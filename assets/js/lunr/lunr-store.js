@@ -5,7 +5,7 @@ var store = [{
         "url": "/sample%20category/layout-author-override/",
         "teaser":null},{
         "title": "Test File",
-        "excerpt":"This is a test file  ","categories": [],
+        "excerpt":"This is a test file  This is line two  ","categories": [],
         "tags": [],
         "url": "/test-file/",
         "teaser":null}]

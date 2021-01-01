@@ -8,4 +8,9 @@ var store = [{
         "excerpt":"This is a test file  This is line two  ","categories": [],
         "tags": [],
         "url": "/test-file/",
+        "teaser":null},{
+        "title": "Image detection using custom vision AI",
+        "excerpt":"What is Dependency Injection? In software engineering, dependency injection is a software design pattern that implements inversion of control for resolving dependencies. – Wikipedia. It makes software components are loosely coupled. Advantages of Dependency Injection Flexibility to use alternative implementation of service. Configurable &amp; easy to use Make system loosely...","categories": ["ASP.NET (All)","ASP.NET MVC","C#","Software Design Pattern"],
+        "tags": ["mytag","change it"],
+        "url": "/asp.net%20(all)/asp.net%20mvc/c%23/software%20design%20pattern/design-image/",
         "teaser":null}]

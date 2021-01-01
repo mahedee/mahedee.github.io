@@ -1,6 +1,6 @@
 var store = [{
         "title": "Important notes",
-        "excerpt":"Some important notes   How to run this site using visual studio code  bundle exec jekyll serve  Application will run here  http://127.0.0.1:4000/   or you can type  bundle exec jekyll serve -o  which will build the application run on the url   Tips for visual studio code  To view command in visual studio code  Type ctrl+shift+p   Important Links   ","categories": ["Blog","Visual Studio Code","Links"],
+        "excerpt":"Some important notes   How to run this site using visual studio code  bundle exec jekyll serve  Application will run here  http://127.0.0.1:4000/   or you can type  bundle exec jekyll serve -o  which will build the application run on the url   Tips for visual studio code  To view command in visual studio code  Type ctrl+shift+p   Important Links     Architecture Playbook   Government Digital Service  ","categories": ["Blog","Visual Studio Code","Links"],
         "tags": ["notes","unpublished"],
         "url": "/blog/visual%20studio%20code/links/important-note-unpublished/",
         "teaser":null},{

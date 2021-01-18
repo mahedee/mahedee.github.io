@@ -14,6 +14,11 @@ var store = [{
         "tags": ["notes","unpublished"],
         "url": "/blog/visual%20studio%20code/links/important-note-unpublished/",
         "teaser":null},{
+        "title": "Speaking at Career Adda at MBSTU",
+        "excerpt":"Speaking at Career Adda, 2020  Organized by CSE Family of MBSTU  Venue: Online/Virtual  Date: 21 August, 2020      ","categories": ["Speech","Technical Speech"],
+        "tags": ["speech","tech"],
+        "url": "/speech/technical%20speech/speaking-at-career-adda-at-cse-family-of-mbstu/",
+        "teaser":null},{
         "title": "Image detection using custom vision AI",
         "excerpt":"What is Dependency Injection? In software engineering, dependency injection is a software design pattern that implements inversion of control for resolving dependencies. – Wikipedia. It makes software components are loosely coupled.   Advantages of Dependency Injection     Flexibility to use alternative implementation of service.   Configurable &amp; easy to use   Make system loosely couple   Code becomes more reusable, testable, readable and manageable.   Reduction of boilerplate code in the application objects   What is Ninject?     Open Source Inversion of Control (IOC)   It is a Dependency Injector for .NET created by Nate Kohari   It’s very easy to use.   Easily add from nuget.   For more information visit Ninject.org Let’s come to the implementation of DI using Ninject in ASP.NET MVC   Tools and Technology used I used following tools and technology to develop the project –      Visual Studio 2013   Visual C#   ASP.NET MVC 5   Entity Framework 6   Razor view engine   Ninject for MVC5  ","categories": ["ASP.NET (All)","ASP.NET MVC","C#","Software Design Pattern"],
         "tags": ["mytag","change it"],

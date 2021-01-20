@@ -15,7 +15,7 @@ var store = [{
         "url": "/important-note-unpublished.html/",
         "teaser":null},{
         "title": "Markdown Syntax",
-        "excerpt":"Commenting on markdown   &lt;!-- Single or multiline commenting--&gt;   ","categories": ["Github"],
+        "excerpt":"Hyperlink  Markdown syntax  [Source Code](https://github.com/mahedee/code-sample/tree/master/auth-demo/MVCAuth)  Rendered output  Source Code   Commenting on markdown   &lt;!-- Single or multiline commenting--&gt;      ","categories": ["Github"],
         "tags": ["markdown","md"],
         "url": "/markdown-syntax.html/",
         "teaser":null},{

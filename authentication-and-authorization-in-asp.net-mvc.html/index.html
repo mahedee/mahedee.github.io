@@ -1,0 +1,850 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Authentication and authorization using ASP.NET MVC - Learn and share</title>
+<meta name="description" content="hi">
+
+
+  <meta name="author" content="Md. Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Learn and share">
+<meta property="og:title" content="Authentication and authorization using ASP.NET MVC">
+<meta property="og:url" content="/authentication-and-authorization-in-asp.net-mvc.html/">
+
+
+  <meta property="og:description" content="hi">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-05T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/authentication-and-authorization-in-asp.net-mvc.html/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Md. Mahedee Hasan",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Learn and share Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Learn and share
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/csharp/" >C#</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.png" alt="Md. Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Md. Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Mahedee Hasan is a Senior Software Architect of Leadsoft Bangladesh Limited – one of the largest software company in Bangladesh. It is CMMI level-5 and ISO Certified Organization. He has over 10 years of working experience in the field of software design and development. He has been awarded Microsoft Most Valuable Professional(MVP) for the 4th time in a row. His MVP category is Artificial Intelligence (AI).</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+            <li><a href="http://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Authentication and authorization using ASP.NET MVC">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="July 05, 2020">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Authentication and authorization using ASP.NET MVC
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- ### Authentication and authorization using ASP.NET MVC -->
+
+<p><strong>Step1: Select ASP.NET Web Application (.NET Framework)</strong></p>
+
+<p><strong>Step2: Type project and solution name</strong><br />
+Type project name as “MVCAuth” and also solution name as “MVC Auth”</p>
+
+<p><strong>Step 3: Select project template</strong></p>
+<ul>
+  <li>Select project template as Web Application (Model-View-Controller)</li>
+  <li>Change authentication to Individual User Authentication</li>
+  <li>Click create button</li>
+</ul>
+
+<p><strong>Step 4: Add some model and view model class</strong></p>
+<ul>
+  <li>Create Role Model class in Models folder as follows
+    <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">public</span> <span class="k">class</span> <span class="nc">Role</span> <span class="p">:</span> <span class="n">IdentityRole</span>
+  <span class="p">{</span>
+
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Create UserRoleVM View Model class in Models folder as follows
+    <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">public</span> <span class="k">class</span> <span class="nc">UserRoleVM</span>
+  <span class="p">{</span>
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">UserId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">RoleId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">UserName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">RoleName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Create UsersRolesVM View Model class in Models folder as follows
+    <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">public</span> <span class="k">class</span> <span class="nc">UsersRolesVM</span>
+  <span class="p">{</span>
+      <span class="c1">//public string UserName { get; set; }</span>
+      <span class="k">public</span> <span class="n">ApplicationUser</span> <span class="n">User</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+      <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">RoleNames</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Step 5: Add Controllers to the application</strong></p>
+<ul>
+  <li>Add RolesController in Controllers folder</li>
+  <li>Choose template MVC 5 Controller with read/write actions</li>
+  <li>Modify RolesController as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">RolesController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">ApplicationDbContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ApplicationDbContext</span><span class="p">();</span>
+        <span class="c1">// GET: Roles</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">roleStore</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleStore</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">db</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">roleManager</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleManager</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">roleStore</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">roles</span> <span class="p">=</span> <span class="n">roleManager</span><span class="p">.</span><span class="n">Roles</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">roles</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: Roles/Details/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Details</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: Roles/Create</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: Roles/Create</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">(</span><span class="n">IdentityRole</span> <span class="n">role</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// TODO: Add insert logic here</span>
+
+                <span class="kt">var</span> <span class="n">roleStore</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleStore</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">db</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">roleManager</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleManager</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">roleStore</span><span class="p">);</span>
+
+                <span class="k">if</span><span class="p">(!</span><span class="n">roleManager</span><span class="p">.</span><span class="nf">RoleExists</span><span class="p">(</span><span class="n">role</span><span class="p">.</span><span class="n">Name</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">roleManager</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">role</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: Roles/Edit/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: Roles/Edit/5</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">FormCollection</span> <span class="n">collection</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// TODO: Add update logic here</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: Roles/Delete/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: Roles/Delete/5</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">FormCollection</span> <span class="n">collection</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// TODO: Add delete logic here</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add UsersRoleController in Controllers folder</li>
+  <li>Choose template MVC 5 Controller with read/write actions</li>
+  <li>Modify UsersRoleController as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">UsersRoleController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="n">ApplicationDbContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ApplicationDbContext</span><span class="p">();</span>
+        <span class="c1">// GET: UsersRole</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">UsersRolesVM</span><span class="p">&gt;</span> <span class="n">usersRolesVMs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">UsersRolesVM</span><span class="p">&gt;();</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;</span> <span class="n">users</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+
+            <span class="kt">var</span> <span class="n">userManager</span> <span class="p">=</span> <span class="k">new</span> <span class="n">UserManager</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">UserStore</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;(</span><span class="n">db</span><span class="p">));</span>
+
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">ApplicationUser</span> <span class="n">user</span> <span class="k">in</span> <span class="n">users</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">UsersRolesVM</span> <span class="n">usersRolesVM</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">UsersRolesVM</span><span class="p">();</span>
+                <span class="n">usersRolesVM</span><span class="p">.</span><span class="n">User</span> <span class="p">=</span> <span class="n">user</span><span class="p">;</span>
+                <span class="n">usersRolesVM</span><span class="p">.</span><span class="n">RoleNames</span> <span class="p">=</span> <span class="n">userManager</span><span class="p">.</span><span class="nf">GetRoles</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+                <span class="n">usersRolesVMs</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">usersRolesVM</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">usersRolesVMs</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: UsersRole/Details/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Details</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: UsersRole/Create</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">()</span>
+        <span class="p">{</span>
+
+            <span class="kt">var</span> <span class="n">roleStore</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleStore</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">db</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">roleManager</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RoleManager</span><span class="p">&lt;</span><span class="n">IdentityRole</span><span class="p">&gt;(</span><span class="n">roleStore</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">roles</span> <span class="p">=</span> <span class="n">roleManager</span><span class="p">.</span><span class="n">Roles</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+
+
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">UserId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">ToList</span><span class="p">(),</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"UserName"</span><span class="p">);</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">RoleName</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">roles</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: UsersRole/Create</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="c1">//public ActionResult Create(FormCollection collection)</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">(</span><span class="n">UserRoleVM</span> <span class="n">userRole</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+               <span class="k">if</span><span class="p">(</span><span class="n">userRole</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">userManager</span> <span class="p">=</span> <span class="k">new</span> <span class="n">UserManager</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">UserStore</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;(</span><span class="n">db</span><span class="p">));</span>
+                    <span class="n">userManager</span><span class="p">.</span><span class="nf">AddToRole</span><span class="p">(</span><span class="n">userRole</span><span class="p">.</span><span class="n">UserId</span><span class="p">,</span> <span class="n">userRole</span><span class="p">.</span><span class="n">RoleName</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: UsersRole/Edit/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: UsersRole/Edit/5</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">FormCollection</span> <span class="n">collection</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// TODO: Add update logic here</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: UsersRole/Delete/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: UsersRole/Delete/5</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">FormCollection</span> <span class="n">collection</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// TODO: Add delete logic here</span>
+
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/auth-demo/MVCAuth">Source Code</a></strong></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#c-sharp" class="page__taxonomy-item" rel="tag">c-sharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#mvc" class="page__taxonomy-item" rel="tag">mvc</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-07-05T00:00:00+00:00">July 05, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Authentication+and+authorization+using+ASP.NET+MVC%20%2Fauthentication-and-authorization-in-asp.net-mvc.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fauthentication-and-authorization-in-asp.net-mvc.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fauthentication-and-authorization-in-asp.net-mvc.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-contribute-an-opensource-project.html/" class="pagination--pager" title="How to contribute on an open source project
+">Previous</a>
+    
+    
+      <a href="/speaking-at-career-adda-at-cse-family-of-mbstu.html/" class="pagination--pager" title="Speaking at Career Adda at MBSTU
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/design-image.html/" rel="permalink">Image detection using custom vision AI
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A post to test author overrides using a data file.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/speaking-at-career-adda-at-cse-family-of-mbstu.html/" rel="permalink">Speaking at Career Adda at MBSTU
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Speaking at Career Adda on 21 August, 2020. Organized by CSE Family of MBSTU. It was a virtual event.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/how-to-contribute-an-opensource-project.html/" rel="permalink">How to contribute on an open source project
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">How to contribute on an open source project using github is discussed here step by step
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/resolve-git-conflict.html/" rel="permalink">Resolve git conflict using meld
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">How to resolve conflict in github is discussed here step by step
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Md. Mahedee Hasan. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -296,7 +296,7 @@
 
 
 
-  2 minute read
+  5 minute read
 </p>
           
         </header>
@@ -318,7 +318,12 @@ Type project name as “MVCAuth” and also solution name as “MVC Auth”</p>
   <li>Click create button</li>
 </ul>
 
-<p><strong>Step 4: Add some model and view model class</strong></p>
+<p><strong>Step 4: Change web.config file</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">&lt;add name="DefaultConnection" connectionString="Data Source=localhost;Initial Catalog=AuthDB;Persist Security Info=False;User ID=sa; Password=mahedee.net; Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False" providerName="System.Data.SqlClient" /&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Add some model and view model class</strong></p>
 <ul>
   <li>Create Role Model class in Models folder as follows
     <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">public</span> <span class="k">class</span> <span class="nc">Role</span> <span class="p">:</span> <span class="n">IdentityRole</span>
@@ -350,7 +355,7 @@ Type project name as “MVCAuth” and also solution name as “MVC Auth”</p>
   </li>
 </ul>
 
-<p><strong>Step 5: Add Controllers to the application</strong></p>
+<p><strong>Step 6: Add Controllers to the application</strong></p>
 <ul>
   <li>Add RolesController in Controllers folder</li>
   <li>Choose template MVC 5 Controller with read/write actions</li>
@@ -566,6 +571,209 @@ Type project name as “MVCAuth” and also solution name as “MVC Auth”</p>
     <span class="p">}</span>
 
 </code></pre></div></div>
+
+<p><strong>Step 7: Create Roles View to the application</strong></p>
+<ul>
+  <li>Add Index View in Views-&gt;Roles folder</li>
+  <li>Add Create View in Views-&gt;Roles folder</li>
+  <li>Modify views as follows</li>
+</ul>
+
+<p><strong>Index.cshtml</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model IEnumerable<span class="nt">&lt;Microsoft.AspNet.Identity.EntityFramework.IdentityRole&gt;</span>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<span class="nt">&lt;h2&gt;</span>Index<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>
+    @Html.ActionLink("Create New", "Create")
+<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;</span>
+            @Html.DisplayNameFor(model =&gt; model.Name)
+        <span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+
+@foreach (var item in Model) {
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            @Html.DisplayFor(modelItem =&gt; item.Name)
+        <span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+}
+
+<span class="nt">&lt;/table&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Create.cshtml</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@*@model MVCAuth.Models.Role*@
+@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<span class="nt">&lt;h2&gt;</span>Create<span class="nt">&lt;/h2&gt;</span>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-horizontal"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h4&gt;</span>Role<span class="nt">&lt;/h4&gt;</span>
+        <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+            @Html.LabelFor(model =&gt; model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-10"</span><span class="nt">&gt;</span>
+                @Html.EditorFor(model =&gt; model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model =&gt; model.Name, "", new { @class = "text-danger" })
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-offset-2 col-md-10"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Create"</span> <span class="na">class=</span><span class="s">"btn btn-default"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+}
+
+<span class="nt">&lt;div&gt;</span>
+    @Html.ActionLink("Back to List", "Index")
+<span class="nt">&lt;/div&gt;</span>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+</code></pre></div></div>
+
+<p><strong>Step 8: Create UsersRole View to the application</strong></p>
+<ul>
+  <li>Add Index View in Views-&gt;UsersRole folder</li>
+  <li>Add Create View in Views-&gt;UsersRole folder</li>
+  <li>Modify views as follows</li>
+</ul>
+
+<p><strong>Index.cshtml</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model IEnumerable<span class="nt">&lt;MVCAuth.Models.UsersRolesVM&gt;</span>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<span class="nt">&lt;h2&gt;</span>Index<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>
+    @Html.ActionLink("Create New", "Create")
+<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;</span>
+            @*@Html.DisplayNameFor(model =&gt; model.UserName)*@
+            User Name
+        <span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>
+            @*@Html.DisplayNameFor(model =&gt; model.RoleName)*@
+            Roles Name
+        <span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+
+    @foreach (var users in Model)
+    {
+
+        foreach (string rolesName in users.RoleNames)
+        {
+            <span class="nt">&lt;tr&gt;</span>
+                <span class="nt">&lt;td&gt;</span>
+                    @Html.DisplayFor(modelItem =&gt; users.User.UserName)
+                <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;td&gt;</span>
+                    @Html.DisplayFor(modelItem =&gt; rolesName)
+                <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;td&gt;</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = 1 })
+                <span class="nt">&lt;/td&gt;</span>
+            <span class="nt">&lt;/tr&gt;</span>
+        }
+    }
+
+<span class="nt">&lt;/table&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Create.cshtml</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@model MVCAuth.Models.UserRoleVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<span class="nt">&lt;h2&gt;</span>Create<span class="nt">&lt;/h2&gt;</span>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-horizontal"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h4&gt;</span>UserRoleVM<span class="nt">&lt;/h4&gt;</span>
+    <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+        @Html.LabelFor(model =&gt; model.UserName, "UserName", htmlAttributes: new { @class = "control-label col-md-2" })
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-10"</span><span class="nt">&gt;</span>
+            @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+        @Html.LabelFor(model =&gt; model.RoleName, "RoleName", htmlAttributes: new { @class = "control-label col-md-2" })
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-10"</span><span class="nt">&gt;</span>
+            @Html.DropDownList("RoleName", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model =&gt; model.UserName, "", new { @class = "text-danger" })
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"form-group"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-offset-2 col-md-10"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Create"</span> <span class="na">class=</span><span class="s">"btn btn-default"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+}
+
+<span class="nt">&lt;div&gt;</span>
+    @Html.ActionLink("Back to List", "Index")
+<span class="nt">&lt;/div&gt;</span>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+</code></pre></div></div>
+
+<p><strong>Step 9: Run migration command in package manager console</strong></p>
+
+<p>Now the application is ready to run.</p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample/tree/master/auth-demo/MVCAuth">Source Code</a></strong></p>
 

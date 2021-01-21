@@ -19,6 +19,11 @@ var store = [{
         "tags": ["markdown","md"],
         "url": "/markdown-syntax.html/",
         "teaser":null},{
+        "title": "Essential plugins for Visual Studio code",
+        "excerpt":"Essential plugins for Visual Studio code      Markdown Preview Enhanced     ","categories": ["Github"],
+        "tags": ["markdown","md"],
+        "url": "/essential-plugins-for-vs-code.html/",
+        "teaser":null},{
         "title": "Getting Started with GitHub",
         "excerpt":"Getting Started with GitHub          Create a GitHub account.            Setting up git on your computer              Download and install the latest version of Git.       Set your username in Git.                Create a repository       Clone your repository    For example:     git clone https://github.com/mahedee/eSchool.git       Pull and push to repository   Pull command uses to get updated files from github repository to your local machine  git pull --rebase upstream master or  git pull   Push command uses to sync your local file to github repository   Add files for the commit  git add .  Write a message for the commit  git commit -m \"complete feature-joining\"  git push origin feature-joining or  git push  ","categories": ["Source Control"],
         "tags": ["git","source-control"],

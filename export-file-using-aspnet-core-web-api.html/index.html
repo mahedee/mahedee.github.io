@@ -1,0 +1,989 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>File transfer (export) through ASP.NET core web api - Learn and share</title>
+<meta name="description" content="hi">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Learn and share">
+<meta property="og:title" content="File transfer (export) through ASP.NET core web api">
+<meta property="og:url" content="/export-file-using-aspnet-core-web-api.html/">
+
+
+  <meta property="og:description" content="hi">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-21T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/export-file-using-aspnet-core-web-api.html/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Md. Mahedee Hasan",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Learn and share Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Learn and share
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/csharp/" >C#</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="File transfer (export) through ASP.NET core web api">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="January 21, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">File transfer (export) through ASP.NET core web api
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- ## Export file using asp.net core web api -->
+
+<p><strong>Tools and Technology used</strong></p>
+<ol>
+  <li>Visual studio 2019</li>
+  <li>ASP.NET Core Web Api</li>
+  <li>Visual C#</li>
+  <li>JQuery</li>
+</ol>
+
+<p>Step 1: Create a blank solution name “FileExpoter”<br />
+Step 2: Add a new asp.net core project in “FileExporer” solution</p>
+
+<ul>
+  <li>Type the project name as “ExportApi”</li>
+  <li>Select API Template</li>
+  <li>Select “Configure for HTTPS”</li>
+</ul>
+
+<p>Step 3: Add a new asp.net core MVC Project in “File Explorer” Solution</p>
+
+<ul>
+  <li>Type the project name as “ClientApp”</li>
+  <li>Select Template - Web Application (Model-View-Controller)</li>
+</ul>
+
+<p>Step 4: Keep files in a folder</p>
+<ul>
+  <li>Create a folder name “files”</li>
+  <li>Keep two files.  mahedeebio.pdf and booklist.xlsx in the files folder</li>
+</ul>
+
+<p>Step 4:  Enable CORS in ExportApi application.</p>
+<ul>
+  <li>Install nuget package - Microsoft.AspNetCore.Cors</li>
+  <li>Modify the ConfigureServices and Configure Method in Startup.cs file as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Startup</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Startup</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">IConfiguration</span> <span class="n">Configuration</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="c1">// This method gets called by the runtime. Use this method to add services to the container.</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+            <span class="c1">//Enable CORS - Cross-Origin resource sharing</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddCors</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">options</span><span class="p">.</span><span class="nf">AddPolicy</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">,</span>
+                    <span class="n">builder</span> <span class="p">=&gt;</span> <span class="n">builder</span><span class="p">.</span><span class="nf">AllowAnyOrigin</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nf">AllowAnyMethod</span><span class="p">()</span>
+                    <span class="p">.</span><span class="nf">AllowAnyHeader</span><span class="p">()</span>
+                    <span class="p">);</span>
+            <span class="p">});</span>
+
+            <span class="c1">////If you want to enable any particular IP</span>
+            <span class="c1">//services.AddCors(c =&gt;</span>
+            <span class="c1">//{</span>
+            <span class="c1">//    c.AddPolicy("AllowOrigin", options =&gt; options.WithOrigins("https://localhost:44312"));</span>
+            <span class="c1">//});</span>
+        <span class="p">}</span>
+
+        <span class="c1">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseDeveloperExceptionPage</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseRouting</span><span class="p">();</span>
+
+            <span class="c1">// Enable CORS</span>
+            <span class="c1">// Must be in between app.UseRouting and app.UseEndpoints</span>
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseCors</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">);</span>
+
+
+            <span class="c1">// Another of way of Allow CORS</span>
+            <span class="c1">//app.UseCors(options =&gt; options.AllowAnyOrigin());</span>
+            <span class="c1">//app.UseCors(options =&gt; options.WithOrigins("https://localhost:44312"));</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">endpoints</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+            <span class="p">});</span>           
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Step 5: Add a controller class in ExportApi project</p>
+<ul>
+  <li>Create a controller - name ExportController</li>
+  <li>Select Template - “API Controller - Empty”</li>
+  <li>Update the Export Controller as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Cors</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportApi.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">EnableCors</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ExportController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="c1">//Get: api/Export/GetExcel</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetExcel"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetExcel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">ConverExceltoB64</span><span class="p">());</span>
+            <span class="p">}</span>
+
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="p">{</span>
+
+                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+
+
+
+
+        <span class="c1">//Get: api/Export/GetPDF</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetPDF"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetPDF</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">ConvertPDFtoB64</span><span class="p">());</span>
+            <span class="p">}</span>
+
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">//Get: api/Export/GetDynamicExcel</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetDynamicExcel"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetDynamicExcel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">BuildeExcel</span><span class="p">());</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+
+        <span class="c1">// Convert an excel file to Base64 </span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="nf">ConverExceltoB64</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">docBytes</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="s">@"files\booklist.xlsx"</span><span class="p">));</span>
+            <span class="kt">string</span> <span class="n">docBase64</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">docBytes</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">docBase64</span><span class="p">);</span>
+        <span class="p">}</span>
+
+
+        <span class="c1">// Convert a pdf file to Base64</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="nf">ConvertPDFtoB64</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">docBytes</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="s">@"files\mahedeebio.pdf"</span><span class="p">));</span>
+            <span class="kt">string</span> <span class="n">docBase64</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">docBytes</span><span class="p">);</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">docBase64</span><span class="p">);</span>
+        <span class="p">}</span>
+
+
+        <span class="c1">// Create an excel on the fly and return as Base64 format</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="nf">BuildeExcel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">StringBuilder</span> <span class="n">table</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;table border=`"</span> <span class="p">+</span> <span class="s">"1px"</span> <span class="p">+</span> <span class="s">"`b&gt;"</span><span class="p">);</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;tr&gt;"</span><span class="p">);</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;ID&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;Name&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;Designation&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/tr&gt;"</span><span class="p">);</span>
+
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">item</span> <span class="k">in</span> <span class="nf">GetEmployeeAll</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;tr&gt;"</span><span class="p">);</span>
+                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
+                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
+                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Designation</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
+                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/tr&gt;"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/table&gt;"</span><span class="p">);</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">temp</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">table</span><span class="p">.</span><span class="nf">ToString</span><span class="p">());</span>
+            <span class="k">return</span> <span class="n">System</span><span class="p">.</span><span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+
+        <span class="p">}</span>
+
+
+        <span class="c1">// Return list of employee</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployeeAll</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+            <span class="p">{</span>
+                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Sabrina Jahan Sara"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Tahiya Hasan Arisha"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Sr. Software Engineer"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Ishrat Jahan Nusaifa"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Architect"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">4</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Nusrat Janan"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Project Manager"</span><span class="p">}</span>
+            <span class="p">};</span>
+
+            <span class="k">return</span> <span class="n">employees</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// Employee model class</span>
+    <span class="k">internal</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Step 6: Modify index.cshtml in ClientApp Project</p>
+<ul>
+  <li>Modify Views-&gt;Home-&gt;Index.cshtml as follows</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
+    ViewData["Title"] = "Home Page";
+}
+
+<span class="nt">&lt;h4&gt;</span>Export file using asp.net web api<span class="nt">&lt;/h4&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">id=</span><span class="s">"btnExcel"</span><span class="nt">&gt;</span>Export Excel<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-info"</span> <span class="na">id=</span><span class="s">"btnPDF"</span><span class="nt">&gt;</span>Export PDF<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-success"</span> <span class="na">id=</span><span class="s">"btnDynamicExcel"</span><span class="nt">&gt;</span>Export Dynamic Excel<span class="nt">&lt;/button&gt;</span>
+
+
+
+@* Implement Scripts section *@
+
+@section Scripts{
+    <span class="nt">&lt;script&gt;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="c1">//alert('working from document ready!!');</span>
+        <span class="p">})</span>
+
+        <span class="c1">//Button's events</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnExcel</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="c1">//alert("Export button clicked");</span>
+            <span class="nx">ExcelExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
+        <span class="p">});</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnPDF</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="c1">//alert("Export for dynamic pdf clicked");</span>
+            <span class="nx">PDFExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
+        <span class="p">});</span>
+
+        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnDynamicExcel</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="c1">//alert("Export button clicked");</span>
+            <span class="nx">DyamicExcelExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
+        <span class="p">});</span>
+
+
+
+
+        <span class="c1">//Excel exporter - start</span>
+        <span class="kd">var</span> <span class="nx">ExcelExportar</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">OnExportarClick</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="c1">//alert('click on exporter!');</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                    <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://localhost:44386/api/export/getexcel</span><span class="dl">"</span><span class="p">,</span>
+                    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">text</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">success</span><span class="p">:</span> <span class="nx">ExcelExportar</span><span class="p">.</span><span class="nx">DownloadExcel</span><span class="p">,</span>
+
+                    <span class="na">failure</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">failur: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+                    <span class="p">},</span> <span class="c1">//End of AJAX failure function</span>
+                    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">error: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="c1">//End of AJAX error function</span>
+                <span class="p">});</span>
+            <span class="p">},</span>
+
+            <span class="na">DownloadExcel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">//alert('download excel');</span>
+                <span class="kd">var</span> <span class="nx">createA</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span>
+                <span class="nx">createA</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">linkDownload</span><span class="dl">'</span><span class="p">);</span>
+                <span class="nx">createA</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">href</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">data:application/vnd.ms-excel;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">);</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">createA</span><span class="p">);</span>
+
+                <span class="nx">createA</span><span class="p">.</span><span class="nx">download</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">download_latest.xls</span><span class="dl">'</span><span class="p">;</span>
+                <span class="kd">var</span> <span class="nx">selectorHref</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkDownload</span><span class="dl">'</span><span class="p">);</span>
+                <span class="nx">selectorHref</span><span class="p">.</span><span class="nx">click</span><span class="p">();</span>
+                <span class="nx">selectorHref</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+
+        <span class="c1">//Excel exporter - End</span>
+
+
+        <span class="c1">//PDF exporter - start</span>
+
+        <span class="kd">var</span> <span class="nx">PDFExportar</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">OnExportarClick</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="c1">//alert('click on pdf exporter!');</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                    <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://localhost:44386/api/export/getpdf</span><span class="dl">"</span><span class="p">,</span>
+                    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">text</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">success</span><span class="p">:</span> <span class="nx">PDFExportar</span><span class="p">.</span><span class="nx">DownloadPDF</span><span class="p">,</span>
+                    <span class="na">failure</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">failur: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+                    <span class="p">},</span> <span class="c1">//End of AJAX failure function</span>
+                    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">error: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="c1">//End of AJAX error function</span>
+                <span class="p">});</span>
+            <span class="p">},</span>
+
+            <span class="na">DownloadPDF</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="c1">// Display in a same page with a download link</span>
+
+                <span class="c1">// Embed the PDF into the HTML page and show it to the user</span>
+                <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">);</span>
+                <span class="nx">obj</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">obj</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">842pt</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">obj</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">application/pdf</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">obj</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">data:application/pdf;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+
+                <span class="c1">// Insert a link that allows the user to download the PDF file</span>
+                <span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span>
+                <span class="nx">link</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Download PDF file</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">link</span><span class="p">.</span><span class="nx">download</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">file.pdf</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">link</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">data:application/octet-stream;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">link</span><span class="p">);</span>
+
+
+                <span class="c1">// Display in a new window</span>
+                <span class="c1">//var objbuilder = '';</span>
+                <span class="c1">//objbuilder += ('</span><span class="o">&lt;</span><span class="nx">object</span> <span class="nx">width</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="nx">height</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span>      <span class="nx">data</span><span class="o">=</span><span class="dl">"</span><span class="s2">data:application/pdf;base64,');
+                //objbuilder += (data);
+                //objbuilder += ('</span><span class="dl">"</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">application/pdf</span><span class="dl">"</span> <span class="kd">class</span><span class="o">=</span><span class="dl">"</span><span class="s2">internal</span><span class="dl">"</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
+                //objbuilder += (</span><span class="dl">'</span><span class="o">&lt;</span><span class="nx">embed</span> <span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">data:application/pdf;base64,');
+                //objbuilder += (data);
+                //objbuilder += ('</span><span class="dl">"</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">application/pdf</span><span class="dl">"</span> <span class="o">/&gt;</span><span class="dl">'</span><span class="s1">);
+                //objbuilder += (</span><span class="dl">'</span><span class="o">&lt;</span><span class="sr">/object&gt;'</span><span class="se">)</span><span class="err">;
+</span>
+                <span class="c1">//var win = window.open("", "_blank", "titlebar=yes");</span>
+                <span class="c1">//win.document.title = "My Title";</span>
+                <span class="c1">//win.document.write('</span><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;&lt;</span><span class="nx">body</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
+                //win.document.write(objbuilder);
+                //win.document.write(</span><span class="dl">'</span><span class="o">&lt;</span><span class="sr">/body&gt;&lt;/</span><span class="nx">html</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
+                //layer = jQuery(win.document);
+
+
+            }
+        };
+
+        //PDF exporter - end
+
+        var DyamicExcelExportar = {
+            OnExportarClick: function () {
+                $.ajax({
+                    url: "https://localhost:44386/api/export/GetDynamicExcel",
+                    type: </span><span class="dl">'</span><span class="nx">GET</span><span class="dl">'</span><span class="s1">,
+                    dataType: </span><span class="dl">'</span><span class="nx">text</span><span class="dl">'</span><span class="s1">,
+                    success: DyamicExcelExportar.DownloadExcel,
+                    failure: function (data) {
+                        alert(</span><span class="dl">'</span><span class="na">failur</span><span class="p">:</span> <span class="dl">'</span><span class="s1"> + data.responseText);
+                    }, //End of AJAX failure function
+                    error: function (request) {
+                        alert(</span><span class="dl">'</span><span class="na">error</span><span class="p">:</span> <span class="dl">'</span><span class="s1"> + request.responseText);
+                    } //End of AJAX error function
+                });
+            },
+
+            DownloadExcel: function (data) {
+                //alert(</span><span class="dl">'</span><span class="nx">download</span> <span class="nx">excel</span><span class="dl">'</span><span class="s1">);
+                var createA = document.createElement(</span><span class="dl">'</span><span class="nx">a</span><span class="dl">'</span><span class="s1">);
+                createA.setAttribute(</span><span class="dl">'</span><span class="nx">id</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="nx">linkDownload</span><span class="dl">'</span><span class="s1">);
+                createA.setAttribute(</span><span class="dl">'</span><span class="nx">href</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="na">data</span><span class="p">:</span><span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">excel</span><span class="p">;</span><span class="nx">base64</span><span class="p">,</span><span class="dl">'</span><span class="s1"> + data);
+                document.body.appendChild(createA);
+
+                createA.download = </span><span class="dl">'</span><span class="nx">download_latest</span><span class="p">.</span><span class="nx">xls</span><span class="dl">'</span><span class="s1">;
+                var selectorHref = document.getElementById(</span><span class="dl">'</span><span class="nx">linkDownload</span><span class="dl">'</span><span class="s1">);
+                selectorHref.click();
+                selectorHref.remove();
+            }
+        };
+
+    </span><span class="nt">&lt;/script&gt;</span>
+}
+</code></pre></div></div>
+
+<p>Step 7: Run Multiple projects</p>
+<ul>
+  <li>Run both ExportApi and ClientApp project</li>
+  <li>To run both multiple project right click on solution-&gt;Properties-&gt;Startup Project-&gt;Multiple Start up project, Select both project as start.</li>
+  <li>Click the button on button of index page and you will see the output.</li>
+</ul>
+
+<p><a href="https://github.com/mahedee/code-sample/tree/master/FileExportApi/FileExporter">Download source code</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#article" class="page__taxonomy-item" rel="tag">article</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#asp-net" class="page__taxonomy-item" rel="tag">asp_net</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#c-sharp" class="page__taxonomy-item" rel="tag">c-sharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#dot-net-core" class="page__taxonomy-item" rel="tag">Dot Net Core</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-01-21T00:00:00+00:00">January 21, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=File+transfer+%28export%29+through+ASP.NET+core+web+api%20%2Fexport-file-using-aspnet-core-web-api.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fexport-file-using-aspnet-core-web-api.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fexport-file-using-aspnet-core-web-api.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/design-image.html/" class="pagination--pager" title="Image detection using custom vision AI
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/design-image.html/" rel="permalink">Image detection using custom vision AI
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A post to test author overrides using a data file.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/build-a-crud-application-using-asp.net-core.html/" rel="permalink">Build a CRUD application using asp.net core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  9 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/speaking-at-career-adda-at-cse-family-of-mbstu.html/" rel="permalink">Speaking at Career Adda at MBSTU
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Speaking at Career Adda on 21 August, 2020. Organized by CSE Family of MBSTU. It was a virtual event.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/authentication-and-authorization-in-asp.net-mvc.html/" rel="permalink">Authentication and authorization using ASP.NET MVC
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Md. Mahedee Hasan. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

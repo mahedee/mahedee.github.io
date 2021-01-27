@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Branching and merging in GitHub - Learn and share</title>
-<meta name="description" content="How to branching and merging in github is discussed here step by step">
+<!-- begin _includes/seo.html --><title>Create a sentiment analysis app using ML.NET - Learn and share</title>
+<meta name="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
 
 
   <meta name="author" content="Md. Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="Branching and merging in GitHub">
-<meta property="og:url" content="/branching-and-merging.html/">
+<meta property="og:title" content="Create a sentiment analysis app using ML.NET">
+<meta property="og:url" content="/create-a-sentiment-analysis-app-using-ml-dot-net.html/">
 
 
-  <meta property="og:description" content="How to branching and merging in github is discussed here step by step">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2020-05-02T00:00:00+00:00">
+  <meta property="og:description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2020-07-05T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="/branching-and-merging.html/">
+
+<link rel="canonical" href="/create-a-sentiment-analysis-app-using-ml-dot-net.html/">
 
 
 
@@ -280,15 +280,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Branching and merging in GitHub">
-    <meta itemprop="description" content="How to branching and merging in github is discussed here step by step">
-    <meta itemprop="datePublished" content="May 02, 2020">
+    <meta itemprop="headline" content="Create a sentiment analysis app using ML.NET">
+    <meta itemprop="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
+    <meta itemprop="datePublished" content="July 05, 2020">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Branching and merging in GitHub
+          <h1 id="page-title" class="page__title" itemprop="headline">Create a sentiment analysis app using ML.NET
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -296,7 +296,7 @@
 
 
 
-  less than 1 minute read
+  2 minute read
 </p>
           
         </header>
@@ -304,58 +304,99 @@
 
       <section class="page__content" itemprop="text">
         
-        <h2 id="branching-and-merging-in-github">Branching and merging in GitHub</h2>
+        <!-- ## Create a sentiment analysis app using ML.NET -->
 
+<p><strong>Application overview</strong><br />
+ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#. Let’s start.</p>
+
+<p><strong>Tools and Technology used</strong> 
+The following tools and technologies has been used for this application</p>
 <ul>
-  <li><strong>To create a branch</strong>
-    <pre><code class="language-github">$ git checkout -b branch01
-Switched to a new branch 'branch01'
-or 
-$git branch branch01
-</code></pre>
-  </li>
-  <li><strong>To switch to a branch</strong><br />
-```github
-$git checkout <branch name=""></branch></li>
+  <li>Visual Studio 2019</li>
+  <li>Visual C#
+&lt;!– * NuGet package “Westwind.AspNetCore.Markdown”</li>
+  <li>ASP.NET Core MVC</li>
+  <li>Razor view engine –&gt;</li>
 </ul>
 
-<p>Example
-$git checkout branch03</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-* **Push files to the a branch**  
-First switch to the specific branch. Then add or modify files. To add files for the commit run the following command.
-```github
-$ git add .
-</code></pre></div></div>
-
-<pre><code class="language-github">$ git push origin &lt;branch name&gt;
-
-Example:
-$ git push origin branch01
-</code></pre>
-
+<p><strong>Step 1: Create a console application</strong></p>
 <ul>
-  <li><strong>Merge branch01 with master branch</strong>
-    <pre><code class="language-github">$ git checkout master
-Switched to branch 'master'
-Your branch is up-to-date with 'origin/master'.
-</code></pre>
-  </li>
+  <li>Create a new project using visual studio 2019</li>
+  <li>Choose the C# Console App (.NET Core) project template</li>
+  <li>Change the project and solution name as “SentimentAnalysis”</li>
+  <li>Click create button to create the project.</li>
 </ul>
 
-<pre><code class="language-github">$ git merge branch01
-</code></pre>
+<p><strong>Step 2: Enable the ML.NET Model Builder preview feature</strong>
+Press right button on the project file -&gt; Add -&gt; Machine learning
+You will see the following pop up message. Enable it.</p>
 
-<pre><code class="language-github">$ git commit -m "merge branch01"
-</code></pre>
+<p>Would you like to enable the ML.NET Model Builder preview feature so you can add Machine Learning to your .NET projects? <a href="">Enable</a></p>
 
-<pre><code class="language-github">$ git push
-</code></pre>
-
-<h3 id="references">References</h3>
+<p><strong>Step 3: Select model builder scenario</strong></p>
 <ul>
-  <li><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging">Git Branching - Basic Branching and Merging</a></li>
+  <li>Press right button on the project -&gt; Add -&gt; Machine Learning</li>
+  <li>Select Text classification</li>
+  <li>Keep the Local Environment and click on data (to move data step)</li>
 </ul>
+
+<!-- Draft -->
+
+<p><strong>Step 4: Download and add data</strong></p>
+<ul>
+  <li>Download the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip">Sentiment Labelled Sentences datasets</a> from the <a href="https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences">UCI Machine Learning Repository</a></li>
+  <li>Unzip the file and keep the “yelp_labelled.txt” file to Data folder</li>
+  <li>The first column of this file represents the comments and the second column represent the sentiment of the text (0 for negative and 1 for positive)</li>
+</ul>
+
+<p><strong>Add data</strong></p>
+<ul>
+  <li>In this form, select File as the input data source type</li>
+  <li>Browse file yelp_labelled.txt. Once you are selected, you will see the preview of the data.</li>
+  <li>Select “col1” for Column to predict (Label) as the image below</li>
+  <li>Now click Train button to move to the train step</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0001.png" alt="" /></p>
+
+<p><strong>Step 5: Train your model</strong></p>
+<ul>
+  <li>Time to train set automatically based on data. But you can manually set it.</li>
+  <li>Click start training button. You will see the following point the screen.</li>
+</ul>
+
+<p>Best accuracy - Percentage of accuracy of the current model <br />
+Best model - This shows you which algorithm performed the best during Model Builder’s exploration.<br />
+Training time - Total times taken to run training
+Models explored (total) - This shows you the total number of models explored by Model Builder in the given amount of time.</p>
+
+<p>Source : Microsoft docs</p>
+
+<ul>
+  <li>Now click Evaluate to move to the evaluate step</li>
+</ul>
+
+<p><strong>Step 6: Evaluate your model</strong></p>
+<ul>
+  <li>Type a sentence in Try your model section.</li>
+  <li>I Typed “This is a fantastic place” and it shows positive is 98% and negative 2%</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0002.png" alt="" /></p>
+
+<!-- Draft -->
+
+<p><strong>Step 8: Build and run the application</strong></p>
+
+<p>Now the application is ready to run. Build and run the application. Now type the “https://localhost:yourport/posts/2020/12/01/markdownarticle” and watch the html output which you is writtern in the markdown tag.
+You can browse as https://localhost:44338/posts/2020/12/01/MyArticle.md to see output as github flavour.</p>
+
+<p><strong><a href="">Source Code</a></strong></p>
+
+<p><strong>References</strong></p>
+<ol>
+  <li>https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create</li>
+</ol>
 
         
       </section>
@@ -408,29 +449,29 @@ Your branch is up-to-date with 'origin/master'.
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-05-02T00:00:00+00:00">May 02, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-07-05T00:00:00+00:00">July 05, 2020</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Branching+and+merging+in+GitHub%20%2Fbranching-and-merging.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Create+a+sentiment+analysis+app+using+ML.NET%20%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fbranching-and-merging.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fbranching-and-merging.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/visual-studio-code-tips-and-tricks-part-01.html/" class="pagination--pager" title="Visual Studio Code Tips and Tricks (Part - 01)
+      <a href="/how-to-contribute-an-opensource-project.html/" class="pagination--pager" title="How to contribute on an open source project
 ">Previous</a>
     
     
-      <a href="/resolve-git-conflict.html/" class="pagination--pager" title="Resolve git conflict using meld
+      <a href="/authentication-and-authorization-in-asp.net-mvc.html/" class="pagination--pager" title="Authentication and authorization using ASP.NET MVC
 ">Next</a>
     
   </nav>

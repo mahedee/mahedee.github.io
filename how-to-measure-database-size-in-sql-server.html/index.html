@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Image detection using custom vision AI - Learn and share</title>
-<meta name="description" content="A post to test author overrides using a data file.">
+<!-- begin _includes/seo.html --><title>How to measure database size in MS SQL Server - Learn and share</title>
+<meta name="description" content="hi">
 
 
   <meta name="author" content="Md. Mahedee Hasan">
@@ -19,11 +19,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="Image detection using custom vision AI">
-<meta property="og:url" content="/design-image.html/">
+<meta property="og:title" content="How to measure database size in MS SQL Server">
+<meta property="og:url" content="/how-to-measure-database-size-in-sql-server.html/">
 
 
-  <meta property="og:description" content="A post to test author overrides using a data file.">
+  <meta property="og:description" content="hi">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="/design-image.html/">
+<link rel="canonical" href="/how-to-measure-database-size-in-sql-server.html/">
 
 
 
@@ -280,15 +280,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Image detection using custom vision AI">
-    <meta itemprop="description" content="A post to test author overrides using a data file.">
+    <meta itemprop="headline" content="How to measure database size in MS SQL Server">
+    <meta itemprop="description" content="">
     <meta itemprop="datePublished" content="January 01, 2021">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Image detection using custom vision AI
+          <h1 id="page-title" class="page__title" itemprop="headline">How to measure database size in MS SQL Server
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -304,39 +304,38 @@
 
       <section class="page__content" itemprop="text">
         
-        <p><strong>What is Dependency Injection?</strong>
-In software engineering, dependency injection is a software design pattern that implements inversion of control for resolving dependencies. – Wikipedia. It makes software components are loosely coupled.</p>
+        <p><strong>Using system view “sys.databases” and sys.master_files</strong><br />
+Run the following script in master database.</p>
 
-<p><strong>Advantages of Dependency Injection</strong></p>
-<ul>
-  <li>Flexibility to use alternative implementation of service.</li>
-  <li>Configurable &amp; easy to use</li>
-  <li>Make system loosely couple</li>
-  <li>Code becomes more reusable, testable, readable and manageable.</li>
-  <li>Reduction of boilerplate code in the application objects</li>
-</ul>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>      <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>  
+            <span class="k">CONVERT</span><span class="p">(</span><span class="nb">VARCHAR</span><span class="p">,</span><span class="k">SUM</span><span class="p">(</span><span class="k">size</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">/</span><span class="mi">1024</span><span class="p">)</span><span class="o">+</span><span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Size</span><span class="p">]</span>  
+<span class="k">FROM</span>        <span class="n">sys</span><span class="p">.</span><span class="n">databases</span>   
+<span class="k">JOIN</span>        <span class="n">sys</span><span class="p">.</span><span class="n">master_files</span>  
+<span class="k">ON</span>          <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">database_id</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">master_files</span><span class="p">.</span><span class="n">database_id</span>  
+<span class="k">GROUP</span> <span class="k">BY</span>    <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>  
+<span class="k">ORDER</span> <span class="k">BY</span>    <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>  
+</code></pre></div></div>
 
-<p><strong>What is Ninject?</strong></p>
-<ul>
-  <li>Open Source Inversion of Control (IOC)</li>
-  <li>It is a Dependency Injector for .NET created by Nate Kohari</li>
-  <li>It’s very easy to use.</li>
-  <li>Easily add from nuget.</li>
-  <li>For more information visit Ninject.org
-Let’s come to the implementation of DI using Ninject in ASP.NET MVC</li>
-</ul>
+<p>or in GB</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>      <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>  
+            <span class="k">CONVERT</span><span class="p">(</span><span class="nb">VARCHAR</span><span class="p">,(</span><span class="k">SUM</span><span class="p">(</span><span class="k">size</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="o">/</span><span class="mi">1024</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="p">.</span><span class="mi">00</span><span class="p">)</span><span class="o">+</span><span class="s1">' GB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Size</span><span class="p">]</span>  
+<span class="k">FROM</span>        <span class="n">sys</span><span class="p">.</span><span class="n">databases</span>   
+<span class="k">JOIN</span>        <span class="n">sys</span><span class="p">.</span><span class="n">master_files</span>  
+<span class="k">ON</span>          <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">database_id</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">master_files</span><span class="p">.</span><span class="n">database_id</span>  
+<span class="k">GROUP</span> <span class="k">BY</span>    <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>  
+<span class="k">ORDER</span> <span class="k">BY</span>    <span class="n">sys</span><span class="p">.</span><span class="n">databases</span><span class="p">.</span><span class="n">name</span>  
+</code></pre></div></div>
 
-<p><strong>Tools and Technology used</strong>
-I used following tools and technology to develop the project –</p>
+<p><strong>Observe the individual database size</strong><br />
+Run the following stored procedure in each database.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">exec</span> <span class="n">sp_spaceused</span>  
+</code></pre></div></div>
 
-<ol>
-  <li>Visual Studio 2013</li>
-  <li>Visual C#</li>
-  <li>ASP.NET MVC 5</li>
-  <li>Entity Framework 6</li>
-  <li>Razor view engine</li>
-  <li>Ninject for MVC5</li>
-</ol>
+<p><strong>Watch database size using SSMS</strong><br />
+Press right button on individual database -&gt; Properties -&gt; General -&gt; Size</p>
+
+<!-- References
+1. https://www.c-sharpcorner.com/blogs/check-database-size-in-sql-server1 -->
 
         
       </section>
@@ -357,11 +356,7 @@ I used following tools and technology to develop the project –</p>
     
       
       
-      <a href="/tags/#change-it" class="page__taxonomy-item" rel="tag">change it</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#mytag" class="page__taxonomy-item" rel="tag">mytag</a>
+      <a href="/tags/#sql" class="page__taxonomy-item" rel="tag">sql</a>
     
     </span>
   </p>
@@ -382,19 +377,7 @@ I used following tools and technology to develop the project –</p>
     
       
       
-      <a href="/categories/#asp-net-all" class="page__taxonomy-item" rel="tag">ASP.NET (All)</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/categories/#software-design-pattern" class="page__taxonomy-item" rel="tag">Software Design Pattern</a>
+      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
     
     </span>
   </p>
@@ -408,11 +391,11 @@ I used following tools and technology to develop the project –</p>
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Image+detection+using+custom+vision+AI%20%2Fdesign-image.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=How+to+measure+database+size+in+MS+SQL+Server%20%2Fhow-to-measure-database-size-in-sql-server.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fdesign-image.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fhow-to-measure-database-size-in-sql-server.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fdesign-image.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fhow-to-measure-database-size-in-sql-server.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -423,7 +406,7 @@ I used following tools and technology to develop the project –</p>
 ">Previous</a>
     
     
-      <a href="/export-file-using-aspnet-core-web-api.html/" class="pagination--pager" title="File transfer (export) through ASP.NET core web api
+      <a href="/parsing-markdown-file-and-display-in-a-razor-view-page-using-asp.net-core.html/" class="pagination--pager" title="Parsing markdown file and display in a razor view using asp.net core
 ">Next</a>
     
   </nav>
@@ -449,6 +432,34 @@ I used following tools and technology to develop the project –</p>
     <h2 class="archive__item-title" itemprop="headline">
       
         <a href="/export-file-using-aspnet-core-web-api.html/" rel="permalink">File transfer (export) through ASP.NET core web api
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/parsing-markdown-file-and-display-in-a-razor-view-page-using-asp.net-core.html/" rel="permalink">Parsing markdown file and display in a razor view using asp.net core
 </a>
       
     </h2>
@@ -505,34 +516,6 @@ I used following tools and technology to develop the project –</p>
     <h2 class="archive__item-title" itemprop="headline">
       
         <a href="/embed-markdown-into-a-razor-view-using-asp.net-core.html/" rel="permalink">Embed markdown into a razor view using asp.net core
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/convert-markdown-to-html-using-asp.net-core.html/" rel="permalink">Convert markdown to html using asp.net core
 </a>
       
     </h2>

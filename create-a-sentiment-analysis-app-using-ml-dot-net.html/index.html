@@ -296,7 +296,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -384,19 +384,57 @@ Models explored (total) - This shows you the total number of models explored by 
 
 <p><img src="..\assets\images\posts\0002.png" alt="" /></p>
 
-<!-- Draft -->
+<p><strong>Step 7: Add project in to the solution</strong></p>
+<ul>
+  <li>Click Add Project Button</li>
+  <li>Model builder will add machine learning model and the project for training</li>
+  <li>ModelBuilder.cs in the console application is used to build/train the model</li>
+  <li>Program.cs in the console application is used to test run the model</li>
+  <li>ModelInput.cs and ModelOutput.cs in Model library is the input and output class for the model training.</li>
+  <li>ConsumeModel.cs in Model library contains the method for model consumption</li>
+  <li>Solution structure will be like as follows 
+<img src="..\assets\images\posts\0003.png" alt="" /></li>
+</ul>
 
-<p><strong>Step 8: Build and run the application</strong></p>
+<p><strong>Step 8: Consume your model</strong></p>
+<ul>
+  <li>Set SentimentAnalysisML.ConsoleApp as startup project</li>
+  <li>Modify a bit of Program.cs in SentimentAnalysisML.ConsoleApp as follows</li>
+</ul>
 
-<p>Now the application is ready to run. Build and run the application. Now type the “https://localhost:yourport/posts/2020/12/01/markdownarticle” and watch the html output which you is writtern in the markdown tag.
-You can browse as https://localhost:44338/posts/2020/12/01/MyArticle.md to see output as github flavour.</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create single instance of sample data from first line of dataset for model input</span>
+            <span class="n">ModelInput</span> <span class="n">sampleData</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ModelInput</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">Col0</span> <span class="p">=</span> <span class="s">@"The food of Hotel Sonargaon was awesome"</span><span class="p">,</span>
+            <span class="p">};</span>
 
-<p><strong><a href="">Source Code</a></strong></p>
+            <span class="c1">// Make a single prediction on the sample data and print results</span>
+            <span class="kt">var</span> <span class="n">predictionResult</span> <span class="p">=</span> <span class="n">ConsumeModel</span><span class="p">.</span><span class="nf">Predict</span><span class="p">(</span><span class="n">sampleData</span><span class="p">);</span>
 
-<p><strong>References</strong></p>
-<ol>
-  <li>https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create</li>
-</ol>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Using model to make single prediction -- Comparing actual Col1 with predicted Col1 from sample data...\n\n"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Col0: </span><span class="p">{</span><span class="n">sampleData</span><span class="p">.</span><span class="n">Col0</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"\n\nPredicted Col1 value </span><span class="p">{</span><span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span><span class="p">}</span><span class="s"> \nPredicted Col1 scores: [</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">","</span><span class="p">,</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Score</span><span class="p">)}</span><span class="s">]\n"</span><span class="p">);</span>
+
+            <span class="kt">string</span> <span class="n">sentiment</span> <span class="p">=</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span> <span class="p">==</span> <span class="s">"1"</span> <span class="p">?</span> <span class="s">"Positive"</span> <span class="p">:</span> <span class="s">"Negative"</span><span class="p">;</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Sentiment: </span><span class="p">{</span><span class="n">sentiment</span><span class="p">}</span><span class="s"> \n"</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=============== End of process, hit any key to finish ==============="</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+</code></pre></div></div>
+
+<p><strong>Step 8: Build and run the application</strong>
+Now build and run the application. You will see the sentiment output of the sentence “The food of Hotel Sonargaon was awesome”.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/SentimentAnalysis">Source Code</a></strong></p>
+
+<!-- **References**  
+1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create -->
 
         
       </section>

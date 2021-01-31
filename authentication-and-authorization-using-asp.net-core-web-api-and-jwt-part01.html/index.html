@@ -296,7 +296,7 @@
 
 
 
-  less than 1 minute read
+  2 minute read
 </p>
           
         </header>
@@ -307,14 +307,167 @@
         <!-- ## Authentication and authorization using asp.net core web api and JWT (Part 01) -->
 
 <p><strong>Application overview</strong><br />
-ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#. Let’s start.</p>
+Token based authentication has been the most popular authentication technique for the last couple of years. Before that we used session based authentication. In session based authentication, client saves session id in the cookie. In token-based authentication, token is given to client instead of session. This token contains encrypted information of user with expiry time. In this article, I will show you, how to create authentication application using asp.net core web api and JWT(Json Web Token).</p>
 
-<p><strong>Tools and Technology used</strong> 
+<p><strong>Tools and Technology used</strong><br />
 The following tools and technologies has been used for this application</p>
 <ul>
   <li>Visual Studio 2019</li>
   <li>Visual C#</li>
+  <li>ASP.NET Core Web API</li>
+  <li>Postman - for api testing</li>
 </ul>
+
+<p>Let’s have a look to the implementation of the project.</p>
+
+<p><strong>Step 1: Create an asp.net core web api application</strong></p>
+<ol>
+  <li>Select File-&gt;New-&gt;Project-&gt;ASP.NET Core Web Application</li>
+  <li>Choose project and solution name</li>
+  <li>Click “Create” button</li>
+</ol>
+
+<p><strong>Step 2: Choose project template</strong></p>
+<ul>
+  <li>Select project template as API</li>
+  <li>Click create button</li>
+</ul>
+
+<p><strong>Step 3: Install NuGet packages</strong></p>
+<ul>
+  <li>Install following nuget packages in the application
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">PM&gt; Install-Package Microsoft.IdentityModel.Tokens</span>
+<span class="s">PM&gt; Install-Package System.IdentityModel.Tokens.Jwt</span>
+<span class="s">PM&gt; Install-Package Microsoft.AspNetCore.Authentication.JwtBearer -Version 3.1.11</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Step 4: Add Key, Issuer and Audience</strong></p>
+<ul>
+  <li>Add Key, Issuer and Audience in Appsettings.json as follows</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="nl">"Jwt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"thisisasecretkey"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Issuer.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Audience"</span><span class="p">:</span><span class="w">  </span><span class="s2">"Audience.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Step 5: Add authentication in HTTP request pipeline</strong><br />
+Add the following code snippet to add authentication in HTTP request pipeline.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+  <span class="p">{</span>
+      <span class="p">.</span>
+      <span class="p">.</span>
+      <span class="p">.</span>
+      <span class="c1">// Configure for HTTP Request pipeline</span>
+      <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">();</span>
+
+      <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+      <span class="n">app</span><span class="p">.</span><span class="nf">UseRouting</span><span class="p">();</span>
+
+      <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+      <span class="n">app</span><span class="p">.</span><span class="nf">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span> <span class="p">=&gt;</span>
+      <span class="p">{</span>
+          <span class="n">endpoints</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+      <span class="p">});</span>
+  <span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 6: Configure JWT based authentication</strong><br />
+Register a JWT authentication schema by using “AddAuthentication” method in ConfigureService Method of Startup.cs as follows</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+  <span class="p">{</span>
+      <span class="n">services</span><span class="p">.</span><span class="nf">AddAuthentication</span><span class="p">(</span><span class="n">JwtBearerDefaults</span><span class="p">.</span><span class="n">AuthenticationScheme</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">AddJwtBearer</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+      <span class="p">{</span>
+          <span class="n">options</span><span class="p">.</span><span class="n">TokenValidationParameters</span> <span class="p">=</span> <span class="k">new</span> <span class="n">TokenValidationParameters</span>
+          <span class="p">{</span>
+              <span class="n">ValidateIssuer</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+              <span class="n">ValidateAudience</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+              <span class="n">ValidateLifetime</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+              <span class="n">ValidateIssuerSigningKey</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+
+              <span class="n">ValidIssuer</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:Issuer"</span><span class="p">],</span>
+              <span class="n">ValidAudience</span> <span class="p">=</span> <span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:Audience"</span><span class="p">],</span>
+              <span class="n">IssuerSigningKey</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SymmetricSecurityKey</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:Key"</span><span class="p">]))</span>
+          <span class="p">};</span>
+      <span class="p">});</span>
+
+      <span class="n">services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Create a login view model</strong><br />
+Create a view model name “LoginVM” in Model folder as follows</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">public</span> <span class="k">class</span> <span class="nc">LoginVM</span>
+  <span class="p">{</span>
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">UserName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+      <span class="k">public</span> <span class="kt">string</span> <span class="n">Password</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 8: Create an api controller</strong><br />
+Create an api controller name AuthController as follows</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AuthController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">IConfiguration</span> <span class="n">_config</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">AuthController</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">config</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_config</span> <span class="p">=</span> <span class="n">config</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">AllowAnonymous</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">,</span> <span class="nf">Route</span><span class="p">(</span><span class="s">"login"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Login</span><span class="p">([</span><span class="n">FromBody</span><span class="p">]</span> <span class="n">LoginVM</span> <span class="n">loginModel</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">loginModel</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="s">"Invalid request"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nf">IsLogin</span><span class="p">(</span><span class="n">loginModel</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">loginModel</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">secretKey</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SymmetricSecurityKey</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:Key"</span><span class="p">]));</span>
+                <span class="kt">var</span> <span class="n">signinCredentials</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SigningCredentials</span><span class="p">(</span><span class="n">secretKey</span><span class="p">,</span> <span class="n">SecurityAlgorithms</span><span class="p">.</span><span class="n">HmacSha256</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">tokeOptions</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">JwtSecurityToken</span><span class="p">(</span>
+                     <span class="n">issuer</span><span class="p">:</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:Issuer"</span><span class="p">],</span>
+                     <span class="n">audience</span><span class="p">:</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:Audience"</span><span class="p">],</span>
+                     <span class="n">claims</span><span class="p">:</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Claim</span><span class="p">&gt;(),</span>
+                     <span class="n">expires</span><span class="p">:</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">AddMinutes</span><span class="p">(</span><span class="m">30</span><span class="p">),</span>
+                     <span class="n">signingCredentials</span><span class="p">:</span> <span class="n">signinCredentials</span>
+                 <span class="p">);</span>
+
+                <span class="kt">var</span> <span class="n">tokenString</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">JwtSecurityTokenHandler</span><span class="p">().</span><span class="nf">WriteToken</span><span class="p">(</span><span class="n">tokeOptions</span><span class="p">);</span>
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">Token</span> <span class="p">=</span> <span class="n">tokenString</span> <span class="p">});</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+
+                <span class="k">return</span> <span class="nf">Unauthorized</span><span class="p">();</span>
+            <span class="p">}</span>
+
+
+
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">bool</span> <span class="nf">IsLogin</span><span class="p">(</span><span class="kt">string</span> <span class="n">username</span><span class="p">,</span> <span class="kt">string</span> <span class="n">password</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">result</span> <span class="p">=</span> <span class="n">username</span> <span class="p">==</span> <span class="s">"mahedee"</span> <span class="p">&amp;&amp;</span> <span class="n">password</span> <span class="p">==</span> <span class="s">"pass123"</span> <span class="p">?</span> <span class="k">true</span> <span class="p">:</span> <span class="k">false</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
 
 <!-- ### Refereces
 https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/

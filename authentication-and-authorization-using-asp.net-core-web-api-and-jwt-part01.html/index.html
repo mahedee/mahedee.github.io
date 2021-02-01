@@ -296,7 +296,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -468,6 +468,52 @@ Create an api controller name AuthController as follows</p>
         <span class="p">}</span>
     <span class="p">}</span>
 </code></pre></div></div>
+
+<p><strong>Step 9: Create a test api controller</strong></p>
+<ul>
+  <li>Create a test api controller name ValuesController as follows</li>
+  <li>Add “Authorize” attribute on the ValuesController</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+  <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+  <span class="p">[</span><span class="n">Authorize</span><span class="p">]</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">ValuesController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+  <span class="p">{</span>
+      <span class="c1">// GET: api/&lt;ValuesController&gt;</span>
+      <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+      <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+      <span class="p">{</span>
+          <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"value1"</span><span class="p">,</span> <span class="s">"value2"</span><span class="p">,</span> <span class="s">"value3"</span><span class="p">,</span> <span class="s">"value4"</span> <span class="p">};</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+  
+</code></pre></div></div>
+
+<p><strong>Step 10: Run application and test using postman</strong></p>
+<ul>
+  <li>Run application</li>
+  <li>Run postman</li>
+  <li>In the Headers tab of postman, set Key as Content-Type and Value as application/json</li>
+  <li>Set url as https://localhost:44362/api/auth/login and set POST method</li>
+  <li>In the body tab select raw and JSON</li>
+  <li>Now set userName and Password in the body of postman as follows</li>
+  <li>Press send button and you will get the token as follows</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0004.png" alt="" /></p>
+
+<p><strong>Step 11: Test your application using token</strong></p>
+<ul>
+  <li>Copy the token you have already got against user name and password</li>
+  <li>In the header tab use Authorization and Bearer Token as follows</li>
+  <li>Set url as https://localhost:44362/api/values</li>
+  <li>Select GET method and click send button you will see the output</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0005.png" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/Auth.JWTv01">Source Code</a></strong></p>
 
 <!-- ### Refereces
 https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/

@@ -55,7 +55,7 @@ var store = [{
         "url": "/necessary-sql-query-in-ms-sql.html/",
         "teaser":null},{
         "title": "Visual studio tips and tricks (Part 01)",
-        "excerpt":"  Set bookmarks in code     Keep your cursor in a specific line   Go to View-&gt;Bookmark Window   Click Bookmark icon at the upper right or at the bottom of bookmark windows   To jump between Bookmarks:   Ctrl + K + N (for next)  and  Ctrl + K + P (for previous)  To toggle a Bookmark on/off for a line:  Ctrl + K + K    ","categories": ["Visual Studio"],
+        "excerpt":"  Set bookmarks in code     Keep your cursor in a specific line   Go to View-&gt;Bookmark Window   Click Bookmark icon at the upper right or at the bottom of bookmark windows   To jump between Bookmarks:      Ctrl + K + N (for next)   Ctrl + K + P (for previous)   To toggle a Bookmark on/off for a line:  Ctrl + K + K    ","categories": ["Visual Studio"],
         "tags": ["testag"],
         "url": "/visual-studio-tips-and-tricks-part-01.html/",
         "teaser":null},{

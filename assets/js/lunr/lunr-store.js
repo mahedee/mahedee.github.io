@@ -50,9 +50,14 @@ var store = [{
         "url": "/branching-and-merging.html/",
         "teaser":null},{
         "title": "Necessary SQL query in MS SQL",
-        "excerpt":"     Search a table name in a database in MS SQL Server     SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME LIKE '%tablename%'            ","categories": ["SQ"],
+        "excerpt":"     Search a table name in a database in MS SQL Server     SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME LIKE '%tablename%'           If you want to see all column of a joining table   select Region.* from Branch inner join Region on Branch.RegionId = Region.Id     ","categories": ["SQ"],
         "tags": ["testag"],
         "url": "/necessary-sql-query-in-ms-sql.html/",
+        "teaser":null},{
+        "title": "Visual studio tips and tricks (Part 01)",
+        "excerpt":"  Set bookmarks in code     Keep your cursor in a specific line   Go to View-&gt;Bookmark Window   Click Bookmark icon at the upper right or at the bottom of bookmark windows   To jump between Bookmarks:   Ctrl + K + N (for next)  and  Ctrl + K + P (for previous)  To toggle a Bookmark on/off for a line:  Ctrl + K + K    ","categories": ["Visual Studio"],
+        "tags": ["testag"],
+        "url": "/visual-studio-tips-and-tricks-part-01.html/",
         "teaser":null},{
         "title": "Resolve git conflict using meld",
         "excerpt":"Resolve git conflict using meld      Install meld in windows   Configure meld in your pc            Edit gitconfig file in C:\\Users&lt;username&gt;\\       Add following line in the gitconfig file   ```text   [diff]   tool = meld   [difftool “meld”]    path = C:/Program Files (x86)/Meld/Meld.exe    [difftool]   prompt = false           ```       Now check and resolve conflict using the following command     $ git difftool origin/master       Refereces     Git Tutorial 7: Diff and Merge using meld 2019  ","categories": ["Source Control"],

@@ -30,7 +30,7 @@ var store = [{
         "url": "/markdown-syntax.html/",
         "teaser":null},{
         "title": "Essential plugins for Visual Studio code",
-        "excerpt":"Essential plugins for Visual Studio code      Markdown Preview Enhanced     ","categories": ["Github"],
+        "excerpt":"Essential plugins for Visual Studio code      C#   Java Extension Pack   Markdown Preview Enhanced     ","categories": ["Github"],
         "tags": ["markdown","md"],
         "url": "/essential-plugins-for-vs-code.html/",
         "teaser":null},{
@@ -40,7 +40,7 @@ var store = [{
         "url": "/getting-started-with-github.html/",
         "teaser":null},{
         "title": "Visual Studio Code Tips and Tricks (Part - 01)",
-        "excerpt":"  Visual studio code extensions which I use most     Markdown Preview Enhanced   Code Spell Checker  ","categories": ["Source Control"],
+        "excerpt":" Visual Studio Code Shortcut     Format the entire active file : Ctrl+Shift+I   Format the selected text: Ctrl+K Ctrl+F   Visual studio code extensions which I use most     Markdown Preview Enhanced   Code Spell Checker  ","categories": ["Source Control"],
         "tags": ["git","source-control"],
         "url": "/visual-studio-code-tips-and-tricks-part-01.html/",
         "teaser":null},{
@@ -58,6 +58,11 @@ var store = [{
         "excerpt":"  Set bookmarks in code     Keep your cursor in a specific line   Go to View-&gt;Bookmark Window   Click Bookmark icon at the upper right or at the bottom of bookmark windows   To jump between Bookmarks:      Ctrl + K + N (for next)   Ctrl + K + P (for previous)   To toggle a Bookmark on/off for a line:  Ctrl + K + K    ","categories": ["Visual Studio"],
         "tags": ["testag"],
         "url": "/visual-studio-tips-and-tricks-part-01.html/",
+        "teaser":null},{
+        "title": "How to support Console.Writeline() in VS code in debug mode",
+        "excerpt":"  Change the lunch.json     Change “console”: “externalTerminal” to “console”: “integratedTerminal” as follows   {     // Use IntelliSense to learn about possible attributes.     // Hover to view descriptions of existing attributes.     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387     \"version\": \"0.2.0\",     \"configurations\": [         {             \"OS-COMMENT1\": \"Use IntelliSense to find out which attributes exist for C# debugging\",             \"OS-COMMENT2\": \"Use hover for the description of the existing attributes\",             \"OS-COMMENT3\": \"For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md\",             \"name\": \".NET Core Launch (console)\",             \"type\": \"coreclr\",             \"request\": \"launch\",             \"preLaunchTask\": \"build\",             \"OS-COMMENT4\": \"If you have changed target frameworks, make sure to update the program path.\",             \"program\": \"${workspaceFolder}/bin/Debug/net5.0/ArrayDS.dll\",             \"args\": [],             \"cwd\": \"${workspaceFolder}\",             \"OS-COMMENT5\": \"For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console\",             \"console\": \"integratedTerminal\",             \"stopAtEntry\": false         },         {             \"name\": \".NET Core Attach\",             \"type\": \"coreclr\",             \"request\": \"attach\",             \"processId\": \"${command:pickProcess}\"         }     ] }  ","categories": ["ASP.NET"],
+        "tags": ["asp-net","csharp"],
+        "url": "/how-to-support-console-writeline-in-vs-code-in-debug-mode.html/",
         "teaser":null},{
         "title": "Resolve git conflict using meld",
         "excerpt":"Resolve git conflict using meld      Install meld in windows   Configure meld in your pc            Edit gitconfig file in C:\\Users&lt;username&gt;\\       Add following line in the gitconfig file   ```text   [diff]   tool = meld   [difftool “meld”]    path = C:/Program Files (x86)/Meld/Meld.exe    [difftool]   prompt = false           ```       Now check and resolve conflict using the following command     $ git difftool origin/master       Refereces     Git Tutorial 7: Diff and Merge using meld 2019  ","categories": ["Source Control"],

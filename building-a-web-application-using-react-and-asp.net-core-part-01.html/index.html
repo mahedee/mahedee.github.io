@@ -296,7 +296,7 @@
 
 
 
-  5 minute read
+  6 minute read
 </p>
           
         </header>
@@ -304,14 +304,16 @@
 
       <section class="page__content" itemprop="text">
         
-        <!-- ## Export file using asp.net core web api -->
+        <!-- ## Building a web application using React and asp.net core(Part 01)-->
+
+<p>React is an open-source, javascript library for building UI components. It is the most popular front end framework. It is maintained by facebook. It can be used for SPA or mobile application development. On the other hand, .net core is an open-source, cross-platform supported framework. Now a days, it is also most popular for software development. In this article, I will show you, how to create a simple application with CRUD operation using asp.net core web api and react. I will show a simple employee profile of HRM application. Let’s start.</p>
 
 <p><strong>Tools and Technology used</strong></p>
 <ol>
   <li>Visual Studio Code</li>
   <li>ASP.NET Core Web Api</li>
   <li>Visual C#</li>
-  <li>React.js</li>
+  <li>React</li>
 </ol>
 
 <p>Step 1: Create a new application</p>
@@ -320,8 +322,26 @@
   <li>Go to View -&gt; Terminal</li>
   <li>Type dotnet new react -o HRM in the terminal</li>
   <li>Type cd HRM to enter into the HRM folder</li>
+  <li>In the application folder you will see another folder name ClientApp which is actually react application inside dotnet application.</li>
   <li>Now run the application using donet run command</li>
 </ul>
+
+<p>Step 2: Create model classes</p>
+<ul>
+  <li>Create a model class name Employee.cs in Model folder as follows</li>
+</ul>
+
+<p><strong>Employee.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span><span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FathersName</span><span class="p">{</span><span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">MothersName</span><span class="p">{</span><span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">DateOfBirth</span><span class="p">{</span><span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
 
 <hr />
 

@@ -296,7 +296,7 @@
 
 
 
-  6 minute read
+  7 minute read
 </p>
           
         </header>
@@ -328,7 +328,7 @@
 
 <p><strong>Step 2: Create model classes</strong></p>
 <ul>
-  <li>Create a model class name Employee.cs in Model folder as follows</li>
+  <li>Create a model class name Employee in Model folder as follows</li>
 </ul>
 
 <p><strong>Employee.cs</strong></p>
@@ -350,6 +350,100 @@
 </ul>
 
 <p><strong>Step 4: Create a dbContext class</strong></p>
+<ul>
+  <li>Create HRMContext Class in Db folder as follows<br />
+<strong>HRMContext.cs</strong><br />
+```csharp
+using HRM.Models;
+using Microsoft.EntityFrameworkCore;</li>
+</ul>
+
+<p>namespace HRM.Db
+{
+    public class HRMContext : DbContext
+    {
+        public HRMContext(DbContextOptions<HRMContext> options) : base(options)
+        {</HRMContext></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    }
+    public DbSet&lt;Employee&gt; Employees { get; set; }
+} } ```
+</code></pre></div></div>
+
+<ul>
+  <li>Configure in memory database in the ConfigureService method of Startup class as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"HRMDB"</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Add some seed data</strong></p>
+<ul>
+  <li>Create a class name SeedDataGenerator in Db folder as follows<br />
+```csharp
+using System;
+using System.Linq;
+using HRM.Db;
+using HRM.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;</li>
+</ul>
+
+<p>public class SeedDataGenerator
+{
+    public static void Initialize(IServiceProvider serviceProvider)
+    {
+        using (var context = new HRMContext(
+            serviceProvider.GetRequiredService&lt;DbContextOptions<HRMContext>&gt;()))
+        {
+            // Check any employee exists 
+            if (context.Employees.Any())
+            {
+                return; // Data already exists no need to generate
+            }</HRMContext></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        context.Employees.AddRange(
+            new Employee
+            {
+                Name = "Md. Mahedee Hasan",
+                Designation = "Head of Software Development",
+                FathersName = "Yeasin Bhuiyan",
+                MothersName = "Moriom Begum",
+                DateOfBirth = new DateTime(1984, 12, 19, 00, 00, 00)
+            },
+
+            new Employee
+            {
+                Name = "Khaleda Islam",
+                Designation = "Software Engineer",
+                FathersName = "Shahidul Islam",
+                MothersName = "Momtaz Begum",
+                DateOfBirth = new DateTime(1990, 10, 29, 00, 00, 00)
+            },
+            
+            new Employee
+            {
+                Name = "Tahiya Hasan Arisha",
+                Designation = "Jr. Software Engineer",
+                FathersName = "Md. Mahedee Hasan",
+                MothersName = "Khaleda Islam",
+                DateOfBirth = new DateTime(2017, 09, 17, 00, 00, 00)
+            }
+        );
+        context.SaveChanges();
+
+    }
+} } ```
+</code></pre></div></div>
+
+<ul>
+  <li>Call SeedDataGenerator from Program class to generate seed data as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
 
 <hr />
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-13T05:13:35+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Md. Mahedee Hasan</name></author><entry><title type="html">Building a web application using React and asp.net core(Part 01)</title><link href="/building-a-web-application-using-react-and-asp.net-core-part-01.html/" rel="alternate" type="text/html" title="Building a web application using React and asp.net core(Part 01)" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>/building-a-web-application-using-react-and-asp.net-core-part-01</id><content type="html" xml:base="/building-a-web-application-using-react-and-asp.net-core-part-01.html/">&lt;!-- ## Building a web application using React and asp.net core(Part 01)--&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-13T06:04:57+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Md. Mahedee Hasan</name></author><entry><title type="html">Building a web application using React and asp.net core(Part 01)</title><link href="/building-a-web-application-using-react-and-asp.net-core-part-01.html/" rel="alternate" type="text/html" title="Building a web application using React and asp.net core(Part 01)" /><published>2021-03-10T00:00:00+00:00</published><updated>2021-03-10T00:00:00+00:00</updated><id>/building-a-web-application-using-react-and-asp.net-core-part-01</id><content type="html" xml:base="/building-a-web-application-using-react-and-asp.net-core-part-01.html/">&lt;!-- ## Building a web application using React and asp.net core(Part 01)--&gt;
 
 &lt;p&gt;React is an open-source, javascript library for building UI components. It is the most popular front end framework. It is maintained by facebook. It can be used for SPA or mobile application development. On the other hand, .net core is an open-source, cross-platform supported framework. Now a days, it is also most popular for software development. In this article, I will show you, how to create a simple application with CRUD operation using asp.net core web api and react. I will show a simple employee profile of HRM application. Let’s start.&lt;/p&gt;
 
@@ -22,7 +22,7 @@
 
 &lt;p&gt;&lt;strong&gt;Step 2: Create model classes&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Create a model class name Employee.cs in Model folder as follows&lt;/li&gt;
+  &lt;li&gt;Create a model class name Employee in Model folder as follows&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Employee.cs&lt;/strong&gt;&lt;/p&gt;
@@ -44,6 +44,100 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 4: Create a dbContext class&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create HRMContext Class in Db folder as follows&lt;br /&gt;
+&lt;strong&gt;HRMContext.cs&lt;/strong&gt;&lt;br /&gt;
+```csharp
+using HRM.Models;
+using Microsoft.EntityFrameworkCore;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;namespace HRM.Db
+{
+    public class HRMContext : DbContext
+    {
+        public HRMContext(DbContextOptions&lt;HRMContext&gt; options) : base(options)
+        {&lt;/HRMContext&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    }
+    public DbSet&amp;lt;Employee&amp;gt; Employees { get; set; }
+} } ```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Configure in memory database in the ConfigureService method of Startup class as follows.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ConfigureServices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IServiceCollection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddDbContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HRMContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;opt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;UseInMemoryDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;HRMDB&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Add some seed data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create a class name SeedDataGenerator in Db folder as follows&lt;br /&gt;
+```csharp
+using System;
+using System.Linq;
+using HRM.Db;
+using HRM.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;public class SeedDataGenerator
+{
+    public static void Initialize(IServiceProvider serviceProvider)
+    {
+        using (var context = new HRMContext(
+            serviceProvider.GetRequiredService&amp;lt;DbContextOptions&lt;HRMContext&gt;&amp;gt;()))
+        {
+            // Check any employee exists 
+            if (context.Employees.Any())
+            {
+                return; // Data already exists no need to generate
+            }&lt;/HRMContext&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        context.Employees.AddRange(
+            new Employee
+            {
+                Name = &quot;Md. Mahedee Hasan&quot;,
+                Designation = &quot;Head of Software Development&quot;,
+                FathersName = &quot;Yeasin Bhuiyan&quot;,
+                MothersName = &quot;Moriom Begum&quot;,
+                DateOfBirth = new DateTime(1984, 12, 19, 00, 00, 00)
+            },
+
+            new Employee
+            {
+                Name = &quot;Khaleda Islam&quot;,
+                Designation = &quot;Software Engineer&quot;,
+                FathersName = &quot;Shahidul Islam&quot;,
+                MothersName = &quot;Momtaz Begum&quot;,
+                DateOfBirth = new DateTime(1990, 10, 29, 00, 00, 00)
+            },
+            
+            new Employee
+            {
+                Name = &quot;Tahiya Hasan Arisha&quot;,
+                Designation = &quot;Jr. Software Engineer&quot;,
+                FathersName = &quot;Md. Mahedee Hasan&quot;,
+                MothersName = &quot;Khaleda Islam&quot;,
+                DateOfBirth = new DateTime(2017, 09, 17, 00, 00, 00)
+            }
+        );
+        context.SaveChanges();
+
+    }
+} } ```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Call SeedDataGenerator from Program class to generate seed data as follows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-csharp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;hr /&gt;
 

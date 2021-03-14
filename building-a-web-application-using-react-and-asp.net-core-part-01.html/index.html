@@ -296,7 +296,7 @@
 
 
 
-  7 minute read
+  6 minute read
 </p>
           
         </header>
@@ -443,428 +443,391 @@ using Microsoft.Extensions.DependencyInjection;</li>
   <li>Call SeedDataGenerator from Program class to generate seed data as follows</li>
 </ul>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Hosting</span><span class="p">;</span>
 
-<hr />
-
-<p>Step 2: Add a new asp.net core project in “FileExporer” solution</p>
-
-<ul>
-  <li>Type the project name as “ExportApi”</li>
-  <li>Select API Template</li>
-  <li>Select “Configure for HTTPS”</li>
-</ul>
-
-<p>Step 3: Add a new asp.net core MVC Project in “File Explorer” Solution</p>
-
-<ul>
-  <li>Type the project name as “ClientApp”</li>
-  <li>Select Template - Web Application (Model-View-Controller)</li>
-</ul>
-
-<p>Step 4: Keep files in a folder</p>
-<ul>
-  <li>Create a folder name “files”</li>
-  <li>Keep two files.  mahedeebio.pdf and booklist.xlsx in the files folder</li>
-</ul>
-
-<p>Step 4:  Enable CORS in ExportApi application.</p>
-<ul>
-  <li>Install nuget package - Microsoft.AspNetCore.Cors</li>
-  <li>Modify the ConfigureServices and Configure Method in Startup.cs file as follows.</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Startup</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">Startup</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">Configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="n">IConfiguration</span> <span class="n">Configuration</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="c1">// This method gets called by the runtime. Use this method to add services to the container.</span>
-        <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-
-            <span class="c1">//Enable CORS - Cross-Origin resource sharing</span>
-            <span class="n">services</span><span class="p">.</span><span class="nf">AddCors</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
-            <span class="p">{</span>
-                <span class="n">options</span><span class="p">.</span><span class="nf">AddPolicy</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">,</span>
-                    <span class="n">builder</span> <span class="p">=&gt;</span> <span class="n">builder</span><span class="p">.</span><span class="nf">AllowAnyOrigin</span><span class="p">()</span>
-                    <span class="p">.</span><span class="nf">AllowAnyMethod</span><span class="p">()</span>
-                    <span class="p">.</span><span class="nf">AllowAnyHeader</span><span class="p">()</span>
-                    <span class="p">);</span>
-            <span class="p">});</span>
-
-            <span class="c1">////If you want to enable any particular IP</span>
-            <span class="c1">//services.AddCors(c =&gt;</span>
-            <span class="c1">//{</span>
-            <span class="c1">//    c.AddPolicy("AllowOrigin", options =&gt; options.WithOrigins("https://localhost:44312"));</span>
-            <span class="c1">//});</span>
-        <span class="p">}</span>
-
-        <span class="c1">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
-        <span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="n">app</span><span class="p">.</span><span class="nf">UseDeveloperExceptionPage</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseRouting</span><span class="p">();</span>
-
-            <span class="c1">// Enable CORS</span>
-            <span class="c1">// Must be in between app.UseRouting and app.UseEndpoints</span>
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseCors</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">);</span>
-
-
-            <span class="c1">// Another of way of Allow CORS</span>
-            <span class="c1">//app.UseCors(options =&gt; options.AllowAnyOrigin());</span>
-            <span class="c1">//app.UseCors(options =&gt; options.WithOrigins("https://localhost:44312"));</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span> <span class="p">=&gt;</span>
-            <span class="p">{</span>
-                <span class="n">endpoints</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-            <span class="p">});</span>           
-        <span class="p">}</span>
-    <span class="p">}</span>
-</code></pre></div></div>
-
-<p>Step 5: Add a controller class in ExportApi project</p>
-<ul>
-  <li>Create a controller - name ExportController</li>
-  <li>Select Template - “API Controller - Empty”</li>
-  <li>Update the Export Controller as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Cors</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">ExportApi.Controllers</span>
+<span class="k">namespace</span> <span class="nn">HRM</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="nf">EnableCors</span><span class="p">(</span><span class="s">"CorsPolicy"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ExportController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
     <span class="p">{</span>
-        <span class="c1">//Get: api/Export/GetExcel</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetExcel"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetExcel</span><span class="p">()</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">try</span>
+            <span class="c1">//CreateHostBuilder(args).Build().Run();</span>
+
+            <span class="c1">// 1. Get the IHost which will host this application</span>
+            <span class="kt">var</span> <span class="n">host</span> <span class="p">=</span> <span class="nf">CreateHostBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">).</span><span class="nf">Build</span><span class="p">();</span>
+
+            <span class="c1">// 2. Find the service within the scope to use</span>
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">host</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">ConverExceltoB64</span><span class="p">());</span>
+                <span class="c1">// 3. Get the instance of HRMContext in our service layer</span>
+                <span class="kt">var</span> <span class="n">services</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">;</span>
+                <span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="n">services</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;();</span>
+
+                <span class="c1">// 4. Call the SeedDataGenerator to generate seed data</span>
+                <span class="n">SeedDataGenerator</span><span class="p">.</span><span class="nf">Initialize</span><span class="p">(</span><span class="n">services</span><span class="p">);</span>  
             <span class="p">}</span>
 
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="p">{</span>
-
-                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
-            <span class="p">}</span>
+            <span class="c1">// Run the application </span>
+            <span class="n">host</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
         <span class="p">}</span>
 
-
-
-
-
-        <span class="c1">//Get: api/Export/GetPDF</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetPDF"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetPDF</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">ConvertPDFtoB64</span><span class="p">());</span>
-            <span class="p">}</span>
-
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="c1">//Get: api/Export/GetDynamicExcel</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"GetDynamicExcel"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetDynamicExcel</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">BuildeExcel</span><span class="p">());</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="p">(</span><span class="n">ex</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-
-        <span class="c1">// Convert an excel file to Base64 </span>
-        <span class="k">private</span> <span class="kt">string</span> <span class="nf">ConverExceltoB64</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">docBytes</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="s">@"files\booklist.xlsx"</span><span class="p">));</span>
-            <span class="kt">string</span> <span class="n">docBase64</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">docBytes</span><span class="p">);</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">docBase64</span><span class="p">);</span>
-        <span class="p">}</span>
-
-
-        <span class="c1">// Convert a pdf file to Base64</span>
-        <span class="k">private</span> <span class="kt">string</span> <span class="nf">ConvertPDFtoB64</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">docBytes</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="s">@"files\mahedeebio.pdf"</span><span class="p">));</span>
-            <span class="kt">string</span> <span class="n">docBase64</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">docBytes</span><span class="p">);</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">docBase64</span><span class="p">);</span>
-        <span class="p">}</span>
-
-
-        <span class="c1">// Create an excel on the fly and return as Base64 format</span>
-        <span class="k">private</span> <span class="kt">string</span> <span class="nf">BuildeExcel</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">StringBuilder</span> <span class="n">table</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;table border=`"</span> <span class="p">+</span> <span class="s">"1px"</span> <span class="p">+</span> <span class="s">"`b&gt;"</span><span class="p">);</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;tr&gt;"</span><span class="p">);</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;ID&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;Name&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;b&gt;&lt;font face=Arial Narrow size=3&gt;Designation&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"</span><span class="p">);</span>
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/tr&gt;"</span><span class="p">);</span>
-
-            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">item</span> <span class="k">in</span> <span class="nf">GetEmployeeAll</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;tr&gt;"</span><span class="p">);</span>
-                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
-                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
-                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;td&gt;&lt;font face=Arial Narrow size="</span> <span class="p">+</span> <span class="s">"14px"</span> <span class="p">+</span> <span class="s">"&gt;"</span> <span class="p">+</span> <span class="n">item</span><span class="p">.</span><span class="n">Designation</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"&lt;/font&gt;&lt;/td&gt;"</span><span class="p">);</span>
-                <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/tr&gt;"</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="n">table</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"&lt;/table&gt;"</span><span class="p">);</span>
-            <span class="kt">byte</span><span class="p">[]</span> <span class="n">temp</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">table</span><span class="p">.</span><span class="nf">ToString</span><span class="p">());</span>
-            <span class="k">return</span> <span class="n">System</span><span class="p">.</span><span class="n">Convert</span><span class="p">.</span><span class="nf">ToBase64String</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
-
-        <span class="p">}</span>
-
-
-        <span class="c1">// Return list of employee</span>
-        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployeeAll</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
-            <span class="p">{</span>
-                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Sabrina Jahan Sara"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">},</span>
-                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Tahiya Hasan Arisha"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Sr. Software Engineer"</span><span class="p">},</span>
-                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Ishrat Jahan Nusaifa"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Architect"</span><span class="p">},</span>
-                <span class="k">new</span> <span class="nf">Employee</span><span class="p">(){</span><span class="n">Id</span> <span class="p">=</span> <span class="m">4</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Nusrat Janan"</span><span class="p">,</span> <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Project Manager"</span><span class="p">}</span>
-            <span class="p">};</span>
-
-            <span class="k">return</span> <span class="n">employees</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-
-    <span class="c1">// Employee model class</span>
-    <span class="k">internal</span> <span class="k">class</span> <span class="nc">Employee</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">IHostBuilder</span> <span class="nf">CreateHostBuilder</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span>
+            <span class="n">Host</span><span class="p">.</span><span class="nf">CreateDefaultBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">ConfigureWebHostDefaults</span><span class="p">(</span><span class="n">webBuilder</span> <span class="p">=&gt;</span>
+                <span class="p">{</span>
+                    <span class="n">webBuilder</span><span class="p">.</span><span class="n">UseStartup</span><span class="p">&lt;</span><span class="n">Startup</span><span class="p">&gt;();</span>
+                <span class="p">});</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 </code></pre></div></div>
 
-<p>Step 6: Modify index.cshtml in ClientApp Project</p>
-<ul>
-  <li>Modify Views-&gt;Home-&gt;Index.cshtml as follows</li>
-</ul>
+<p><strong>Step 6: Create IRepository and Repository class in the Repository folder as follows</strong></p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
-    ViewData["Title"] = "Home Page";
-}
+<p><strong>IEmployeeRepository.cs</strong></p>
 
-<span class="nt">&lt;h4&gt;</span>Export file using asp.net web api<span class="nt">&lt;/h4&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span> <span class="na">id=</span><span class="s">"btnExcel"</span><span class="nt">&gt;</span>Export Excel<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-info"</span> <span class="na">id=</span><span class="s">"btnPDF"</span><span class="nt">&gt;</span>Export PDF<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-success"</span> <span class="na">id=</span><span class="s">"btnDynamicExcel"</span><span class="nt">&gt;</span>Export Dynamic Excel<span class="nt">&lt;/button&gt;</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
 
+<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">();</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
 
+    <span class="p">}</span>
+<span class="p">}</span>
 
-@* Implement Scripts section *@
-
-@section Scripts{
-    <span class="nt">&lt;script&gt;</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="c1">//alert('working from document ready!!');</span>
-        <span class="p">})</span>
-
-        <span class="c1">//Button's events</span>
-        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnExcel</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="c1">//alert("Export button clicked");</span>
-            <span class="nx">ExcelExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
-        <span class="p">});</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnPDF</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="c1">//alert("Export for dynamic pdf clicked");</span>
-            <span class="nx">PDFExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
-        <span class="p">});</span>
-
-        <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#btnDynamicExcel</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="c1">//alert("Export button clicked");</span>
-            <span class="nx">DyamicExcelExportar</span><span class="p">.</span><span class="nx">OnExportarClick</span><span class="p">();</span>
-        <span class="p">});</span>
-
-
-
-
-        <span class="c1">//Excel exporter - start</span>
-        <span class="kd">var</span> <span class="nx">ExcelExportar</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="na">OnExportarClick</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                <span class="c1">//alert('click on exporter!');</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-                    <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://localhost:44386/api/export/getexcel</span><span class="dl">"</span><span class="p">,</span>
-                    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
-                    <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">text</span><span class="dl">'</span><span class="p">,</span>
-                    <span class="na">success</span><span class="p">:</span> <span class="nx">ExcelExportar</span><span class="p">.</span><span class="nx">DownloadExcel</span><span class="p">,</span>
-
-                    <span class="na">failure</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">failur: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-                    <span class="p">},</span> <span class="c1">//End of AJAX failure function</span>
-                    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">error: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-                    <span class="p">}</span> <span class="c1">//End of AJAX error function</span>
-                <span class="p">});</span>
-            <span class="p">},</span>
-
-            <span class="na">DownloadExcel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">//alert('download excel');</span>
-                <span class="kd">var</span> <span class="nx">createA</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span>
-                <span class="nx">createA</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">linkDownload</span><span class="dl">'</span><span class="p">);</span>
-                <span class="nx">createA</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">'</span><span class="s1">href</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">data:application/vnd.ms-excel;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">);</span>
-                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">createA</span><span class="p">);</span>
-
-                <span class="nx">createA</span><span class="p">.</span><span class="nx">download</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">download_latest.xls</span><span class="dl">'</span><span class="p">;</span>
-                <span class="kd">var</span> <span class="nx">selectorHref</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">linkDownload</span><span class="dl">'</span><span class="p">);</span>
-                <span class="nx">selectorHref</span><span class="p">.</span><span class="nx">click</span><span class="p">();</span>
-                <span class="nx">selectorHref</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">};</span>
-
-        <span class="c1">//Excel exporter - End</span>
-
-
-        <span class="c1">//PDF exporter - start</span>
-
-        <span class="kd">var</span> <span class="nx">PDFExportar</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="na">OnExportarClick</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                <span class="c1">//alert('click on pdf exporter!');</span>
-                <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-                    <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://localhost:44386/api/export/getpdf</span><span class="dl">"</span><span class="p">,</span>
-                    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
-                    <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">text</span><span class="dl">'</span><span class="p">,</span>
-                    <span class="na">success</span><span class="p">:</span> <span class="nx">PDFExportar</span><span class="p">.</span><span class="nx">DownloadPDF</span><span class="p">,</span>
-                    <span class="na">failure</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">failur: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-                    <span class="p">},</span> <span class="c1">//End of AJAX failure function</span>
-                    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">error: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-                    <span class="p">}</span> <span class="c1">//End of AJAX error function</span>
-                <span class="p">});</span>
-            <span class="p">},</span>
-
-            <span class="na">DownloadPDF</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-
-                <span class="c1">// Display in a same page with a download link</span>
-
-                <span class="c1">// Embed the PDF into the HTML page and show it to the user</span>
-                <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">);</span>
-                <span class="nx">obj</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">;</span>
-                <span class="nx">obj</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">842pt</span><span class="dl">'</span><span class="p">;</span>
-                <span class="nx">obj</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">application/pdf</span><span class="dl">'</span><span class="p">;</span>
-                <span class="nx">obj</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">data:application/pdf;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">;</span>
-                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-
-                <span class="c1">// Insert a link that allows the user to download the PDF file</span>
-                <span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span>
-                <span class="nx">link</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Download PDF file</span><span class="dl">'</span><span class="p">;</span>
-                <span class="nx">link</span><span class="p">.</span><span class="nx">download</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">file.pdf</span><span class="dl">'</span><span class="p">;</span>
-                <span class="nx">link</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">data:application/octet-stream;base64,</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">;</span>
-                <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">link</span><span class="p">);</span>
-
-
-                <span class="c1">// Display in a new window</span>
-                <span class="c1">//var objbuilder = '';</span>
-                <span class="c1">//objbuilder += ('</span><span class="o">&lt;</span><span class="nx">object</span> <span class="nx">width</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span> <span class="nx">height</span><span class="o">=</span><span class="dl">"</span><span class="s2">100%</span><span class="dl">"</span>      <span class="nx">data</span><span class="o">=</span><span class="dl">"</span><span class="s2">data:application/pdf;base64,');
-                //objbuilder += (data);
-                //objbuilder += ('</span><span class="dl">"</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">application/pdf</span><span class="dl">"</span> <span class="kd">class</span><span class="o">=</span><span class="dl">"</span><span class="s2">internal</span><span class="dl">"</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
-                //objbuilder += (</span><span class="dl">'</span><span class="o">&lt;</span><span class="nx">embed</span> <span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">data:application/pdf;base64,');
-                //objbuilder += (data);
-                //objbuilder += ('</span><span class="dl">"</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">application/pdf</span><span class="dl">"</span> <span class="o">/&gt;</span><span class="dl">'</span><span class="s1">);
-                //objbuilder += (</span><span class="dl">'</span><span class="o">&lt;</span><span class="sr">/object&gt;'</span><span class="se">)</span><span class="err">;
-</span>
-                <span class="c1">//var win = window.open("", "_blank", "titlebar=yes");</span>
-                <span class="c1">//win.document.title = "My Title";</span>
-                <span class="c1">//win.document.write('</span><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;&lt;</span><span class="nx">body</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
-                //win.document.write(objbuilder);
-                //win.document.write(</span><span class="dl">'</span><span class="o">&lt;</span><span class="sr">/body&gt;&lt;/</span><span class="nx">html</span><span class="o">&gt;</span><span class="dl">'</span><span class="s1">);
-                //layer = jQuery(win.document);
-
-
-            }
-        };
-
-        //PDF exporter - end
-
-        var DyamicExcelExportar = {
-            OnExportarClick: function () {
-                $.ajax({
-                    url: "https://localhost:44386/api/export/GetDynamicExcel",
-                    type: </span><span class="dl">'</span><span class="nx">GET</span><span class="dl">'</span><span class="s1">,
-                    dataType: </span><span class="dl">'</span><span class="nx">text</span><span class="dl">'</span><span class="s1">,
-                    success: DyamicExcelExportar.DownloadExcel,
-                    failure: function (data) {
-                        alert(</span><span class="dl">'</span><span class="na">failur</span><span class="p">:</span> <span class="dl">'</span><span class="s1"> + data.responseText);
-                    }, //End of AJAX failure function
-                    error: function (request) {
-                        alert(</span><span class="dl">'</span><span class="na">error</span><span class="p">:</span> <span class="dl">'</span><span class="s1"> + request.responseText);
-                    } //End of AJAX error function
-                });
-            },
-
-            DownloadExcel: function (data) {
-                //alert(</span><span class="dl">'</span><span class="nx">download</span> <span class="nx">excel</span><span class="dl">'</span><span class="s1">);
-                var createA = document.createElement(</span><span class="dl">'</span><span class="nx">a</span><span class="dl">'</span><span class="s1">);
-                createA.setAttribute(</span><span class="dl">'</span><span class="nx">id</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="nx">linkDownload</span><span class="dl">'</span><span class="s1">);
-                createA.setAttribute(</span><span class="dl">'</span><span class="nx">href</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="na">data</span><span class="p">:</span><span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">excel</span><span class="p">;</span><span class="nx">base64</span><span class="p">,</span><span class="dl">'</span><span class="s1"> + data);
-                document.body.appendChild(createA);
-
-                createA.download = </span><span class="dl">'</span><span class="nx">download_latest</span><span class="p">.</span><span class="nx">xls</span><span class="dl">'</span><span class="s1">;
-                var selectorHref = document.getElementById(</span><span class="dl">'</span><span class="nx">linkDownload</span><span class="dl">'</span><span class="s1">);
-                selectorHref.click();
-                selectorHref.remove();
-            }
-        };
-
-    </span><span class="nt">&lt;/script&gt;</span>
-}
 </code></pre></div></div>
 
-<p>Step 7: Run Multiple projects</p>
+<p><strong>EmployeeRepository.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Repository</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span> <span class="p">:</span> <span class="n">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="n">IEmployeeRepository</span> <span class="n">_employeeRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">IEmployeeRepository</span> <span class="n">repository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_employeeRepository</span> <span class="p">=</span> <span class="n">repository</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectAllEmployees</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">UpdateEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">DeleteEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Create IEmployeeService and EmployeeService class in the Services folder as follows</strong></p>
+
+<p><strong>IEmployeeService.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">();</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>EmployeeService.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Repository</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span> <span class="p">:</span> <span class="n">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="n">IEmployeeRepository</span> <span class="n">_employeeRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">IEmployeeRepository</span> <span class="n">repository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_employeeRepository</span> <span class="p">=</span> <span class="n">repository</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectAllEmployees</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">UpdateEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">DeleteEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Register interfaces and corresponding concrete class in the ConfigureServic method</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"HRMDB"</span><span class="p">));</span>
+    
+
+    <span class="n">services</span><span class="p">.</span><span class="nf">AddControllersWithViews</span><span class="p">();</span>
+
+    <span class="c1">// In production, the React files will be served from this directory</span>
+    <span class="n">services</span><span class="p">.</span><span class="nf">AddSpaStaticFiles</span><span class="p">(</span><span class="n">configuration</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">configuration</span><span class="p">.</span><span class="n">RootPath</span> <span class="p">=</span> <span class="s">"ClientApp/build"</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">//Register </span>
+    <span class="n">services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IEmployeeRepository</span><span class="p">,</span> <span class="n">EmployeeRepository</span><span class="p">&gt;();</span>
+    <span class="n">services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IEmployeeService</span><span class="p">,</span> <span class="n">EmployeeService</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 8: Add controller</strong></p>
 <ul>
-  <li>Run both ExportApi and ClientApp project</li>
-  <li>To run both multiple project right click on solution-&gt;Properties-&gt;Startup Project-&gt;Multiple Start up project, Select both project as start.</li>
-  <li>Click the button on button of index page and you will see the output.</li>
+  <li>Add a controller class name - EmployeesController in Controllers folder as follows.
+<strong>EmployeesController.cs</strong></li>
 </ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeesController</span> <span class="p">:</span> <span class="n">Controller</span>
+<span class="p">{</span>
+
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IEmployeeService</span> <span class="n">_employeeService</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">EmployeesController</span><span class="p">(</span><span class="n">IEmployeeService</span> <span class="n">employeeService</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_employeeService</span> <span class="p">=</span> <span class="n">employeeService</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"[action]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+             <span class="kt">var</span> <span class="n">allemployess</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">GetEmployees</span><span class="p">();</span>
+             <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">allemployess</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">//return await _context.Employees.ToListAsync();</span>
+    <span class="p">}</span>
+
+    
+    <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"Employee/{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployeeById</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">GetEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddEmployee"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">([</span><span class="n">FromBody</span><span class="p">]</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">employee</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">AddEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+            <span class="c1">//</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"EditEmployee/{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="p">[</span><span class="n">FromBody</span><span class="p">]</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+            <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">EditEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">employee</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteEmployee/{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+            <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">RemoveEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Test the application using postman</strong></p>
+<ul>
+  <li>Go to terminal and type <code class="language-plaintext highlighter-rouge">dotnet run</code> to run the application</li>
+  <li>Test api end point using postman as follows.
+<img src="..\assets\images\posts\0006.postmantest.gif" alt="" /></li>
+</ul>
+
+<hr />
 
 <p><a href="https://github.com/mahedee/code-sample/tree/master/FileExportApi/FileExporter">Download source code</a></p>
 

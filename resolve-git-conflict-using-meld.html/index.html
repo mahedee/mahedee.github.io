@@ -9,33 +9,31 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Layout: Author Override - Learn and share</title>
-<meta name="description" content="A post to test author overrides using a data file.">
+<!-- begin _includes/seo.html --><title>Resolve git conflict using meld - Learn and share</title>
+<meta name="description" content="How to resolve conflict in github is discussed here step by step">
 
 
-  <meta name="author" content="Billy Rick">
+  <meta name="author" content="Md. Mahedee Hasan">
 
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="Layout: Author Override">
-<meta property="og:url" content="/test-file.html/">
+<meta property="og:title" content="Resolve git conflict using meld">
+<meta property="og:url" content="/resolve-git-conflict-using-meld.html/">
 
 
-  <meta property="og:description" content="A post to test author overrides using a data file.">
-
-
-
+  <meta property="og:description" content="How to resolve conflict in github is discussed here step by step">
 
 
 
 
-  <meta property="article:published_time" content="2009-12-29T00:00:00+00:00">
 
 
 
-  <meta property="article:modified_time" content="2018-09-10T16:32:27+00:00">
+  <meta property="article:published_time" content="2020-09-04T00:00:00+00:00">
+
+
 
 
 
@@ -44,7 +42,7 @@
   
 
 
-<link rel="canonical" href="/test-file.html/">
+<link rel="canonical" href="/resolve-git-conflict-using-meld.html/">
 
 
 
@@ -174,18 +172,18 @@
       
 
       
-        <img src="/assets/images/bio-photo-2.jpg" alt="Billy Rick" itemprop="image">
+        <img src="/assets/images/me.png" alt="Md. Mahedee Hasan" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Billy Rick</h3>
+      <h3 class="author__name" itemprop="name">Md. Mahedee Hasan</h3>
     
     
       <div class="author__bio" itemprop="description">
-        <p>What do you want, jewels? I am a very extravagant man.</p>
+        <p>Mahedee Hasan is a Senior Software Architect of Leadsoft Bangladesh Limited – one of the largest software company in Bangladesh. It is CMMI level-5 and ISO Certified Organization. He has over 10 years of working experience in the field of software design and development. He has been awarded Microsoft Most Valuable Professional(MVP) for the 4th time in a row. His MVP category is Artificial Intelligence (AI).</p>
 
       </div>
     
@@ -195,19 +193,25 @@
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
       
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
+        </li>
+      
 
       
         
           
-            <li><a href="mailto:billyrick@rick.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+          
+            <li><a href="http://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
           
         
           
-            <li><a href="https://thewhip.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
           
         
           
-            <li><a href="https://twitter.com/extravagantman" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
           
         
       
@@ -276,15 +280,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Layout: Author Override">
-    <meta itemprop="description" content="A post to test author overrides using a data file.">
-    <meta itemprop="datePublished" content="December 29, 2009">
-    <meta itemprop="dateModified" content="September 10, 2018">
+    <meta itemprop="headline" content="Resolve git conflict using meld">
+    <meta itemprop="description" content="How to resolve conflict in github is discussed here step by step">
+    <meta itemprop="datePublished" content="September 04, 2020">
+    
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Layout: Author Override
+          <h1 id="page-title" class="page__title" itemprop="headline">Resolve git conflict using meld
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -300,48 +304,35 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Sites that may have content authored from various individuals can be accommodated by using <a href="https://jekyllrb.com/docs/datafiles/">data files</a>.</p>
+        <h2 id="resolve-git-conflict-using-meld">Resolve git conflict using meld</h2>
 
-<p>To attribute an author to a post or page that is different from the site author specified in <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+<ul>
+  <li><a href="https://meldmerge.org/">Install meld in windows</a></li>
+  <li>Configure meld in your pc
+    <ul>
+      <li>Edit gitconfig file in C:\Users&lt;username&gt;\</li>
+      <li>Add following line in the gitconfig file
+  ```text
+  [diff]
+  tool = meld
+  [difftool “meld”]<br />
+  path = C:/Program Files (x86)/Meld/Meld.exe<br />
+  [difftool]
+  prompt = false</li>
+    </ul>
 
-<p><strong>Step 1.</strong> Create <code class="language-plaintext highlighter-rouge">_data/authors.yml</code> and add authors using the following format. Anything variables found under <code class="language-plaintext highlighter-rouge">author</code> in <code class="language-plaintext highlighter-rouge">_config.yml</code> can be used (e.g. <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">bio</code>, <code class="language-plaintext highlighter-rouge">avatar</code>, author <code class="language-plaintext highlighter-rouge">links</code>, etc.).</p>
+    <p>```</p>
+  </li>
+  <li>Now check and resolve conflict using the following command
+    <pre><code class="language-github">$ git difftool origin/master
+</code></pre>
+  </li>
+</ul>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># /_data/authors.yml</span>
-
-<span class="na">Billy Rick</span><span class="pi">:</span>
-  <span class="na">name        </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Billy</span><span class="nv"> </span><span class="s">Rick"</span>
-  <span class="na">bio         </span><span class="pi">:</span> <span class="s2">"</span><span class="s">What</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">want,</span><span class="nv"> </span><span class="s">jewels?</span><span class="nv"> </span><span class="s">I</span><span class="nv"> </span><span class="s">am</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">extravagant</span><span class="nv"> </span><span class="s">man."</span>
-  <span class="na">avatar      </span><span class="pi">:</span> <span class="s2">"</span><span class="s">/assets/images/bio-photo-2.jpg"</span>
-  <span class="na">links</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Email"</span>
-      <span class="na">icon</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fas</span><span class="nv"> </span><span class="s">fa-fw</span><span class="nv"> </span><span class="s">fa-envelope-square"</span>
-      <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mailto:billyrick@rick.com"</span>
-    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Website"</span>
-      <span class="na">icon</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fas</span><span class="nv"> </span><span class="s">fa-fw</span><span class="nv"> </span><span class="s">fa-link"</span>
-      <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://thewhip.com"</span>
-    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Twitter"</span>
-      <span class="na">icon</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fab</span><span class="nv"> </span><span class="s">fa-fw</span><span class="nv"> </span><span class="s">fa-twitter-square"</span>
-      <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://twitter.com/extravagantman"</span>
-
-<span class="na">Cornelius Fiddlebone</span><span class="pi">:</span>
-  <span class="na">name        </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Cornelius</span><span class="nv"> </span><span class="s">Fiddlebone"</span>
-  <span class="na">bio         </span><span class="pi">:</span> <span class="s2">"</span><span class="s">I</span><span class="nv"> </span><span class="s">ordered</span><span class="nv"> </span><span class="s">what?"</span>
-  <span class="na">avatar      </span><span class="pi">:</span> <span class="s2">"</span><span class="s">/assets/images/bio-photo.jpg"</span>
-  <span class="na">links</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Email"</span>
-      <span class="na">icon</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fas</span><span class="nv"> </span><span class="s">fa-fw</span><span class="nv"> </span><span class="s">fa-envelope-square"</span>
-      <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mailto:cornelius@thewhip.com"</span>
-    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Twitter"</span>
-      <span class="na">icon</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fab</span><span class="nv"> </span><span class="s">fa-fw</span><span class="nv"> </span><span class="s">fa-twitter-square"</span>
-      <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://twitter.com/rhymeswithsackit"</span>
-</code></pre></div></div>
-
-<p><strong>Step 2.</strong> Assign one of the authors in <code class="language-plaintext highlighter-rouge">authors.yml</code> to a post or page you wish to override the <code class="language-plaintext highlighter-rouge">site.author</code> with.</p>
-
-<p>Example: To assign <code class="language-plaintext highlighter-rouge">Billy Rick</code> as an author for a post the following YAML Front Matter would be applied:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">author</span><span class="pi">:</span> <span class="s">Billy Rick</span>
-</code></pre></div></div>
+<h3 id="refereces">Refereces</h3>
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=4BqEXdI-Km0">Git Tutorial 7: Diff and Merge using meld 2019</a></li>
+</ul>
 
         
       </section>
@@ -362,11 +353,11 @@
     
       
       
-      <a href="/tags/#move-it" class="page__taxonomy-item" rel="tag">move it</a><span class="sep">, </span>
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#simple" class="page__taxonomy-item" rel="tag">simple</a>
+      <a href="/tags/#source-control" class="page__taxonomy-item" rel="tag">source-control</a>
     
     </span>
   </p>
@@ -387,36 +378,36 @@
     
       
       
-      <a href="/categories/#sample-category" class="page__taxonomy-item" rel="tag">Sample category</a>
+      <a href="/categories/#source-control" class="page__taxonomy-item" rel="tag">Source Control</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2018-09-10">September 10, 2018</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-09-04T00:00:00+00:00">September 04, 2020</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Layout%3A+Author+Override%20%2Ftest-file.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Resolve+git+conflict+using+meld%20%2Fresolve-git-conflict-using-meld.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftest-file.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fresolve-git-conflict-using-meld.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftest-file.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fresolve-git-conflict-using-meld.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/demo-article.html/" class="pagination--pager" title="This is a demo article
+      <a href="/common-markdown-syntax.html/" class="pagination--pager" title="Common Markdown Syntax
 ">Previous</a>
     
     
-      <a href="/install-jekyll-on-windows.html/" class="pagination--pager" title="Install jekyll on windows step by step
+      <a href="/necessary-sql-query-in-ms-sql.html/" class="pagination--pager" title="Necessary SQL query in MS SQL
 ">Next</a>
     
   </nav>
@@ -523,7 +514,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/parsing-markdown-file-and-display-in-a-razor-view-page-using-asp.net-core.html/" rel="permalink">Parsing markdown file and display in a razor view using asp.net core
+        <a href="/embed-markdown-into-a-razor-view-using-asp.net-core.html/" rel="permalink">Embed markdown into a razor view using asp.net core
 </a>
       
     </h2>
@@ -533,7 +524,7 @@
 
 
 
-  3 minute read
+  1 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">

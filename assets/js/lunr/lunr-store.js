@@ -4,6 +4,11 @@ var store = [{
         "tags": [],
         "url": "/reference-articles.html/",
         "teaser":null},{
+        "title": "Some important links",
+        "excerpt":"Some important links      How to Install XAMPP and WordPress Locally on Windows PC  ","categories": [],
+        "tags": [],
+        "url": "/some-important-links.html/",
+        "teaser":null},{
         "title": "Install jekyll on windows step by step",
         "excerpt":"Install jekyll on windows step by step   Here is the list of tools or plugins I needed to install to run the blog locally.   Windows      Install jekyll on windows   VSCode extensions      Markdown All in One   Code Spell Checker   Steps      run bundle install (first time only)   bundle exec jekyll serve to serve the application   Tools that didn’t work   For some unknown reason, installing via choco didn’t didn’t work.      Chocolatey (Kept)   Jekyll (Removed)  ","categories": ["Blog","Configuration"],
         "tags": ["jekyll","change it"],

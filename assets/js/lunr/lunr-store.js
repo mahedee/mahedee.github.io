@@ -30,7 +30,7 @@ var store = [{
         "url": "/how-to-support-console-writeline-in-vs-code-in-debug-mode.html/",
         "teaser":null},{
         "title": "Visual Studio Code Tips and Tricks (Part - 01)",
-        "excerpt":" Visual Studio Code Shortcut     Format the entire active file : Ctrl+Shift+I   Format the selected text: Ctrl+K Ctrl+F   Visual studio code extensions which I use most     Markdown Preview Enhanced   Code Spell Checker  ","categories": ["Source Control"],
+        "excerpt":" Visual Studio Code Shortcut     Format the entire active file : Ctrl+Shift+I   Format the selected text: Ctrl+K Ctrl+F   Visual studio code extensions which I use most     Markdown Preview Enhanced   Code Spell Checker   ES7 React/Redux/GraphQL/React-Native snippets  ","categories": ["Source Control"],
         "tags": ["git","source-control"],
         "url": "/visual-studio-code-tips-and-tricks-part-01.html/",
         "teaser":null},{

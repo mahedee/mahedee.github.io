@@ -316,7 +316,39 @@
   <li><a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a></li>
   <li><a href="https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker">Code Spell Checker</a></li>
   <li><a href="https://marketplace.visualstudio.com/itemdetails?itemName=dsznajder.es7-react-js-snippets">ES7 React/Redux/GraphQL/React-Native snippets</a></li>
+  <li><a href="https://marketplace.visualstudio.com/items?itemName=riazxrazor.html-to-jsx">html to JSX</a></li>
 </ol>
+
+<p><strong>How to add a project to a solution using VS Code</strong></p>
+
+<p>Open VS Code terminal and navigate to the directory where you want to create solution folder. Use following commands</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet new sln -o MyApiApp
+</code></pre></div></div>
+<p>The -o parameter lets you specify the output directory</p>
+
+<p>Navigate to solution direction</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cd .\MyApiApp\ 
+</code></pre></div></div>
+
+<p>Create new projects under root solution folder</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet new console -o MyApiApp.ConsoleApp
+dotnet new webapi -o MyApiApp.WebApi 
+dotnet new classlib -o MyApiApp.Repository 
+dotnet new xunit -o MyApiApp.Tests
+</code></pre></div></div>
+
+<p>Add projects to solution (use tab to navigate path).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet sln MyApiApp.sln add .\MyApiApp.ConsoleApp\MyApiApp.ConsoleApp.csproj .\MyApiApp.WebApi\MyApiApp.WebApi.csproj .\MyApiApp.Repository\MyApiApp.Repository.csproj .\MyApiApp.Tests\MyApiApp.Tests.csproj 
+</code></pre></div></div>
+<p>Add project references</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet add .\MyApiApp.WebApi\MyApiApp.WebApi.csproj reference .\MyApiApp.Repository\MyApiApp.Repository.csproj 
+dotnet add .\MyApiApp.ConsoleApp\MyApiApp.ConsoleApp.csproj reference .\MyApiApp.Repository\MyApiApp.Repository.csproj 
+dotnet add .\MyApiApp.Tests\MyApiApp.Tests.csproj reference .\MyApiApp.WebApi\MyApiApp.WebApi.csproj .\MyApiApp.Repository\MyApiApp.Repository.csproj
+</code></pre></div></div>
 
         
       </section>

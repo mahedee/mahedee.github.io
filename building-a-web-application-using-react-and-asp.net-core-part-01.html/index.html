@@ -352,22 +352,23 @@
 <p><strong>Step 4: Create a dbContext class</strong></p>
 <ul>
   <li>Create HRMContext Class in Db folder as follows<br />
-<strong>HRMContext.cs</strong><br />
-```csharp
-using HRM.Models;
-using Microsoft.EntityFrameworkCore;</li>
+<strong>HRMContext.cs</strong></li>
 </ul>
 
-<p>namespace HRM.Db
-{
-    public class HRMContext : DbContext
-    {
-        public HRMContext(DbContextOptions<HRMContext> options) : base(options)
-        {</HRMContext></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    }
-    public DbSet&lt;Employee&gt; Employees { get; set; }
-} } ```
+<span class="k">namespace</span> <span class="nn">HRM.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HRMContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">HRMContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <ul>

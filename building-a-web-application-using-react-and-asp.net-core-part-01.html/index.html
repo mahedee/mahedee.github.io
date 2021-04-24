@@ -383,61 +383,62 @@
 
 <p><strong>Step 5: Add some seed data</strong></p>
 <ul>
-  <li>Create a class name SeedDataGenerator in Db folder as follows<br />
-```csharp
-using System;
-using System.Linq;
-using HRM.Db;
-using HRM.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;</li>
+  <li>Create a class name SeedDataGenerator in Db folder as follows</li>
 </ul>
 
-<p>public class SeedDataGenerator
-{
-    public static void Initialize(IServiceProvider serviceProvider)
-    {
-        using (var context = new HRMContext(
-            serviceProvider.GetRequiredService&lt;DbContextOptions<HRMContext>&gt;()))
-        {
-            // Check any employee exists 
-            if (context.Employees.Any())
-            {
-                return; // Data already exists no need to generate
-            }</HRMContext></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        context.Employees.AddRange(
-            new Employee
-            {
-                Name = "Md. Mahedee Hasan",
-                Designation = "Head of Software Development",
-                FathersName = "Yeasin Bhuiyan",
-                MothersName = "Moriom Begum",
-                DateOfBirth = new DateTime(1984, 12, 19, 00, 00, 00)
-            },
+<span class="k">public</span> <span class="k">class</span> <span class="nc">SeedDataGenerator</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="n">IServiceProvider</span> <span class="n">serviceProvider</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HRMContext</span><span class="p">(</span>
+            <span class="n">serviceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;&gt;()))</span>
+        <span class="p">{</span>
+            <span class="c1">// Check any employee exists </span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span> <span class="c1">// Data already exists no need to generate</span>
+            <span class="p">}</span>
 
-            new Employee
-            {
-                Name = "Khaleda Islam",
-                Designation = "Software Engineer",
-                FathersName = "Shahidul Islam",
-                MothersName = "Momtaz Begum",
-                DateOfBirth = new DateTime(1990, 10, 29, 00, 00, 00)
-            },
-            
-            new Employee
-            {
-                Name = "Tahiya Hasan Arisha",
-                Designation = "Jr. Software Engineer",
-                FathersName = "Md. Mahedee Hasan",
-                MothersName = "Khaleda Islam",
-                DateOfBirth = new DateTime(2017, 09, 17, 00, 00, 00)
-            }
-        );
-        context.SaveChanges();
+            <span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Md. Mahedee Hasan"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Head of Software Development"</span><span class="p">,</span>
+                    <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Yeasin Bhuiyan"</span><span class="p">,</span>
+                    <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Moriom Begum"</span><span class="p">,</span>
+                    <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1984</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                <span class="p">},</span>
 
-    }
-} } ```
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Khaleda Islam"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">,</span>
+                    <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Shahidul Islam"</span><span class="p">,</span>
+                    <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Momtaz Begum"</span><span class="p">,</span>
+                    <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1990</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                <span class="p">},</span>
+                
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Tahiya Hasan Arisha"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Jr. Software Engineer"</span><span class="p">,</span>
+                    <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Md. Mahedee Hasan"</span><span class="p">,</span>
+                    <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Khaleda Islam"</span><span class="p">,</span>
+                    <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">2017</span><span class="p">,</span> <span class="m">09</span><span class="p">,</span> <span class="m">17</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+            <span class="n">context</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <ul>

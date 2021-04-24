@@ -351,9 +351,10 @@
 
 <p><strong>Step 4: Create a dbContext class</strong></p>
 <ul>
-  <li>Create HRMContext Class in Db folder as follows<br />
-<strong>HRMContext.cs</strong></li>
+  <li>Create HRMContext Class in Db folder as follows</li>
 </ul>
+
+<p><strong>HRMContext.cs</strong></p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
@@ -491,104 +492,136 @@
 
 <p><strong>IEmployeeRepository.cs</strong></p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
 
-<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="k">namespace</span> <span class="nn">HRM.Repository</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeService</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeRepository</span>
     <span class="p">{</span>
-        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">();</span>
-        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
-        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
-        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">SelectAllEmployees</span><span class="p">();</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">SelectEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">UpdateEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
+
 
 </code></pre></div></div>
 
 <p><strong>EmployeeRepository.cs</strong></p>
+
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.Db</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">HRM.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">HRM.Repository</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
 
-<span class="k">namespace</span> <span class="nn">HRM.Services</span>
+<span class="k">namespace</span> <span class="nn">HRM.Repository</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span> <span class="p">:</span> <span class="n">IEmployeeService</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeRepository</span> <span class="p">:</span> <span class="n">IEmployeeRepository</span>
     <span class="p">{</span>
-        <span class="n">IEmployeeRepository</span> <span class="n">_employeeRepository</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">IEmployeeRepository</span> <span class="n">repository</span><span class="p">)</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">HRMContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeRepository</span><span class="p">(</span><span class="n">HRMContext</span> <span class="n">context</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="n">_employeeRepository</span> <span class="p">=</span> <span class="n">repository</span><span class="p">;</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">SelectAllEmployees</span><span class="p">()</span>
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectAllEmployees</span><span class="p">();</span>
+                <span class="kt">var</span> <span class="n">allemployess</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">allemployess</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
             <span class="p">{</span>
                 <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">SelectEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">employee</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">UpdateEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
         <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="s">"Cannot be updated!"</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">employee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">UpdateEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">employee</span><span class="p">);</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="s">"Data updated successfully!"</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span> <span class="n">exp</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">EmployeeExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="s">"Data not found!"</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+                <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
         <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
             <span class="k">try</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="s">"Data saved successfully!"</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">try</span>
+            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">DeleteEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="k">return</span> <span class="s">"Data not found!"</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span><span class="p">(</span><span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="s">"Data deleted successfully!"</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">EmployeeExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
         <span class="p">}</span>
 
     <span class="p">}</span>
 <span class="p">}</span>
+
 </code></pre></div></div>
 
 <p><strong>Step 7: Create IEmployeeService and EmployeeService class in the Services folder as follows</strong></p>
@@ -612,7 +645,9 @@
 <span class="p">}</span>
 
 </code></pre></div></div>
+
 <p><strong>EmployeeService.cs</strong></p>
+
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>

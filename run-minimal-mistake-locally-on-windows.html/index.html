@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Convert markdown to html using asp.net core - Learn and share</title>
+<!-- begin _includes/seo.html --><title>Run Jekyll on local machine - Learn and share</title>
 <meta name="description" content="hi">
 
 
@@ -19,8 +19,8 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="Convert markdown to html using asp.net core">
-<meta property="og:url" content="/convert-markdown-to-html-using-asp.net-core.html/">
+<meta property="og:title" content="Run Jekyll on local machine">
+<meta property="og:url" content="/run-minimal-mistake-locally-on-windows.html/">
 
 
   <meta property="og:description" content="hi">
@@ -31,7 +31,7 @@
 
 
 
-  <meta property="article:published_time" content="2020-10-07T00:00:00+00:00">
+  <meta property="article:published_time" content="2009-03-01T00:00:00+00:00">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="/convert-markdown-to-html-using-asp.net-core.html/">
+<link rel="canonical" href="/run-minimal-mistake-locally-on-windows.html/">
 
 
 
@@ -280,15 +280,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Convert markdown to html using asp.net core">
+    <meta itemprop="headline" content="Run Jekyll on local machine">
     <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="October 07, 2020">
+    <meta itemprop="datePublished" content="March 01, 2009">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Convert markdown to html using asp.net core
+          <h1 id="page-title" class="page__title" itemprop="headline">Run Jekyll on local machine
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -296,7 +296,7 @@
 
 
 
-  1 minute read
+  less than 1 minute read
 </p>
           
         </header>
@@ -304,75 +304,19 @@
 
       <section class="page__content" itemprop="text">
         
-        <!-- ### Convert markdown to html using asp.net core-->
+        <!-- ## Branching and merging in GitHub -->
 
-<p><strong>Application overview</strong><br />
-In this application, I will show how to create an application which is convert markdown to html using asp.net core. Let’s have a look on the implementation of the project.</p>
-
-<p><strong>Tools and Technology used</strong> 
-The following tools and technologies has been used for this application</p>
+<p>Go to root directory <br />
+Run the following command</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle exec jekyll serve -w
+</code></pre></div></div>
+<p>You will see an url like<br />
+Server address: http://127.0.0.1:4000<br />
+Go to this url and see locally
+&lt;!– ### References</p>
 <ul>
-  <li>Visual Studio 2019</li>
-  <li>Visual C#</li>
-  <li>NuGet package “Markdig”</li>
-  <li>ASP.NET Core MVC</li>
-  <li>Razor view engine</li>
+  <li>Test –&gt;</li>
 </ul>
-
-<p><strong>Step1: Select ASP.NET Core Web Application</strong><br />
-Select File-&gt;New-&gt;Project-&gt;ASP.NET Core Web Application</p>
-
-<p><strong>Step2: Choose project and solution name</strong><br />
-Type project and solution name as “MarkdownToHtml”</p>
-
-<p><strong>Step 3: Select project template</strong></p>
-<ul>
-  <li>Select project template as Web Application (Model-View-Controller)</li>
-  <li>Click create button</li>
-</ul>
-
-<p><strong>Step 4: Install Nuget package “Markdig”</strong><br />
-Run the following command in package manager console</p>
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">PM&gt; Install-Package Markdig</span>
-</code></pre></div></div>
-
-<!-- Draft -->
-
-<p><strong>Step 5: Add a method name Parse in MarkDownParser static class in Utility foler</strong></p>
-
-<p><strong>MarkDownParser.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="kt">string</span> <span class="n">markdownText</span> <span class="p">=</span> <span class="s">"## This is a title of Markdown file "</span><span class="p">;</span>
-        <span class="kt">string</span> <span class="n">htmltext</span> <span class="p">=</span> <span class="n">MarkDownParser</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">markdownText</span><span class="p">);</span>
-        <span class="n">htmltext</span> <span class="p">+=</span> <span class="n">MarkDownParser</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"  "</span><span class="p">)</span> <span class="p">;</span><span class="c1">// for new line</span>
-        <span class="n">htmltext</span> <span class="p">+=</span> <span class="n">MarkDownParser</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"__Strong text__"</span><span class="p">);</span><span class="c1">// for new line</span>
-
-        <span class="n">htmltext</span> <span class="p">+=</span> <span class="n">MarkDownParser</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"  "</span><span class="p">);</span><span class="c1">// for new line</span>
-        <span class="n">htmltext</span> <span class="p">+=</span> <span class="n">MarkDownParser</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"* This is a bullet point"</span><span class="p">);</span><span class="c1">// bullet point</span>
-        <span class="n">ViewBag</span><span class="p">.</span><span class="n">HTMLText</span> <span class="p">=</span> <span class="n">htmltext</span><span class="p">;</span>
-
-        <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
-    <span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>Step 6: Modify Home-&gt;Index.cshtml as follows</strong></p>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
-    ViewData["Title"] = "Home Page";
-}
-
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"text-center"</span><span class="nt">&gt;</span>
-    @Html.Raw(ViewBag.HTMLText)
-<span class="nt">&lt;/div&gt;</span>
-
-</code></pre></div></div>
-<p><strong>Step 7: Build and run the application</strong></p>
-
-<p>Now the application is ready to run. Build and run the application and watch the html output which you have given as markdown input in index action.</p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/markdown-parser/MarkdownToHtml">Source Code</a></strong></p>
-
 
         
       </section>
@@ -393,7 +337,7 @@ Run the following command in package manager console</p>
     
       
       
-      <a href="/tags/#markdown" class="page__taxonomy-item" rel="tag">markdown</a>
+      <a href="/tags/#testag" class="page__taxonomy-item" rel="tag">testag</a>
     
     </span>
   </p>
@@ -414,36 +358,36 @@ Run the following command in package manager console</p>
     
       
       
-      <a href="/categories/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a>
+      <a href="/categories/#visual-studio" class="page__taxonomy-item" rel="tag">Visual Studio</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-10-07T00:00:00+00:00">October 07, 2020</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2009-03-01T00:00:00+00:00">March 01, 2009</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Convert+markdown+to+html+using+asp.net+core%20%2Fconvert-markdown-to-html-using-asp.net-core.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Run+Jekyll+on+local+machine%20%2Frun-minimal-mistake-locally-on-windows.html%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fconvert-markdown-to-html-using-asp.net-core.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Frun-minimal-mistake-locally-on-windows.html%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fconvert-markdown-to-html-using-asp.net-core.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Frun-minimal-mistake-locally-on-windows.html%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/how-to-contribute-an-opensource-project.html/" class="pagination--pager" title="How to contribute on an open source project
+      <a href="/some-important-links.html/" class="pagination--pager" title="Some important links
 ">Previous</a>
     
     
-      <a href="/build-a-crud-application-using-asp.net-core.html/" class="pagination--pager" title="Build a CRUD application using asp.net core
+      <a href="/install-jekyll-on-windows.html/" class="pagination--pager" title="Install jekyll on windows step by step
 ">Next</a>
     
   </nav>

@@ -381,41 +381,43 @@ The following tools and technologies has been used for this application</p>
 
 <p><strong>Step 4: Add .env file in the root directory</strong></p>
 <ul>
-  <li>Add .env file int root directory and modify as follows
-```env
-    <h1 id="port--4444">PORT = 4444</h1>
-  </li>
+  <li>Add .env file int root directory and modify as follows</li>
 </ul>
 
-<p>CONFIG_STORAGE_CATALOG_URL=http://host.docker.internal:5202/c/api/v1/catalog/items/[0]/pic/
-NAME = Md. Mahedee Hasan
-DBNAME = ContainerDB
-PORT = 4545
-#AZURE_CATALOG_DB=<YourAzureSQLDBCatalogDBConnString></YourAzureSQLDBCatalogDBConnString></p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># PORT = 4444</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-**Step 5: Modify docker-compose.override.yml**  
-* Modify docker-compose.override.yml as follows
-```yml
-version: '3.4'
+<span class="s">CONFIG_STORAGE_CATALOG_URL=http://host.docker.internal:5202/c/api/v1/catalog/items/[0]/pic/</span>
+<span class="s">NAME = Md. Mahedee Hasan</span>
+<span class="s">DBNAME = ContainerDB</span>
+<span class="s">PORT = </span><span class="m">4545</span>
+<span class="c1">#AZURE_CATALOG_DB=&lt;YourAzureSQLDBCatalogDBConnString&gt;</span>
 
-services:
-  catalog.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionString=${AZURE_CATALOG_DB:-Server=sqldata;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
-      - PATH_BASE=/catalog-api
-      - PicBaseUrl=${CONFIG_STORAGE_CATALOG_URL}
-      - Name=${NAME}
-      #- DbName=${DBNAME}
-      - Port=${PORT}
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+</code></pre></div></div>
+
+<p><strong>Step 5: Modify docker-compose.override.yml</strong></p>
+<ul>
+  <li>Modify docker-compose.override.yml as follows</li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.4'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="s">catalog.api</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_ENVIRONMENT=Development</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_URLS=https://+:443;http://+:80</span>
+      <span class="pi">-</span> <span class="s">ConnectionString=${AZURE_CATALOG_DB:-Server=sqldata;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}</span>
+      <span class="pi">-</span> <span class="s">PATH_BASE=/catalog-api</span>
+      <span class="pi">-</span> <span class="s">PicBaseUrl=${CONFIG_STORAGE_CATALOG_URL}</span>
+      <span class="pi">-</span> <span class="s">Name=${NAME}</span>
+      <span class="c1">#- DbName=${DBNAME}</span>
+      <span class="pi">-</span> <span class="s">Port=${PORT}</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">80"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">443"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro</span>
 
 </code></pre></div></div>
 

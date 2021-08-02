@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-02T08:40:34+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Uses of Configuration Provider and Options Pattern in ASP.NET Core</title><link href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="alternate" type="text/html" title="Uses of Configuration Provider and Options Pattern in ASP.NET Core" /><published>2021-07-02T00:00:00+00:00</published><updated>2021-07-02T00:00:00+00:00</updated><id>/uses-of-configuration-provider-and-options-pattern-in-asp.net-core</id><content type="html" xml:base="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/">&lt;!-- ## Create a sentiment analysis app using ML.NET --&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-02T08:48:56+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Uses of Configuration Provider and Options Pattern in ASP.NET Core</title><link href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="alternate" type="text/html" title="Uses of Configuration Provider and Options Pattern in ASP.NET Core" /><published>2021-07-02T00:00:00+00:00</published><updated>2021-07-02T00:00:00+00:00</updated><id>/uses-of-configuration-provider-and-options-pattern-in-asp.net-core</id><content type="html" xml:base="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/">&lt;!-- ## Create a sentiment analysis app using ML.NET --&gt;
 
 &lt;p&gt;&lt;strong&gt;Application overview&lt;/strong&gt;&lt;br /&gt;
 In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsettings.json or docker-compose.yml or .env or any other configuration file. We can use IOptions&lt;T&gt; to read these settings using C#. Here is a sample code to retrieve application setting from appsettings.json, docker-compose.yml and .env file.&lt;/T&gt;&lt;/p&gt;
@@ -59,41 +59,43 @@ The following tools and technologies has been used for this application&lt;/p&gt
 
 &lt;p&gt;&lt;strong&gt;Step 4: Add .env file in the root directory&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Add .env file int root directory and modify as follows
-```env
-    &lt;h1 id=&quot;port--4444&quot;&gt;PORT = 4444&lt;/h1&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Add .env file int root directory and modify as follows&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;CONFIG_STORAGE_CATALOG_URL=http://host.docker.internal:5202/c/api/v1/catalog/items/[0]/pic/
-NAME = Md. Mahedee Hasan
-DBNAME = ContainerDB
-PORT = 4545
-#AZURE_CATALOG_DB=&lt;YourAzureSQLDBCatalogDBConnString&gt;&lt;/YourAzureSQLDBCatalogDBConnString&gt;&lt;/p&gt;
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# PORT = 4444&lt;/span&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-**Step 5: Modify docker-compose.override.yml**  
-* Modify docker-compose.override.yml as follows
-```yml
-version: '3.4'
+&lt;span class=&quot;s&quot;&gt;CONFIG_STORAGE_CATALOG_URL=http://host.docker.internal:5202/c/api/v1/catalog/items/[0]/pic/&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;NAME = Md. Mahedee Hasan&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;DBNAME = ContainerDB&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;PORT = &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4545&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#AZURE_CATALOG_DB=&amp;lt;YourAzureSQLDBCatalogDBConnString&amp;gt;&lt;/span&gt;
 
-services:
-  catalog.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionString=${AZURE_CATALOG_DB:-Server=sqldata;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
-      - PATH_BASE=/catalog-api
-      - PicBaseUrl=${CONFIG_STORAGE_CATALOG_URL}
-      - Name=${NAME}
-      #- DbName=${DBNAME}
-      - Port=${PORT}
-    ports:
-      - &quot;80&quot;
-      - &quot;443&quot;
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Modify docker-compose.override.yml&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Modify docker-compose.override.yml as follows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.4'&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;catalog.api&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ASPNETCORE_ENVIRONMENT=Development&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ASPNETCORE_URLS=https://+:443;http://+:80&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ConnectionString=${AZURE_CATALOG_DB:-Server=sqldata;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PATH_BASE=/catalog-api&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PicBaseUrl=${CONFIG_STORAGE_CATALOG_URL}&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Name=${NAME}&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;#- DbName=${DBNAME}&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Port=${PORT}&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;80&quot;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;443&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 

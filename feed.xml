@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-04T07:35:26+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Uses of Configuration Provider and Options Pattern in ASP.NET Core</title><link href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="alternate" type="text/html" title="Uses of Configuration Provider and Options Pattern in ASP.NET Core" /><published>2021-07-02T00:00:00+00:00</published><updated>2021-07-02T00:00:00+00:00</updated><id>/uses-of-configuration-provider-and-options-pattern-in-asp.net-core</id><content type="html" xml:base="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/">&lt;!-- ## Create a sentiment analysis app using ML.NET --&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-04T08:10:47+00:00</updated><id>/feed.xml</id><title type="html">Learn and share</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Uses of Configuration Provider and Options Pattern in ASP.NET Core</title><link href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="alternate" type="text/html" title="Uses of Configuration Provider and Options Pattern in ASP.NET Core" /><published>2021-07-02T00:00:00+00:00</published><updated>2021-07-02T00:00:00+00:00</updated><id>/uses-of-configuration-provider-and-options-pattern-in-asp.net-core</id><content type="html" xml:base="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/">&lt;!-- ## Create a sentiment analysis app using ML.NET --&gt;
 
 &lt;p&gt;&lt;strong&gt;Application overview&lt;/strong&gt;&lt;br /&gt;
 In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsettings.json or docker-compose.yml or .env or any other configuration file. We can use IOptions&lt;T&gt; to read these settings using C#. Here is a sample code to retrieve application setting from appsettings.json, docker-compose.yml and .env file.&lt;/T&gt;&lt;/p&gt;
@@ -422,7 +422,7 @@ Now build and run the application. You will see the sentiment output of the sent
 &lt;!-- **References**  
 1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create --&gt;</content><author><name>Mahedee Hasan</name></author><category term="AI" /><category term="Machine Learning" /><category term="C#" /><category term="ai" /><category term="machinelearning" /><category term="csharp" /><summary type="html">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.</summary></entry><entry><title type="html">Export and Import Docker images and container with asp.net core application</title><link href="/Export-and-Import-Docker-images-and-container-with-asp.net-core-application/" rel="alternate" type="text/html" title="Export and Import Docker images and container with asp.net core application" /><published>2021-04-02T00:00:00+00:00</published><updated>2021-04-02T00:00:00+00:00</updated><id>/Export-and-Import-Docker-images-and-container-with-asp.net-core-application</id><content type="html" xml:base="/Export-and-Import-Docker-images-and-container-with-asp.net-core-application/">&lt;p&gt;Sometimes we need to work in a disconnected environment. In that situation, we need to export/import docker images and container. Here I will show how to export and import images and container.&lt;/p&gt;
 
-&lt;h2 id=&quot;export-and-import-docker-images&quot;&gt;Export and import docker images&lt;/h2&gt;
+&lt;h2 id=&quot;save-and-load-docker-images&quot;&gt;Save and load docker images&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Step 1: Create a sample asp.net core application - name CatalogApp&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 2: Containerize CatalogApp&lt;/strong&gt;&lt;/p&gt;
@@ -430,6 +430,27 @@ Now build and run the application. You will see the sentiment output of the sent
   &lt;li&gt;Add a dockerfile in the root directory - here dockerfile and sln file exists in the same directory.&lt;/li&gt;
   &lt;li&gt;You see how to &lt;a href=&quot;https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-5.0&quot;&gt;Containerize a .NET Core app&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# https://hub.docker.com/_/microsoft-dotnet&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /source&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# copy csproj and restore as distinct layers&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY *.sln .&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY CatalogApp/*.csproj ./CatalogApp/&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;RUN dotnet restore&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# copy everything else and build app&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY CatalogApp/. ./CatalogApp/&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /source/CatalogApp&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;RUN dotnet publish -c release -o /app --no-restore&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# final stage/image&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;FROM mcr.microsoft.com/dotnet/aspnet:5.0&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /app&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY --from=build /app ./&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;ENTRYPOINT [&quot;dotnet&quot;, &quot;CatalogApp.dll&quot;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 3: Run in linux container&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -449,7 +470,7 @@ Now build and run the application. You will see the sentiment output of the sent
   &lt;li&gt;Browse application at http://localhost:5000/ to see output&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 3: Export docker images&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 3: Save docker images&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;To export “catalogapp” image run the following command
     &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;save&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;D:\Images\catalogapp.tar&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp&lt;/span&gt;
@@ -458,7 +479,7 @@ Now build and run the application. You will see the sentiment output of the sent
   &lt;li&gt;You will see a catalogapp.tar file in D:\Images\ directory&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 4: Now import docker images&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 4: Now load docker images&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;You may run the following command to remove all docker images
     &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;rmi&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(docker images -q)&lt;/span&gt;
@@ -471,7 +492,7 @@ Now build and run the application. You will see the sentiment output of the sent
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Run Imported image&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Run loaded image&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Now run the following command to run the catalogapp images with latest tag.
     &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;5000:80&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp_container&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp:latest&lt;/span&gt;
@@ -480,9 +501,96 @@ Now build and run the application. You will see the sentiment output of the sent
   &lt;li&gt;Browse application at http://localhost:5000/ to see output&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;!-- ## Export and import docker container --&gt;
-&lt;!-- ## Docker hub and pull --&gt;
-&lt;!-- ## Summary --&gt;
+&lt;h2 id=&quot;export-and-import-docker-container&quot;&gt;Export and import docker container&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Step 1: Create a sample asp.net core application as before - name CatalogApp&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Containerize CatalogApp&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Add a dockerfile in the root directory - here dockerfile and sln file exists in the same directory.&lt;/li&gt;
+  &lt;li&gt;You see how to &lt;a href=&quot;https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-5.0&quot;&gt;Containerize a .NET Core app&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# https://hub.docker.com/_/microsoft-dotnet&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /source&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# copy csproj and restore as distinct layers&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY *.sln .&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY CatalogApp/*.csproj ./CatalogApp/&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;RUN dotnet restore&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# copy everything else and build app&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY CatalogApp/. ./CatalogApp/&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /source/CatalogApp&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;RUN dotnet publish -c release -o /app --no-restore&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# final stage/image&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;FROM mcr.microsoft.com/dotnet/aspnet:5.0&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;WORKDIR /app&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;COPY --from=build /app ./&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;ENTRYPOINT [&quot;dotnet&quot;, &quot;CatalogApp.dll&quot;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Run in linux container&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Navigate to the Dockerfile folder&lt;/li&gt;
+  &lt;li&gt;Run the following commands to build the application in docker
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;build&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-t&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now you will see an image name catalogapp is created. To check images, run the following command.
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;images&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;If you want to run the application (images) in docker, run the following command
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;5000:80&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp_container&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Browse application at http://localhost:5000/ to see output&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Export docker container&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;To export “catalogapp_container” container run the following command
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;D:\Containers\catalogapp_container.tar&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp_container&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;You will see a catalogapp_container file in D:\Containers\ directory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Now import docker container&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;You may run the following command to remove all docker images
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;rmi&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(docker images -q)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Go to to the directory D:\Containers\&lt;/li&gt;
+  &lt;li&gt;Run the following command to load images. You will see two images is created with dev and latest tag.
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;PS&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;D:\Containers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp_container.tar&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp:imp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Run Imported image&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Now run the following command to run the catalogapp images with latest tag.
+    &lt;div class=&quot;language-ps highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;docker&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-it&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;5000:80&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp_container&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catalogapp:imp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Browse application at http://localhost:5000/ to see output&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Let’s summarize the idea of image and container export and import.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Image load is just copying and container import is just like turn container to image.&lt;/li&gt;
+  &lt;li&gt;To export and import images, use docker save and load command.&lt;/li&gt;
+  &lt;li&gt;To export and import container, use docker export and import command.&lt;/li&gt;
+  &lt;li&gt;Exported tar file is smaller than saved tar file. Because the exported file is a container, when the export file is imported, all the history of the image (that is, the information of each layer) cannot be retained, and the rollback operation cannot be performed. And save is based on the mirror image, so you can completely retain the information of each layer when importing.&lt;/li&gt;
+  &lt;li&gt;It’s not possible to rename loaded images but you can do it for imported image like catalogapp:imp&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/mahedee/code-sample/tree/master/docker-export-import&quot;&gt;Source Code&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;!-- 
 References

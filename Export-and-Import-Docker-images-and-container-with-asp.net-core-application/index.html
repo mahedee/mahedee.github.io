@@ -312,7 +312,7 @@
 
 
 
-  1 minute read
+  3 minute read
 </p>
           
         </header>
@@ -322,7 +322,7 @@
         
         <p>Sometimes we need to work in a disconnected environment. In that situation, we need to export/import docker images and container. Here I will show how to export and import images and container.</p>
 
-<h2 id="export-and-import-docker-images">Export and import docker images</h2>
+<h2 id="save-and-load-docker-images">Save and load docker images</h2>
 <p><strong>Step 1: Create a sample asp.net core application - name CatalogApp</strong></p>
 
 <p><strong>Step 2: Containerize CatalogApp</strong></p>
@@ -330,6 +330,27 @@
   <li>Add a dockerfile in the root directory - here dockerfile and sln file exists in the same directory.</li>
   <li>You see how to <a href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-5.0">Containerize a .NET Core app</a></li>
 </ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://hub.docker.com/_/microsoft-dotnet</span>
+<span class="s">FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build</span>
+<span class="s">WORKDIR /source</span>
+
+<span class="c1"># copy csproj and restore as distinct layers</span>
+<span class="s">COPY *.sln .</span>
+<span class="s">COPY CatalogApp/*.csproj ./CatalogApp/</span>
+<span class="s">RUN dotnet restore</span>
+
+<span class="c1"># copy everything else and build app</span>
+<span class="s">COPY CatalogApp/. ./CatalogApp/</span>
+<span class="s">WORKDIR /source/CatalogApp</span>
+<span class="s">RUN dotnet publish -c release -o /app --no-restore</span>
+
+<span class="c1"># final stage/image</span>
+<span class="s">FROM mcr.microsoft.com/dotnet/aspnet:5.0</span>
+<span class="s">WORKDIR /app</span>
+<span class="s">COPY --from=build /app ./</span>
+<span class="s">ENTRYPOINT ["dotnet", "CatalogApp.dll"]</span>
+</code></pre></div></div>
 
 <p><strong>Step 3: Run in linux container</strong></p>
 <ul>
@@ -349,7 +370,7 @@
   <li>Browse application at http://localhost:5000/ to see output</li>
 </ul>
 
-<p><strong>Step 3: Export docker images</strong></p>
+<p><strong>Step 3: Save docker images</strong></p>
 <ul>
   <li>To export “catalogapp” image run the following command
     <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">save</span> <span class="nf">-o</span> <span class="nf">D:\Images\catalogapp.tar</span> <span class="nf">catalogapp</span>
@@ -358,7 +379,7 @@
   <li>You will see a catalogapp.tar file in D:\Images\ directory</li>
 </ul>
 
-<p><strong>Step 4: Now import docker images</strong></p>
+<p><strong>Step 4: Now load docker images</strong></p>
 <ul>
   <li>You may run the following command to remove all docker images
     <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
@@ -371,7 +392,7 @@
   </li>
 </ul>
 
-<p><strong>Run Imported image</strong></p>
+<p><strong>Run loaded image</strong></p>
 <ul>
   <li>Now run the following command to run the catalogapp images with latest tag.
     <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">-it</span> <span class="nf">--rm</span> <span class="nf">-p</span> <span class="nf">5000:80</span> <span class="nf">--name</span> <span class="nf">catalogapp_container</span> <span class="nf">catalogapp:latest</span>
@@ -380,9 +401,96 @@
   <li>Browse application at http://localhost:5000/ to see output</li>
 </ul>
 
-<!-- ## Export and import docker container -->
-<!-- ## Docker hub and pull -->
-<!-- ## Summary -->
+<h2 id="export-and-import-docker-container">Export and import docker container</h2>
+<p><strong>Step 1: Create a sample asp.net core application as before - name CatalogApp</strong></p>
+
+<p><strong>Step 2: Containerize CatalogApp</strong></p>
+<ul>
+  <li>Add a dockerfile in the root directory - here dockerfile and sln file exists in the same directory.</li>
+  <li>You see how to <a href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-5.0">Containerize a .NET Core app</a></li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://hub.docker.com/_/microsoft-dotnet</span>
+<span class="s">FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build</span>
+<span class="s">WORKDIR /source</span>
+
+<span class="c1"># copy csproj and restore as distinct layers</span>
+<span class="s">COPY *.sln .</span>
+<span class="s">COPY CatalogApp/*.csproj ./CatalogApp/</span>
+<span class="s">RUN dotnet restore</span>
+
+<span class="c1"># copy everything else and build app</span>
+<span class="s">COPY CatalogApp/. ./CatalogApp/</span>
+<span class="s">WORKDIR /source/CatalogApp</span>
+<span class="s">RUN dotnet publish -c release -o /app --no-restore</span>
+
+<span class="c1"># final stage/image</span>
+<span class="s">FROM mcr.microsoft.com/dotnet/aspnet:5.0</span>
+<span class="s">WORKDIR /app</span>
+<span class="s">COPY --from=build /app ./</span>
+<span class="s">ENTRYPOINT ["dotnet", "CatalogApp.dll"]</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Run in linux container</strong></p>
+<ul>
+  <li>Navigate to the Dockerfile folder</li>
+  <li>Run the following commands to build the application in docker
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">catalogapp</span> <span class="nf">.</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Now you will see an image name catalogapp is created. To check images, run the following command.
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">images</span>
+</code></pre></div>    </div>
+  </li>
+  <li>If you want to run the application (images) in docker, run the following command
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">-it</span> <span class="nf">--rm</span> <span class="nf">-p</span> <span class="nf">5000:80</span> <span class="nf">--name</span> <span class="nf">catalogapp_container</span> <span class="nf">catalogapp</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Browse application at http://localhost:5000/ to see output</li>
+</ul>
+
+<p><strong>Step 3: Export docker container</strong></p>
+<ul>
+  <li>To export “catalogapp_container” container run the following command
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">export</span> <span class="nf">-o</span> <span class="nf">D:\Containers\catalogapp_container.tar</span> <span class="nf">catalogapp_container</span>
+</code></pre></div>    </div>
+  </li>
+  <li>You will see a catalogapp_container file in D:\Containers\ directory</li>
+</ul>
+
+<p><strong>Step 4: Now import docker container</strong></p>
+<ul>
+  <li>You may run the following command to remove all docker images
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Go to to the directory D:\Containers\</li>
+  <li>Run the following command to load images. You will see two images is created with dev and latest tag.
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">D:\Containers</span><span class="p">&gt;</span> <span class="nf">docker</span> <span class="nf">import</span> <span class="nf">catalogapp_container.tar</span> <span class="nf">catalogapp:imp</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Run Imported image</strong></p>
+<ul>
+  <li>Now run the following command to run the catalogapp images with latest tag.
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">-it</span> <span class="nf">--rm</span> <span class="nf">-p</span> <span class="nf">5000:80</span> <span class="nf">--name</span> <span class="nf">catalogapp_container</span> <span class="nf">catalogapp:imp</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Browse application at http://localhost:5000/ to see output</li>
+</ul>
+
+<h2 id="summary">Summary</h2>
+<p>Let’s summarize the idea of image and container export and import.</p>
+<ul>
+  <li>Image load is just copying and container import is just like turn container to image.</li>
+  <li>To export and import images, use docker save and load command.</li>
+  <li>To export and import container, use docker export and import command.</li>
+  <li>Exported tar file is smaller than saved tar file. Because the exported file is a container, when the export file is imported, all the history of the image (that is, the information of each layer) cannot be retained, and the rollback operation cannot be performed. And save is based on the mirror image, so you can completely retain the information of each layer when importing.</li>
+  <li>It’s not possible to rename loaded images but you can do it for imported image like catalogapp:imp</li>
+</ul>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/docker-export-import">Source Code</a></strong></p>
 
 <!-- 
 References

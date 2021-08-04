@@ -335,16 +335,16 @@
 <ul>
   <li>Navigate to the Dockerfile folder</li>
   <li>Run the following commands to build the application in docker
-    <pre><code class="language-cmd">docker build -t catalogapp .
-</code></pre>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">catalogapp</span> <span class="nf">.</span>
+</code></pre></div>    </div>
   </li>
   <li>Now you will see an image name catalogapp is created. To check images, run the following command.
-    <pre><code class="language-cmd">docker images
-</code></pre>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">images</span>
+</code></pre></div>    </div>
   </li>
   <li>If you want to run the application (images) in docker, run the following command
-    <pre><code class="language-cmd">docker run -it --rm -p 5000:80 --name catalogapp_container catalogapp
-</code></pre>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">-it</span> <span class="nf">--rm</span> <span class="nf">-p</span> <span class="nf">5000:80</span> <span class="nf">--name</span> <span class="nf">catalogapp_container</span> <span class="nf">catalogapp</span>
+</code></pre></div>    </div>
   </li>
   <li>Browse application at http://localhost:5000/ to see output</li>
 </ul>
@@ -352,8 +352,8 @@
 <p><strong>Step 3: Export docker images</strong></p>
 <ul>
   <li>To export “catalogapp” image run the following command
-    <pre><code class="language-cmd">docker save -o D:\Images\catalogapp.tar catalogapp
-</code></pre>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">save</span> <span class="nf">-o</span> <span class="nf">D:\Images\catalogapp.tar</span> <span class="nf">catalogapp</span>
+</code></pre></div>    </div>
   </li>
   <li>You will see a catalogapp.tar file in D:\Images\ directory</li>
 </ul>
@@ -361,8 +361,8 @@
 <p><strong>Step 4: Now import docker images</strong></p>
 <ul>
   <li>You may run the following command to remove all docker images
-    <pre><code class="language-cmd">docker rmi $(docker images -q)
-</code></pre>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
+</code></pre></div>    </div>
   </li>
   <li>Go to to the directory D:\Images\</li>
   <li>Run the following command to load images. You will see two images is created with dev and latest tag.

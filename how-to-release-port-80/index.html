@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>How to release port 80 - Learn and share</title>
-<meta name="description" content="hi">
+<meta name="description" content="Few days ago, I fall in a problem. I could not start apache server by XAMP control panel. There was a message shown port 80 busy. However ultimately, I found the solution this was due to IIS server. IIS Server was running on port 80 at that time.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://mahedee.github.io//how-to-release-port-80/">
 
 
-  <meta property="og:description" content="hi">
+  <meta property="og:description" content="Few days ago, I fall in a problem. I could not start apache server by XAMP control panel. There was a message shown port 80 busy. However ultimately, I found the solution this was due to IIS server. IIS Server was running on port 80 at that time.">
 
 
 
@@ -297,7 +297,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="How to release port 80">
-    <meta itemprop="description" content="">
+    <meta itemprop="description" content="Few days ago, I fall in a problem. I could not start apache server by XAMP control panel. There was a message shown port 80 busy. However ultimately, I found the solution this was due to IIS server. IIS Server was running on port 80 at that time.">
     <meta itemprop="datePublished" content="March 02, 2010">
     
 
@@ -326,20 +326,18 @@
 
 <ol>
   <li>Go to command prompt.</li>
-  <li>Check which process is using port 80</li>
+  <li>Check which process is using port 80
+    <ul>
+      <li>On the command prompt window, type the following command.
+        <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">netstat</span> <span class="nf">-o</span> <span class="nf">-n</span> <span class="nf">-a</span> <span class="nf">|</span> <span class="nf">findstr</span> <span class="nf">0.0:80</span>
+</code></pre></div>        </div>
+      </li>
+      <li>You will see the following screen</li>
+    </ul>
+  </li>
 </ol>
 
-<ul>
-  <li>On the command prompt window, type the following command.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">netstat</span> <span class="nf">-o</span> <span class="nf">-n</span> <span class="nf">-a</span> <span class="nf">|</span> <span class="nf">findstr</span> <span class="nf">0.0:80</span>
-</code></pre></div></div>
-<ul>
-  <li>You will see the following screen</li>
-</ul>
-
-<p><img src="/assets/images/posts/2010/119.jpg" alt="" /></p>
+<p><img src="/assets/images/posts/2010/netstat.png" alt="" /></p>
 
 <p>The last column is process Id column</p>
 
@@ -352,6 +350,8 @@
   <li>And make sure you select the <strong>PID (Process Identifier)</strong> as shown in the image below.</li>
 </ol>
 
+<p><img src="/assets/images/posts/2010/pid.png" alt="" /></p>
+
 <p>Now you can see which process is using which PID and description like the following</p>
 
 <p><strong>Stop the services</strong></p>
@@ -361,7 +361,7 @@
   <li>Click the <strong>Services</strong> tab</li>
   <li>Arrange the Services by description or by</li>
   <li>For IIS I found Service name as IIS Admin</li>
-  <li>Right click on it and select Stop Sevice.</li>
+  <li>Right click on it and select Stop Service.</li>
 </ol>
 
         
@@ -383,7 +383,15 @@
     
       
       
-      <a href="/tags/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
+      <a href="/tags/#os" class="page__taxonomy-item" rel="tag">os</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">windows</a>
     
     </span>
   </p>
@@ -404,7 +412,15 @@
     
       
       
-      <a href="/categories/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
+      <a href="/categories/#os" class="page__taxonomy-item" rel="tag">OS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
     
     </span>
   </p>

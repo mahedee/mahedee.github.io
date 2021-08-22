@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to find pen drive hidden folder - Learn and share</title>
-<meta name="description" content="Sometimes due to virus attack, our pen drive data is hidden.  We think, all folders are deleted. So, check first before you format your Usb otherwise you will lose your data forever.  Sometimes hidden files are not displayed even if you “Show hidden files and folders” in the Folders Options. To find hidden folder in your pen drive. Just run the following command in your command window.">
+<!-- begin _includes/seo.html --><title>A Basic Guide On SQL Database Repair Commands - Learn and share</title>
+<meta name="description" content="hi">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="How to find pen drive hidden folder">
-<meta property="og:url" content="https://mahedee.github.io//how-to-find-pen-drive-hidden-folder/">
+<meta property="og:title" content="A Basic Guide On SQL Database Repair Commands">
+<meta property="og:url" content="https://mahedee.github.io//sql-database-repair-commands/">
 
 
-  <meta property="og:description" content="Sometimes due to virus attack, our pen drive data is hidden.  We think, all folders are deleted. So, check first before you format your Usb otherwise you will lose your data forever.  Sometimes hidden files are not displayed even if you “Show hidden files and folders” in the Folders Options. To find hidden folder in your pen drive. Just run the following command in your command window.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2010-03-05T00:00:00+00:00">
+  <meta property="og:description" content="hi">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2017-10-11T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.github.io//how-to-find-pen-drive-hidden-folder/">
+
+<link rel="canonical" href="https://mahedee.github.io//sql-database-repair-commands/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to find pen drive hidden folder">
-    <meta itemprop="description" content="Sometimes due to virus attack, our pen drive data is hidden.  We think, all folders are deleted. So, check first before you format your Usb otherwise you will lose your data forever.  Sometimes hidden files are not displayed even if you “Show hidden files and folders” in the Folders Options. To find hidden folder in your pen drive. Just run the following command in your command window.">
-    <meta itemprop="datePublished" content="March 05, 2010">
+    <meta itemprop="headline" content="A Basic Guide On SQL Database Repair Commands">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="October 11, 2017">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to find pen drive hidden folder
+          <h1 id="page-title" class="page__title" itemprop="headline">A Basic Guide On SQL Database Repair Commands
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  4 minute read
 </p>
           
         </header>
@@ -320,11 +320,75 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Sometimes due to virus attack, our pen drive data is hidden.  We think, all folders are deleted. So, check first before you format your Usb otherwise you will lose your data forever.  Sometimes hidden files are not displayed even if you “Show hidden files and folders” in the Folders Options. To find hidden folder in your pen drive. Just run the following command in your command window.</p>
+        <p>Many times while working on SQL Server Database you have faced the problem of data corruption. However, being an administrator you must be aware of database recovery solution to <span style="color:red"> recover corrupt MDF file </span>. Therefore, in the upcoming section, we are going to describe the SQL database repair commands in a well-organized manner. Read on to know more in details about SQL database recovery commands.</p>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">attrib</span> <span class="nf">-h</span> <span class="nf">-r</span> <span class="nf">-s</span> <span class="nv">/s</span> <span class="nv">/d</span> <span class="nf">g:\*.*</span>
-</code></pre></div></div>
-<p>For accurate command just copy the above command and pest it. Here g: is considered your pen drive.  Replace g by your pen drive “drive letter”</p>
+<p><strong>Some Additional Information</strong></p>
+
+<p>You have to check the logical as well as physical integrity of all objects within the specified database by performing the below operations:</p>
+
+<p><strong>Note:</strong> DBCC CHECKDB command must be supported by the database. It can contain memory-optimized tables but validation has to occur only on disk-based tables. However, database backup and recovery has become a part and CHECKSUM validation is completed with memory-optimized file groups.</p>
+
+<p>Now, the DBCC repair option is not available in memory-optimized tables, you need to back up your databases on a regular basis and testing the backup files. If data integrity problem occurs in the memory-optimized tables so you must recover from an older backup.</p>
+
+<ul>
+  <li>Running the DBCC CHECKALLOC command on the database</li>
+  <li>Running DBCC CHECKTABLE for all tables and view them in the database</li>
+  <li>Running DBCC CHECKCATALOG script on the database</li>
+  <li>On the database, validates the content of every indexed view</li>
+  <li>Validation should be performed in link-level consistency between table metadata, file system directories and when saving varbinary(max) data in your file system using FILESTREAM</li>
+  <li>Validates the Service Broker services within the database.</li>
+</ul>
+
+<p><strong>Syntax</strong></p>
+
+<p><img src="/assets/images/posts/2017/sql-database-repair-commands.png" alt="" /></p>
+
+<p><strong>Description Of All Commands</strong></p>
+
+<p>According to above script we are going to explain each syntax in a proper way. Let’s have a look:</p>
+
+<ol>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>This field __‘database_name</td>
+          <td>database_id</td>
+          <td>0’__ indicates an argument. It is the database ID or name, which can run the integrity checks. If not mentioned, or if 0 is mentioned, then, the current database will be used. Database names must be observed for an identifier.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>It <strong>‘NOINDEX’</strong> specifies nonclustered indexes verification that will not be performed. It will decrease the overall execution time. NOINDEX will not affect the system tables because the integrity checks are always executed on all the system table indexes.</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>It will indicate __‘REPAIR_ALLOW_DATA_LOSS</td>
+          <td>REPAIR_FAST</td>
+          <td>REPAIR_REBUILD’__ that repair level for the errors found by DBCC CHECKD. As a final option, use this REPAIR alternatives only. The specified database has been accessed in a single-user mode to utilize one of the following three repair options</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>It signifies <strong>‘REPAIR_ALLOW_DATA_LOSS’</strong> to retrieve all reported errors. But, these repairs may cause some data loss.</li>
+  <li>This argument <strong>‘REPAIR_FAST’</strong> helps to maintain backward compatibility only. There is no repair action will be performed.</li>
+  <li>This argument <strong>‘REPAIR_REBUILD’</strong> is performing repair option, which has no possibility of any data loss. This may include quick repairs i.e., repairing missing rows in non-clustered indexes, and very time-consuming repairs, while rebuilding an index. It is not applicable to repair all errors involving FILESTREAM data.</li>
+  <li>This argument <strong>‘ALL_ERRORMSGS’</strong> will display all reported error messages per object. All errors are displayed on the screen by default. This option has no effect if it is specified or ommitted as well. This error messages have to be sorted by object ID, except for those messages created from tempdb database.</li>
+  <li>In this field <strong>‘EXTENDED_LOGICAL_CHECKS’</strong> if the compatibility level is 100 or above in SQL Server 2008 then, it performs the logical consistency checks on the XML indexes, indexed view, and spatial indexes, where exist<br />
+For more details, in the <strong>“Remarks”</strong> section you have to view <strong>“Performing Logical Consistency Checks on Indexes”</strong>, as far later</li>
+  <li>This argument <strong>‘NO_INFOMSGS’</strong> contains all informational messages.</li>
+  <li>This <strong>‘TABLOCK’</strong> may Cause DBCC CHECKDB command to obtain locks in place of using the internal database snapshot. This may include short-term an exclusive (X) lock on database. TABLOCK option causes the DBCC CHECKDB and will run faster on the database under heavy load, but reduces the type of concurrency effects on database while running the DBCC CHECKDB cmd.</li>
+  <li>This field <strong>‘ESTIMATEONLY’</strong> shows an excessive amount of tempdb space, which is needed to run DBCC CHECKDB command with other specified options. The actual database test is not performed.</li>
+  <li>It <strong>‘PHYSICAL_ONLY’</strong> indicates the limit to verify the integrity of physical page and records the header and then, allocate the consistency of the database. This option is available to provide a small check and it will check the physical consistency of SQL database. However, it can also detect the split pages, hardware failures, and some checksum failures that can compromise users data.</li>
+  <li>This argument <strong>‘DATA_PURITY’</strong> Causes the DBCC CHECKDB for checking the database that is not valid or might be out-of-range. For example, DBCC CHECKDB detected the columns with time and date ranges that are larger than or less than the acceptable value for date &amp; time data type; decimal or numeric data types with the precise or accurate value that is not valid.</li>
+  <li>Enable the column-value integrity checks by default and no need to select DATA_PURITY option. In upgraded version of databases, column checks are not selected by default until DBCC CHECKDB command with DATA_PURITY has run error freely on the SQL database. After that, DBCC CHECKDB checks the integrity of column-value by default.</li>
+  <li>It <strong>‘MAXDOP’</strong> can override the maximum degree of parallelism of sp_configure for the given statement. The MAXDOP exceeds the configured value with sp_configure. If MAXDOP can exceed the configured value with Resource Governor, then, SQL Database Engine uses the value of Resource Governor MAXDOP, which is also described in ALTER WORKLOAD GROUP.</li>
+</ol>
+
+<p><strong>Conclusion</strong></p>
+
+<p>Recovery of data in quite important for managing the SQL database. If one record is missing then, it will create a hurdle in the work flow. Therefore, we have already discussed the SQL database repair commands in an efficient manner.</p>
 
         
       </section>
@@ -345,7 +409,7 @@
     
       
       
-      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a>
+      <a href="/tags/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
     
     </span>
   </p>
@@ -366,36 +430,36 @@
     
       
       
-      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a>
+      <a href="/categories/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-03-05T00:00:00+00:00">March 05, 2010</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-10-11T00:00:00+00:00">October 11, 2017</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+find+pen+drive+hidden+folder%20https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-find-pen-drive-hidden-folder%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=A+Basic+Guide+On+SQL+Database+Repair+Commands%20https%3A%2F%2Fmahedee.github.io%2F%2Fsql-database-repair-commands%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-find-pen-drive-hidden-folder%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.github.io%2F%2Fsql-database-repair-commands%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-find-pen-drive-hidden-folder%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.github.io%2F%2Fsql-database-repair-commands%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/create-drop-insert-update-delete-and-select-the-basic-sql/" class="pagination--pager" title="Create, Drop, Insert, Update, Delete and Select – The Basic SQL
+      <a href="/a-simple-data-science-experiment-with-azure-machine-learning-studio/" class="pagination--pager" title="A Simple Data Science Experiment With Azure Machine Learning Studio
 ">Previous</a>
     
     
-      <a href="/asp-net-common-interview-questions/" class="pagination--pager" title="ASP.net : Common Interview Questions
+      <a href="/create-your-first-chat-bot-application-using-microsoft-bot-framework/" class="pagination--pager" title="Create your first chat bot application using Microsoft Bot Framework
 ">Next</a>
     
   </nav>
@@ -615,8 +679,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.github.io//how-to-find-pen-drive-hidden-folder/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/how-to-find-pen-drive-hidden-folder"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.github.io//sql-database-repair-commands/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/sql-database-repair-commands"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

@@ -23,7 +23,7 @@ function get_current_site {
 
 function build_site {
 	echo "building site"
-	bundle exec jekyll build
+	JEKYLL_ENV=production bundle exec jekyll build
 }
 
 function deploy {

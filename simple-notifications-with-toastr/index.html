@@ -1,0 +1,861 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Simple Notifications With Toastr - Learn and share</title>
+<meta name="description" content="toastr is a simple JavaScript toast notification library that is small, easy to use, and extendable. It is mostly used to show notification and its outlook is very nice and responsive. It allows you to create simple toasts with HTML5 and JavaScript">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Learn and share">
+<meta property="og:title" content="Simple Notifications With Toastr">
+<meta property="og:url" content="https://mahedee.github.io//simple-notifications-with-toastr/">
+
+
+  <meta property="og:description" content="toastr is a simple JavaScript toast notification library that is small, easy to use, and extendable. It is mostly used to show notification and its outlook is very nice and responsive. It allows you to create simple toasts with HTML5 and JavaScript">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2014-09-16T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.github.io//simple-notifications-with-toastr/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.github.io//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Learn and share Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Learn and share
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.png" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Simple Notifications With Toastr">
+    <meta itemprop="description" content="toastr is a simple JavaScript toast notification library that is small, easy to use, and extendable. It is mostly used to show notification and its outlook is very nice and responsive. It allows you to create simple toasts with HTML5 and JavaScript">
+    <meta itemprop="datePublished" content="September 16, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Simple Notifications With Toastr
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>toastr is a simple JavaScript toast notification library that is small, easy to use, and extendable. It is mostly used to show notification and its outlook is very nice and responsive. It allows you to create simple toasts with HTML5 and JavaScript like following:</p>
+
+<p><img src="/assets/images/posts/2014/toast.jpg" alt="" /></p>
+
+<p>Let’s use toastr in a simple asp.net MVC application.</p>
+
+<p><strong>Step 1: Create a ASP.NET MVC application with basic template</strong></p>
+
+<ul>
+  <li>Open visual studio, Go to File-&gt;New-&gt;Project</li>
+  <li>Select Template -&gt; Visual C# -&gt; Web -&gt; ASP.NET MVC 4 Web application and click OK</li>
+  <li>Select Basic Template and Razor as view engine</li>
+</ul>
+
+<p><strong>Step 2: Install required packages</strong></p>
+
+<p>Run the following command in package manager console to install packages</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">toastr</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create HomeController and index view</strong></p>
+
+<p>Create a Home controller by right click on controller folder. Create an index view in Views -&gt; Home -&gt; Index.cshtml by right clicking in index action of Home controller.</p>
+
+<p><strong>HomeController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Mvc</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Toastr.Controllers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HomeController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="c1">//</span>
+        <span class="c1">// GET: /Home/</span>
+ 
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+ 
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Index.cshtml</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+&lt;h2&gt;Toastr Implimentation&lt;/h2&gt;
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Modify BundleConfig.cs</strong></p>
+
+<p><strong>BundleConfig.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Optimization</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Toastr</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">BundleConfig</span>
+    <span class="p">{</span>
+        <span class="c1">// For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterBundles</span><span class="p">(</span><span class="n">BundleCollection</span> <span class="n">bundles</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScriptBundle</span><span class="p">(</span><span class="s">"~/bundles/jquery"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                        <span class="s">"~/Scripts/jquery-{version}.js"</span><span class="p">));</span>
+ 
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScriptBundle</span><span class="p">(</span><span class="s">"~/bundles/jqueryui"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                        <span class="s">"~/Scripts/jquery-ui-{version}.js"</span><span class="p">));</span>
+ 
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScriptBundle</span><span class="p">(</span><span class="s">"~/bundles/jqueryval"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                        <span class="s">"~/Scripts/jquery.unobtrusive*"</span><span class="p">,</span>
+                        <span class="s">"~/Scripts/jquery.validate*"</span><span class="p">));</span>
+ 
+            <span class="c1">//Added for toaster</span>
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScriptBundle</span><span class="p">(</span><span class="s">"~/bundles/toastr"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                       <span class="s">"~/Scripts/toastr.js*"</span><span class="p">,</span>
+                       <span class="s">"~/Scripts/toastrImp.js"</span><span class="p">));</span>
+ 
+ 
+            <span class="c1">// Use the development version of Modernizr to develop with and learn from. Then, when you're</span>
+            <span class="c1">// ready for production, use the build tool at http://modernizr.com to pick only the tests you need.</span>
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">ScriptBundle</span><span class="p">(</span><span class="s">"~/bundles/modernizr"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                        <span class="s">"~/Scripts/modernizr-*"</span><span class="p">));</span>
+ 
+            <span class="c1">//Modify for toastr</span>
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">StyleBundle</span><span class="p">(</span><span class="s">"~/Content/css"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span><span class="s">"~/Content/site.css"</span><span class="p">,</span>
+                                                                <span class="s">"~/Content/toastr.css"</span><span class="p">));</span>
+ 
+            <span class="n">bundles</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">StyleBundle</span><span class="p">(</span><span class="s">"~/Content/themes/base/css"</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.core.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.resizable.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.selectable.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.accordion.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.autocomplete.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.button.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.dialog.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.slider.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.tabs.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.datepicker.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.progressbar.css"</span><span class="p">,</span>
+                        <span class="s">"~/Content/themes/base/jquery.ui.theme.css"</span><span class="p">));</span>
+ 
+             
+            <span class="n">BundleTable</span><span class="p">.</span><span class="n">EnableOptimizations</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+ 
+ 
+        <span class="p">}</span>
+          
+ 
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Add toastrImp.js in Scripts folder. Modify BundleConfig.cs to add toastr.js, toastrImp.js and toastr.css add bundle reference in Views-&gt;Shared-&gt;_Layout.cshtml. toastrImp.js is my created javascript file to implement toastr.</p>
+
+<p><strong>toastrImp.js</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+ 
+    <span class="nx">displayToastr</span><span class="p">();</span>
+  
+<span class="p">});</span>
+ 
+<span class="kd">function</span> <span class="nx">displayToastr</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//alert('yes');</span>
+    <span class="c1">// Display a info toast, with no title</span>
+    <span class="nx">toastr</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi Mahedee, This information for you.</span><span class="dl">'</span><span class="p">)</span>
+ 
+    <span class="c1">// Display a warning toast, with no title</span>
+    <span class="nx">toastr</span><span class="p">.</span><span class="nx">warning</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi Mahedee, This the first warning for you!</span><span class="dl">'</span><span class="p">)</span>
+ 
+    <span class="c1">// Display a success toast, with a title</span>
+    <span class="nx">toastr</span><span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="dl">'</span><span class="s1">Yes! You have successfully completed your task!</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Congratulation for you, Mahedee!</span><span class="dl">'</span><span class="p">)</span>
+ 
+    <span class="c1">// Display an error toast, with a title</span>
+    <span class="nx">toastr</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">An error occured in the solution!</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Please contact with system administrator.</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>_Layout.cshtml</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;!</span><span class="n">DOCTYPE</span> <span class="n">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">meta</span> <span class="n">charset</span><span class="p">=</span><span class="s">"utf-8"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">meta</span> <span class="n">name</span><span class="p">=</span><span class="s">"viewport"</span> <span class="n">content</span><span class="p">=</span><span class="s">"width=device-width"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">title</span><span class="p">&gt;</span><span class="n">@ViewBag</span><span class="p">.</span><span class="n">Title</span><span class="p">&lt;/</span><span class="n">title</span><span class="p">&gt;</span>
+    <span class="n">@Styles</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/Content/css"</span><span class="p">)</span>
+    <span class="n">@Scripts</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/bundles/modernizr"</span><span class="p">)</span>
+<span class="p">&lt;/</span><span class="n">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">body</span><span class="p">&gt;</span>
+    <span class="nf">@RenderBody</span><span class="p">()</span>
+ 
+    <span class="n">@Scripts</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/bundles/jquery"</span><span class="p">)</span>
+    <span class="n">@Scripts</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/bundles/toastr"</span><span class="p">)</span>
+    <span class="nf">@RenderSection</span><span class="p">(</span><span class="s">"scripts"</span><span class="p">,</span> <span class="n">required</span><span class="p">:</span> <span class="k">false</span><span class="p">)</span>
+<span class="p">&lt;/</span><span class="n">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">html</span><span class="p">&gt;</span>
+
+</code></pre></div></div>
+
+<p>Now run the program, you will see some notification nicely like below.</p>
+
+<p><img src="/assets/images/posts/2014/Output2.jpg" alt="" /></p>
+
+<p><strong>Some option need to know:</strong></p>
+
+<p>The position of toastr can be</p>
+
+<ol>
+  <li>toast-top-right</li>
+  <li>toast-top-left</li>
+  <li>toast-bottom-right</li>
+  <li>toast-bottom-left</li>
+  <li>toast-top-full-width</li>
+  <li>toast-bottom-full-width</li>
+</ol>
+
+<p>You can change it in toastr.js like following.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">toastr</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+<span class="dl">"</span><span class="s2">closeButton</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">debug</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">positionClass</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">toast-top-full-width</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">onclick</span><span class="dl">"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">showDuration</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">200</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">hideDuration</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1500</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">timeOut</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">6000</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">extendedTimeOut</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1200</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">showEasing</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">swing</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">hideEasing</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">linear</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">showMethod</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fadeIn</span><span class="dl">"</span><span class="p">,</span>
+<span class="dl">"</span><span class="s2">hideMethod</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fadeOut</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/Toastr">Source code</a></strong></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetmvc" class="page__taxonomy-item" rel="tag">aspnetmvc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">javascript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-09-16T00:00:00+00:00">September 16, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Simple+Notifications+With+Toastr%20https%3A%2F%2Fmahedee.github.io%2F%2Fsimple-notifications-with-toastr%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.github.io%2F%2Fsimple-notifications-with-toastr%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.github.io%2F%2Fsimple-notifications-with-toastr%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/a-simple-spa-with-angularjs-asp-net-mvc-web-api-and-ef/" class="pagination--pager" title="A Simple SPA with AngularJs, ASP.NET MVC, Web API And EF
+">Previous</a>
+    
+    
+      <a href="/json-serialization-in-asp-net-mvc-and-angularjs/" class="pagination--pager" title="JSON Serialization In ASP.NET MVC And AngularJs
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2014-09-15-a-signalr-application-for-real-time-notification-using-angularjs-and-toastr/" rel="permalink">
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Serilog is a newer logging framework for .NET and now has been the most used and preferred framework for .NET Application. Seq is the intelligent search, ana...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="permalink">Uses of Configuration Provider and Options Pattern in ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" rel="permalink">Create a sentiment analysis app using ML.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.github.io//simple-notifications-with-toastr/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/simple-notifications-with-toastr"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

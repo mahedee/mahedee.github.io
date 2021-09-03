@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to view SQL Server error log - Learn and share</title>
-<meta name="description" content="hi">
+<!-- begin _includes/seo.html --><title>How To Add ASP.NET MVC to a Web Form Application - Learn and share</title>
+<meta name="description" content="ASP.NET MVC is very popular now a day. But we have much legacy system of ASP.NET web form. If you want to use ASP.NET MVC with legacy ASP.NET web form application. What should you do? This is not encouraged to create an application with ASP.NET web form and ASP.NET MVC together. If you need, you can use. So, let’s start. In this application I used Visual Studio 2012 and .NET framework 4.5">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Learn and share">
-<meta property="og:title" content="How to view SQL Server error log">
-<meta property="og:url" content="https://mahedee.github.io//how-to-view-sql-server-error-log/">
+<meta property="og:title" content="How To Add ASP.NET MVC to a Web Form Application">
+<meta property="og:url" content="https://mahedee.github.io//how-to-add-asp-net-mvc-to-a-web-form-application/">
 
 
-  <meta property="og:description" content="hi">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2010-12-01T00:00:00+00:00">
+  <meta property="og:description" content="ASP.NET MVC is very popular now a day. But we have much legacy system of ASP.NET web form. If you want to use ASP.NET MVC with legacy ASP.NET web form application. What should you do? This is not encouraged to create an application with ASP.NET web form and ASP.NET MVC together. If you need, you can use. So, let’s start. In this application I used Visual Studio 2012 and .NET framework 4.5">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2014-10-14T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.github.io//how-to-view-sql-server-error-log/">
+
+<link rel="canonical" href="https://mahedee.github.io//how-to-add-asp-net-mvc-to-a-web-form-application/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to view SQL Server error log">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="December 01, 2010">
+    <meta itemprop="headline" content="How To Add ASP.NET MVC to a Web Form Application">
+    <meta itemprop="description" content="ASP.NET MVC is very popular now a day. But we have much legacy system of ASP.NET web form. If you want to use ASP.NET MVC with legacy ASP.NET web form application. What should you do? This is not encouraged to create an application with ASP.NET web form and ASP.NET MVC together. If you need, you can use. So, let’s start. In this application I used Visual Studio 2012 and .NET framework 4.5">
+    <meta itemprop="datePublished" content="October 14, 2014">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to view SQL Server error log
+          <h1 id="page-title" class="page__title" itemprop="headline">How To Add ASP.NET MVC to a Web Form Application
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
           
         </header>
@@ -320,16 +320,64 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>The SQL Server error log contains user-defined events and certain system events. You can use this error log to troubleshoot problems related to SQL Server.
-Step to view SQL Server error log</p>
+        <p>ASP.NET MVC is very popular now a day. But we have much legacy system of ASP.NET web form. If you want to use ASP.NET MVC with legacy ASP.NET web form application. What should you do? This is not encouraged to create an application with ASP.NET web form and ASP.NET MVC together. If you need, you can use. So, let’s start. In this application I used Visual Studio 2012 and .NET framework 4.5</p>
 
-<p>Object Explorer -&gt; Server -&gt; Management -&gt; SQL Server Logs.</p>
+<p><strong>Step 1: Create a ASP.NET Web Forms Application</strong></p>
 
-<p><img src="/assets/images/posts/2010/11.jpg" alt="" /></p>
+<ul>
+  <li>Open visual studio, Got to File-&gt;New-&gt;Project</li>
+  <li>Select Template -&gt; Visual C# -&gt; Web -&gt; ASP.NET Web Forms application, set location and click OK</li>
+</ul>
 
-<p>Right-click a log -&gt; Click View SQL Server Log.</p>
+<p><strong>Step 2: Add Reference</strong></p>
+<ul>
+  <li>Click right button on the project -&gt; Add Reference -&gt;Extensions -&gt; System.web.mvc</li>
+  <li>And Add Reference -&gt; Framework -&gt; System.Web.Routing</li>
+</ul>
 
-<p><img src="/assets/images/posts/2010/12.jpg" alt="" /></p>
+<p><img src="/assets/images/posts/2014/addref.jpg" alt="" /></p>
+
+<p><strong>Step 3: Configure Default Routing</strong><br />
+Modify the Application_Start method of Global.asax file. Write down the following code snippet in the Application_Start method .</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">System</span><span class="p">.</span><span class="n">Web</span><span class="p">.</span><span class="n">Routing</span><span class="p">.</span><span class="n">RouteTable</span><span class="p">.</span><span class="n">Routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span><span class="s">"Default"</span><span class="p">,</span> <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>
+                <span class="k">new</span> <span class="p">{</span> <span class="n">Controller</span> <span class="p">=</span> <span class="s">"Home"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="s">""</span> <span class="p">});</span>
+
+</code></pre></div></div>
+<p>Here Route name is Default and default routing is {controller}/{action}/{id} . Here, default controller is Home and default action is index and default id is empty.</p>
+
+<p><strong>Step 4: Create Controller directory and Controller</strong></p>
+
+<ul>
+  <li>Create a controller directory by right click on solution -&gt;Add -&gt; New folder -&gt; Controllers</li>
+  <li>Create a controller by right click on Controller folder -&gt; Add -&gt; Class -&gt; MyController (name of the class)</li>
+  <li>And create an action in MyController - name AboutMe like below.</li>
+</ul>
+
+<p><strong>MyController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Mvc</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">WebFormMVC.Controllers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">MyController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">JsonResult</span> <span class="nf">AboutMe</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">Json</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">name</span> <span class="p">=</span> <span class="s">"Mahedee Hasan"</span><span class="p">,</span> <span class="n">designation</span> <span class="p">=</span> <span class="s">"Software Architect"</span><span class="p">},</span> <span class="n">JsonRequestBehavior</span><span class="p">.</span><span class="n">AllowGet</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Now run the application, if you set default page of your application is default.aspx. You will see the output of as usual asp.net webform application. Now change the URL like : http://localhost:53598/My/Aboutme you will see a json output. This is actually MVC output.</p>
+
+<p>If you are not clear in any portion or you have any suggestion, please leave your comment here. To run the application you may require some packages to download.</p>
 
         
       </section>
@@ -350,7 +398,15 @@ Step to view SQL Server error log</p>
     
       
       
-      <a href="/tags/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
+      <a href="/tags/#aspnetmvc" class="page__taxonomy-item" rel="tag">aspnetmvc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
     
     </span>
   </p>
@@ -371,36 +427,44 @@ Step to view SQL Server error log</p>
     
       
       
-      <a href="/categories/#shaon" class="page__taxonomy-item" rel="tag">Shaon</a>
+      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-12-01T00:00:00+00:00">December 01, 2010</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-10-14T00:00:00+00:00">October 14, 2014</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+view+SQL+Server+error+log%20https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=How+To+Add+ASP.NET+MVC+to+a+Web+Form+Application%20https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-add-asp-net-mvc-to-a-web-form-application%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-add-asp-net-mvc-to-a-web-form-application%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.github.io%2F%2Fhow-to-add-asp-net-mvc-to-a-web-form-application%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/set-a-fixed-amount-of-memory-in-sql-server-using-sql-server-management-studio/" class="pagination--pager" title="Set a fixed amount of memory in SQL Server (Using SQL Server Management Studio)
+      <a href="/retrieving-a-collection-of-objects-with-page-methods-and-angularjs-in-asp-net-web-form/" class="pagination--pager" title="Retrieving A Collection Of Objects With Page Methods And AngularJS In ASP.NET Web Form
 ">Previous</a>
     
     
-      <a href="/introduction-to-angularjs-and-bootstrap-in-asp-net-web-form/" class="pagination--pager" title="Introduction To AngularJs And Bootstrap In ASP.NET Web Form
+      <a href="/uses-of-dropdown-list-and-radio-button-in-asp-net-mvc-application-with-entity-framework/" class="pagination--pager" title="Uses Of Dropdown List And Radio Button In ASP.NET MVC Application With Entity Framework
 ">Next</a>
     
   </nav>
@@ -620,8 +684,8 @@ Step to view SQL Server error log</p>
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.github.io//how-to-view-sql-server-error-log/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/how-to-view-sql-server-error-log"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.github.io//how-to-add-asp-net-mvc-to-a-web-form-application/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/how-to-add-asp-net-mvc-to-a-web-form-application"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

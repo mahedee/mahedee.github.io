@@ -312,7 +312,7 @@
 
 
 
-  5 minute read
+  4 minute read
 </p>
           
         </header>
@@ -610,225 +610,452 @@ Right outer join returns all the rows from the right table in conjunction with t
   </tbody>
 </table>
 
-<p>SELF JOIN
+<p><strong>SELF JOIN</strong><br />
 The SQL SELF JOIN is used to join a table to itself as if the table were two tables, temporarily renaming at least one table in the SQL statement.</p>
 
-<p>Syntax:</p>
+<p><strong>Syntax:</strong></p>
 
-<p>?
-1
-2
-3
-SELECT A.Id, A.Name, B.Name AS Introducer
-FROM Customers A, Customers B
-WHERE A.IntroducerId = B.Id
-Output:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">A</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">A</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">B</span><span class="p">.</span><span class="n">Name</span> <span class="k">AS</span> <span class="n">Introducer</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">A</span><span class="p">,</span> <span class="n">Customers</span> <span class="n">B</span>
+<span class="k">WHERE</span> <span class="n">A</span><span class="p">.</span><span class="n">IntroducerId</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="n">Id</span>
+</code></pre></div></div>
 
-<p>Id          Name                                               Introducer</p>
+<p><strong>Output:</strong></p>
 
-<hr />
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Introducer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>Hamidur Rahman</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>Mahedee Hasan</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>Hamidur Rahman</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>Jamilur Rahman</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>Hasan Sarwar</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>Kamal Hossain</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>Imran Khan</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>1           Mahedee Hasan                             Hamidur Rahman</p>
-
-<p>2           Hamidur Rahman                         Mahedee Hasan</p>
-
-<p>3           Jamilur Rahman                           Hamidur Rahman</p>
-
-<p>4           Hasan Sarwar                                Jamilur Rahman</p>
-
-<p>5           Kamal Hossain                              Hasan Sarwar</p>
-
-<p>6           Imran Khan                                   Kamal Hossain</p>
-
-<p>7           Abu Sayem                                     Imran Khan</p>
-
-<p>CARTESIAN JOIN/CROSS JOIN
+<p><strong>CARTESIAN JOIN/CROSS JOIN</strong><br />
 The SQL cross join produces a result set which is the number of rows in the first table multiplied by the number of rows in the second table, if no WHERE clause uses in the second table</p>
 
-<p>07-crossjoin</p>
+<p><img src="/assets/images/posts/2014/07-crossjoin.jpg" alt="" /></p>
 
-<p>Syntax:</p>
+<p><strong>Syntax:</strong></p>
 
-<p>?
-1
-2
-3
-4
-5
-SELECT cust.Id, cust.Name, ord.Amount, ord.[Date]
-FROM Customers cust, Orders ord</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">cust</span><span class="p">,</span> <span class="n">Orders</span> <span class="n">ord</span>
+ 
+<span class="k">SELECT</span> <span class="n">cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">cust</span> <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+</code></pre></div></div>
 
-<p>SELECT cust.Id, cust.Name, ord.Amount, ord.[Date]
-FROM Customers cust CROSS JOIN Orders ord
-Output:</p>
+<p><strong>Output:</strong></p>
 
-<p>Id          Name                                               Amount                                  Date</p>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
 
-<hr />
+<p><strong>Additional Information Related JOIN</strong></p>
 
-<p>1           Mahedee Hasan                            4000.00                                 2014-01-10</p>
-
-<p>2           Hamidur Rahman                       4000.00                                 2014-01-10</p>
-
-<p>3           Jamilur Rahman                          4000.00                                 2014-01-10</p>
-
-<p>4           Hasan Sarwar                                4000.00                                 2014-01-10</p>
-
-<p>5           Kamal Hossain                             4000.00                                 2014-01-10</p>
-
-<p>6           Imran Khan                                  4000.00                                 2014-01-10</p>
-
-<p>7           Abu Sayem                                     4000.00                                 2014-01-10</p>
-
-<p>1           Mahedee Hasan                            5000.00                                 2014-01-10</p>
-
-<p>2           Hamidur Rahman                       5000.00                                 2014-01-10</p>
-
-<p>3           Jamilur Rahman                          5000.00                                 2014-01-10</p>
-
-<p>4           Hasan Sarwar                               5000.00                                 2014-01-10</p>
-
-<p>5           Kamal Hossain                             5000.00                                 2014-01-10</p>
-
-<p>6           Imran Khan                                  5000.00                                 2014-01-10</p>
-
-<p>7           Abu Sayem                                    5000.00                                 2014-01-10</p>
-
-<p>1           Mahedee Hasan                            3000.00                                 2014-02-13</p>
-
-<p>2           Hamidur Rahman                       3000.00                                 2014-02-13</p>
-
-<p>3           Jamilur Rahman                          3000.00                                 2014-02-13</p>
-
-<p>4           Hasan Sarwar                               3000.00                                 2014-02-13</p>
-
-<p>5           Kamal Hossain                             3000.00                                 2014-02-13</p>
-
-<p>6           Imran Khan                                  3000.00                                 2014-02-13</p>
-
-<p>7           Abu Sayem                                    3000.00                                 2014-02-13</p>
-
-<p>1           Mahedee Hasan                            600.00                                  2014-03-22</p>
-
-<p>2           Hamidur Rahman                       600.00                                  2014-03-22</p>
-
-<p>3           Jamilur Rahman                          600.00                                  2014-03-22</p>
-
-<p>4           Hasan Sarwar                               600.00                                  2014-03-22</p>
-
-<p>5           Kamal Hossain                             600.00                                  2014-03-22</p>
-
-<p>6           Imran Khan                                  600.00                                  2014-03-22</p>
-
-<p>7           Abu Sayem                                    600.00                                  2014-03-22</p>
-
-<p>1           Mahedee Hasan                            800.00                                  2014-03-22</p>
-
-<p>2           Hamidur Rahman                        800.00                                  2014-03-22</p>
-
-<p>3           Jamilur Rahman                          800.00                                  2014-03-22</p>
-
-<p>4           Hasan Sarwar                               800.00                                  2014-03-22</p>
-
-<p>5           Kamal Hossain                             800.00                                  2014-03-22</p>
-
-<p>6           Imran Khan                                  800.00                                  2014-03-22</p>
-
-<p>7           Abu Sayem                                    800.00                                  2014-03-22</p>
-
-<p>Additional Information Related JOIN</p>
-
-<p>Left Outer Join Where Null
+<p><strong>Left Outer Join Where Null</strong>
 Left outer join where null returns all the rows from the left table in conjunction without the matching rows from the right table.</p>
 
-<p>08-left Join and Null</p>
+<p><img src="/assets/images/posts/2014/08-left-Join-and-Null.jpg" alt="" /></p>
 
-<p>Syntax</p>
+<p><strong>Syntax</strong></p>
 
-<p>?
-1
-2
-3
-4
-5
-SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
-FROM Customers Cust
-LEFT JOIN Orders ord
-ON Cust.Id = ord.CustomerId
-where ord.CustomerId is null
-Output</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span>
+<span class="k">where</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span> <span class="k">is</span> <span class="k">null</span>
+</code></pre></div></div>
+<p><strong>Output</strong></p>
 
-<p>Id          Name                                               Amount                                  Date</p>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+  </tbody>
+</table>
 
-<hr />
-
-<p>1           Mahedee Hasan                              NULL                                    NULL</p>
-
-<p>5           Kamal Hossain                               NULL                                    NULL</p>
-
-<p>6           Imran Khan                                    NULL                                    NULL</p>
-
-<p>7           Abu Sayem                                      NULL                                    NULL</p>
-
-<p>Right Outer Join Where Null
+<p><strong>Right Outer Join Where Null</strong><br />
 Right outer join where null returns all the rows from the right table in conjunction without the matching rows from the left table.</p>
 
-<p>08-Right Join and Null</p>
+<p><img src="/assets/images/posts/2014/08-Right-Join-and-Null2.jpg" alt="" /></p>
 
-<p>Syntax:</p>
+<p><strong>Syntax:</strong></p>
 
-<p>?
-1
-2
-3
-4
-5
-SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
-FROM Customers Cust
-RIGHT JOIN Orders ord
-ON Cust.Id = ord.CustomerId
-where Cust.Id is null
-Output</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">RIGHT</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span>
+<span class="k">where</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="k">is</span> <span class="k">null</span>
+</code></pre></div></div>
 
-<p>Id              Name          Amount        Date
-———– ————————————————– ————————————— ———-
-NULL       NULL          800.00        2014-03-22</p>
+<p><strong>Output</strong></p>
 
-<p>Full Outer Join Where Null
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NULL</td>
+      <td>NULL</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Full Outer Join Where Null</strong><br />
 Full outer join is combines left outer join and right outer join. It returns row from either table when the conditions are met and returns null value when there is no match</p>
 
-<p>10-full Join and Null</p>
+<p><img src="/assets/images/posts/2014/10-full-Join-and-Null.jpg" alt="" /></p>
 
-<p>Syntax</p>
+<p><strong>Syntax</strong></p>
 
-<p>?
-1
-2
-3
-4
-5
-6
-SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
-FROM Customers Cust
-FULL OUTER JOIN Orders ord
-ON Cust.Id = ord.CustomerId
-WHERE Cust.Id is null
-OR ord.CustomerId is null
-Output</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">FULL</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span>
+<span class="k">WHERE</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="k">is</span> <span class="k">null</span>
+<span class="k">OR</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span> <span class="k">is</span> <span class="k">null</span>
+</code></pre></div></div>
 
-<p>Id          Name                                                  Amount                                  Date</p>
+<p><strong>Output</strong></p>
 
-<hr />
-
-<p>1           Mahedee Hasan                                  NULL                                    NULL</p>
-
-<p>5           Kamal Hossain                                   NULL                                    NULL</p>
-
-<p>6           Imran Khan                                        NULL                                    NULL</p>
-
-<p>7           Abu Sayem                                          NULL                                    NULL</p>
-
-<p>NULL        NULL                                            800.00                                  2014-03-22</p>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>NULL</td>
+      <td>NULL</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
 
         
       </section>

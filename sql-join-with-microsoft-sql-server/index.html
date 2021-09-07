@@ -1,0 +1,1150 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>SQL Join With Microsoft SQL Server - Think Simple</title>
+<meta name="description" content="A SQL join clause is used to combine records from two or more tables in a database based on common field between them. It creates a set of rows in a temporary table.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="SQL Join With Microsoft SQL Server">
+<meta property="og:url" content="https://mahedee.net//sql-join-with-microsoft-sql-server/">
+
+
+  <meta property="og:description" content="A SQL join clause is used to combine records from two or more tables in a database based on common field between them. It creates a set of rows in a temporary table.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2014-07-03T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//sql-join-with-microsoft-sql-server/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="SQL Join With Microsoft SQL Server">
+    <meta itemprop="description" content="A SQL join clause is used to combine records from two or more tables in a database based on common field between them. It creates a set of rows in a temporary table.">
+    <meta itemprop="datePublished" content="July 03, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">SQL Join With Microsoft SQL Server
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>What is SQL Joins?</strong></p>
+
+<p>A SQL join clause is used to combine records from two or more tables in a database based on common field between them. It creates a set of rows in a temporary table.</p>
+
+<p>There are different types of joins available in SQL:
+• INNER JOIN
+• LEFT JOIN
+• RIGHT JOIN
+• FULL JOIN
+• SELF JOIN
+• CARTESIAN JOIN/CROSS JOIN</p>
+
+<p>To understand JOINs, let’s consider the following two tables Customers and Orders is as follows</p>
+
+<p><strong>Customers</strong></p>
+
+<p><img src="/assets/images/posts/2014/01-Customer02.jpg" alt="" /></p>
+
+<p><strong>Orders</strong></p>
+
+<p><img src="/assets/images/posts/2014/02-Orders02.jpg" alt="" /></p>
+
+<p><strong>INNER JOIN</strong></p>
+
+<p>INNER JOIN returns match data between tables. It returns rows when there is at least one match in both the tables.</p>
+
+<p><img src="/assets/images/posts/2014/03-InnerJoin2.jpg" alt="" /></p>
+
+<p><strong>Syntax:</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th style="text-align: center">Name</th>
+      <th style="text-align: right">Amount</th>
+      <th style="text-align: right">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td style="text-align: center">Hamidur Rahman</td>
+      <td style="text-align: right">4000.00</td>
+      <td style="text-align: right">2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td style="text-align: center">Hamidur Rahman</td>
+      <td style="text-align: right">5000.00</td>
+      <td style="text-align: right">2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td style="text-align: center">Jamilur Rahman</td>
+      <td style="text-align: right">3000.00</td>
+      <td style="text-align: right">2014-02-13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td style="text-align: center">Hasan Sarwar</td>
+      <td style="text-align: right">600.00</td>
+      <td style="text-align: right">2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>LEFT JOIN/LEFT OUTER JOIN</strong><br />
+Left Outer Join returns all the rows from the left table in conjunction with the matching rows from the right table. If there are no columns matching in the right table, it returns NULL values.</p>
+
+<p><img src="/assets/images/posts/2014/04-Left-join1.jpg" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>RIGHT JOIN/RIGHT OUTER JOIN</strong><br />
+Right outer join returns all the rows from the right table in conjunction with the matching rows from the left table. If there are no columns matching in the left table, it returns NULL values.</p>
+
+<p><img src="/assets/images/posts/2014/05-Right-join.jpg" alt="" /></p>
+
+<p><strong>Syntax:</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">RIGHT</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>NULL</td>
+      <td>NULL</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>FULL JOIN /FULL OUTER JOIN</strong></p>
+
+<p>Full outer join is combines left outer join and right outer join. It returns row from either table when the conditions are met and returns null value when there is no match</p>
+
+<p><img src="/assets/images/posts/2014/06-Full-Join4.jpg" alt="" /></p>
+
+<p><strong>Syntax:</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ord</span><span class="p">.</span><span class="n">Amount</span><span class="p">,</span> <span class="n">ord</span><span class="p">.[</span><span class="nb">Date</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">Customers</span> <span class="n">Cust</span>
+<span class="k">FULL</span> <span class="k">JOIN</span> <span class="n">Orders</span> <span class="n">ord</span>
+<span class="k">ON</span> <span class="n">Cust</span><span class="p">.</span><span class="n">Id</span> <span class="o">=</span> <span class="n">ord</span><span class="p">.</span><span class="n">CustomerId</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Output:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mahedee Hasan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>4000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Hamidur Rahman</td>
+      <td>5000.00</td>
+      <td>2014-01-10</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Jamilur Rahman</td>
+      <td>3000.00</td>
+      <td>2014-02-13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Hasan Sarwar</td>
+      <td>600.00</td>
+      <td>2014-03-22</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Kamal Hossain</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Imran Khan</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Abu Sayem</td>
+      <td>NULL</td>
+      <td>NULL</td>
+    </tr>
+    <tr>
+      <td>NULL</td>
+      <td>NULL</td>
+      <td>800.00</td>
+      <td>2014-03-22</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>SELF JOIN
+The SQL SELF JOIN is used to join a table to itself as if the table were two tables, temporarily renaming at least one table in the SQL statement.</p>
+
+<p>Syntax:</p>
+
+<p>?
+1
+2
+3
+SELECT A.Id, A.Name, B.Name AS Introducer
+FROM Customers A, Customers B
+WHERE A.IntroducerId = B.Id
+Output:</p>
+
+<p>Id          Name                                               Introducer</p>
+
+<hr />
+
+<p>1           Mahedee Hasan                             Hamidur Rahman</p>
+
+<p>2           Hamidur Rahman                         Mahedee Hasan</p>
+
+<p>3           Jamilur Rahman                           Hamidur Rahman</p>
+
+<p>4           Hasan Sarwar                                Jamilur Rahman</p>
+
+<p>5           Kamal Hossain                              Hasan Sarwar</p>
+
+<p>6           Imran Khan                                   Kamal Hossain</p>
+
+<p>7           Abu Sayem                                     Imran Khan</p>
+
+<p>CARTESIAN JOIN/CROSS JOIN
+The SQL cross join produces a result set which is the number of rows in the first table multiplied by the number of rows in the second table, if no WHERE clause uses in the second table</p>
+
+<p>07-crossjoin</p>
+
+<p>Syntax:</p>
+
+<p>?
+1
+2
+3
+4
+5
+SELECT cust.Id, cust.Name, ord.Amount, ord.[Date]
+FROM Customers cust, Orders ord</p>
+
+<p>SELECT cust.Id, cust.Name, ord.Amount, ord.[Date]
+FROM Customers cust CROSS JOIN Orders ord
+Output:</p>
+
+<p>Id          Name                                               Amount                                  Date</p>
+
+<hr />
+
+<p>1           Mahedee Hasan                            4000.00                                 2014-01-10</p>
+
+<p>2           Hamidur Rahman                       4000.00                                 2014-01-10</p>
+
+<p>3           Jamilur Rahman                          4000.00                                 2014-01-10</p>
+
+<p>4           Hasan Sarwar                                4000.00                                 2014-01-10</p>
+
+<p>5           Kamal Hossain                             4000.00                                 2014-01-10</p>
+
+<p>6           Imran Khan                                  4000.00                                 2014-01-10</p>
+
+<p>7           Abu Sayem                                     4000.00                                 2014-01-10</p>
+
+<p>1           Mahedee Hasan                            5000.00                                 2014-01-10</p>
+
+<p>2           Hamidur Rahman                       5000.00                                 2014-01-10</p>
+
+<p>3           Jamilur Rahman                          5000.00                                 2014-01-10</p>
+
+<p>4           Hasan Sarwar                               5000.00                                 2014-01-10</p>
+
+<p>5           Kamal Hossain                             5000.00                                 2014-01-10</p>
+
+<p>6           Imran Khan                                  5000.00                                 2014-01-10</p>
+
+<p>7           Abu Sayem                                    5000.00                                 2014-01-10</p>
+
+<p>1           Mahedee Hasan                            3000.00                                 2014-02-13</p>
+
+<p>2           Hamidur Rahman                       3000.00                                 2014-02-13</p>
+
+<p>3           Jamilur Rahman                          3000.00                                 2014-02-13</p>
+
+<p>4           Hasan Sarwar                               3000.00                                 2014-02-13</p>
+
+<p>5           Kamal Hossain                             3000.00                                 2014-02-13</p>
+
+<p>6           Imran Khan                                  3000.00                                 2014-02-13</p>
+
+<p>7           Abu Sayem                                    3000.00                                 2014-02-13</p>
+
+<p>1           Mahedee Hasan                            600.00                                  2014-03-22</p>
+
+<p>2           Hamidur Rahman                       600.00                                  2014-03-22</p>
+
+<p>3           Jamilur Rahman                          600.00                                  2014-03-22</p>
+
+<p>4           Hasan Sarwar                               600.00                                  2014-03-22</p>
+
+<p>5           Kamal Hossain                             600.00                                  2014-03-22</p>
+
+<p>6           Imran Khan                                  600.00                                  2014-03-22</p>
+
+<p>7           Abu Sayem                                    600.00                                  2014-03-22</p>
+
+<p>1           Mahedee Hasan                            800.00                                  2014-03-22</p>
+
+<p>2           Hamidur Rahman                        800.00                                  2014-03-22</p>
+
+<p>3           Jamilur Rahman                          800.00                                  2014-03-22</p>
+
+<p>4           Hasan Sarwar                               800.00                                  2014-03-22</p>
+
+<p>5           Kamal Hossain                             800.00                                  2014-03-22</p>
+
+<p>6           Imran Khan                                  800.00                                  2014-03-22</p>
+
+<p>7           Abu Sayem                                    800.00                                  2014-03-22</p>
+
+<p>Additional Information Related JOIN</p>
+
+<p>Left Outer Join Where Null
+Left outer join where null returns all the rows from the left table in conjunction without the matching rows from the right table.</p>
+
+<p>08-left Join and Null</p>
+
+<p>Syntax</p>
+
+<p>?
+1
+2
+3
+4
+5
+SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
+FROM Customers Cust
+LEFT JOIN Orders ord
+ON Cust.Id = ord.CustomerId
+where ord.CustomerId is null
+Output</p>
+
+<p>Id          Name                                               Amount                                  Date</p>
+
+<hr />
+
+<p>1           Mahedee Hasan                              NULL                                    NULL</p>
+
+<p>5           Kamal Hossain                               NULL                                    NULL</p>
+
+<p>6           Imran Khan                                    NULL                                    NULL</p>
+
+<p>7           Abu Sayem                                      NULL                                    NULL</p>
+
+<p>Right Outer Join Where Null
+Right outer join where null returns all the rows from the right table in conjunction without the matching rows from the left table.</p>
+
+<p>08-Right Join and Null</p>
+
+<p>Syntax:</p>
+
+<p>?
+1
+2
+3
+4
+5
+SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
+FROM Customers Cust
+RIGHT JOIN Orders ord
+ON Cust.Id = ord.CustomerId
+where Cust.Id is null
+Output</p>
+
+<p>Id              Name          Amount        Date
+———– ————————————————– ————————————— ———-
+NULL       NULL          800.00        2014-03-22</p>
+
+<p>Full Outer Join Where Null
+Full outer join is combines left outer join and right outer join. It returns row from either table when the conditions are met and returns null value when there is no match</p>
+
+<p>10-full Join and Null</p>
+
+<p>Syntax</p>
+
+<p>?
+1
+2
+3
+4
+5
+6
+SELECT Cust.Id, Cust.Name, ord.Amount, ord.[Date]
+FROM Customers Cust
+FULL OUTER JOIN Orders ord
+ON Cust.Id = ord.CustomerId
+WHERE Cust.Id is null
+OR ord.CustomerId is null
+Output</p>
+
+<p>Id          Name                                                  Amount                                  Date</p>
+
+<hr />
+
+<p>1           Mahedee Hasan                                  NULL                                    NULL</p>
+
+<p>5           Kamal Hossain                                   NULL                                    NULL</p>
+
+<p>6           Imran Khan                                        NULL                                    NULL</p>
+
+<p>7           Abu Sayem                                          NULL                                    NULL</p>
+
+<p>NULL        NULL                                            800.00                                  2014-03-22</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#database" class="page__taxonomy-item" rel="tag">database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#database" class="page__taxonomy-item" rel="tag">Database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-07-03T00:00:00+00:00">July 03, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=SQL+Join+With+Microsoft+SQL+Server%20https%3A%2F%2Fmahedee.net%2F%2Fsql-join-with-microsoft-sql-server%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fsql-join-with-microsoft-sql-server%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fsql-join-with-microsoft-sql-server%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-view-sql-server-error-log/" class="pagination--pager" title="How to view SQL Server error log
+">Previous</a>
+    
+    
+      <a href="/introduction-to-asp-net-mvc/" class="pagination--pager" title="Introduction To ASP.NET MVC
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Serilog is a newer logging framework for .NET and now has been the most used and preferred framework for .NET Application. Seq is the intelligent search, ana...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="permalink">Uses of Configuration Provider and Options Pattern in ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" rel="permalink">Create a sentiment analysis app using ML.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Export-and-Import-Docker-images-and-container-with-asp.net-core-application/" rel="permalink">Export and Import Docker images and container with asp.net core application
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Sometimes we need to work in a disconnected environment. In that situation, we need to export/import docker images and container. Here I will show how to exp...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//sql-join-with-microsoft-sql-server/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/sql-join-with-microsoft-sql-server"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

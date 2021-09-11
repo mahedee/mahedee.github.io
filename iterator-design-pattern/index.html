@@ -1,0 +1,878 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Iterator design pattern with C# - Think Simple</title>
+<meta name="description" content="Iterator pattern is a design pattern which is used to traverse aggregate object often called container and access container’s object without exposing it’s underlying representation. Iterator pattern decoupled algorithm from aggregate object or container. In some cases, algorithms are container specific. We often use collection in C# and then we traverse the collection without knowing it’s internal details. Collection is grouping of some object. Objects can be same type or different type. Collection in fact actively used iterator pattern.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Iterator design pattern with C#">
+<meta property="og:url" content="https://mahedee.net//iterator-design-pattern/">
+
+
+  <meta property="og:description" content="Iterator pattern is a design pattern which is used to traverse aggregate object often called container and access container’s object without exposing it’s underlying representation. Iterator pattern decoupled algorithm from aggregate object or container. In some cases, algorithms are container specific. We often use collection in C# and then we traverse the collection without knowing it’s internal details. Collection is grouping of some object. Objects can be same type or different type. Collection in fact actively used iterator pattern.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-03-09T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//iterator-design-pattern/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Iterator design pattern with C#">
+    <meta itemprop="description" content="Iterator pattern is a design pattern which is used to traverse aggregate object often called container and access container’s object without exposing it’s underlying representation. Iterator pattern decoupled algorithm from aggregate object or container. In some cases, algorithms are container specific. We often use collection in C# and then we traverse the collection without knowing it’s internal details. Collection is grouping of some object. Objects can be same type or different type. Collection in fact actively used iterator pattern.">
+    <meta itemprop="datePublished" content="March 09, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Iterator design pattern with C#
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Iterator pattern is a design pattern which is used to traverse aggregate object often called container and access container’s object without exposing it’s underlying representation. Iterator pattern decoupled algorithm from aggregate object or container. In some cases, algorithms are container specific. We often use collection in C# and then we traverse the collection without knowing it’s internal details. Collection is grouping of some object. Objects can be same type or different type. Collection in fact actively used iterator pattern.</p>
+
+<p><img src="/assets/images/posts/2019/UML_Iterator.jpg" alt="" /></p>
+
+<p>The above figure is UML class diagram for Iterator Pattern. The main idea behind the iterator pattern is to take the responsibility of traversing container and put it to the iterator object. The iterator object will maintain the state of the iteration, keeping track of the current item and track for the next item to iterate.</p>
+
+<p><strong>Benefits:</strong></p>
+
+<ul>
+  <li>Access element of container without exposing it’s internal details.</li>
+  <li>Provides a uniform interface for traversing different collection (aggregate object).</li>
+  <li>Provides multiple simultaneous traversals in a collection.</li>
+</ul>
+
+<p><strong>Implementation:</strong></p>
+
+<p>Let’s come to the point. We are going to implement iterator design pattern. I am using here a collection for fruits item. The main actor in here:</p>
+
+<ul>
+  <li>IIterator – Interface to define Iterator (Concrete iterator class)</li>
+  <li>Iterator – Concrete iterator class which is used to iterate elements.</li>
+  <li>ICollection – Interface to define aggregate.</li>
+  <li>Collection – Concrete aggregate class.</li>
+</ul>
+
+<p>I used FruitItem class as item class here.</p>
+
+<p><strong>Step 1: Create Item class.</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+  <span class="c1">/// Item class</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">FruitItem</span>
+  <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+ 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 2: Create IIterator Interface</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+  <span class="c1">/// Interface for Iterator</span>
+  <span class="k">public</span> <span class="k">interface</span> <span class="nc">IIterator</span>
+  <span class="p">{</span>
+    <span class="n">FruitItem</span> <span class="nf">First</span><span class="p">();</span>
+    <span class="n">FruitItem</span> <span class="nf">Next</span><span class="p">();</span>
+    <span class="n">FruitItem</span> <span class="n">CurrentItem</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">IsDone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 3: Create concrete Iterator class</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+
+    <span class="c1">/// Concrete Iterator Class</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Iterator</span> <span class="p">:</span> <span class="n">IIterator</span>
+    <span class="p">{</span>
+        
+        <span class="k">private</span> <span class="n">Collection</span> <span class="n">collection</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">int</span> <span class="n">current</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">int</span> <span class="n">step</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        
+        <span class="k">public</span> <span class="nf">Iterator</span><span class="p">(</span><span class="n">Collection</span> <span class="n">vCollection</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">collection</span> <span class="p">=</span> <span class="n">vCollection</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="n">FruitItem</span> <span class="nf">First</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">current</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">FruitItem</span><span class="p">)</span><span class="n">collection</span><span class="p">[</span><span class="n">current</span><span class="p">];</span>
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="n">FruitItem</span> <span class="nf">Next</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">current</span> <span class="p">++;</span>
+            
+            <span class="k">if</span> <span class="p">(!</span><span class="n">IsDone</span><span class="p">)</span>
+              <span class="k">return</span> <span class="p">(</span><span class="n">FruitItem</span><span class="p">)</span><span class="n">collection</span><span class="p">[</span><span class="n">current</span><span class="p">];</span>
+            <span class="k">else</span>
+              <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsDone</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">current</span> <span class="p">&gt;=</span> <span class="n">collection</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="n">FruitItem</span> <span class="n">CurrentItem</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="n">FruitItem</span><span class="p">)</span> <span class="n">collection</span><span class="p">[</span><span class="n">current</span><span class="p">];</span> <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// Gets or sets stepsize</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Step</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step</span><span class="p">;</span> <span class="p">}</span>
+            <span class="k">set</span> <span class="p">{</span> <span class="n">step</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create collection interface.</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+  <span class="c1">/// Interface for Aggregate class  </span>
+  <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICollection</span>
+  <span class="p">{</span>
+    <span class="n">Iterator</span> <span class="nf">CreateIterator</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 5: Create concrete collection class.</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+    <span class="c1">///</span>
+    <span class="c1">/// Concrete aggregate class</span>
+    <span class="c1">///</span>
+    
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Collection</span> <span class="p">:</span> <span class="n">ICollection</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">ArrayList</span> <span class="n">lstFoodItem</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ArrayList</span><span class="p">();</span>
+        
+        <span class="k">public</span> <span class="n">Iterator</span> <span class="nf">CreateIterator</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">Iterator</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// Get counted items</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Count</span>
+        <span class="p">{</span>
+            <span class="k">get</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="n">lstFoodItem</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// Indexer</span>
+        <span class="k">public</span> <span class="kt">object</span> <span class="k">this</span><span class="p">[</span><span class="kt">int</span> <span class="n">index</span><span class="p">]</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lstFoodItem</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>        
+            <span class="k">set</span> <span class="p">{</span> <span class="n">lstFoodItem</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">value</span><span class="p">);</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Create client class</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">IteratorPattern</span>
+<span class="p">{</span>
+<span class="k">class</span> <span class="nc">Program</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Collection</span> <span class="n">collection</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Collection</span><span class="p">();</span>
+        
+        <span class="n">collection</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"1"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Mango"</span> <span class="p">};</span>
+        <span class="n">collection</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"2"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Orange"</span> <span class="p">};</span>
+        <span class="n">collection</span><span class="p">[</span><span class="m">2</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"3"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Banana"</span> <span class="p">};</span>
+        <span class="n">collection</span><span class="p">[</span><span class="m">3</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"4"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Apple"</span> <span class="p">};</span>
+        <span class="n">collection</span><span class="p">[</span><span class="m">4</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"5"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Lichi"</span> <span class="p">};</span>
+        <span class="n">collection</span><span class="p">[</span><span class="m">5</span><span class="p">]</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FruitItem</span><span class="p">()</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="s">"7"</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Tamarind"</span> <span class="p">};</span>
+        
+        <span class="c1">// Create iterator</span>
+        <span class="n">Iterator</span> <span class="n">iterator</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Iterator</span><span class="p">(</span><span class="n">collection</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Items by iterating over collection"</span><span class="p">);</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="n">FruitItem</span> <span class="n">item</span> <span class="p">=</span> <span class="n">iterator</span><span class="p">.</span><span class="nf">First</span><span class="p">();</span> <span class="p">!</span><span class="n">iterator</span><span class="p">.</span><span class="n">IsDone</span><span class="p">;</span> <span class="n">item</span> <span class="p">=</span> <span class="n">iterator</span><span class="p">.</span><span class="nf">Next</span><span class="p">())</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>Output:</p>
+
+<p><img src="/assets/images/posts/2019/output.jpg" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/IteratorPattern">Source code</a></strong></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#designpattern" class="page__taxonomy-item" rel="tag">designpattern</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#oop" class="page__taxonomy-item" rel="tag">oop</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#design-pattern" class="page__taxonomy-item" rel="tag">Design Pattern</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#oop" class="page__taxonomy-item" rel="tag">OOP</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-03-09T00:00:00+00:00">March 09, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Iterator+design+pattern+with+C%23%20https%3A%2F%2Fmahedee.net%2F%2Fiterator-design-pattern%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fiterator-design-pattern%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fiterator-design-pattern%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/open-close-principle/" class="pagination--pager" title="Open Close Principle With C#
+">Previous</a>
+    
+    
+      <a href="/singleton-design-pattern/" class="pagination--pager" title="Singleton design pattern using C#
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2014-07-01-install-and-uninstall-windows-service-from-command-prompt/" rel="permalink">
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Serilog is a newer logging framework for .NET and now has been the most used and preferred framework for .NET Application. Seq is the intelligent search, ana...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="permalink">Uses of Configuration Provider and Options Pattern in ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" rel="permalink">Create a sentiment analysis app using ML.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//iterator-design-pattern/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/iterator-design-pattern"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

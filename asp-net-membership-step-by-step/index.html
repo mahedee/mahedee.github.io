@@ -1,0 +1,1081 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ASP.NET membership step by step - Think Simple</title>
+<meta name="description" content="ASP.NET provides build in control to validate and store user credential. So, membership helps to manage user authentication and authorization in website. The membership provider is the glue between Login controls and membership database.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="ASP.NET membership step by step">
+<meta property="og:url" content="https://mahedee.net//asp-net-membership-step-by-step/">
+
+
+  <meta property="og:description" content="ASP.NET provides build in control to validate and store user credential. So, membership helps to manage user authentication and authorization in website. The membership provider is the glue between Login controls and membership database.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2014-02-12T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//asp-net-membership-step-by-step/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ASP.NET membership step by step">
+    <meta itemprop="description" content="ASP.NET provides build in control to validate and store user credential. So, membership helps to manage user authentication and authorization in website. The membership provider is the glue between Login controls and membership database.">
+    <meta itemprop="datePublished" content="February 12, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">ASP.NET membership step by step
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>ASP.NET provides build in control to validate and store user credential. So, membership helps to manage user authentication and authorization in website. The membership provider is the glue between Login controls and membership database.</p>
+
+<p><strong>Step 1: Implementing the Membership and Role Provider</strong></p>
+
+<p>Suppose we are going to create a website using Visual Studio 2010. If you create a website using visual studio 2010, you will get login and Registration pages by default. But we want to create it manually so that we can understand its functionality.</p>
+
+<p>So, what should we do? Don’t worry. Let’s create an empty website. To create an empty website, go to Add -&gt; New Website -&gt; ASP.NET Empty Website.</p>
+
+<p>In the empty website, we will get only an web.config file.</p>
+
+<p>To store user information, we need to create required tables, sp and other information into the database in the SQL Server. To create membership tables and stored procedures follow the following steps.</p>
+
+<ul>
+  <li>Go to directory C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319</li>
+  <li>Click aspnet_regsql.exe. You will see the following screen.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2014/ams-01.jpg" alt="" /></p>
+
+<ul>
+  <li>Click next to continue</li>
+</ul>
+
+<p><img src="/assets/images/posts/2014/29.jpg" alt="" /></p>
+
+<ul>
+  <li>Select Configure SQL Server for application services and Press Next</li>
+</ul>
+
+<p><img src="/assets/images/posts/2014/35.jpg" alt="" /></p>
+
+<p>Type your server name. Here my server name is SOFT. Select SQL Server Authentication, type user name and password of server. Then select Database Name. Click Next to continue. You will see the following screen.</p>
+
+<p><img src="/assets/images/posts/2014/45.jpg" alt="" /></p>
+
+<p>Click Next to continue.</p>
+
+<p><img src="/assets/images/posts/2014/56.jpg" alt="" /></p>
+
+<p><strong>Click Finish. Now all tables and SPs are imported to desired database.</strong></p>
+
+<p><strong>Step 2: Configuring Connection String:</strong> <br />
+To retrieve membership information, create a connection string. This connection string can be used for retrieving other information from database for the website.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;connectionStrings&gt;</span>
+    <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"ApplicationServices"</span> <span class="na">connectionString=</span><span class="s">"Data Source=SOFT;Initial Catalog=TourismDB; User ID=sa;Password=sa"</span> <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/connectionStrings&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Step 3: Configuring Authentication:</strong></p>
+
+<p>Authentication is the process by which system can identify who are you? ASP.NET framework supports 3 types of Authentication.</p>
+
+<ul>
+  <li>Windows Authentication</li>
+  <li>.NET Passport Authentication</li>
+  <li>Form Authentication.</li>
+</ul>
+
+<p>We will configure form authentication here. When form authentication is enabled, users are typically identified by the cookies. There are several options for configuring form authentication. One of the options is cookiless which enables you to use form authentication even when the browser does not support cookies.</p>
+
+<p>In this case, Membership handles all details’ of retrieving and storing user and role information. Add the following portion in web.config file to enable form authentication.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;system.web&gt;</span>
+    <span class="nt">&lt;authentication</span> <span class="na">mode=</span><span class="s">"Forms"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;forms</span> <span class="na">loginUrl=</span><span class="s">"~/Account/Login.aspx"</span> <span class="na">timeout=</span><span class="s">"2880"</span> <span class="na">cookieless=</span><span class="s">"AutoDetect"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/forms&gt;</span>
+    <span class="nt">&lt;/authentication&gt;</span>
+  <span class="nt">&lt;/system.web&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Step 4: Membership Provider Settings:</strong></p>
+
+<p>To enable membership, add the following code snippet to web.config file. There are many elements in membership provider. We will use only the important elements here. Basic elements are – name, type( name space of the provider), connectionStringName (name of connection string which is used to connect with membership database). You can use PasswordFormat either of the three – Hash, encrypted and clear. Default value of PasswordFormat attribute is Hashed. You can use maxInvalidPasswordAttempts – number of maximum attempts to enter invalid password,  minRequiredPasswordLength – minimum password length.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;system.web&gt;</span>
+   <span class="nt">&lt;membership&gt;</span>
+      <span class="nt">&lt;providers&gt;</span>
+        <span class="nt">&lt;clear/&gt;</span>     
+        <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"AspNetSqlMembershipProvider"</span> <span class="na">type=</span><span class="s">"System.Web.Security.SqlMembershipProvider"</span> <span class="na">connectionStringName=</span><span class="s">"ApplicationServices"</span> <span class="na">enablePasswordRetrieval=</span><span class="s">"false"</span> <span class="na">enablePasswordReset=</span><span class="s">"true"</span> <span class="na">requiresQuestionAndAnswer=</span><span class="s">"false"</span> <span class="na">requiresUniqueEmail=</span><span class="s">"false"</span> <span class="na">maxInvalidPasswordAttempts=</span><span class="s">"5"</span> <span class="na">minRequiredPasswordLength=</span><span class="s">"6"</span> <span class="na">minRequiredNonalphanumericCharacters=</span><span class="s">"0"</span> <span class="na">passwordAttemptWindow=</span><span class="s">"10"</span> <span class="na">applicationName=</span><span class="s">"/"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;providers&gt;</span>
+    <span class="nt">&lt;membership&gt;</span>
+<span class="nt">&lt;system.web&gt;</span>
+
+</code></pre></div></div>
+
+<p>Step 5: Add a Login Form: Add a login form name Login.aspx in the website. Now add a Login control in Login page. You can change the style of the login control according to your requirements. Elegant format of login control is used here. For the first time, there is no user available. So we must create some users. We used here CreateUserText=”Register” CreateUserUrl=”~/Register.aspx”. This two properties are used here so that we can create a new user by going to Register.aspx page.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Login</span> <span class="n">ID</span><span class="p">=</span><span class="s">"loginUser"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">CreateUserText</span><span class="p">=</span><span class="s">"Register"</span>
+  <span class="n">CreateUserUrl</span><span class="p">=</span><span class="s">"~/Register.aspx"</span>
+  <span class="n">onauthenticate</span><span class="p">=</span><span class="s">"loginUser_Authenticate"</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#F7F7DE"</span>
+  <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#CCCC99"</span> <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"1px"</span>
+  <span class="n">Font</span><span class="p">-</span><span class="n">Names</span><span class="p">=</span><span class="s">"Verdana"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Size</span><span class="p">=</span><span class="s">"10pt"</span> <span class="n">Height</span><span class="p">=</span><span class="s">"135px"</span> <span class="n">Width</span><span class="p">=</span><span class="s">"286px"</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="n">TitleTextStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#6B696B"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Bold</span><span class="p">=</span><span class="s">"True"</span> <span class="n">ForeColor</span><span class="p">=</span><span class="s">"#FFFFFF"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Login</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add the following code snippet for handling corresponding onauthenticate event</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">loginUser_Authenticate</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">AuthenticateEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">isLogin</span> <span class="p">=</span> <span class="n">Membership</span><span class="p">.</span><span class="nf">ValidateUser</span><span class="p">(</span><span class="n">loginUser</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">loginUser</span><span class="p">.</span><span class="n">Password</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isLogin</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">loginUser</span><span class="p">.</span><span class="n">Visible</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+      <span class="n">Session</span><span class="p">[</span><span class="s">"user"</span><span class="p">]</span> <span class="p">=</span> <span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span>
+      <span class="n">FormsAuthentication</span><span class="p">.</span><span class="nf">RedirectFromLoginPage</span><span class="p">(</span><span class="n">loginUser</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+      <span class="n">Response</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"Default.aspx"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>After log in successfully. Page will be redirected to Default.aspx page. So we need to add a Default.aspx page. We will add it later.</p>
+
+<p><strong>Step 6: Add Register Form:</strong> In step 5 I have added property CreateUserUrl=”~/Register.aspx” .But this page is not exists. So create a page Register.aspx. In this form we will use a CreateUserWizard which enable to display a user registration form. Like login control you can also change style of CreateUserWizard control. I used here simple format.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">CreateUserWizard</span> <span class="n">ID</span><span class="p">=</span><span class="s">"RegisterUser"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span>
+            <span class="n">OnCreatedUser</span><span class="p">=</span><span class="s">"RegisterUser_CreatedUser"</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#E3EAEB"</span>
+            <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#E6E2D8"</span> <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"1px"</span>
+            <span class="n">Font</span><span class="p">-</span><span class="n">Names</span><span class="p">=</span><span class="s">"Verdana"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Size</span><span class="p">=</span><span class="s">"0.8em"</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">ContinueButtonStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"White"</span> <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#C5BBAF"</span>
+                <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"1px"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Names</span><span class="p">=</span><span class="s">"Verdana"</span>
+                <span class="n">ForeColor</span><span class="p">=</span><span class="s">"#1C5E55"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">CreateUserButtonStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"White"</span> <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#C5BBAF"</span>
+                <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"1px"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Names</span><span class="p">=</span><span class="s">"Verdana"</span>
+                <span class="n">ForeColor</span><span class="p">=</span><span class="s">"#1C5E55"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">TitleTextStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#1C5E55"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Bold</span><span class="p">=</span><span class="s">"True"</span> <span class="n">ForeColor</span><span class="p">=</span><span class="s">"White"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">WizardSteps</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">CreateUserWizardStep</span> <span class="n">ID</span><span class="p">=</span><span class="s">"CreateUserWizardStep1"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span><span class="p">&gt;</span>
+                <span class="n">asp</span><span class="p">:</span><span class="n">CreateUserWizardStep</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">CompleteWizardStep</span> <span class="n">ID</span><span class="p">=</span><span class="s">"CompleteWizardStep1"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span><span class="p">&gt;</span>
+                <span class="n">asp</span><span class="p">:</span><span class="n">CompleteWizardStep</span><span class="p">&gt;</span>
+            <span class="n">WizardSteps</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">HeaderStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#666666"</span> <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#E6E2D8"</span> <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span>
+                <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"2px"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Bold</span><span class="p">=</span><span class="s">"True"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Size</span><span class="p">=</span><span class="s">"0.9em"</span> <span class="n">ForeColor</span><span class="p">=</span><span class="s">"White"</span>
+                <span class="n">HorizontalAlign</span><span class="p">=</span><span class="s">"Center"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">NavigationButtonStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"White"</span> <span class="n">BorderColor</span><span class="p">=</span><span class="s">"#C5BBAF"</span>
+                <span class="n">BorderStyle</span><span class="p">=</span><span class="s">"Solid"</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"1px"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Names</span><span class="p">=</span><span class="s">"Verdana"</span>
+                <span class="n">ForeColor</span><span class="p">=</span><span class="s">"#1C5E55"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">SideBarButtonStyle</span> <span class="n">ForeColor</span><span class="p">=</span><span class="s">"White"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">SideBarStyle</span> <span class="n">BackColor</span><span class="p">=</span><span class="s">"#1C5E55"</span> <span class="n">Font</span><span class="p">-</span><span class="n">Size</span><span class="p">=</span><span class="s">"0.9em"</span> <span class="n">VerticalAlign</span><span class="p">=</span><span class="s">"Top"</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">StepStyle</span> <span class="n">BorderWidth</span><span class="p">=</span><span class="s">"0px"</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">CreateUserWizard</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>Add the following code snippet for handling corresponding OnCreatedUser event.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">RegisterUser_CreatedUser</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">FormsAuthentication</span><span class="p">.</span><span class="nf">SetAuthCookie</span><span class="p">(</span><span class="n">RegisterUser</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="k">false</span> <span class="cm">/* createPersistentCookie */</span><span class="p">);</span>
+    
+    <span class="kt">string</span> <span class="n">continueUrl</span> <span class="p">=</span> <span class="n">RegisterUser</span><span class="p">.</span><span class="n">ContinueDestinationPageUrl</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">continueUrl</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">continueUrl</span> <span class="p">=</span> <span class="s">"Login.aspx"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Response</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="n">continueUrl</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 7: Add location tag for Register page:</strong> Add the following code snippet in web.config file. This means register page is allowed to all. Because, for the first time you have to create a user without login to the application.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">locationpath</span><span class="p">=</span><span class="s">"Register.aspx"</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">authorization</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="n">allowusers</span><span class="p">=</span><span class="s">"*"</span><span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="n">authorization</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">location</span><span class="p">&gt;</span>
+</code></pre></div></div>
+<p><strong>Step 8: Add Default Page:</strong> Add Default.aspx page. You can add here some message here because page will be redirected to the default page after successfully logged in.</p>
+
+<p>Now run the application. You will see the following login screen.</p>
+
+<p><img src="/assets/images/posts/2014/65.jpg" alt="" /></p>
+
+<p>But you don’t have any user to login. So, click Register in login page and you will be redirected to Register page.</p>
+
+<p><img src="/assets/images/posts/2014/75.jpg" alt="" /></p>
+
+<p>Now create a user and try to login by that user from login page. Yes! you have logged in and redirected to Default.aspx.</p>
+
+<p><strong>Step 9: Add Login Status:</strong>
+ We always see a message “Welcome Mahedee!” after login and Login before login to the site. We see this login status in all pages. If user want to login from any pages, he just need to click in login link and go to login page.  Here he can login and enter the site as authentic user. Here we have created a master page and login status control to do exactly the same thing. Here I used LoginStatus and LoginView Control. It should be mentioned here what are the functions of LoginStatus and LoginView Control? LoginStatus control enables you to display a login or logout link depending on user authentication. It actually displays whether user is currently logged in or not. LoginView enables you to display different content depending on user Authentication status or role.</p>
+
+<ul>
+  <li>Add the following code snippet in MasterPage.master.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">LoginView</span> <span class="n">ID</span><span class="p">=</span><span class="s">"HeadLoginView"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">EnableViewState</span><span class="p">=</span><span class="s">"false"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">AnonymousTemplate</span><span class="p">&gt;</span>
+        <span class="p">[</span> <span class="p">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="p">=</span><span class="s">"Login.aspx"</span> <span class="n">id</span><span class="p">=</span><span class="s">"HeadLoginStatus"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span><span class="p">&gt;</span><span class="n">Log</span> <span class="n">Ina</span><span class="p">&gt;</span> <span class="p">]</span>
+    <span class="n">AnonymousTemplate</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">LoggedInTemplate</span><span class="p">&gt;</span>
+        <span class="n">Welcome</span> <span class="p">&lt;</span><span class="n">span</span> <span class="k">class</span><span class="err">="</span><span class="nc">bold</span><span class="s">"&gt;
+</span>            <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">LoginName</span> <span class="n">ID</span><span class="p">=</span><span class="s">"HeadLoginName"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="p">/&gt;</span>
+        <span class="n">span</span><span class="p">&gt;!</span> <span class="p">[</span>
+        <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">LoginStatus</span> <span class="n">ID</span><span class="p">=</span><span class="s">"HeadLoginStatus"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">LogoutAction</span><span class="p">=</span><span class="s">"Redirect"</span> <span class="n">LogoutText</span><span class="p">=</span><span class="s">"Log Out"</span>
+            <span class="n">LogoutPageUrl</span><span class="p">=</span><span class="s">"~/"</span> <span class="p">/&gt;</span>
+        <span class="p">]</span>
+    <span class="p">&lt;</span><span class="n">LoggedInTemplate</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">LoginView</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>Now if you add MasterPage.master to any of your pages. You will get login status after login to the application. Here I used MasterPage in Default.aspx.</p>
+
+<p><strong>Step 10: Add Role Manager:</strong><br />
+To add role manager add the following code snippet to web.config file.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;roleManager</span> <span class="na">enabled=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;providers&gt;</span>
+        <span class="nt">&lt;clear/&gt;</span>
+        <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"AspNetSqlRoleProvider"</span> <span class="na">type=</span><span class="s">"System.Web.Security.SqlRoleProvider"</span> <span class="na">connectionStringName=</span><span class="s">"ApplicationServices"</span> <span class="na">applicationName=</span><span class="s">"/"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"AspNetWindowsTokenRoleProvider"</span> <span class="na">type=</span><span class="s">"System.Web.Security.WindowsTokenRoleProvider"</span> <span class="na">applicationName=</span><span class="s">"/"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;providers/&gt;</span>
+    <span class="nt">&lt;roleManager/&gt;</span>
+</code></pre></div></div>
+<p><strong>Step 11: Create Role Manager Page:</strong> <br />
+Create a page like below for managing roles.</p>
+
+<p><img src="/assets/images/posts/2014/83.jpg" alt="" /></p>
+
+<p><strong>Step 12: Add Role Provider in web.config:</strong> <br />
+Add the following code snippet for web.config for enable Role Provider.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;roleManager</span> <span class="na">enabled=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;providers&gt;</span>
+        <span class="nt">&lt;clear/&gt;</span>
+        <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"AspNetSqlRoleProvider"</span> <span class="na">type=</span><span class="s">"System.Web.Security.SqlRoleProvider"</span> <span class="na">connectionStringName=</span><span class="s">"ApplicationServices"</span> <span class="na">applicationName=</span><span class="s">"/"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"AspNetWindowsTokenRoleProvider"</span> <span class="na">type=</span><span class="s">"System.Web.Security.WindowsTokenRoleProvider"</span> <span class="na">applicationName=</span><span class="s">"/"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;providers/&gt;</span>
+    <span class="nt">&lt;roleManager/&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Step 13: Manage Role:</strong>  <br />
+In step 11 we saw Role manager page. Now we will create the corresponding code for managing (Create, delete roles &amp; assign users to role) roles. Here I also add a grid to display user role mapping.</p>
+
+<ul>
+  <li>Create Roles: Add the following code for corresponding event to create role. I have added the code for corresponding Create button event.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">btnCreateRole_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(!</span><span class="n">Roles</span><span class="p">.</span><span class="nf">RoleExists</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">txtRole</span><span class="p">.</span><span class="n">Text</span><span class="p">))</span>
+      <span class="p">{</span>
+        <span class="n">Roles</span><span class="p">.</span><span class="nf">CreateRole</span><span class="p">(</span><span class="n">txtRole</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span>
+        <span class="nf">BindRoles</span><span class="p">();</span>
+        <span class="nf">BindUsers</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"Role created successfully"</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"Role already exists"</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<ul>
+  <li>Bind Roles: I have bind a dropdown list for Roles.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">BindRoles</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">SqlConnection</span> <span class="n">con</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SqlConnection</span><span class="p">(</span><span class="n">Convert</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">ConnectionStrings</span><span class="p">[</span><span class="s">"ApplicationServices"</span><span class="p">]));</span>
+    
+    <span class="n">con</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span>
+    <span class="n">SqlDataAdapter</span> <span class="n">da</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SqlDataAdapter</span><span class="p">(</span><span class="s">"select UserId, UserName from aspnet_users"</span><span class="p">,</span> <span class="n">con</span><span class="p">);</span>
+    <span class="n">DataSet</span> <span class="n">ds</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DataSet</span><span class="p">();</span>
+    <span class="n">da</span><span class="p">.</span><span class="nf">Fill</span><span class="p">(</span><span class="n">ds</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">ddlUsers</span><span class="p">.</span><span class="n">DataSource</span> <span class="p">=</span> <span class="n">ds</span><span class="p">;</span>
+    <span class="n">ddlUsers</span><span class="p">.</span><span class="n">DataTextField</span> <span class="p">=</span> <span class="s">"UserName"</span><span class="p">;</span>
+    <span class="n">ddlUsers</span><span class="p">.</span><span class="n">DataValueField</span> <span class="p">=</span> <span class="s">"UserName"</span><span class="p">;</span>
+    <span class="n">ddlUsers</span><span class="p">.</span><span class="nf">DataBind</span><span class="p">();</span>
+    
+    <span class="n">con</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<ul>
+  <li>
+    <p>Bind Users: A dropdown list is bound for roles in this occasion also.
+```csharp
+private void BindUsers()
+{
+  SqlConnection con = new SqlConnection(Convert.ToString(ConfigurationManager.ConnectionStrings[“ApplicationServices”]));</p>
+
+    <p>con.Open();
+  SqlDataAdapter da = new SqlDataAdapter(“SELECT RoleId, RoleName FROM aspnet_Roles”, con);
+  DataSet ds = new DataSet();
+  da.Fill(ds);
+  this.ddlRoles.DataSource = ds;
+  ddlRoles.DataTextField = “RoleName”;
+  ddlRoles.DataValueField = “RoleName”;
+  ddlRoles.DataBind();</p>
+
+    <p>con.Close();
+}</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Assign Roles to User: Use the following code snippet to assign roles to users.
+
+```csharp
+protected void btnAssign_Click(object sender, EventArgs e)
+{
+    try
+    {
+      if (!Roles.IsUserInRole(this.ddlRoles.SelectedValue))
+      {
+        Roles.AddUserToRole(this.ddlUsers.SelectedValue,this.ddlRoles.SelectedValue);
+        BindUsers();
+        BindRoles();
+        BindUserRole();
+        this.lblMsg.Text = "User assigned to role successfully";
+      }
+      else
+      {
+        this.lblMsg.Text = "Role already exits for the user.";
+      }
+    }
+    catch (Exception ex)
+    {
+      this.lblMsg.Text = ex.Message;
+    }
+}
+</code></pre></div></div>
+<ul>
+  <li>Remove role from the user: I have added a gridview in rolemanger page. Here is the code snippet of delete button event handler. Roles.RemoveUserFromRole(string username, string rolename) Method is responsible to remove role form the user.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">btnDelete_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">LinkButton</span> <span class="n">btnDelete</span> <span class="p">=</span> <span class="n">sender</span> <span class="k">as</span> <span class="n">LinkButton</span><span class="p">;</span>
+    
+    <span class="c1">//Identify the clicked row</span>
+    <span class="kt">int</span> <span class="n">rowIndex</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="nf">ToInt32</span><span class="p">(</span><span class="n">btnDelete</span><span class="p">.</span><span class="n">Attributes</span><span class="p">[</span><span class="s">"RowIndex"</span><span class="p">]);</span>
+    
+    <span class="n">GridViewRow</span> <span class="n">gvRow</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">gvRoleToUsers</span><span class="p">.</span><span class="n">Rows</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">];</span>
+    
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="n">Roles</span><span class="p">.</span><span class="nf">RemoveUserFromRole</span><span class="p">(</span><span class="n">gvRow</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Text</span><span class="p">,</span> <span class="n">gvRow</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="n">Text</span><span class="p">);</span> <span class="c1">//username, role name</span>
+        <span class="nf">BindUsers</span><span class="p">();</span>
+        <span class="nf">BindRoles</span><span class="p">();</span>
+        <span class="nf">BindUserRole</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"User is removed from the role"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Delete roles: The following code snippet is responsible to delete a roles.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">btnDeleteRole_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="n">Roles</span><span class="p">.</span><span class="nf">DeleteRole</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">ddlRoles</span><span class="p">.</span><span class="n">SelectedValue</span><span class="p">);</span> <span class="c1">//Responsible to delete role</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">BindRoles</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">BindUserRole</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"Role is deleted!"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">lblMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 14: Show and Hide Menu depending on Roles:</strong></p>
+
+<p>We have already created roles and assigned roles to users. Now if we want to show and Hide the menus depending on roles, we have to follow the following steps.</p>
+
+<ul>
+  <li>Add sitemap: Add web.sitemap in the project. We have added this site map with a treeview. Have a look in the web.sitemap content.</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xmlversion</span><span class="err">="1.0"</span><span class="na">encoding=</span><span class="s">"utf-8"</span> <span class="err">?</span><span class="nt">&gt;</span>
+ 
+<span class="nt">&lt;siteMapxmlns</span><span class="err">="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0"</span> <span class="nt">&gt;</span>
+ 
+<span class="nt">&lt;siteMapNodeurl</span><span class="err">="ASP.NET"</span><span class="na">title=</span><span class="s">""</span>  <span class="na">description=</span><span class="s">""</span><span class="na">roles=</span><span class="s">"Administrator"</span><span class="nt">&gt;</span>
+ 
+<span class="nt">&lt;siteMapNodeurl</span><span class="err">="Defult.aspx"</span><span class="na">title=</span><span class="s">"Home"</span>  <span class="na">description=</span><span class="s">""</span><span class="nt">/&gt;</span>
+ 
+<span class="nt">&lt;siteMapNodeurl</span><span class="err">="Register.aspx"</span><span class="na">title=</span><span class="s">"Register"</span>  <span class="na">description=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+ 
+<span class="nt">&lt;siteMapNodeurl</span><span class="err">="RoleManager.aspx"</span><span class="na">title=</span><span class="s">"Role Manager"</span><span class="na">description=</span><span class="s">""</span><span class="na">roles=</span><span class="s">"Administrator"</span><span class="nt">/&gt;</span>
+ 
+<span class="nt">&lt;siteMapNodeurl</span><span class="err">="ManageUsers.aspx"</span><span class="na">title=</span><span class="s">"User Manager"</span><span class="na">description=</span><span class="s">""</span><span class="na">roles=</span><span class="s">"Administrator,IT officer"</span><span class="nt">/&gt;</span>
+ 
+<span class="nt">&lt;siteMapNode/&gt;</span>
+ 
+<span class="nt">&lt;siteMap/&gt;</span>
+
+</code></pre></div></div>
+<p>You may understand above code snippet that only Administrator can view RoleManager.aspx page and Administrator and IT Officer can view ManageUsers.aspx page. There is no restriction in other pages.</p>
+
+<ul>
+  <li>Add Location element in web.config: To hide and show menu as described above add the following code snippet in web.config file.</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;locationpath</span><span class="err">="RoleManager.aspx"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;system.web&gt;</span>
+    <span class="nt">&lt;authorization&gt;</span>
+    <span class="nt">&lt;allowroles</span><span class="err">="Administrator"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;denyusers</span><span class="err">="*"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;authorization/&gt;</span>
+  <span class="nt">&lt;system.web/&gt;</span>
+<span class="nt">&lt;location/&gt;</span>
+<span class="nt">&lt;locationpath</span><span class="err">="ManageUsers.aspx"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;system.web&gt;</span>
+    <span class="nt">&lt;authorization&gt;</span>
+    <span class="nt">&lt;allowroles</span><span class="err">="Administrator,IT</span> <span class="err">officer"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;denyusers</span><span class="err">="*"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;authorization&gt;</span>
+  <span class="nt">&lt;system.web/&gt;</span>
+<span class="nt">&lt;location/&gt;</span>
+
+</code></pre></div></div>
+<p>Ok now run your application. Login to the application and you will see menus according to your roles.</p>
+
+<!-- __[Source code](https://github.com/mahedee/code-sample/tree/master/ASPGridView)__ -->
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-02-12T00:00:00+00:00">February 12, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ASP.NET+membership+step+by+step%20https%3A%2F%2Fmahedee.net%2F%2Fasp-net-membership-step-by-step%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fasp-net-membership-step-by-step%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fasp-net-membership-step-by-step%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-register-net-framework-in-iis/" class="pagination--pager" title="How to register .NET framework in IIS
+">Previous</a>
+    
+    
+      <a href="/retrieve-data-from-database-by-first-asp-net-program/" class="pagination--pager" title="Retrieve data from database using your first ASP.Net program
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2014-07-01-install-and-uninstall-windows-service-from-command-prompt/" rel="permalink">
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Serilog is a newer logging framework for .NET and now has been the most used and preferred framework for .NET Application. Seq is the intelligent search, ana...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="permalink">Uses of Configuration Provider and Options Pattern in ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" rel="permalink">Create a sentiment analysis app using ML.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//asp-net-membership-step-by-step/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/asp-net-membership-step-by-step"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

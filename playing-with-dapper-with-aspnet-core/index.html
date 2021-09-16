@@ -345,43 +345,43 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 
 <p><strong>Step 4:</strong> Add connection string</p>
 <ul>
-  <li>
-    <p>Add connection string in appsettings.json
-<strong>appsettings.json</strong>
-```json
-{
-“Logging”: {
-  “LogLevel”: {
-    “Default”: “Information”,
-    “Microsoft”: “Warning”,
-    “Microsoft.Hosting.Lifetime”: “Information”
-  }
-},</p>
-
-    <p>“ConnectionStrings”: {
-  “DefaultConnection”: “Data Source=localhost;Initial Catalog=OrderingDB;User ID=sa;Password=yourdbpassword”
-},</p>
-
-    <p>“AllowedHosts”: “*”
-}</p>
-  </li>
+  <li>Add connection string in appsettings.json
+<strong>appsettings.json</strong></li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-__Step 5:__ Create Entity classes  
-* Create BaseEntity and Customer entity class in Entities folder as follows.
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.Hosting.Lifetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
 
-__BaseEntity.cs__
-```csharp
-using System;
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data Source=localhost;Initial Catalog=OrderingDB;User ID=sa;Password=yourdbpassword"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
 
-namespace Ordering.API.Entities
-{
-    public abstract class BaseEntity
-    {
-        public Int64 Id { get; set; }
-    }
-}
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>Step 5:</strong> Create Entity classes</p>
+<ul>
+  <li>Create BaseEntity and Customer entity class in Entities folder as follows.</li>
+</ul>
+
+<p><strong>BaseEntity.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BaseEntity</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 </code></pre></div></div>
 <p><strong>Customer.cs</strong></p>
@@ -864,7 +864,7 @@ namespace Ordering.API.Entities
       
   <nav class="pagination">
     
-      <a href="/maintain-dbcontext-class-in-a-seperate-project/" class="pagination--pager" title="Maintain DbContext class in a seperate project using Entity Framework core
+      <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" class="pagination--pager" title="Create a sentiment analysis app using ML.NET
 ">Previous</a>
     
     
@@ -930,6 +930,33 @@ namespace Ordering.API.Entities
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/playing-with-clean-architecture-and-cqrs-pattern-using-asp.net-core-ef-and-dapper/" rel="permalink">Playing with Clean Architecture and CQRS pattern using asp.net core, EF and Dapper
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Clean architecute was created by Robert C. Martin known as Uncle Bob. It’s now mostly used software architecute especially in microservice architecture. In t...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
 </a>
       
@@ -971,33 +998,6 @@ namespace Ordering.API.Entities
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" rel="permalink">Create a sentiment analysis app using ML.NET
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  3 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to ...</p>
   </article>
 </div>
 

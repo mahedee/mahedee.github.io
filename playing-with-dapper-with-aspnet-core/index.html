@@ -261,7 +261,7 @@
 
 
 
-  4 minute read
+  5 minute read
 </p>
           
         </header>
@@ -285,12 +285,56 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 
 <p><strong>Implementation</strong></p>
 
-<p><strong>Step 1:</strong> Create an API project</p>
+<p><strong>Step 1:</strong> Create database, table and stored procedure.</p>
+<ul>
+  <li>Create a databse in sql server name - OrderingDB</li>
+  <li>Run the following script to create table and stored procedure.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">USE</span> <span class="p">[</span><span class="n">OrderingDB</span><span class="p">]</span>
+<span class="k">GO</span>
+<span class="cm">/****** Object:  Table [dbo].[Customers]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
+<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
+<span class="k">GO</span>
+<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
+<span class="k">GO</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Customers</span><span class="p">](</span>
+	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">bigint</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="p">[</span><span class="n">FirstName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="p">[</span><span class="n">LastName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="p">[</span><span class="n">Email</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="p">[</span><span class="n">ContactNumber</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+ <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Customers</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> 
+<span class="p">(</span>
+	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span>
+<span class="p">)</span><span class="k">WITH</span> <span class="p">(</span><span class="n">PAD_INDEX</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">STATISTICS_NORECOMPUTE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">IGNORE_DUP_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">ALLOW_ROW_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">ALLOW_PAGE_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">OPTIMIZE_FOR_SEQUENTIAL_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+<span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span> <span class="n">TEXTIMAGE_ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+<span class="k">GO</span>
+<span class="cm">/****** Object:  StoredProcedure [dbo].[spGetCustomersByEmail]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
+<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
+<span class="k">GO</span>
+<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
+<span class="k">GO</span>
+<span class="c1">-- EXEC dbo.[spGetCustomersByEmail] @Email = 'mahedee.hasan@gmail.com'</span>
+<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">spGetCustomersByEmail</span><span class="p">]</span>
+	<span class="o">@</span><span class="n">Email</span> <span class="nb">Varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">AS</span>
+<span class="k">BEGIN</span>
+	<span class="c1">-- SET NOCOUNT ON added to prevent extra result sets from</span>
+	<span class="k">SET</span> <span class="n">NOCOUNT</span> <span class="k">ON</span><span class="p">;</span>
+	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span> <span class="k">WHERE</span> <span class="n">Email</span> <span class="o">=</span> <span class="o">@</span><span class="n">Email</span>
+<span class="k">END</span>
+<span class="k">GO</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 2:</strong> Create an API project</p>
 <ul>
   <li>Create an asp.net web api project name Ordering.API</li>
 </ul>
 
-<p><strong>Step 2:</strong> Install nuget packages</p>
+<p><strong>Step 3:</strong> Install nuget packages</p>
 <ul>
   <li>Install the following nuget packages in Ordering.API project.
     <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">Dapper</span>
@@ -299,21 +343,45 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
   </li>
 </ul>
 
-<p><strong>Step 3:</strong> Create Entity classes</p>
+<p><strong>Step 4:</strong> Add connection string</p>
 <ul>
-  <li>Create BaseEntity and Customer entity class in Entities folder as follows.</li>
+  <li>
+    <p>Add connection string in appsettings.json
+<strong>appsettings.json</strong>
+```json
+{
+“Logging”: {
+  “LogLevel”: {
+    “Default”: “Information”,
+    “Microsoft”: “Warning”,
+    “Microsoft.Hosting.Lifetime”: “Information”
+  }
+},</p>
+
+    <p>“ConnectionStrings”: {
+  “DefaultConnection”: “Data Source=localhost;Initial Catalog=OrderingDB;User ID=sa;Password=yourdbpassword”
+},</p>
+
+    <p>“AllowedHosts”: “*”
+}</p>
+  </li>
 </ul>
 
-<p><strong>BaseEntity.cs</strong></p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+__Step 5:__ Create Entity classes  
+* Create BaseEntity and Customer entity class in Entities folder as follows.
 
-<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BaseEntity</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+__BaseEntity.cs__
+```csharp
+using System;
+
+namespace Ordering.API.Entities
+{
+    public abstract class BaseEntity
+    {
+        public Int64 Id { get; set; }
+    }
+}
 
 </code></pre></div></div>
 <p><strong>Customer.cs</strong></p>
@@ -334,7 +402,7 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 
 </code></pre></div></div>
 
-<p><strong>Step 4:</strong> Create DbConnector and Repository classes</p>
+<p><strong>Step 6:</strong> Create DbConnector and Repository classes</p>
 <ul>
   <li>Create DbConnector class in Repositories folder to connect with database</li>
 </ul>
@@ -553,7 +621,7 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 <span class="p">}</span>
 
 </code></pre></div></div>
-<p><strong>Step 5:</strong> Create Service class and interface</p>
+<p><strong>Step 7:</strong> Create Service class and interface</p>
 
 <ul>
   <li>Create ICustomerService interface and CustomerService class in Services folder</li>
@@ -640,7 +708,7 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 
 </code></pre></div></div>
 
-<p><strong>Step 6:</strong> Create controller class</p>
+<p><strong>Step 8:</strong> Create controller class</p>
 
 <ul>
   <li>Create CustomerController in controllers folder</li>
@@ -703,7 +771,7 @@ Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET p
 <span class="p">}</span>
 
 </code></pre></div></div>
-<p><strong>Step 7:</strong> Now run the application. You will see the output in swagger. Try CRUD operation using swagger.</p>
+<p><strong>Step 9:</strong> Now run the application. You will see the output in swagger. Try CRUD operation using swagger.</p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/DapperDemo">Source code</a></strong></p>
 

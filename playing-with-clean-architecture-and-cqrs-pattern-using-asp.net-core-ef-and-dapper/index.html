@@ -13,6 +13,8 @@
 <meta name="description" content="Clean architecute was created by Robert C. Martin known as Uncle Bob. It’s now mostly used software architecute especially in microservice architecture. In this article I will discuss about clean architecute a bit and then implement the concept using clean architecture and CQRS pattern using asp.net core, entity framework core and dapper.">
 
 
+  <meta name="author" content="Mahedee Hasan">
+
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
@@ -166,11 +168,24 @@
 <div itemscope itemtype="https://schema.org/Person">
 
   
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name"></h3>
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
     
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
     
   </div>
 
@@ -178,7 +193,43 @@
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
       
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
 
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
       
 
       
@@ -261,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  12 minute read
 </p>
           
         </header>
@@ -273,34 +324,1140 @@
 
 <p><strong>Introduction</strong></p>
 
-<p>Clean architecute was created by Robert C. Martin known as Uncle Bob. It’s now mostly used software architecute especially in microservice architecture. In this article I will discuss about clean architecute a bit and then implement the concept using clean architecture and CQRS pattern using asp.net core, entity framework core and dapper. The main concept of clean architecture is that the core logic of the application is changed rarely so it will be independent and considered it as core.</p>
+<p>Clean architecute was created by Robert C. Martin known as Uncle Bob. It’s now mostly used software architecute especially in microservice architecture. In this article, I will discuss about clean architecute a bit and then implement the concept using clean architecture and CQRS pattern using asp.net core, entity framework core and dapper. The main concept of clean architecture is that the core logic of the application is changed rarely so it will be independent and considered it as core.</p>
 
 <p><img src="/assets/images/posts/2021/clean.png" alt="" /></p>
 
 <p>Fig - The Clean Architecture (Picture collected from internet)</p>
 
-<p>In clean architecute, based on the picture, the domain and application layers remain in the center of the design which is known as core of the application. The domain layer contains enterprise logic and the application layer contains business logic. Generally, business logic is not sharable, it is for that particualr business only but enterprise logic can be shared across many related system.</p>
+<p>In clean architecture, based on the picture, the domain and application layers remain in the center of the design which is known as core of the application. The domain layer contains enterprise logic and the application layer contains business logic. Generally, business logic is not sharable, it is for that particualr business only but enterprise logic can be shared across many related system.</p>
 
 <p><strong>Advantages</strong></p>
 
 <ul>
-  <li>Separation of Concern - so highly maintainable</li>
-  <li>You can change UI without changing the core business.</li>
-  <li>Scalable and testable, especially domain model and its buiness rules are highly testable.</li>
+  <li>Highly maintainable - It’s follows seperation of concern.</li>
+  <li>UI Independent - It is loosely coupled with UI layer. So, you can change UI without changing the core buisness.</li>
+  <li>Highly Testable - Apps built using this approach, and especially the core domain model and its business rules, are extremely testable.</li>
+  <li>Framework Independent - You can use any langulage like C#, Java, Python to implement clean architecture.</li>
+  <li>Scalable - Can implement CQRS pattern. So, it is highly scalable.</li>
 </ul>
 
-<p><strong>CQRS Pattern</strong>
-<strong>Advantages</strong></p>
+<p><strong>CQRS Pattern</strong></p>
 
-<p><strong>Disadvantes</strong></p>
+<p>CQRS stands for Command and Query Responsibility Segregation. Main concern of this pattern is seperation of concern. It seperates read and command (insert, update, delete) operations. It is mostly used for performance and scalability.</p>
 
-<p><strong>Project description</strong></p>
+<p>Now, I will show you a sample project in which I have implemented Clean Architecture with CQRS pattern.</p>
 
 <p><strong>Tools and technologies used</strong></p>
+<ul>
+  <li>Clean Architecture</li>
+  <li>CQRS Pattern</li>
+  <li>Visual Studio 2019</li>
+  <li>.NET 5.0</li>
+  <li>SQLite</li>
+  <li>Dapper</li>
+  <li>Entity Framework</li>
+  <li>AutoMapper</li>
+  <li>MediatR</li>
+  <li>ASP.NET Core Web API</li>
+  <li>C#</li>
+</ul>
 
 <p><strong>Implementation</strong></p>
 
+<p><strong>Step 1: Create solution and projects.</strong></p>
+
+<ul>
+  <li>
+    <p>Create a solution name Ecommerce using the following command.</p>
+
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">dotnet</span> <span class="nf">new</span> <span class="nf">sln</span> <span class="nf">-o</span> <span class="nf">Ecommerce</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Now the following 3 projects in Ecommerce\Services\Ordering folder. Ordering.API is a webapi project. Rest of the projects are class library.</p>
+
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">dotnet</span> <span class="nf">new</span> <span class="nf">webapi</span> <span class="nf">-o</span> <span class="nf">Ordering.API</span>
+</code></pre></div>    </div>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">dotnet</span> <span class="nf">new</span> <span class="nf">classlib</span> <span class="nf">-o</span> <span class="nf">Ordering.Application</span>
+</code></pre></div>    </div>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">dotnet</span> <span class="nf">new</span> <span class="nf">classlib</span> <span class="nf">-o</span> <span class="nf">Ordering.Core</span>
+</code></pre></div>    </div>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nf">dotnet</span> <span class="nf">new</span> <span class="nf">classlib</span> <span class="nf">-o</span> <span class="nf">Ordering.Infrastructure</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Go to Ecommerce folder and open terminal. Add all project to the solutions using the following command.</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">dotnet</span> <span class="nf">sln</span> <span class="nf">.\Ecommerce.sln</span> <span class="nb">add</span> <span class="nf">.\Services\Ordering\Ordering.API\Ordering.API.csproj</span> <span class="nf">.\Services\Ordering\Ordering.Application\Ordering.Application.csproj</span> <span class="nf">.\Services\Ordering\Ordering.Core\Ordering.Core.csproj</span> <span class="nf">.\Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj</span>
+</code></pre></div></div>
+<ul>
+  <li>Your initial application structure is a follows.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2021/projects.png" alt="" /></p>
+
 <!-- [Source code](https://github.com/mahedee/code-sample02/tree/main/CleanArchitectureDemo/Ecommerce) -->
+
+<p><strong>Step 2: Install nuget packages.</strong></p>
+
+<ul>
+  <li>Install following nuget packages in Ordering.Infrastructure Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Dapper</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Data.Sqlite.Core</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Design</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Relational</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Extensions.Configuration.Abstractions</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in Ordering.Application Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AutoMapper</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MediatR</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in Ordering.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AutoMapper.Extensions.Microsoft.DependencyInjection</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MediatR</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MediatR.Extensions.Microsoft.DependencyInjection</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Design</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Sqlite</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create Entity class  in Ordering.Core project</strong></p>
+
+<ul>
+  <li>Create BaseEntity in Ordering.Core/Entities/Base folder</li>
+  <li>Create Customer in Ordering.Core/Entities folder</li>
+</ul>
+
+<p><strong>BaseEntity.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Core.Entities.Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">BaseEntity</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">Key</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">ModifiedDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="nf">BaseEntity</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">ModifiedDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Customer.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.Core.Entities.Base</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Core.Entities</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span> <span class="p">:</span> <span class="n">BaseEntity</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create Command and Query Interface in Ordering.Core project</strong></p>
+
+<ul>
+  <li>Create ICommandRepository in Ordering.Core/Repositories/Command/Base folder</li>
+  <li>Create ICommandCustomerRepository in Ordering.Core/Repositories/Command folder</li>
+  <li>Create IQueryRepository in Ordering.Core/Repositories/Query/Base folder</li>
+  <li>Create ICustomerQueryRepository in Ordering.Core/Repositories/Query folder</li>
+</ul>
+
+<p><strong>ICommandRepository.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Core.Repositories.Command.Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICommandRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
+    <span class="err">{</span>
+        <span class="nc">Task</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="nf">AddAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
+        <span class="n">Task</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
+        <span class="n">Task</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>ICustomerCommandRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command.Base</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Core.Repositories.Command</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerCommandRepository</span> <span class="p">:</span> <span class="n">ICommandRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>IQueryRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">Ordering.Core.Repositories.Query.Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IQueryRepository</span> <span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
+    <span class="err">{</span>
+        <span class="c1">// Generic repository for all if any</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p><strong>ICustomerQueryRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Core.Repositories.Query</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerQueryRepository</span> <span class="p">:</span> <span class="n">IQueryRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="c1">//Custom operation which is not generic</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomerByEmail</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Create DbConnector and OrderingContext in Ordering.Infrastructure project</strong></p>
+
+<ul>
+  <li>Create DbConnector class in Ordering.Infrastructure/Data folder for SQLite connection for query.</li>
+</ul>
+
+<p><strong>DbConnector.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Data.Sqlite</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DbConnector</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
+
+        <span class="k">protected</span> <span class="nf">DbConnector</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">IDbConnection</span> <span class="nf">CreateConnection</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">_connectionString</span> <span class="p">=</span> <span class="n">_configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">SqliteConnection</span><span class="p">(</span><span class="n">_connectionString</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create OrderingContext class in Ordering.Infrastructure/Data folder for command.</li>
+</ul>
+
+<p><strong>OrderingContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">OrderingContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">OrderingContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">OrderingContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span> <span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">Customers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Create Command and Query Repository in Ordering.Infrastructure project</strong></p>
+
+<ul>
+  <li>Create CommandRepository in Ordering.Infrastructure/Repositories/Command/Base folder</li>
+</ul>
+
+<p><strong>CommandRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Repository.Command.Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CommandRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">ICommandRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
+    <span class="err">{</span>
+        <span class="nc">protected</span> <span class="k">readonly</span> <span class="n">OrderingContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">CommandRepository</span><span class="p">(</span><span class="n">OrderingContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="nf">AddAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Set</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;().</span><span class="nf">AddAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">entity</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">entity</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Set</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;().</span><span class="nf">Remove</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create CommandCustomerRepository in Ordering.Infrastructure/Repositories/Command folder</li>
+</ul>
+
+<p><strong>CustomerCommandRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Command.Base</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Repository.Command</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerCommandRepository</span> <span class="p">:</span> <span class="n">CommandRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;,</span> <span class="n">ICustomerCommandRepository</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CustomerCommandRepository</span><span class="p">(</span><span class="n">OrderingContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create QueryRepository in Ordering.Infrastructure/Repositories/Query/Base folder</li>
+</ul>
+
+<p><strong>QueryRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Data</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Repository.Query.Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">QueryRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">DbConnector</span><span class="p">,</span>  <span class="n">IQueryRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span>
+    <span class="err">{</span>
+        <span class="nc">public</span> <span class="nf">QueryRepository</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Create CustomerQueryRepository in Ordering.Infrastructure/Repositories/Query folder</li>
+</ul>
+
+<p><strong>CustomerQueryRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Dapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Query.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Infrastructure.Repository.Query</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerQueryRepository</span> <span class="p">:</span> <span class="n">QueryRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;,</span> <span class="n">ICustomerQueryRepository</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CustomerQueryRepository</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span> 
+            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS"</span><span class="p">;</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="kt">long</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS WHERE Id = @Id"</span><span class="p">;</span>
+                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
+                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Id"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int64</span><span class="p">);</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryFirstOrDefaultAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomerByEmail</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS WHERE Email = @email"</span><span class="p">;</span>
+                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
+                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Email"</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
+
+                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryFirstOrDefaultAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 7: Now organize Ordering.Application layer</strong></p>
+
+<ul>
+  <li>Create CustomerResponse class in Ordering.Application/Response folder</li>
+</ul>
+
+<p><strong>CustomerResponse.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Response</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerResponse</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<ul>
+  <li>Create Create, Edit and Delete customer command in Ordering.Application/Commands folder</li>
+</ul>
+
+<p><strong>CreateCustomerCommand.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Commands</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CreateCustomerCommand</span> <span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="nf">CreateCustomerCommand</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">CreatedDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>EditCustomerCommand.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Commands</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EditCustomerCommand</span> <span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>DeleteCustomerCommand</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Commands</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DeleteCustomerCommand</span> <span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="nf">DeleteCustomerCommand</span><span class="p">(</span><span class="n">Int64</span> <span class="n">Id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="n">Id</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create Query class in Ordering.Application/Queries folder</li>
+</ul>
+
+<p><strong>GetAllCustomerQuery.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Queries</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">record</span> <span class="n">GetAllCustomerQuery</span> <span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>GetCustomerByEmailQuery.cs</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Queries</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GetCustomerByEmailQuery</span><span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="nf">GetCustomerByEmailQuery</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Email</span> <span class="p">=</span> <span class="n">email</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>GetCustomerByIdQuery.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Queries</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GetCustomerByIdQuery</span><span class="p">:</span> <span class="n">IRequest</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="nf">GetCustomerByIdQuery</span><span class="p">(</span><span class="n">Int64</span> <span class="n">Id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="n">Id</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create CustomerMapper and OrderingMappingProfile class in Ordering.Application/Mapper folder</li>
+</ul>
+
+<p><strong>CustomerMapper.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AutoMapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Mapper</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerMapper</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">Lazy</span><span class="p">&lt;</span><span class="n">IMapper</span><span class="p">&gt;</span> <span class="n">Lazy</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Lazy</span><span class="p">&lt;</span><span class="n">IMapper</span><span class="p">&gt;(()=&gt;</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">config</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MapperConfiguration</span><span class="p">(</span><span class="n">cfg</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">cfg</span><span class="p">.</span><span class="n">ShouldMapProperty</span> <span class="p">=</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">GetMethod</span><span class="p">.</span><span class="n">IsPublic</span> <span class="p">||</span> <span class="n">p</span><span class="p">.</span><span class="n">GetMethod</span><span class="p">.</span><span class="n">IsAssembly</span><span class="p">;</span>
+                <span class="n">cfg</span><span class="p">.</span><span class="n">AddProfile</span><span class="p">&lt;</span><span class="n">OrderingMappingProfile</span><span class="p">&gt;();</span>
+            <span class="p">});</span>
+
+            <span class="kt">var</span> <span class="n">mapper</span> <span class="p">=</span> <span class="n">config</span><span class="p">.</span><span class="nf">CreateMapper</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">mapper</span><span class="p">;</span>
+        <span class="p">});</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">IMapper</span> <span class="n">Mapper</span> <span class="p">=&gt;</span> <span class="n">Lazy</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>OrderingMappingProfile.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">AutoMapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Commands</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Mapper</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">OrderingMappingProfile</span> <span class="p">:</span> <span class="n">Profile</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">OrderingMappingProfile</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">CreateMap</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">,</span> <span class="n">CustomerResponse</span><span class="p">&gt;().</span><span class="nf">ReverseMap</span><span class="p">();</span>
+            <span class="n">CreateMap</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">,</span> <span class="n">CreateCustomerCommand</span><span class="p">&gt;().</span><span class="nf">ReverseMap</span><span class="p">();</span>
+            <span class="n">CreateMap</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">,</span> <span class="n">EditCustomerCommand</span><span class="p">&gt;().</span><span class="nf">ReverseMap</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<ul>
+  <li>Create CommandHandler classes in Ordering.Application/Handlers/CommandHandlers folder</li>
+</ul>
+
+<p><strong>CreateCustomerHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Commands</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Mapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.CommandHandler</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CreateCustomerHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">CreateCustomerCommand</span><span class="p">,</span> <span class="n">CustomerResponse</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerCommandRepository</span> <span class="n">_customerCommandRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CreateCustomerHandler</span><span class="p">(</span><span class="n">ICustomerCommandRepository</span> <span class="n">customerCommandRepository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_customerCommandRepository</span> <span class="p">=</span> <span class="n">customerCommandRepository</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">CreateCustomerCommand</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">customerEntity</span> <span class="p">=</span> <span class="n">CustomerMapper</span><span class="p">.</span><span class="n">Mapper</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">request</span><span class="p">);</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="n">customerEntity</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="p">(</span><span class="s">"There is a problem in mapper"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="kt">var</span> <span class="n">newCustomer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerCommandRepository</span><span class="p">.</span><span class="nf">AddAsync</span><span class="p">(</span><span class="n">customerEntity</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">customerResponse</span> <span class="p">=</span> <span class="n">CustomerMapper</span><span class="p">.</span><span class="n">Mapper</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;(</span><span class="n">newCustomer</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">customerResponse</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>DeleteCustomerHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Commands</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.CommandHandler</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DeleteCustomerHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">DeleteCustomerCommand</span><span class="p">,</span> <span class="n">String</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerCommandRepository</span> <span class="n">_customerCommandRepository</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerQueryRepository</span> <span class="n">_customerQueryRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">DeleteCustomerHandler</span><span class="p">(</span><span class="n">ICustomerCommandRepository</span> <span class="n">customerRepository</span><span class="p">,</span> <span class="n">ICustomerQueryRepository</span> <span class="n">customerQueryRepository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_customerCommandRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
+            <span class="n">_customerQueryRepository</span> <span class="p">=</span> <span class="n">customerQueryRepository</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">DeleteCustomerCommand</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">customerEntity</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerQueryRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+
+                <span class="k">await</span> <span class="n">_customerCommandRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">customerEntity</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="k">new</span> <span class="nf">ApplicationException</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">));</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="s">"Customer information has been deleted!"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>EditCustomerHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Commands</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Mapper</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.CommandHandler</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EditCustomerHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">EditCustomerCommand</span><span class="p">,</span> <span class="n">CustomerResponse</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerCommandRepository</span> <span class="n">_customerCommandRepository</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerQueryRepository</span> <span class="n">_customerQueryRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">EditCustomerHandler</span><span class="p">(</span><span class="n">ICustomerCommandRepository</span> <span class="n">customerRepository</span><span class="p">,</span> <span class="n">ICustomerQueryRepository</span> <span class="n">customerQueryRepository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_customerCommandRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
+            <span class="n">_customerQueryRepository</span> <span class="p">=</span> <span class="n">customerQueryRepository</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">EditCustomerCommand</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">customerEntity</span> <span class="p">=</span> <span class="n">CustomerMapper</span><span class="p">.</span><span class="n">Mapper</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">request</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">customerEntity</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="p">(</span><span class="s">"There is a problem in mapper"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_customerCommandRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">customerEntity</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="kt">var</span> <span class="n">modifiedCustomer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerQueryRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">customerResponse</span> <span class="p">=</span> <span class="n">CustomerMapper</span><span class="p">.</span><span class="n">Mapper</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;(</span><span class="n">modifiedCustomer</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="n">customerResponse</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create QueryHandler classes in Ordering.Application/Handlers/QueryHandlers folder</li>
+</ul>
+
+<p><strong>GetAllCustomerHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Queries</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.QueryHandlers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GetAllCustomerHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">GetAllCustomerQuery</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerQueryRepository</span> <span class="n">_customerQueryRepository</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">GetAllCustomerHandler</span><span class="p">(</span><span class="n">ICustomerQueryRepository</span> <span class="n">customerQueryRepository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_customerQueryRepository</span> <span class="p">=</span> <span class="n">customerQueryRepository</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">GetAllCustomerQuery</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;)</span><span class="k">await</span> <span class="n">_customerQueryRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>GetCustomerByEmailHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Queries</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.QueryHandlers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GetCustomerByEmailHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">GetCustomerByEmailQuery</span><span class="p">,</span> <span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IMediator</span> <span class="n">_mediator</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">GetCustomerByEmailHandler</span><span class="p">(</span><span class="n">IMediator</span> <span class="n">mediator</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_mediator</span> <span class="p">=</span> <span class="n">mediator</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">GetCustomerByEmailQuery</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">GetAllCustomerQuery</span><span class="p">());</span>
+            <span class="kt">var</span> <span class="n">selectedCustomer</span> <span class="p">=</span> <span class="n">customers</span><span class="p">.</span><span class="nf">FirstOrDefault</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Email</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">().</span><span class="nf">Contains</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">Email</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">()));</span>
+            <span class="k">return</span> <span class="n">selectedCustomer</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>GetCustomerByIdHandler.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Queries</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.Application.Handlers.QueryHandlers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GetCustomerByIdHandler</span> <span class="p">:</span> <span class="n">IRequestHandler</span><span class="p">&lt;</span><span class="n">GetCustomerByIdQuery</span><span class="p">,</span> <span class="n">Customer</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IMediator</span> <span class="n">_mediator</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">GetCustomerByIdHandler</span><span class="p">(</span><span class="n">IMediator</span> <span class="n">mediator</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_mediator</span> <span class="p">=</span> <span class="n">mediator</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">Handle</span><span class="p">(</span><span class="n">GetCustomerByIdQuery</span> <span class="n">request</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">GetAllCustomerQuery</span><span class="p">());</span>
+            <span class="kt">var</span> <span class="n">selectedCustomer</span> <span class="p">=</span> <span class="n">customers</span><span class="p">.</span><span class="nf">FirstOrDefault</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">request</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">selectedCustomer</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 8: Orgnaize Ordering.API project. This is an web api project.</strong></p>
+
+<ul>
+  <li>Create CustomerController in Ordering.API/Controllers folder</li>
+</ul>
+
+<p><strong>CustomerController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Commands</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Queries</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Response</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IMediator</span> <span class="n">_mediator</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CustomerController</span><span class="p">(</span><span class="n">IMediator</span> <span class="n">mediator</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_mediator</span> <span class="p">=</span> <span class="n">mediator</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">ProducesResponseType</span><span class="p">(</span><span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">GetAllCustomerQuery</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="p">[</span><span class="nf">ProducesResponseType</span><span class="p">(</span><span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">GetCustomerByIdQuery</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"email"</span><span class="p">)]</span>
+        <span class="p">[</span><span class="nf">ProducesResponseType</span><span class="p">(</span><span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByEmail</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">GetCustomerByEmailQuery</span><span class="p">(</span><span class="n">email</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">ProducesResponseType</span><span class="p">(</span><span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">CustomerResponse</span><span class="p">&gt;&gt;</span> <span class="nf">CreateCustomer</span><span class="p">([</span><span class="n">FromBody</span><span class="p">]</span> <span class="n">CreateCustomerCommand</span> <span class="n">command</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+
+
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"EditCustomer/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span> <span class="nf">EditCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="p">[</span><span class="n">FromBody</span><span class="p">]</span> <span class="n">EditCustomerCommand</span> <span class="n">command</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+                    <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+            <span class="p">}</span>
+
+
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteCustomer/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+                <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_mediator</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="k">new</span> <span class="nf">DeleteCustomerCommand</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Set connection string in appsettings.json file. I have used here SQLite database for simplicity.</li>
+</ul>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.Hosting.Lifetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data Source=db/ordering.db"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Modify configure connection string and register concrete class in Startup class as follows.</li>
+</ul>
+
+<p><strong>Startup.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MediatR</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.OpenApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Application.Handlers.CommandHandler</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Command.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Core.Repositories.Query.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Command</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Command.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Query</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.Infrastructure.Repository.Query.Base</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Reflection</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.API</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Startup</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Startup</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">IConfiguration</span> <span class="n">Configuration</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="c1">// This method gets called by the runtime. Use this method to add services to the container.</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+        <span class="p">{</span>
+
+
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+            <span class="c1">// Configure for Sqlite</span>
+            <span class="n">services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">OrderingContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span> <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlite</span><span class="p">(</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
+
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerDoc</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="k">new</span> <span class="n">OpenApiInfo</span> <span class="p">{</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"Ordering.API"</span><span class="p">,</span> <span class="n">Version</span> <span class="p">=</span> <span class="s">"v1"</span> <span class="p">});</span>
+            <span class="p">});</span>
+
+            <span class="c1">// Register dependencies</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddAutoMapper</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">Startup</span><span class="p">));</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddMediatR</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">CreateCustomerHandler</span><span class="p">).</span><span class="nf">GetTypeInfo</span><span class="p">().</span><span class="n">Assembly</span><span class="p">);</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddScoped</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IQueryRepository</span><span class="p">&lt;&gt;),</span> <span class="k">typeof</span><span class="p">(</span><span class="n">QueryRepository</span><span class="p">&lt;&gt;));</span>
+            <span class="n">services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">ICustomerQueryRepository</span><span class="p">,</span> <span class="n">CustomerQueryRepository</span><span class="p">&gt;();</span>
+            <span class="n">services</span><span class="p">.</span><span class="nf">AddScoped</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ICommandRepository</span><span class="p">&lt;&gt;),</span> <span class="k">typeof</span><span class="p">(</span><span class="n">CommandRepository</span><span class="p">&lt;&gt;));</span>
+            <span class="n">services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">Core</span><span class="p">.</span><span class="n">Repositories</span><span class="p">.</span><span class="n">Command</span><span class="p">.</span><span class="n">ICustomerCommandRepository</span><span class="p">,</span> <span class="n">CustomerCommandRepository</span><span class="p">&gt;();</span>
+
+        <span class="p">}</span>
+
+        <span class="c1">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseDeveloperExceptionPage</span><span class="p">();</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerEndpoint</span><span class="p">(</span><span class="s">"/swagger/v1/swagger.json"</span><span class="p">,</span> <span class="s">"Ordering.API v1"</span><span class="p">));</span>
+            <span class="p">}</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseRouting</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">endpoints</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 9: Run migration command on package manager console</strong></p>
+
+<ul>
+  <li>In package manager console select Oredering.Infrastructure as defult project.</li>
+  <li>Run the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Add-Migration</span> <span class="nf">initialsqlmig</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Update-Database</span> <span class="nf">-Verbose</span>
+</code></pre></div></div>
+
+<p><strong>Step 10: Now run your application and test using swagger. The overall solution structure is look like as following.</strong></p>
+
+<p><img src="/assets/images/posts/2021/fullsolution.png" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/CleanArchitectureDemo/Ecommerce">Source code</a></strong></p>
 
         
       </section>
@@ -322,6 +1479,14 @@
       
       
       <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#cleanarchitecture" class="page__taxonomy-item" rel="tag">cleanarchitecture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#cqrs" class="page__taxonomy-item" rel="tag">cqrs</a><span class="sep">, </span>
     
       
       

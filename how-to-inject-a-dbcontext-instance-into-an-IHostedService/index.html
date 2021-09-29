@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Create a sentiment analysis app using ML.NET - Think Simple</title>
-<meta name="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
+<!-- begin _includes/seo.html --><title>How to inject a DbContext instance into an IHostedService - Think Simple</title>
+<meta name="description" content="Few days back, I was working on a class which implemented IHostedService. I was working on asp.net core project. I tried to use DbContext class using constructor.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="Create a sentiment analysis app using ML.NET">
-<meta property="og:url" content="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/">
+<meta property="og:title" content="How to inject a DbContext instance into an IHostedService">
+<meta property="og:url" content="https://mahedee.net//how-to-inject-a-dbcontext-instance-into-an-IHostedService/">
 
 
-  <meta property="og:description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-04-02T00:00:00+00:00">
+  <meta property="og:description" content="Few days back, I was working on a class which implemented IHostedService. I was working on asp.net core project. I tried to use DbContext class using constructor.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2021-04-03T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/">
+
+<link rel="canonical" href="https://mahedee.net//how-to-inject-a-dbcontext-instance-into-an-IHostedService/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Create a sentiment analysis app using ML.NET">
-    <meta itemprop="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
-    <meta itemprop="datePublished" content="April 02, 2021">
+    <meta itemprop="headline" content="How to inject a DbContext instance into an IHostedService">
+    <meta itemprop="description" content="Few days back, I was working on a class which implemented IHostedService. I was working on asp.net core project. I tried to use DbContext class using constructor.">
+    <meta itemprop="datePublished" content="April 03, 2021">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Create a sentiment analysis app using ML.NET
+          <h1 id="page-title" class="page__title" itemprop="headline">How to inject a DbContext instance into an IHostedService
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  3 minute read
+  less than 1 minute read
 </p>
           
         </header>
@@ -320,135 +320,75 @@
 
       <section class="page__content" itemprop="text">
         
-        <!-- ## Create a sentiment analysis app using ML.NET -->
+        <!-- ## Implementation of swagger in a asp.net core web api using in memory database -->
 
-<p><strong>Application overview</strong><br />
-ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#. Let’s start.</p>
+<p><strong>Problem Statement</strong></p>
 
-<p><strong>Tools and Technology used</strong> 
-The following tools and technologies has been used for this application</p>
-<ul>
-  <li>Visual Studio 2019</li>
-  <li>Visual C#</li>
-</ul>
+<p>Few days back, I was working on a class which implemented IHostedService. I was working on asp.net core project. I tried to use DbContext class using constructor. But, it shows the following error -</p>
 
-<p><strong>Step 1: Create a console application</strong></p>
-<ul>
-  <li>Create a new project using visual studio 2019</li>
-  <li>Choose the C# Console App (.NET Core) project template</li>
-  <li>Change the project and solution name as “SentimentAnalysis”</li>
-  <li>Click create button to create the project.</li>
-</ul>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Cannot</span> <span class="nf">consume</span> <span class="nf">scoped</span> <span class="nf">service</span> <span class="nf">'Microsoft.EntityFrameworkCore.DbContextOptions'</span> <span class="nf">from</span> <span class="nf">singleton</span> <span class="nf">'Microsoft.Extensions.Hosting.IHostedService'.</span>
+</code></pre></div></div>
+<p>I tried it several way but I failed.</p>
 
-<p><strong>Step 2: Enable the ML.NET Model Builder preview feature</strong>
-Press right button on the project file -&gt; Add -&gt; Machine learning
-You will see the following pop up message. Enable it.</p>
+<p><strong>Solution</strong><br />
+<strong>Step 1:</strong> I have injected IserviceScopeFactory and solve the problem as like below.</p>
 
-<p>Would you like to enable the ML.NET Model Builder preview feature so you can add Machine Learning to your .NET projects? <a href="">Enable</a></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Plain.RabbitMQ</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Shared.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
 
-<p><strong>Step 3: Select model builder scenario</strong></p>
-<ul>
-  <li>Press right button on the project -&gt; Add -&gt; Machine Learning</li>
-  <li>Select Text classification</li>
-  <li>Keep the Local Environment and click on data (to move data step)</li>
-</ul>
-
-<!-- Draft -->
-
-<p><strong>Step 4: Download and add data</strong></p>
-<ul>
-  <li>Download the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip">Sentiment Labelled Sentences datasets</a> from the <a href="https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences">UCI Machine Learning Repository</a></li>
-  <li>Unzip the file and keep the “yelp_labelled.txt” file to Data folder</li>
-  <li>The first column of this file represents the comments and the second column represent the sentiment of the text (0 for negative and 1 for positive)</li>
-</ul>
-
-<p><strong>Add data</strong></p>
-<ul>
-  <li>In this form, select File as the input data source type</li>
-  <li>Browse file yelp_labelled.txt. Once you are selected, you will see the preview of the data.</li>
-  <li>Select “col1” for Column to predict (Label) as the image below</li>
-  <li>Now click Train button to move to the train step</li>
-</ul>
-
-<p><img src="..\assets\images\posts\0001.png" alt="" /></p>
-
-<p><strong>Step 5: Train your model</strong></p>
-<ul>
-  <li>Time to train set automatically based on data. But you can manually set it.</li>
-  <li>Click start training button. You will see the following point the screen.</li>
-</ul>
-
-<p>Best accuracy - Percentage of accuracy of the current model <br />
-Best model - This shows you which algorithm performed the best during Model Builder’s exploration.<br />
-Training time - Total times taken to run training
-Models explored (total) - This shows you the total number of models explored by Model Builder in the given amount of time.</p>
-
-<p>Source : Microsoft docs</p>
-
-<ul>
-  <li>Now click Evaluate to move to the evaluate step</li>
-</ul>
-
-<p><strong>Step 6: Evaluate your model</strong></p>
-<ul>
-  <li>Type a sentence in Try your model section.</li>
-  <li>I Typed “This is a fantastic place” and it shows positive is 98% and negative 2%</li>
-</ul>
-
-<p><img src="..\assets\images\posts\0002.png" alt="" /></p>
-
-<p><strong>Step 7: Add project in to the solution</strong></p>
-<ul>
-  <li>Click Add Project Button</li>
-  <li>Model builder will add machine learning model and the project for training</li>
-  <li>ModelBuilder.cs in the console application is used to build/train the model</li>
-  <li>Program.cs in the console application is used to test run the model</li>
-  <li>ModelInput.cs and ModelOutput.cs in Model library is the input and output class for the model training.</li>
-  <li>ConsumeModel.cs in Model library contains the method for model consumption</li>
-  <li>Solution structure will be like as follows</li>
-</ul>
-
-<p><img src="..\assets\images\posts\0003.png" alt="" /></p>
-
-<p><strong>Step 8: Consume your model</strong></p>
-<ul>
-  <li>Set SentimentAnalysisML.ConsoleApp as startup project</li>
-  <li>Modify a bit of Program.cs in SentimentAnalysisML.ConsoleApp as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">Program</span>
+<span class="k">namespace</span> <span class="nn">Ordering.API</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogResponseListener</span> <span class="p">:</span> <span class="n">IHostedService</span>
     <span class="p">{</span>
-        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">private</span> <span class="n">ISubscriber</span> <span class="n">_subscriber</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IServiceScopeFactory</span> <span class="n">_scopeFactory</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CatalogResponseListener</span><span class="p">(</span><span class="n">ISubscriber</span> <span class="n">subscripber</span><span class="p">,</span> <span class="n">IServiceScopeFactory</span> <span class="n">scopeFactory</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="c1">// Create single instance of sample data from first line of dataset for model input</span>
-            <span class="n">ModelInput</span> <span class="n">sampleData</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ModelInput</span><span class="p">()</span>
-            <span class="p">{</span>
-                <span class="n">Col0</span> <span class="p">=</span> <span class="s">@"The food of Hotel Sonargaon was awesome"</span><span class="p">,</span>
-            <span class="p">};</span>
-
-            <span class="c1">// Make a single prediction on the sample data and print results</span>
-            <span class="kt">var</span> <span class="n">predictionResult</span> <span class="p">=</span> <span class="n">ConsumeModel</span><span class="p">.</span><span class="nf">Predict</span><span class="p">(</span><span class="n">sampleData</span><span class="p">);</span>
-
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Using model to make single prediction -- Comparing actual Col1 with predicted Col1 from sample data...\n\n"</span><span class="p">);</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Col0: </span><span class="p">{</span><span class="n">sampleData</span><span class="p">.</span><span class="n">Col0</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"\n\nPredicted Col1 value </span><span class="p">{</span><span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span><span class="p">}</span><span class="s"> \nPredicted Col1 scores: [</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">","</span><span class="p">,</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Score</span><span class="p">)}</span><span class="s">]\n"</span><span class="p">);</span>
-
-            <span class="kt">string</span> <span class="n">sentiment</span> <span class="p">=</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span> <span class="p">==</span> <span class="s">"1"</span> <span class="p">?</span> <span class="s">"Positive"</span> <span class="p">:</span> <span class="s">"Negative"</span><span class="p">;</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Sentiment: </span><span class="p">{</span><span class="n">sentiment</span><span class="p">}</span><span class="s"> \n"</span><span class="p">);</span>
-
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=============== End of process, hit any key to finish ==============="</span><span class="p">);</span>
-            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">_subscriber</span> <span class="p">=</span> <span class="n">subscripber</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">_scopeFactory</span> <span class="p">=</span> <span class="n">scopeFactory</span><span class="p">;</span>
         <span class="p">}</span>
-    <span class="p">}</span> 
+        <span class="k">public</span> <span class="n">Task</span> <span class="nf">StartAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_subscriber</span><span class="p">.</span><span class="nf">Subscribe</span><span class="p">(</span><span class="n">Subscribe</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">Subscribe</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">,</span> <span class="n">IDictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span> <span class="n">header</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">response</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="n">DeserializeObject</span><span class="p">&lt;</span><span class="n">CatalogResponse</span><span class="p">&gt;(</span><span class="n">message</span><span class="p">);</span>
+
+            <span class="k">if</span><span class="p">(!</span><span class="n">response</span><span class="p">.</span><span class="n">IsSuccess</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">_scopeFactory</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">_orderingContext</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">OrderingContext</span><span class="p">&gt;();</span>
+                    <span class="c1">// Remove ordering item</span>
+                    <span class="kt">var</span> <span class="n">orderItem</span> <span class="p">=</span> <span class="n">_orderingContext</span><span class="p">.</span><span class="n">OrderItems</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">ProductId</span> <span class="p">==</span> <span class="n">response</span><span class="p">.</span><span class="n">CatalogId</span><span class="p">).</span><span class="nf">FirstOrDefault</span><span class="p">();</span>
+                    <span class="n">_orderingContext</span><span class="p">.</span><span class="n">OrderItems</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">orderItem</span><span class="p">);</span>
+                    <span class="n">_orderingContext</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">Task</span> <span class="nf">StopAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 </code></pre></div></div>
 
-<p><strong>Step 9: Build and run the application</strong>
-Now build and run the application. You will see the sentiment output of the sentence “The food of Hotel Sonargaon was awesome”.</p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/SentimentAnalysis">Source Code</a></strong></p>
-
-<!-- **References**  
-1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create -->
+<!-- [Download source code](https://github.com/mahedee/code-sample/tree/master/SwaggerInMemory/SMS.Web) -->
 
         
       </section>
@@ -469,7 +409,7 @@ Now build and run the application. You will see the sentiment output of the sent
     
       
       
-      <a href="/tags/#ai" class="page__taxonomy-item" rel="tag">ai</a><span class="sep">, </span>
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
     
       
       
@@ -477,7 +417,7 @@ Now build and run the application. You will see the sentiment output of the sent
     
       
       
-      <a href="/tags/#machinelearning" class="page__taxonomy-item" rel="tag">machinelearning</a>
+      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a>
     
     </span>
   </p>
@@ -498,7 +438,7 @@ Now build and run the application. You will see the sentiment output of the sent
     
       
       
-      <a href="/categories/#ai" class="page__taxonomy-item" rel="tag">AI</a><span class="sep">, </span>
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
     
       
       
@@ -506,36 +446,36 @@ Now build and run the application. You will see the sentiment output of the sent
     
       
       
-      <a href="/categories/#machine-learning" class="page__taxonomy-item" rel="tag">Machine Learning</a>
+      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-04-02T00:00:00+00:00">April 02, 2021</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-04-03T00:00:00+00:00">April 03, 2021</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Create+a+sentiment+analysis+app+using+ML.NET%20https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net-for-future-test%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=How+to+inject+a+DbContext+instance+into+an+IHostedService%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-inject-a-dbcontext-instance-into-an-IHostedService%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net-for-future-test%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-inject-a-dbcontext-instance-into-an-IHostedService%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net-for-future-test%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-inject-a-dbcontext-instance-into-an-IHostedService%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/maintain-dbcontext-class-in-a-seperate-project/" class="pagination--pager" title="Maintain DbContext class in a seperate project using Entity Framework core
+      <a href="/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/" class="pagination--pager" title="Create a sentiment analysis app using ML.NET
 ">Previous</a>
     
     
-      <a href="/how-to-inject-a-dbcontext-instance-into-an-IHostedService/" class="pagination--pager" title="How to inject a DbContext instance into an IHostedService
+      <a href="/playing-with-dapper-with-aspnet-core/" class="pagination--pager" title="Playing with dapper using asp.net core
 ">Next</a>
     
   </nav>
@@ -755,8 +695,8 @@ Now build and run the application. You will see the sentiment output of the sent
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/create-a-sentiment-analysis-app-using-ml-dot-net-for-future-test"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.net//how-to-inject-a-dbcontext-instance-into-an-IHostedService/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/how-to-inject-a-dbcontext-instance-into-an-IHostedService"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

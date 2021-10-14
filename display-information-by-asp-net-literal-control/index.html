@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to configure IIS for different port - Think Simple</title>
-<meta name="description" content="hi">
+<!-- begin _includes/seo.html --><title>Display information by ASP.Net literal control - Think Simple</title>
+<meta name="description" content="The literal control is similar to the Label control. Unlike the Label control, the Literal control does not render its content inside of a tag. You can use the Literal control to display text or HTML content in a browser.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to configure IIS for different port">
-<meta property="og:url" content="https://mahedee.net//how-to-configure-iis-for-different-port/">
+<meta property="og:title" content="Display information by ASP.Net literal control">
+<meta property="og:url" content="https://mahedee.net//display-information-by-asp-net-literal-control/">
 
 
-  <meta property="og:description" content="hi">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2013-11-07T00:00:00+00:00">
+  <meta property="og:description" content="The literal control is similar to the Label control. Unlike the Label control, the Literal control does not render its content inside of a tag. You can use the Literal control to display text or HTML content in a browser.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2013-08-13T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.net//how-to-configure-iis-for-different-port/">
+
+<link rel="canonical" href="https://mahedee.net//display-information-by-asp-net-literal-control/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to configure IIS for different port">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="November 07, 2013">
+    <meta itemprop="headline" content="Display information by ASP.Net literal control">
+    <meta itemprop="description" content="The literal control is similar to the Label control. Unlike the Label control, the Literal control does not render its content inside of a tag. You can use the Literal control to display text or HTML content in a browser.">
+    <meta itemprop="datePublished" content="August 13, 2013">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to configure IIS for different port
+          <h1 id="page-title" class="page__title" itemprop="headline">Display information by ASP.Net literal control
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
           
         </header>
@@ -320,7 +320,44 @@
 
       <section class="page__content" itemprop="text">
         
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/PMtTkHetag0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+        <p>The literal control is similar to the Label control. Unlike the Label control, the Literal control does not render its content inside of a tag. You can use the Literal control to display text or HTML content in a browser.</p>
+
+<p>Literal control does not support either CssClass or BackColor properties.</p>
+
+<p>Literal control has mode property which Label has not.
+Three mode property of Literal control:</p>
+
+<p>PassThrough: Displays the contents of the control without encoding.
+Encode: The contents of the control are converted to an HTML-encoded string.
+Transform: Unsupported markup-language elements are removed from the contents of the control. If the Literal control is rendered on a browser that supports HTML or XHTML, the control’s contents are not modified.
+You will be clear after watching output of the following</p>
+
+<p>Write the following code in your aspx page. Here I used 4 literal. 1st one for displaying simple message from code behind. Others 3 are displayed the content in different mode of literal.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span> <span class="n">ID</span> <span class="p">=</span> <span class="s">"ltrlMsg"</span> <span class="n">runat</span> <span class="p">=</span> <span class="s">"server"</span><span class="p">&gt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span> <span class="n">ID</span> <span class="p">=</span> <span class="s">"ltrPasThrough"</span> <span class="n">Mode</span> <span class="p">=</span><span class="s">"PassThrough"</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"This is Mahedee Hasan"</span> <span class="n">runat</span> <span class="p">=</span> <span class="s">"server"</span><span class="p">&gt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span> <span class="n">ID</span> <span class="p">=</span> <span class="s">"Literal1"</span> <span class="n">Mode</span><span class="p">=</span><span class="s">"Encode"</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"This is Mahedee Hasan"</span> <span class="n">runat</span> <span class="p">=</span> <span class="s">"server"</span><span class="p">&gt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span> <span class="n">ID</span> <span class="p">=</span> <span class="s">"Literal2"</span> <span class="n">Mode</span> <span class="p">=</span> <span class="s">"Transform"</span> <span class="n">Text</span> <span class="p">=</span> <span class="s">"This is Mahedee Hasan"</span> <span class="n">runat</span> <span class="p">=</span> <span class="s">"server"</span><span class="p">&gt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Literal</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+
+</code></pre></div></div>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">Page_Load</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">ltrlMsg</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"Welcome to ASP.net Literal Control!"</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>The output of the code is look like this.</p>
+
+<p>Welcome to ASP.net Literal Control!<br />
+<strong>This is Mahedee Hasan</strong><br />
+<strong>This is Mahedee Hasanll</strong><br />
+<strong>This is Mahedee Hasan</strong></p>
 
         
       </section>
@@ -341,11 +378,11 @@
     
       
       
-      <a href="/tags/#iis" class="page__taxonomy-item" rel="tag">iis</a><span class="sep">, </span>
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a>
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
     
     </span>
   </p>
@@ -366,40 +403,40 @@
     
       
       
-      <a href="/categories/#iis" class="page__taxonomy-item" rel="tag">IIS</a><span class="sep">, </span>
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
     
       
       
-      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a>
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2013-11-07T00:00:00+00:00">November 07, 2013</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2013-08-13T00:00:00+00:00">August 13, 2013</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+configure+IIS+for+different+port%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-iis-for-different-port%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Display+information+by+ASP.Net+literal+control%20https%3A%2F%2Fmahedee.net%2F%2Fdisplay-information-by-asp-net-literal-control%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-iis-for-different-port%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fdisplay-information-by-asp-net-literal-control%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-iis-for-different-port%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fdisplay-information-by-asp-net-literal-control%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/how-to-create-domain-controller-in-windows-server-2008-r2/" class="pagination--pager" title="How To Create Domain Controller In Windows Server 2008 R2
+      <a href="/call-javascript-from-asp-net-code-behind/" class="pagination--pager" title="Call JavaScript from Asp.Net code behind
 ">Previous</a>
     
     
-      <a href="/how-to-copy-folder-with-content/" class="pagination--pager" title="How to copy folder with content using C#
+      <a href="/how-to-create-domain-controller-in-windows-server-2008-r2/" class="pagination--pager" title="How To Create Domain Controller In Windows Server 2008 R2
 ">Next</a>
     
   </nav>
@@ -619,8 +656,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//how-to-configure-iis-for-different-port/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/how-to-configure-iis-for-different-port"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.net//display-information-by-asp-net-literal-control/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/display-information-by-asp-net-literal-control"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

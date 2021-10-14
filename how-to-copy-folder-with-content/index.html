@@ -1,0 +1,684 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to copy folder with content using C# - Think Simple</title>
+<meta name="description" content="hi">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="How to copy folder with content using C#">
+<meta property="og:url" content="https://mahedee.net//how-to-copy-folder-with-content/">
+
+
+  <meta property="og:description" content="hi">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2013-11-23T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//how-to-copy-folder-with-content/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 14 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to copy folder with content using C#">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="November 23, 2013">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to copy folder with content using C#
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">CopyFolder</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">sourcePath</span> <span class="p">=</span> <span class="s">@"G:\Mahedee_Share\Created"</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">destPath</span> <span class="p">=</span> <span class="s">@"G:\Mahedee_Share\Development"</span><span class="p">;</span>
+            <span class="nf">CopyFolder</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span><span class="n">destPath</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">CopyFolder</span><span class="p">(</span><span class="kt">string</span> <span class="n">sourcePath</span><span class="p">,</span> <span class="kt">string</span> <span class="n">destinationPath</span><span class="p">)</span>
+        <span class="p">{</span>
+        
+            <span class="k">try</span>
+            <span class="p">{</span>
+            
+            <span class="c1">//Now Create all of the directories</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">dirPath</span> <span class="k">in</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">GetDirectories</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span>
+            <span class="n">SearchOption</span><span class="p">.</span><span class="n">AllDirectories</span><span class="p">))</span>
+            <span class="n">Directory</span><span class="p">.</span><span class="nf">CreateDirectory</span><span class="p">(</span><span class="n">dirPath</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span> <span class="n">destinationPath</span><span class="p">));</span>
+            
+            <span class="c1">//Copy all the files &amp; Replaces any files with the same name</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">newPath</span> <span class="k">in</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">GetFiles</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span> <span class="s">"*.*"</span><span class="p">,</span>
+            <span class="n">SearchOption</span><span class="p">.</span><span class="n">AllDirectories</span><span class="p">))</span>
+            <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="nf">Copy</span><span class="p">(</span><span class="n">newPath</span><span class="p">,</span> <span class="n">newPath</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span> <span class="n">destinationPath</span><span class="p">),</span> <span class="k">true</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+            
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2013-11-23T00:00:00+00:00">November 23, 2013</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+copy+folder+with+content+using+C%23%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-copy-folder-with-content%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-copy-folder-with-content%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-copy-folder-with-content%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-configure-iis-for-different-port/" class="pagination--pager" title="How to configure IIS for different port
+">Previous</a>
+    
+    
+      <a href="/file-upload-to-server-with-asp-net/" class="pagination--pager" title="File upload to server with ASP.Net
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/playing-with-clean-architecture-and-cqrs-pattern-using-asp.net-core-ef-and-dapper/" rel="permalink">Playing with Clean Architecture and CQRS pattern using asp.net core, EF and Dapper
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Clean architecute was created by Robert C. Martin known as Uncle Bob. It’s now mostly used software architecute especially in microservice architecture. In t...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/integrate-logging-in-a-asp.net-core-application-using-serilog-and-seq/" rel="permalink">Integrate logging in a asp.net core application using Serilog and Seq
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Serilog is a newer logging framework for .NET and now has been the most used and preferred framework for .NET Application. Seq is the intelligent search, ana...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/uses-of-configuration-provider-and-options-pattern-in-asp.net-core/" rel="permalink">Uses of Configuration Provider and Options Pattern in ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In ASP.NET core, we often use application settings from different configuration files and load to a some files. Application settings can be in the appsetting...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/distributed-transaction-using-saga-rabbitmq-aspnetcore/" rel="permalink">Distributed transaction using SAGA pattern, RabbitMQ and asp.net core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Distributed transaction is one that spans multiple databases across the network while preserving ACID properties. It is very important in Microservices becau...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//how-to-copy-folder-with-content/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/how-to-copy-folder-with-content"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

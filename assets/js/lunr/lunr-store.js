@@ -204,6 +204,11 @@ var store = [{
         "tags": ["quote","motivational","english"],
         "url": "https://mahedee.net//most-used-quote-motivational/",
         "teaser":null},{
+        "title": "বানী চিরন্তনী",
+        "excerpt":"   মূর্খদের সাথে কখনো তর্ক করতে যেও না, কারন হলো মূর্খরা তোমাকে তাদের পর্যায়ে নামিয়ে নিয়ে এসে তর্কে হারিয়ে দিবে। - হুমায়ূন আহমেদ  ","categories": ["Quote","Bangla"],
+        "tags": ["quote","motivational","Bangla"],
+        "url": "https://mahedee.net//most-used-quote-motivational-bangla/",
+        "teaser":null},{
         "title": "HTTP Error 404.3",
         "excerpt":"Did you find the error “HTTP Error 404.3” ? Yes, I found the error at the time of deploying my ASP.NET web application to IIS 7. I found the following error (screen shot).         To solve the error follow the following steps:   Step 1: Go to Control Panel -&gt; Programs and Features -&gt; Turn Windows Features on or off   Step 2: Mark the features as like following image.   Step 3: Click OK and reset IIS.  ","categories": ["Troubleshooting","IIS"],
         "tags": ["troubleshooting","iis"],

@@ -204,6 +204,11 @@ var store = [{
         "tags": ["quote","motivational","english"],
         "url": "https://mahedee.net//most-used-quote-motivational/",
         "teaser":null},{
+        "title": "ইসলামিক মহান বানী",
+        "excerpt":"আল কোরআন      রহমানের বান্দা তো তারাই, যারা দুনিয়াতে নম্রভাবে চলাফেরা করে। তাদের সাথে যখন মূর্খরা কথা বলতে থাকে, তারা বলে সালাম (শান্তি)। - সূরা_ফুরক্বনঃ ৬৩  ","categories": ["Quote","Bangla"],
+        "tags": ["quote","motivational","bangla","islamic"],
+        "url": "https://mahedee.net//islamic-quran-hadith-quote-bangla/",
+        "teaser":null},{
         "title": "বানী চিরন্তনী",
         "excerpt":"   মূর্খদের সাথে কখনো তর্ক করতে যেও না, কারন হলো মূর্খরা তোমাকে তাদের পর্যায়ে নামিয়ে নিয়ে এসে তর্কে হারিয়ে দিবে। - হুমায়ূন আহমেদ  ","categories": ["Quote","Bangla"],
         "tags": ["quote","motivational","Bangla"],

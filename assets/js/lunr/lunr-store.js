@@ -680,7 +680,7 @@ var store = [{
         "url": "https://mahedee.net//branching-and-merging/",
         "teaser":null},{
         "title": "Tips and Tricks for git",
-        "excerpt":"  GitHub is a internet hosting provider for software development and version control using git. It provides distributed version control, source code management, issue tracking and many more. This is now the number one version control provider. Here, I will discuss on tips and tricks of git      Discard unstaged changes in Git?   For all unstaged files in current working directory use:      git checkout -- .      ","categories": ["Source Control","Github"],
+        "excerpt":"  GitHub is a internet hosting provider for software development and version control using git. It provides distributed version control, source code management, issue tracking and many more. This is now the number one version control provider. Here, I will discuss on tips and tricks of git      Discard unstaged changes in Git?   For all unstaged files in current working directory use:      git checkout -- .       Merge your local uncommited changes     git stash     git pull     git stash apply      Remove cached files            Go to the directory and run the following command          git rm -r --cached obj/                  ","categories": ["Source Control","Github"],
         "tags": ["git","source-control"],
         "url": "https://mahedee.net//necessary-tips-for-git/",
         "teaser":null},{

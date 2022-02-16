@@ -1,4 +1,810 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-15T12:17:29+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Authentication and authorization using react.js and asp.net core</title><link href="https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core/" rel="alternate" type="text/html" title="Authentication and authorization using react.js and asp.net core" /><published>2022-01-07T00:00:00+00:00</published><updated>2022-01-07T00:00:00+00:00</updated><id>https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core</id><content type="html" xml:base="https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core/"><![CDATA[<!-- ## Building a web application using React and asp.net core(Part 01)-->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-16T04:12:20+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Application health monitoring using asp.net core</title><link href="https://mahedee.net//Application-health-monitoring-using-asp.net-core/" rel="alternate" type="text/html" title="Application health monitoring using asp.net core" /><published>2022-02-03T00:00:00+00:00</published><updated>2022-02-03T00:00:00+00:00</updated><id>https://mahedee.net//Application-health-monitoring-using-asp.net-core</id><content type="html" xml:base="https://mahedee.net//Application-health-monitoring-using-asp.net-core/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+
+<p><strong>Introduction</strong></p>
+
+<p>Health monitoring provides real-time information about the state of the application. It’s a very crucial part for large distributed application. Especially, microservies based application. In this article, I will show you how to monitor application’s health in different ways.</p>
+
+<p><strong>Tools and technologies used</strong></p>
+<ul>
+  <li>Visual Studio 2022</li>
+  <li>.NET 6.0</li>
+  <li>SQL Server</li>
+  <li>Entity Framework</li>
+  <li>ASP.NET Core Web API</li>
+  <li>C#</li>
+</ul>
+
+<p><strong>Implementation</strong></p>
+
+<p><strong>Step 1: Create solution and projects.</strong></p>
+
+<ul>
+  <li>Create a solution name HealthCheck</li>
+  <li>Add 4 new web api project, name - Admin.API, Customer.API, Location.API and WebStatus in the solution.</li>
+</ul>
+
+<p>Here WebStatus project will monitor health of Admin.API, Customer.API and Location.API project and display result on watchdog.</p>
+
+<p><strong>Step 2: Install nuget packages.</strong></p>
+
+<ul>
+  <li>Install following nuget package in Admin.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in Customer.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.SqlServer</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Newtonsoft.Json</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">System.Data.SqlClient</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in Location.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.SqlServer</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in WebStatus Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.InMemory.Storage</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Configure Admin.API project for health check</strong></p>
+
+<ul>
+  <li>Modify Program.cs file is as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="c1">// Register required services for health checks</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">();</span>
+
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Registered healthcheck service using</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">();</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Added healthcheck end point using following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Now you can run and check the application health using the following URL</p>
+
+    <p>https://localhost:7147/hc</p>
+
+    <p>https://localhost:7147/liveness</p>
+  </li>
+</ul>
+
+<p><strong>Step 4: Configure Customer.API project for health check</strong></p>
+
+<ul>
+  <li>Add ConnectionString in appsettings.json file as follows</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"CustomerDBConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=Demo.CustomerDB;User Id=sa;Password=secret@pass;"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add CustomerDbContext class in Customer.API/Db folder
+<strong>CustomerDbContext.cs</strong></li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Customer.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CustomerDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Add DatabaseHealthCheck and HealthCheckResponse class in Customer.API/Utility folder</li>
+</ul>
+
+<p><strong>DatabaseHealthCheck.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Data.SqlClient</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Customer.API.Utility</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DatabaseHealthCheck</span> <span class="p">:</span> <span class="n">IHealthCheck</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">DatabaseHealthCheck</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">HealthCheckResult</span><span class="p">&gt;</span> <span class="nf">CheckHealthAsync</span><span class="p">(</span><span class="n">HealthCheckContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span> <span class="p">=</span> <span class="k">default</span><span class="p">)</span>
+        <span class="p">{</span>
+            
+            <span class="kt">string</span> <span class="n">_connectionString</span> <span class="p">=</span> <span class="n">_configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">);</span>
+
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SqlConnection</span><span class="p">(</span><span class="n">_connectionString</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">try</span>
+                <span class="p">{</span>
+                    <span class="n">connection</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">catch</span> <span class="p">(</span><span class="n">SqlException</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// return HealthCheckResult.Healthy();</span>
+                    <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">FromResult</span><span class="p">(</span><span class="k">new</span> <span class="nf">HealthCheckResult</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Registration</span><span class="p">.</span><span class="n">FailureStatus</span><span class="p">,</span> <span class="s">"Cannot connect to Demo.CustomerDB"</span><span class="p">));</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">HealthCheckResult</span><span class="p">.</span><span class="nf">Healthy</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+<p><strong>HealthCheckResponse.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Customer.API.Utility</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HealthCheckResponse</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">Task</span> <span class="nf">CustomResponseWriter</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">HealthReport</span> <span class="n">healthReport</span><span class="p">)</span>
+        <span class="p">{</span>
+
+            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="k">new</span>
+            <span class="p">{</span>
+                <span class="n">status</span> <span class="p">=</span> <span class="n">healthReport</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(),</span>
+                <span class="n">errors</span> <span class="p">=</span> <span class="n">healthReport</span><span class="p">.</span><span class="n">Entries</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span>
+                    <span class="n">key</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span>
+                    <span class="k">value</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span>
+                <span class="p">})</span>
+            <span class="p">});</span>
+
+            <span class="k">return</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="nf">WriteHealthCheckUIResponse</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">healthReport</span><span class="p">);</span>
+            <span class="c1">//return context.Response.WriteAsync(result);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file is as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Customer.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Customer.API.Utility</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="c1">// Sql server health check with name "customersql" with custom healtcheck</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddCheck</span><span class="p">&lt;</span><span class="n">DatabaseHealthCheck</span><span class="p">&gt;(</span><span class="s">"customersql"</span><span class="p">);</span>
+
+
+<span class="c1">// Create DbContext</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">))</span>
+    <span class="p">);</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="s">"customerdbcontext"</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">();</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">HealthCheckResponse</span><span class="p">.</span><span class="n">CustomResponseWriter</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthcheck</span> <span class="p">=&gt;</span> <span class="n">healthcheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customersql"</span><span class="p">;</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customersql"</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
+<span class="c1">//.RequireAuthorization();</span>
+
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customerdbcontext"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Supress cache headers</span>
+    <span class="n">AllowCachingResponses</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+
+    <span class="c1">// Customize the HTTP Status code</span>
+    <span class="n">ResultStatusCodes</span> <span class="p">=</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span>
+    <span class="p">},</span>
+
+    <span class="c1">// filters the health checks so that only those tagged with sql</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthCheck</span> <span class="p">=&gt;</span> <span class="n">healthCheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customerdbcontext"</span><span class="p">,</span>
+
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//Predicate = _ =&gt; true,</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability</span>
+<span class="c1">//to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Checking sql server’s health with a name customersql using following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddCheck</span><span class="p">&lt;</span><span class="n">DatabaseHealthCheck</span><span class="p">&gt;(</span><span class="s">"customersql"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Checking sql server’s health using dbcontext of EF using following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">))</span>
+    <span class="p">);</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="s">"customerdbcontext"</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Added healthcheck end point for different services seperatedly using the following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">();</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">HealthCheckResponse</span><span class="p">.</span><span class="n">CustomResponseWriter</span><span class="p">;</span>
+<span class="n">options</span><span class="p">.</span><span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthcheck</span> <span class="p">=&gt;</span> <span class="n">healthcheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customersql"</span><span class="p">;</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customersql"</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
+<span class="c1">//.RequireAuthorization();</span>
+
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customerdbcontext"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Supress cache headers</span>
+    <span class="n">AllowCachingResponses</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+
+    <span class="c1">// Customize the HTTP Status code</span>
+    <span class="n">ResultStatusCodes</span> <span class="p">=</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span>
+    <span class="p">},</span>
+
+    <span class="c1">// filters the health checks so that only those tagged with sql</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthCheck</span> <span class="p">=&gt;</span> <span class="n">healthCheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customerdbcontext"</span><span class="p">,</span>
+
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//Predicate = _ =&gt; true,</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability</span>
+<span class="c1">//to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Now you can run and check the application health using the following URL</p>
+
+    <p>https://localhost:7145/hc</p>
+
+    <p>https://localhost:7145/customersql</p>
+
+    <p>https://localhost:7145/customerdbcontext</p>
+
+    <p>https://localhost:7145/liveness</p>
+  </li>
+</ul>
+
+<p><strong>Step 5: Configure Location.API project for health check</strong></p>
+
+<ul>
+  <li>Add ConnectionString in appsettings.json file as follows</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"CustomerDBConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=Demo.LocationDB;User Id=sa;Password=secret@pass;"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add CustomerDbContext class in Customer.API/Persistence folder</li>
+</ul>
+
+<p><strong>LocationDbContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+
+<span class="k">namespace</span> <span class="nn">Location.API.Persistence</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">LocationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">LocationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file is as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Location.API.Persistence</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+
+<span class="c1">// Sql server health check </span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
+        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
+
+<span class="c1">// Create DbContext</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
+    <span class="p">);</span>
+
+<span class="c1">// DbContext health check for EF core</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Checking sql server’s health using following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
+        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Checking sql server’s health using dbcontext of EF using following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
+    <span class="p">);</span>
+
+<span class="c1">// DbContext health check for EF core</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Added healthcheck end point to check the application health</li>
+  <li>Here application will be healthy when both sql server and application is up and running. Otherwise, it will be un healthy.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Location.API.Persistence</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+
+<span class="c1">// Sql server health check </span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
+        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
+
+<span class="c1">// Create DbContext</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
+    <span class="p">);</span>
+
+<span class="c1">// DbContext health check for EF core</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="c1">// Cofigure for health check</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
+<span class="p">});</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Now you can run and check the application health using the following URL</p>
+
+    <p>https://localhost:7232/hc</p>
+
+    <p>https://localhost:7232/liveness</p>
+  </li>
+</ul>
+
+<p><strong>Step 6: Configure WebStatus project for to monitors others 3 application’s health</strong></p>
+
+<ul>
+  <li>Configure HealthCheckUI in appsettings.json file as follows</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"HealthChecksUI"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"HealthChecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Admin.API"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7147/hc"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/hc"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API -&gt; CustomerDB"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/customersql"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API -&gt; CustomerDbContext"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/customerdbcontext"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+
+      </span><span class="err">//Location</span><span class="w"> </span><span class="err">service</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location.API"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7232/hc"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+
+    </span><span class="nl">"EvaluationTimeInSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"MinimumSecondsBetweenFailureNotifications"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file is as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="c1">// Configure service for healthcheck</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecksUI</span><span class="p">().</span><span class="nf">AddInMemoryStorage</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="c1">// Cofigure methods for healthcheck</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecksUI</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Here, Added HealthCheckUI using the following code</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Configure service for healthcheck</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecksUI</span><span class="p">().</span><span class="nf">AddInMemoryStorage</span><span class="p">();</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="c1">// Cofigure methods for healthcheck</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecksUI</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Now now all(multiple) projects at a time and monitor all application’s</p>
+
+    <p>https://localhost:7188/healthchecks-ui#/healthchecks</p>
+  </li>
+</ul>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/health-check/HealthCheck">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><summary type="html"><![CDATA[Health monitoring provides real-time information about the state of the application. It's a very crucial part for large distributed application. Especially, microservies based application. In this article, I will show you how to monitor application's health in different ways.]]></summary></entry><entry><title type="html">Authentication and authorization using react.js and asp.net core</title><link href="https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core/" rel="alternate" type="text/html" title="Authentication and authorization using react.js and asp.net core" /><published>2022-01-07T00:00:00+00:00</published><updated>2022-01-07T00:00:00+00:00</updated><id>https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core</id><content type="html" xml:base="https://mahedee.net//authentication-and-authorization-using-react.js-and-asp.net-core/"><![CDATA[<!-- ## Building a web application using React and asp.net core(Part 01)-->
 
 <p><a href="https://mahedee.net/authentication-and-authorization-using-JWT-in-asp.net-core-application/">In the previous article</a>, I have shown you how to create a back end application for authentication and authorization using JWT and .net core. In this article, I will design UI using react.js. I will also show you how to maintain authentication and authorization from front end.</p>
 
@@ -7325,510 +8131,6 @@ Angular is a TypeScript-based free and open-source web application framework. It
 </ol>
 
 <p>For more information visit angular official site: https://angular.io/</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Angular" /><category term="Javascript" /><category term="angular" /><category term="javascript" /><summary type="html"><![CDATA[Intoduction to Angular]]></summary></entry><entry><title type="html">Playing with dapper using asp.net core</title><link href="https://mahedee.net//playing-with-dapper-with-aspnet-core-copy/" rel="alternate" type="text/html" title="Playing with dapper using asp.net core" /><published>2021-05-05T00:00:00+00:00</published><updated>2021-05-05T00:00:00+00:00</updated><id>https://mahedee.net//playing-with-dapper-with-aspnet-core%20copy</id><content type="html" xml:base="https://mahedee.net//playing-with-dapper-with-aspnet-core-copy/"><![CDATA[<!-- ## Implementation of swagger in a asp.net core web api using in memory database -->
-
-<p><strong>Introduction</strong><br />
-Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET platform. It is free and open source software. It is very easy to handle sql query using fewer lines of code. Here I will show you CRUD operation using inline query and stored procedure with an asp.net core web api project. So, let’s begin.</p>
-
-<p><strong>Tools and technologies used</strong></p>
-
-<ul>
-  <li>Visual Studio 2019</li>
-  <li>SQL Server 2019</li>
-  <li>Dapper 2.0.90</li>
-  <li>ASP.NET Core Web API</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1:</strong> Create database, table and stored procedure.</p>
-<ul>
-  <li>Create a databse in sql server name - OrderingDB</li>
-  <li>Run the following script to create table and stored procedure.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">USE</span> <span class="p">[</span><span class="n">OrderingDB</span><span class="p">]</span>
-<span class="k">GO</span>
-<span class="cm">/****** Object:  Table [dbo].[Customers]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
-<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Customers</span><span class="p">](</span>
-	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">bigint</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">FirstName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">LastName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">Email</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">ContactNumber</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
- <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Customers</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> 
-<span class="p">(</span>
-	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span>
-<span class="p">)</span><span class="k">WITH</span> <span class="p">(</span><span class="n">PAD_INDEX</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">STATISTICS_NORECOMPUTE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">IGNORE_DUP_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">ALLOW_ROW_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">ALLOW_PAGE_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">OPTIMIZE_FOR_SEQUENTIAL_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span> <span class="n">TEXTIMAGE_ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
-<span class="k">GO</span>
-<span class="cm">/****** Object:  StoredProcedure [dbo].[spGetCustomersByEmail]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
-<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="c1">-- EXEC dbo.[spGetCustomersByEmail] @Email = 'mahedee.hasan@gmail.com'</span>
-<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">spGetCustomersByEmail</span><span class="p">]</span>
-	<span class="o">@</span><span class="n">Email</span> <span class="nb">Varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="k">AS</span>
-<span class="k">BEGIN</span>
-	<span class="c1">-- SET NOCOUNT ON added to prevent extra result sets from</span>
-	<span class="k">SET</span> <span class="n">NOCOUNT</span> <span class="k">ON</span><span class="p">;</span>
-	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span> <span class="k">WHERE</span> <span class="n">Email</span> <span class="o">=</span> <span class="o">@</span><span class="n">Email</span>
-<span class="k">END</span>
-<span class="k">GO</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 2:</strong> Create an API project</p>
-<ul>
-  <li>Create an asp.net web api project name Ordering.API</li>
-</ul>
-
-<p><strong>Step 3:</strong> Install nuget packages</p>
-<ul>
-  <li>Install the following nuget packages in Ordering.API project.
-    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">Dapper</span>
-<span class="nf">Install-Package</span> <span class="nf">Microsoft.Data.SqlClient</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Step 4:</strong> Add connection string</p>
-<ul>
-  <li>Add connection string in appsettings.json
-<strong>appsettings.json</strong></li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.Hosting.Lifetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data Source=localhost;Initial Catalog=OrderingDB;User ID=sa;Password=yourdbpassword"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong>Step 5:</strong> Create Entity classes</p>
-<ul>
-  <li>Create BaseEntity and Customer entity class in Entities folder as follows.</li>
-</ul>
-
-<p><strong>BaseEntity.cs</strong></p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BaseEntity</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Customer.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span> <span class="p">:</span> <span class="n">BaseEntity</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 6:</strong> Create DbConnector and Repository classes</p>
-<ul>
-  <li>Create DbConnector class in Repositories folder to connect with database</li>
-</ul>
-
-<p><strong>DbConnector.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Data.SqlClient</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">DbConnector</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
-
-        <span class="k">protected</span> <span class="nf">DbConnector</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">protected</span> <span class="n">IDbConnection</span> <span class="nf">CreateConnection</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="nf">SqlConnection</span><span class="p">(</span><span class="n">_configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Create Repository interfaces and concrete class in Repositories folder</li>
-</ul>
-
-<p><strong>IGenericRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IGenericRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>ICustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerRepository</span> <span class="p">:</span> <span class="n">IGenericRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>CustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Dapper</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerRepository</span> <span class="p">:</span> <span class="n">DbConnector</span><span class="p">,</span> <span class="n">ICustomerRepository</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">CustomerRepository</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"INSERT INTO CUSTOMERS (FIRSTNAME, LASTNAME, EMAIL, CONTACTNUMBER, ADDRESS) "</span> <span class="p">+</span>
-                    <span class="s">"VALUES (@FIRSTNAME, @LASTNAME, @EMAIL, @CONTACTNUMBER, @ADDRESS)"</span><span class="p">;</span>
-
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"FIRSTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">FirstName</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"LASTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">LastName</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"EMAIL"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Email</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"CONTACTNUMBER"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">ContactNumber</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ADDRESS"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Address</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"DELETE FROM CUSTOMERS WHERE Id = @Id"</span><span class="p">;</span>
-
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Id"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int64</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS"</span><span class="p">;</span>
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">procedure</span> <span class="p">=</span> <span class="s">"spGetCustomersByEmail"</span><span class="p">;</span>
-                <span class="n">DynamicParameters</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"@Email"</span><span class="p">,</span> <span class="n">email</span><span class="p">);</span>
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">commandType</span><span class="p">:</span> <span class="n">CommandType</span><span class="p">.</span><span class="n">StoredProcedure</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
-                <span class="p">}</span>
-
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS WHERE Id = @Id"</span><span class="p">;</span>
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Id"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int32</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryFirstOrDefaultAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"UPDATE CUSTOMERS SET FIRSTNAME = @FIRSTNAME, LASTNAME = @LASTNAME, EMAIL = @EMAIL, CONTACTNUMBER = @CONTACTNUMBER, ADDRESS = @ADDRESS WHERE ID = @ID "</span><span class="p">;</span>
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"FIRSTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">FirstName</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"LASTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"CONTACTNUMBER"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">ContactNumber</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ADDRESS"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Address</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"EMAIL"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ID"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int64</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Step 7:</strong> Create Service class and interface</p>
-
-<ul>
-  <li>Create ICustomerService interface and CustomerService class in Services folder</li>
-</ul>
-
-<p><strong>ICustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Repositories</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span> <span class="p">:</span> <span class="n">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerRepository</span> <span class="n">_customerRepository</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ICustomerRepository</span> <span class="n">customerRepository</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">CreateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 8:</strong> Create controller class</p>
-
-<ul>
-  <li>Create CustomerController in controllers folder</li>
-</ul>
-
-<p><strong>CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Repositories</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span> <span class="p">:</span> <span class="n">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerRepository</span> <span class="n">_customerRepository</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ICustomerRepository</span> <span class="n">customerRepository</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">CreateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Step 9:</strong> Now run the application. You will see the output in swagger. Try CRUD operation using swagger.</p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/DapperDemo">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET Core" /><category term="C#" /><category term="Dapper" /><category term="ORM" /><category term="csharp" /><category term="aspnetcore" /><category term="dapper" /><category term="orm" /><summary type="html"><![CDATA[Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET platform. It is free and open source software. It is very easy to handle sql query using fewer lines of code. Here I will show you CRUD operation using inline query and stored procedure with an asp.net core web api project.]]></summary></entry><entry><title type="html">Playing with dapper using asp.net core</title><link href="https://mahedee.net//playing-with-dapper-with-aspnet-core/" rel="alternate" type="text/html" title="Playing with dapper using asp.net core" /><published>2021-05-05T00:00:00+00:00</published><updated>2021-05-05T00:00:00+00:00</updated><id>https://mahedee.net//playing-with-dapper-with-aspnet-core</id><content type="html" xml:base="https://mahedee.net//playing-with-dapper-with-aspnet-core/"><![CDATA[<!-- ## Implementation of swagger in a asp.net core web api using in memory database -->
 
 <p><strong>Introduction</strong><br />
 Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET platform. It is free and open source software. It is very easy to handle sql query using fewer lines of code. Here I will show you CRUD operation using inline query and stored procedure with an asp.net core web api project. So, let’s begin.</p>

@@ -1,4 +1,826 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-16T04:12:20+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Application health monitoring using asp.net core</title><link href="https://mahedee.net//Application-health-monitoring-using-asp.net-core/" rel="alternate" type="text/html" title="Application health monitoring using asp.net core" /><published>2022-02-03T00:00:00+00:00</published><updated>2022-02-03T00:00:00+00:00</updated><id>https://mahedee.net//Application-health-monitoring-using-asp.net-core</id><content type="html" xml:base="https://mahedee.net//Application-health-monitoring-using-asp.net-core/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-16T05:39:24+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+
+<p><strong>Introduction</strong></p>
+
+<p>API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.</p>
+
+<p><strong>Tools and technologies used</strong></p>
+<ul>
+  <li>Visual Studio 2022</li>
+  <li>.NET 6.0</li>
+  <li>In Memory Database</li>
+  <li>Entity Framework</li>
+  <li>ASP.NET Core Web API</li>
+  <li>C#</li>
+  <li>Ocelot</li>
+</ul>
+
+<p><strong>Implementation</strong></p>
+
+<p><strong>Step 1: Create solution and projects.</strong></p>
+
+<ul>
+  <li>Create a solution name APIGateway</li>
+  <li>Add 4 new web api project, name - Catalog.API, Location.API, Ordering.API and BFF.Web in the solution.</li>
+</ul>
+
+<p>Here, BFF.Web project will act as API Gateway.</p>
+
+<p><strong>Step 2: Install nuget packages.</strong></p>
+
+<ul>
+  <li>Install following nuget package in Catalog.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.InMemory</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget package in Ordering.API Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.InMemory</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in BFF.Web Project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Cache.CacheManager</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Organize Catalog.API Project</strong></p>
+
+<ul>
+  <li>Create a Product model class in Catalog.API/Model folder</li>
+</ul>
+
+<p><strong>Product.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Model</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">Key</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">AvailableStock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">RestockThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a CatalogContext class in Catalog.API/Db folder</li>
+</ul>
+
+<p><strong>CatalogContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CatalogContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">ModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">DbContextOptionsBuilder</span> <span class="n">optionsBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">optionsBuilder</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"CatalogDB"</span><span class="p">));</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a conroller class name ProductsController in Catalog.API/Controllers folder</li>
+</ul>
+
+<p><strong>CatalogContoller.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">nullable</span> <span class="n">disable</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProductsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CatalogContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ProductsController</span><span class="p">(</span><span class="n">CatalogContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetProducts</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// PUT: api/Products/5</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"Edit/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">product</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">ProductExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: api/Products</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"Add"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">PostProduct</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetProduct"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">product</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// DELETE: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"Delete/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">ProductExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Organize Ordering.API Project</strong></p>
+
+<ul>
+  <li>Create a Order model class in Ordering.API/Model folder</li>
+</ul>
+
+<p><strong>Order.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">Ordering.API.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Order</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">OrderDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Comments</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a OrderingContext class in Ordering.API/Db folder</li>
+</ul>
+
+<p><strong>OrderingContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.API.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">OrderingContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">OrderingContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">OrderingContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Ordering</span><span class="p">.</span><span class="n">API</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Order</span><span class="p">&gt;</span> <span class="n">Order</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.API.Db</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">OrderingContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"CatalogDB"</span><span class="p">));</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a conroller class name OrdersController in Ordering.API/Controllers folder</li>
+</ul>
+
+<p><strong>OrdersController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">nullable</span> <span class="n">disable</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ordering.API.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Ordering.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">OrdersController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">OrderingContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">OrdersController</span><span class="p">(</span><span class="n">OrderingContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Orders</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetOrder</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Orders/5</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;&gt;</span> <span class="nf">GetOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">order</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// PUT: api/Orders/5</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"Edit/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Order</span> <span class="n">order</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">order</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">OrderExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: api/Orders</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"Add"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;&gt;</span> <span class="nf">PostOrder</span><span class="p">(</span><span class="n">Order</span> <span class="n">order</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetOrder"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">order</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// DELETE: api/Orders/5</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"Delete/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">OrderExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Order</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Organize Location.API Project</strong></p>
+
+<ul>
+  <li>Create CountriesController in Location.API/Controllers folder</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Location.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CountriesController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+      <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+      <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span><span class="s">"America"</span><span class="p">,</span><span class="s">"Bangladesh"</span><span class="p">,</span> <span class="s">"Canada"</span> <span class="p">};</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Organize BFF.Web (API Gateway)  Project</strong></p>
+
+<ul>
+  <li>Add a configuraton file for api gateway. I keep this file name - ocelot.json. Add this file in the root directory.</li>
+</ul>
+
+<p><strong>ocelot.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Countries/GetAll"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7003</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="err">//</span><span class="w"> </span><span class="err">Configure</span><span class="w"> </span><span class="err">caching</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">cache</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">expire</span><span class="w"> </span><span class="err">after</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="err">seconds.</span><span class="w">
+      </span><span class="nl">"FileCacheOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"TtlSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"countriescaching"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Countries/GetAll"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">],</span><span class="w">
+
+      </span><span class="err">//</span><span class="w"> </span><span class="err">Enable</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">sensative</span><span class="w"> </span><span class="err">Routing/URL</span><span class="w">
+      </span><span class="nl">"RouteIsCaseSensitive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Catalog</span><span class="w"> </span><span class="err">Services</span><span class="w">
+    </span><span class="err">//------------------//</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/GetAll"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="err">//</span><span class="w"> </span><span class="err">Implement</span><span class="w"> </span><span class="err">rate</span><span class="w"> </span><span class="err">limiting</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">maximum</span><span class="w"> </span><span class="err">admitted</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="mi">5</span><span class="err">s.</span><span class="w">
+      </span><span class="nl">"RateLimitOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"ClientWhitelist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">array</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">specify</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">clients</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">affected</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">rate-limiting</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"EnableRateLimiting"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5s"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"PeriodTimespan"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/GetAll"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Add"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Add"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Post"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Edit/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Edit/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Put"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Delete/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Delete/{id}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="err">//---Catalog</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">------------//</span><span class="w">
+
+    </span><span class="err">//---Ordering</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Catch</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">Routing</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7126</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="err">//---Ordering</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+
+  </span><span class="err">//https://localhost:</span><span class="mi">7282</span><span class="err">/api/Products/GetAll</span><span class="w">
+
+  </span><span class="nl">"GlobalConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">enable</span><span class="w"> </span><span class="err">request</span><span class="w"> </span><span class="err">correleation</span><span class="w"> </span><span class="err">id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">capture</span><span class="w"> </span><span class="err">request</span><span class="w"> </span><span class="err">information</span><span class="w">
+    </span><span class="nl">"RequestIdKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Correlation-Id"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"BaseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7205/"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file as follows</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ocelot.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.Middleware</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.Cache.CacheManager</span><span class="p">;</span>
+
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+
+<span class="kt">var</span> <span class="n">environment</span> <span class="p">=</span> <span class="n">Environment</span><span class="p">.</span><span class="nf">GetEnvironmentVariable</span><span class="p">(</span><span class="s">"ASPNETCORE_ENVIRONMENT"</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">SetBasePath</span><span class="p">(</span><span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">())</span>
+    <span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="s">"ocelot.json"</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span> <span class="n">reloadOnChange</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddEnvironmentVariables</span><span class="p">();</span>
+
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+
+<span class="c1">// Swagger for ocelot</span>
+<span class="c1">//builder.Services.AddSwaggerForOcelot(builder.Configuration);</span>
+<span class="c1">//builder.Services.AddSwaggerForOcelot();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="c1">//For ocelot</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">()</span>
+    
+    <span class="c1">// Added for caching</span>
+    <span class="p">.</span><span class="nf">AddCacheManager</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="n">x</span><span class="p">.</span><span class="nf">WithDictionaryHandle</span><span class="p">();</span>
+    <span class="p">});</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+    <span class="c1">//app.UseSwaggerForOcelotUI();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseOcelot</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 7: Run and Test application</strong></p>
+
+<ul>
+  <li>Now run multiple (all) projects and test application using postman.</li>
+  <li>You have to check application using api gateway.</li>
+  <li>For Location service, test using https://localhost:7205/Countries/GetAll</li>
+  <li>For Catalog service, test using https://localhost:7205/Products/{endpoints}</li>
+  <li>For Ordering service, test using https://localhost:7205/api/Orders/{endpoints}</li>
+</ul>
+
+<p><strong>Note:</strong></p>
+
+<p><strong>Configure caching in api gateway</strong></p>
+
+<ul>
+  <li>Added the following section in ocelot.json file.</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="nl">"FileCacheOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="nl">"TtlSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+</span><span class="nl">"Region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"countriescaching"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Added the following code block in the  the Program.cs file as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//For ocelot</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">()</span>
+    
+    <span class="c1">// Added for caching</span>
+    <span class="p">.</span><span class="nf">AddCacheManager</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="n">x</span><span class="p">.</span><span class="nf">WithDictionaryHandle</span><span class="p">();</span>
+    <span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><strong>Enable case sensative URL</strong></p>
+
+<ul>
+  <li>Add following blocks in ocelot.json for case sensative URL</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="err">Enable</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">sensative</span><span class="w"> </span><span class="err">Routing/URL</span><span class="w">
+      </span><span class="nl">"RouteIsCaseSensitive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Implement rate limiting</strong></p>
+
+<ul>
+  <li>Add following blocks in ocelot.json for rate limiting</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">Implement</span><span class="w"> </span><span class="err">rate</span><span class="w"> </span><span class="err">limiting</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">maximum</span><span class="w"> </span><span class="err">admitted</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="mi">5</span><span class="err">s.</span><span class="w">
+</span><span class="nl">"RateLimitOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="nl">"ClientWhitelist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">array</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">specify</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">clients</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">affected</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">rate-limiting</span><span class="w">
+</span><span class="p">],</span><span class="w">
+</span><span class="nl">"EnableRateLimiting"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+</span><span class="nl">"Period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5s"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"PeriodTimespan"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="nl">"Limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>Catch all routing</strong></p>
+
+<ul>
+  <li>Add following blocks in ocelot.json for catch all routing</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7126</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+
+    </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><summary type="html"><![CDATA[API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.]]></summary></entry><entry><title type="html">Application health monitoring using asp.net core</title><link href="https://mahedee.net//Application-health-monitoring-using-asp.net-core/" rel="alternate" type="text/html" title="Application health monitoring using asp.net core" /><published>2022-02-03T00:00:00+00:00</published><updated>2022-02-03T00:00:00+00:00</updated><id>https://mahedee.net//Application-health-monitoring-using-asp.net-core</id><content type="html" xml:base="https://mahedee.net//Application-health-monitoring-using-asp.net-core/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -8130,508 +8952,4 @@ Angular is a TypeScript-based free and open-source web application framework. It
   </li>
 </ol>
 
-<p>For more information visit angular official site: https://angular.io/</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Angular" /><category term="Javascript" /><category term="angular" /><category term="javascript" /><summary type="html"><![CDATA[Intoduction to Angular]]></summary></entry><entry><title type="html">Playing with dapper using asp.net core</title><link href="https://mahedee.net//playing-with-dapper-with-aspnet-core-copy/" rel="alternate" type="text/html" title="Playing with dapper using asp.net core" /><published>2021-05-05T00:00:00+00:00</published><updated>2021-05-05T00:00:00+00:00</updated><id>https://mahedee.net//playing-with-dapper-with-aspnet-core%20copy</id><content type="html" xml:base="https://mahedee.net//playing-with-dapper-with-aspnet-core-copy/"><![CDATA[<!-- ## Implementation of swagger in a asp.net core web api using in memory database -->
-
-<p><strong>Introduction</strong><br />
-Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET platform. It is free and open source software. It is very easy to handle sql query using fewer lines of code. Here I will show you CRUD operation using inline query and stored procedure with an asp.net core web api project. So, let’s begin.</p>
-
-<p><strong>Tools and technologies used</strong></p>
-
-<ul>
-  <li>Visual Studio 2019</li>
-  <li>SQL Server 2019</li>
-  <li>Dapper 2.0.90</li>
-  <li>ASP.NET Core Web API</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1:</strong> Create database, table and stored procedure.</p>
-<ul>
-  <li>Create a databse in sql server name - OrderingDB</li>
-  <li>Run the following script to create table and stored procedure.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">USE</span> <span class="p">[</span><span class="n">OrderingDB</span><span class="p">]</span>
-<span class="k">GO</span>
-<span class="cm">/****** Object:  Table [dbo].[Customers]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
-<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">Customers</span><span class="p">](</span>
-	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="p">[</span><span class="nb">bigint</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">FirstName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">LastName</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">Email</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">ContactNumber</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="k">max</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
- <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Customers</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> 
-<span class="p">(</span>
-	<span class="p">[</span><span class="n">Id</span><span class="p">]</span> <span class="k">ASC</span>
-<span class="p">)</span><span class="k">WITH</span> <span class="p">(</span><span class="n">PAD_INDEX</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">STATISTICS_NORECOMPUTE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">IGNORE_DUP_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span> <span class="n">ALLOW_ROW_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">ALLOW_PAGE_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span> <span class="n">OPTIMIZE_FOR_SEQUENTIAL_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
-<span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span> <span class="n">TEXTIMAGE_ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
-<span class="k">GO</span>
-<span class="cm">/****** Object:  StoredProcedure [dbo].[spGetCustomersByEmail]    Script Date: 9/16/2021 11:44:55 AM ******/</span>
-<span class="k">SET</span> <span class="n">ANSI_NULLS</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="k">SET</span> <span class="n">QUOTED_IDENTIFIER</span> <span class="k">ON</span>
-<span class="k">GO</span>
-<span class="c1">-- EXEC dbo.[spGetCustomersByEmail] @Email = 'mahedee.hasan@gmail.com'</span>
-<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">spGetCustomersByEmail</span><span class="p">]</span>
-	<span class="o">@</span><span class="n">Email</span> <span class="nb">Varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<span class="k">AS</span>
-<span class="k">BEGIN</span>
-	<span class="c1">-- SET NOCOUNT ON added to prevent extra result sets from</span>
-	<span class="k">SET</span> <span class="n">NOCOUNT</span> <span class="k">ON</span><span class="p">;</span>
-	<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Customers</span> <span class="k">WHERE</span> <span class="n">Email</span> <span class="o">=</span> <span class="o">@</span><span class="n">Email</span>
-<span class="k">END</span>
-<span class="k">GO</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 2:</strong> Create an API project</p>
-<ul>
-  <li>Create an asp.net web api project name Ordering.API</li>
-</ul>
-
-<p><strong>Step 3:</strong> Install nuget packages</p>
-<ul>
-  <li>Install the following nuget packages in Ordering.API project.
-    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">Dapper</span>
-<span class="nf">Install-Package</span> <span class="nf">Microsoft.Data.SqlClient</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Step 4:</strong> Add connection string</p>
-<ul>
-  <li>Add connection string in appsettings.json
-<strong>appsettings.json</strong></li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.Hosting.Lifetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data Source=localhost;Initial Catalog=OrderingDB;User ID=sa;Password=yourdbpassword"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong>Step 5:</strong> Create Entity classes</p>
-<ul>
-  <li>Create BaseEntity and Customer entity class in Entities folder as follows.</li>
-</ul>
-
-<p><strong>BaseEntity.cs</strong></p>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BaseEntity</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="n">Int64</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Customer.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Entities</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span> <span class="p">:</span> <span class="n">BaseEntity</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContactNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 6:</strong> Create DbConnector and Repository classes</p>
-<ul>
-  <li>Create DbConnector class in Repositories folder to connect with database</li>
-</ul>
-
-<p><strong>DbConnector.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Data.SqlClient</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">DbConnector</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
-
-        <span class="k">protected</span> <span class="nf">DbConnector</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">protected</span> <span class="n">IDbConnection</span> <span class="nf">CreateConnection</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="nf">SqlConnection</span><span class="p">(</span><span class="n">_configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Create Repository interfaces and concrete class in Repositories folder</li>
-</ul>
-
-<p><strong>IGenericRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IGenericRepository</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">T</span> <span class="n">entity</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>ICustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerRepository</span> <span class="p">:</span> <span class="n">IGenericRepository</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>CustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Dapper</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Data</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Repositories</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerRepository</span> <span class="p">:</span> <span class="n">DbConnector</span><span class="p">,</span> <span class="n">ICustomerRepository</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">CustomerRepository</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"INSERT INTO CUSTOMERS (FIRSTNAME, LASTNAME, EMAIL, CONTACTNUMBER, ADDRESS) "</span> <span class="p">+</span>
-                    <span class="s">"VALUES (@FIRSTNAME, @LASTNAME, @EMAIL, @CONTACTNUMBER, @ADDRESS)"</span><span class="p">;</span>
-
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"FIRSTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">FirstName</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"LASTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">LastName</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"EMAIL"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Email</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"CONTACTNUMBER"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">ContactNumber</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ADDRESS"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Address</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"DELETE FROM CUSTOMERS WHERE Id = @Id"</span><span class="p">;</span>
-
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Id"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int64</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS"</span><span class="p">;</span>
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">procedure</span> <span class="p">=</span> <span class="s">"spGetCustomersByEmail"</span><span class="p">;</span>
-                <span class="n">DynamicParameters</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"@Email"</span><span class="p">,</span> <span class="n">email</span><span class="p">);</span>
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">commandType</span><span class="p">:</span> <span class="n">CommandType</span><span class="p">.</span><span class="n">StoredProcedure</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
-                <span class="p">}</span>
-
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"SELECT * FROM CUSTOMERS WHERE Id = @Id"</span><span class="p">;</span>
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Id"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int32</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="n">QueryFirstOrDefaultAsync</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">query</span> <span class="p">=</span> <span class="s">"UPDATE CUSTOMERS SET FIRSTNAME = @FIRSTNAME, LASTNAME = @LASTNAME, EMAIL = @EMAIL, CONTACTNUMBER = @CONTACTNUMBER, ADDRESS = @ADDRESS WHERE ID = @ID "</span><span class="p">;</span>
-                <span class="kt">var</span> <span class="n">parameters</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DynamicParameters</span><span class="p">();</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"FIRSTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">FirstName</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"LASTNAME"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"CONTACTNUMBER"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">ContactNumber</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ADDRESS"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Address</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"EMAIL"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">String</span><span class="p">);</span>
-                <span class="n">parameters</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"ID"</span><span class="p">,</span> <span class="n">entity</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">DbType</span><span class="p">.</span><span class="n">Int64</span><span class="p">);</span>
-
-                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="nf">CreateConnection</span><span class="p">())</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="p">(</span><span class="k">await</span> <span class="n">connection</span><span class="p">.</span><span class="nf">ExecuteAsync</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">exp</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">exp</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Step 7:</strong> Create Service class and interface</p>
-
-<ul>
-  <li>Create ICustomerService interface and CustomerService class in Services folder</li>
-</ul>
-
-<p><strong>ICustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">);</span>
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Repositories</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span> <span class="p">:</span> <span class="n">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerRepository</span> <span class="n">_customerRepository</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ICustomerRepository</span> <span class="n">customerRepository</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">CreateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 8:</strong> Create controller class</p>
-
-<ul>
-  <li>Create CustomerController in controllers folder</li>
-</ul>
-
-<p><strong>CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ordering.API.Entities</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ordering.API.Repositories</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Ordering.API.Services</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span> <span class="p">:</span> <span class="n">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerRepository</span> <span class="n">_customerRepository</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ICustomerRepository</span> <span class="n">customerRepository</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">CreateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllByEmailId</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllCustomer</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">Int64</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Customer</span> <span class="n">entity</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Step 9:</strong> Now run the application. You will see the output in swagger. Try CRUD operation using swagger.</p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/DapperDemo">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET Core" /><category term="C#" /><category term="Dapper" /><category term="ORM" /><category term="csharp" /><category term="aspnetcore" /><category term="dapper" /><category term="orm" /><summary type="html"><![CDATA[Dapper is mostly used, speedy and high performance ORM tools for Microsoft.NET platform. It is free and open source software. It is very easy to handle sql query using fewer lines of code. Here I will show you CRUD operation using inline query and stored procedure with an asp.net core web api project.]]></summary></entry></feed>
+<p>For more information visit angular official site: https://angular.io/</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Angular" /><category term="Javascript" /><category term="angular" /><category term="javascript" /><summary type="html"><![CDATA[Intoduction to Angular]]></summary></entry></feed>

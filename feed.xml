@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-27T04:38:14+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-27T09:11:58+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -6346,7 +6346,42 @@ The following tools and technologies has been used for this application</p>
 <p><strong>Step 6: Create an ASP.NET core Web API Project</strong></p>
 
 <ul>
-  <li></li>
+  <li>Add docker file</li>
+</ul>
+
+<p><strong>Step 7: Push image to docker hub</strong></p>
+
+<ul>
+  <li>Go to the project root directory where docker file exists.</li>
+  <li>Login to docker desktop.</li>
+  <li>Use the following command to check login status.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">login</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use the following command to build container image.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span> <span class="nf">.</span>
+</code></pre></div></div>
+<p>Format: docker image build -t {username}/{imagename}:{tag} .</p>
+
+<ul>
+  <li>Use the following command to check already created image</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">images</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Push image to docker hub using following command.
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span>
+</code></pre></div>    </div>
+    <p>Format: docker image push {username}/{imagename}:{tag}</p>
+  </li>
+  <li>Now login to hub.docker.com and you will see new image inside repository (https://hub.docker.com/repositories)</li>
 </ul>
 
 <p><strong>Step 10: Build and run the application</strong>

@@ -312,7 +312,7 @@
 
 
 
-  1 minute read
+  2 minute read
 </p>
           
         </header>
@@ -405,7 +405,42 @@ The following tools and technologies has been used for this application</p>
 <p><strong>Step 6: Create an ASP.NET core Web API Project</strong></p>
 
 <ul>
-  <li></li>
+  <li>Add docker file</li>
+</ul>
+
+<p><strong>Step 7: Push image to docker hub</strong></p>
+
+<ul>
+  <li>Go to the project root directory where docker file exists.</li>
+  <li>Login to docker desktop.</li>
+  <li>Use the following command to check login status.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">login</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use the following command to build container image.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span> <span class="nf">.</span>
+</code></pre></div></div>
+<p>Format: docker image build -t {username}/{imagename}:{tag} .</p>
+
+<ul>
+  <li>Use the following command to check already created image</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">images</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Push image to docker hub using following command.
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span>
+</code></pre></div>    </div>
+    <p>Format: docker image push {username}/{imagename}:{tag}</p>
+  </li>
+  <li>Now login to hub.docker.com and you will see new image inside repository (https://hub.docker.com/repositories)</li>
 </ul>
 
 <p><strong>Step 10: Build and run the application</strong>

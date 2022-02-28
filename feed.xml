@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-28T10:36:05+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-28T12:35:37+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -6487,6 +6487,119 @@ The following tools and technologies has been used for this application</p>
 <ul>
   <li>From the above output, you can see the node port is exposed on 32461 port.</li>
   <li>Now browse the application using the following URL: http://localhost:32461/swagger/index.html</li>
+</ul>
+
+<p><strong>Step 10: Configure Kubernetes dashboard</strong></p>
+
+<ul>
+  <li>Dashboard UI is not configured by default. To configure, run the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You can check the namespaces with the below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">ns</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                   <span class="nf">STATUS</span>   <span class="nf">AGE</span>
+<span class="nf">default</span>                <span class="nf">Active</span>   <span class="nf">4d5h</span>
+<span class="nf">kube-node-lease</span>        <span class="nf">Active</span>   <span class="nf">4d5h</span>
+<span class="nf">kube-public</span>            <span class="nf">Active</span>   <span class="nf">4d5h</span>
+<span class="nf">kube-system</span>            <span class="nf">Active</span>   <span class="nf">4d5h</span>
+<span class="nf">kubernetes-dashboard</span>   <span class="nf">Active</span>   <span class="nf">123m</span>
+</code></pre></div></div>
+
+<p>If you see the above output, we can see a new namespace name - kubernetes-dashboard.</p>
+
+<ul>
+  <li>You can check if any pods are running on newly created namespace with the below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">-o</span> <span class="nf">wide</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check service type with the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">svc</span>
+</code></pre></div></div>
+
+<p>Default service type is ClusterIP and it cannot be access from outside the cluster. We don’t need to modify Service file because we are not going to expose the cluster to the outside world.</p>
+
+<ul>
+  <li>Create a file name - dashboard-adminuser.yaml and add the following code in dashboard-adminuser.yaml</li>
+</ul>
+
+<p><strong>dashboard-adminuser.yaml</strong></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Namespace</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">admin-user</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRoleBinding</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">admin-user</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">cluster-admin</span>
+<span class="na">subjects</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">admin-user</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+</code></pre></div></div>
+
+<ul>
+  <li>As we are using new cluster binding so we need to delete the existing Cluster Binding section from kubernetes-dashboard file, otherwise an error will return. Use below command to delete.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">clusterrolebinding</span> <span class="nf">kubernetes-dashboard</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Go to the directory where dashboard-adminuser.yaml is resides and execute the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">dashboard-adminuser.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we need to find token we can use to log in. Execute following command:</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">secret</span> <span class="nf">$</span><span class="s">(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}")</span> <span class="nf">-o</span> <span class="nf">go-template=""</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Copy the genereted token and open another terminal type the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">proxy</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Now, use below URL to access the dashboard.
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</p>
+  </li>
+  <li>
+    <p>Select token of the UI and pest copied token and click sign in. You will see the dashboard screen.</p>
+  </li>
 </ul>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>

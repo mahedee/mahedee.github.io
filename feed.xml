@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-27T09:11:58+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-28T08:33:32+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -6263,7 +6263,7 @@
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/token-based-auth-core/ECommerce">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="Dapper" /><category term="EF" /><category term="JWT" /><category term="Auth" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><category term="ef" /><category term="dapper" /><category term="jwt" /><category term="auth" /><summary type="html"><![CDATA[Authentication and authorization is a key part of an application. Sometimes we struggle to implement authentication and authorization in a web api application. In this article I will show you, how to implement authentication and authorization using JWT in an asp.net core web application.]]></summary></entry><entry><title type="html">Configure kubernetes single node cluster and deploy an asp.net core application using docker hub</title><link href="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/" rel="alternate" type="text/html" title="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub" /><published>2021-12-05T00:00:00+00:00</published><updated>2021-12-05T00:00:00+00:00</updated><id>https://mahedee.net//kubernetes-single-node-asp.net-docker-hub</id><content type="html" xml:base="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/"><![CDATA[<!-- ## Create a sentiment analysis app using ML.NET -->
 
-<p><strong>Application overview</strong><br />
+<p><strong>Overview</strong><br />
 Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project. In this article, I will show you how to configure kubernetese single node cluster on local environmend and deploy an asp.net core application using docker hub.</p>
 
 <p><strong>Tools and Technology used</strong> 
@@ -6384,8 +6384,110 @@ The following tools and technologies has been used for this application</p>
   <li>Now login to hub.docker.com and you will see new image inside repository (https://hub.docker.com/repositories)</li>
 </ul>
 
-<p><strong>Step 10: Build and run the application</strong>
-Now build and run the application. You will see the swagger ui and test CatalogController to test settings.</p>
+<p><strong>Step 8: Configure Pod for Kubernetes</strong></p>
+
+<ul>
+  <li>Create a pod manifest file name pod.yml in deploy/k8s folder with below code.</li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">catalog-pod</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">web-api</span>
+
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">web-ctr</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/catalog:1.0.1</span>
+      <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">44392</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Go to the the directory where pod.yml file resides and run the below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">pod.yml</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">pod</span><span class="nv">/catalog-pod</span> <span class="nf">created</span>
+</code></pre></div></div>
+
+<ul>
+  <li>State of the created pods can be checked by the below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">--watch</span>
+</code></pre></div></div>
+
+<ul>
+  <li>If you need to delete a pod write below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">pod</span> <span class="nf">catalog-pod</span>
+</code></pre></div></div>
+<p>or</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">-f</span> <span class="nf">pod.yml</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Expose kubernetes service</strong></p>
+
+<ul>
+  <li>Create a service pod using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">expose</span> <span class="nf">pod</span> <span class="nf">catalog-pod</span> <span class="nf">--name=catalog-svc</span> <span class="nf">--type=NodePort</span> <span class="nf">--port=8011</span>
+</code></pre></div></div>
+
+<p>Output</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">service</span><span class="nv">/catalog-svc</span> <span class="nf">exposed</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check created services using following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span>
+</code></pre></div></div>
+
+<ul>
+  <li>To see the details of the service, use the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">svc</span> <span class="nf">catalog-svc</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Name:</span>                     <span class="nf">catalog-svc</span>
+<span class="nf">Namespace:</span>                <span class="nf">default</span>
+<span class="nf">Labels:</span>                   <span class="nf">app=web-api</span>
+<span class="nf">Annotations:</span>              <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+<span class="nf">Selector:</span>                 <span class="nf">app=web-api</span>
+<span class="nf">Type:</span>                     <span class="nf">NodePort</span>
+<span class="nf">IP</span> <span class="nf">Family</span> <span class="nf">Policy:</span>         <span class="nf">SingleStack</span>
+<span class="nf">IP</span> <span class="nf">Families:</span>              <span class="nf">IPv4</span>
+<span class="nf">IP:</span>                       <span class="nf">10.101.161.222</span>
+<span class="nf">IPs:</span>                      <span class="nf">10.101.161.222</span>
+<span class="nf">LoadBalancer</span> <span class="nf">Ingress:</span>     <span class="nf">localhost</span>
+<span class="nf">Port:</span>                     <span class="p">&lt;</span><span class="nf">unset</span><span class="p">&gt;</span>  <span class="mf">8011</span><span class="nv">/TCP</span>
+<span class="nf">TargetPort:</span>               <span class="mf">8011</span><span class="nv">/TCP</span>
+<span class="nf">NodePort:</span>                 <span class="p">&lt;</span><span class="nf">unset</span><span class="p">&gt;</span>  <span class="mf">32461</span><span class="nv">/TCP</span>
+<span class="nf">Endpoints:</span>                <span class="nf">10.1.0.10:8011</span>
+<span class="nf">Session</span> <span class="nf">Affinity:</span>         <span class="nf">None</span>
+<span class="nf">External</span> <span class="nf">Traffic</span> <span class="nf">Policy:</span>  <span class="nf">Cluster</span>
+<span class="nf">Events:</span>                   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>From the above output, you can see the node port is exposed on 32461 port.</li>
+  <li>Now browse the application using the following URL: http://localhost:32461/swagger/index.html</li>
+</ul>
 
 <p><strong><a href="https://github.com/mahedee/code-sample/tree/master/ConfigSettings">Source Code</a></strong></p>
 

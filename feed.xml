@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-02-28T12:35:37+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-01T04:29:01+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -6264,10 +6264,12 @@
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/token-based-auth-core/ECommerce">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="Dapper" /><category term="EF" /><category term="JWT" /><category term="Auth" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><category term="ef" /><category term="dapper" /><category term="jwt" /><category term="auth" /><summary type="html"><![CDATA[Authentication and authorization is a key part of an application. Sometimes we struggle to implement authentication and authorization in a web api application. In this article I will show you, how to implement authentication and authorization using JWT in an asp.net core web application.]]></summary></entry><entry><title type="html">Configure kubernetes single node cluster and deploy an asp.net core application using docker hub</title><link href="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/" rel="alternate" type="text/html" title="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub" /><published>2021-12-05T00:00:00+00:00</published><updated>2021-12-05T00:00:00+00:00</updated><id>https://mahedee.net//kubernetes-single-node-asp.net-docker-hub</id><content type="html" xml:base="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/"><![CDATA[<!-- ## Create a sentiment analysis app using ML.NET -->
 
 <p><strong>Overview</strong><br />
-Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project. In this article, I will show you how to configure kubernetese single node cluster on local environmend and deploy an asp.net core application using docker hub.</p>
+Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project. In this article, I will show you how to configure kubernetese single node cluster on local environment and deploy an asp.net core application using docker hub.</p>
 
-<p><strong>Tools and Technology used</strong> 
-The following tools and technologies has been used for this application</p>
+<p><strong>Tools and Technology used</strong></p>
+
+<p>The following tools and technologies has been used for this application</p>
+
 <ul>
   <li>Visual Studio 2022</li>
   <li>Visual C#</li>
@@ -6346,8 +6348,253 @@ The following tools and technologies has been used for this application</p>
 <p><strong>Step 6: Create an ASP.NET core Web API Project</strong></p>
 
 <ul>
-  <li>Add docker file</li>
+  <li>
+    <p>Open Visual Studio and Create an Web API Project. Ex. Catalog.API</p>
+  </li>
+  <li>
+    <p>Install the following packages in the project.</p>
+  </li>
 </ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+<span class="nf">Install-Package</span> <span class="nf">Microsoft.VisualStudio.Web.CodeGeneration.Design</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add Connection String on appsettings.json as follows</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=192.168.7.154;Database=Demo.CustomerDB;User Id=sa;Password=yourPassword;"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Create a model class name - Product Model in Models folder</li>
+</ul>
+
+<p><strong>Product.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">Key</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">AvailableStock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">RestockThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Add CatalogDbContext class in Db folder as follows</li>
+</ul>
+
+<p><strong>CatalogDbContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CatalogDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CatalogDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Catalog</span><span class="p">.</span><span class="n">API</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Product</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a Contoller class name ProductsController as follows</li>
+</ul>
+
+<p><strong>ProductsController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">nullable</span> <span class="n">disable</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProductsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CatalogDbContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ProductsController</span><span class="p">(</span><span class="n">CatalogDbContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetProduct</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// PUT: api/Products/5</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">product</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">ProductExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: api/Products</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">PostProduct</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetProduct"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">product</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// DELETE: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">ProductExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Product</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Run the following command to add migration and update database</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Add-Migration</span> <span class="nf">init-mig</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Update-Database</span> <span class="nf">-Verbose</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add a docker file in the root directory with the following code.</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
+
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+<span class="k">EXPOSE</span><span class="s"> 443</span>
+
+<span class="k">EXPOSE</span><span class="s"> 8011</span>
+<span class="k">ENV</span><span class="s"> ASPNETCORE_URLS http://*:8011</span>
+
+
+
+<span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
+
+
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+<span class="k">COPY</span><span class="s"> ["/Catalog.API.csproj", "Catalog.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"Catalog.API/Catalog.API.csproj"</span>
+
+<span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Catalog.API.dll"]</span>
+
+</code></pre></div></div>
 
 <p><strong>Step 7: Push image to docker hub</strong></p>
 
@@ -6364,9 +6611,11 @@ The following tools and technologies has been used for this application</p>
   <li>Use the following command to build container image.</li>
 </ul>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span> <span class="nf">.</span>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/catalog:1.0.4</span> <span class="nf">.</span>
 </code></pre></div></div>
 <p>Format: docker image build -t {username}/{imagename}:{tag} .</p>
+
+<p>Note: There is a dot at the end of the command.</p>
 
 <ul>
   <li>Use the following command to check already created image</li>
@@ -6377,7 +6626,7 @@ The following tools and technologies has been used for this application</p>
 
 <ul>
   <li>Push image to docker hub using following command.
-    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/catalog:demo</span>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/catalog:1.0.4</span>
 </code></pre></div>    </div>
     <p>Format: docker image push {username}/{imagename}:{tag}</p>
   </li>
@@ -6400,9 +6649,10 @@ The following tools and technologies has been used for this application</p>
 <span class="na">spec</span><span class="pi">:</span>
   <span class="na">containers</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">web-ctr</span>
-      <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/catalog:1.0.1</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/catalog:1.0.4</span>
       <span class="na">ports</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">44392</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8011</span>
+
 </code></pre></div></div>
 
 <ul>

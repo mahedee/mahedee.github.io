@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-01T04:29:01+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-01T04:49:12+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">API gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="API gateway using ocelot in asp.net core application" /><published>2022-02-10T00:00:00+00:00</published><updated>2022-02-10T00:00:00+00:00</updated><id>https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -6852,6 +6852,64 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
   </li>
 </ul>
 
+<p><strong>Some Kubectl commands</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">version</span> <span class="nf">--short</span> <span class="err">//</span> <span class="nf">Check</span> <span class="nf">Kubectl</span> <span class="nf">version</span>
+
+<span class="nf">docker</span> <span class="nf">info</span>
+
+<span class="nf">kubectl</span> <span class="nf">cluster-info</span>
+
+<span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span>	<span class="err">/</span><span class="nv">/shows</span> <span class="nf">list</span> <span class="nf">of</span> <span class="nf">nodes</span>
+
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">pod.yml</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">--watch</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">-o</span> <span class="nf">wide</span>
+
+<span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">pods</span> <span class="nf">my-pod</span> <span class="err">//</span> <span class="nf">to</span> <span class="nf">see</span> <span class="nf">the</span> <span class="nf">details</span> <span class="nf">about</span> <span class="nf">pod</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">-f</span> <span class="nf">pod.yml</span> <span class="err">//</span> <span class="nf">delete</span> <span class="nf">already</span> <span class="nf">created</span> <span class="nf">pod</span> <span class="nf">by</span> <span class="nf">pod.yml</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">pod</span> <span class="nf">mypod</span> <span class="err">//</span> <span class="nf">delete</span> <span class="nf">particular</span> <span class="nf">pod</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">svc</span> <span class="nf">mysvc</span> <span class="err">//</span> <span class="nf">delete</span> <span class="nf">particular</span> <span class="nf">service</span>
+
+<span class="nf">kubectl</span> <span class="nf">expose</span> <span class="nf">pod</span> <span class="nf">my-pod</span> <span class="nf">--name=my-svc</span> <span class="nf">--type=NodePort</span> <span class="err">//</span> <span class="nf">create</span> <span class="nf">a</span> <span class="nf">service</span> <span class="nf">pod</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span> <span class="err">//</span> <span class="nf">check</span> <span class="nf">created</span> <span class="nf">services</span>
+
+<span class="err">//</span> <span class="nf">deploy</span> <span class="nf">kubernetes</span> <span class="nf">dashboard</span> <span class="nf">using</span> <span class="nf">the</span> <span class="nf">following</span> <span class="nf">command</span>
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\recommended.yaml.txt</span>
+
+<span class="err">//</span> <span class="nf">Verify</span> <span class="nf">the</span> <span class="nf">running</span> <span class="nf">pod</span>
+<span class="nf">kubectl.exe</span> <span class="nb">get</span> <span class="nf">-f</span> <span class="nf">.\recommended.yaml.txt</span>
+
+<span class="err">//</span> <span class="nf">Generate</span> <span class="nf">token</span> <span class="kr">for</span> <span class="nf">the</span> <span class="nf">dashboard</span>
+
+<span class="s">((kubectl -n kube-system describe secret default | Select-String "token:") -split " +")</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span>
+
+<span class="nf">kubectl</span> <span class="nf">proxy.</span>
+
+</code></pre></div></div>
+
+<p><strong>Some Docker commands</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">login</span>
+
+<span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/demoapp:1.0.0</span> <span class="nf">.</span>
+
+<span class="nf">docker</span> <span class="nf">image</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/demoapp:1.0.0</span> <span class="nf">.</span>
+
+<span class="nf">docker</span> <span class="nf">images</span>
+
+<span class="nf">docker</span> <span class="nf">images</span> <span class="nf">ls</span>
+
+
+</code></pre></div></div>
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 
 <!-- **References**  

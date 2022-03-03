@@ -312,7 +312,7 @@
 
 
 
-  4 minute read
+  5 minute read
 </p>
           
         </header>
@@ -573,6 +573,79 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">jaeger</span>
 </code></pre></div></div>
+
+<p><strong>Logging from Istio and Envoy</strong></p>
+
+<ul>
+  <li>Create a YAML file and name the file elasticsearch.yaml  and write below code.</li>
+</ul>
+
+<p><strong>elasticsearch.yaml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<ul>
+  <li>Create a YAML file and name the file kibana.yaml  and write below code.</li>
+</ul>
+
+<p><strong>kibana.yaml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<ul>
+  <li>Create a YAML file and name the file fluentd.yaml  and write below code.</li>
+</ul>
+
+<p><strong>fluentd.yaml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<ul>
+  <li>Now execute all above file with below commands.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">elasticsearch.yaml</span>
+
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">kibana.yaml</span>
+
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">fluentd.yaml</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">-n</span> <span class="nf">logging</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>If you are using docker desktop you can use below command to port forward.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">port-forward</span> <span class="nf">svc</span><span class="nv">/kibana</span> <span class="nf">8001:5601</span> <span class="nf">-n</span> <span class="nf">logging</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now browse kibana using http://localhost:8001/</li>
+</ul>
+
+<p><strong>Step xx: Configure Istio to Log to Fluentd</strong></p>
+
+<p>Now we are going to configure Istio to use the same FluentD instance, and send proxy logs through FluentD into Elasticsearch.
+It will be actual adapter configuration that I mentioned earler.</p>
+<ul>
+  <li>Create a YAMl file and name the file fluentd-istio.yaml and write below code.</li>
+</ul>
+
+<p><strong>fluentd-istio.yaml</strong></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<ul>
+  <li>Apply the below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">fluentd-istio.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Filter on search with kubernetes.container.name is istio-proxy  and we will see logs fron istio proxy.</li>
+</ul>
 
 <p><strong>Kubectl Commands</strong></p>
 

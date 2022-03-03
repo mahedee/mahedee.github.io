@@ -1,0 +1,948 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Configure service mesh using istio with an asp.net core applications on Kubernetes - Think Simple</title>
+<meta name="description" content="hi">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Configure service mesh using istio with an asp.net core applications on Kubernetes">
+<meta property="og:url" content="https://mahedee.net//service-mesh-istio/">
+
+
+  <meta property="og:description" content="hi">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2009-01-29T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//service-mesh-istio/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (7th times), programmer, software architect, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Dhaka, Bangladesh</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Configure service mesh using istio with an asp.net core applications on Kubernetes">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="January 29, 2009">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Configure service mesh using istio with an asp.net core applications on Kubernetes
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- ## Authentication and authorization using asp.net core web api and JWT (Part 01) -->
+
+<p><strong>Overview</strong></p>
+
+<p><strong>Tools and Technology used</strong><br />
+The following tools and technologies has been used for this application</p>
+<ul>
+  <li>Visual Studio 2019</li>
+  <li>Visual C#</li>
+  <li>ASP.NET Core Web API</li>
+  <li>Postman - for api testing</li>
+</ul>
+
+<p>Let’s have a look to the implementation of the project.</p>
+
+<p><strong>Step xx: Create an asp.net core web api application</strong></p>
+<ol>
+  <li>Select File-&gt;New-&gt;Project-&gt;ASP.NET Core Web Application</li>
+  <li>Choose project and solution name</li>
+  <li>Click “Create” button</li>
+</ol>
+
+<p><strong>Step xx: Download Istio</strong></p>
+<ul>
+  <li>Go to the linke below and download “istio-1.12.2-win.zip”<br />
+https://github.com/istio/istio/releases/tag/1.12.2</li>
+</ul>
+
+<p>or download and extract the latest release automatically (Linux or macOS):
+curl -L https://istio.io/downloadIstio | sh -</p>
+
+<ul>
+  <li>
+    <p>Extract zip file and move to the Istio Package directory. For example, istio-1.12.2.</p>
+  </li>
+  <li>
+    <p>Then installation directory contains:</p>
+    <ul>
+      <li>Sample applications in sample/ directory</li>
+      <li>The istioctl client binary in the bin/ directory</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Step xx: Add istioctl client to your path</strong></p>
+
+<ul>
+  <li>Use the following command in git bash to add istioctl client to your path.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">export</span> <span class="nf">PATH=$PWD</span><span class="nv">/bin:$PATH</span>
+</code></pre></div></div>
+
+<p>Note: The above command doesn’t run on powershell. If you close the git bash, you will not get istioctl. You have to run the above command again.</p>
+
+<ul>
+  <li>To check istioctl client use the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span>
+</code></pre></div></div>
+
+<p><strong>Step xx: Install Istio</strong></p>
+
+<ul>
+  <li>For this installation, we use the demo configuration profile. It’s selected to have a good set of defaults for testing, but there are other profiles for production or performance testing. Use below command to install Istio.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">install</span> <span class="nf">--set</span> <span class="nf">profile=demo</span> <span class="nf">-y</span>
+</code></pre></div></div>
+<ul>
+  <li>Use the following command to verify Istio.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">all</span> <span class="nf">-n</span> <span class="nf">istio-system</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                                        <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
+<span class="nf">pod</span><span class="nv">/istio-egressgateway-c9cbbd99f-wk265</span>     <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">87s</span>
+<span class="nf">pod</span><span class="nv">/istio-ingressgateway-7c8bc47b49-xpvvc</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">86s</span>
+<span class="nf">pod</span><span class="nv">/istiod-765596f7ff-2p72v</span>                 <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">3m13s</span>
+
+<span class="nf">NAME</span>                           <span class="nf">TYPE</span>           <span class="nf">CLUSTER-IP</span>       <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>                                                                      <span class="nf">AGE</span>
+<span class="nf">service</span><span class="nv">/istio-egressgateway</span>    <span class="nf">ClusterIP</span>      <span class="nf">10.101.157.106</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">80</span><span class="nv">/TCP,443/TCP</span>                                                               <span class="nf">85s</span>
+<span class="nf">service</span><span class="nv">/istio-ingressgateway</span>   <span class="nf">LoadBalancer</span>   <span class="nf">10.109.205.109</span>   <span class="nf">localhost</span>     <span class="nf">15021:32149</span><span class="nv">/TCP,80:30563/TCP,443:30960/TCP,31400:32369/TCP,15443:32309/TCP</span>   <span class="nf">85s</span>
+<span class="nf">service</span><span class="nv">/istiod</span>                 <span class="nf">ClusterIP</span>      <span class="nf">10.109.211.149</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">15010</span><span class="nv">/TCP,15012/TCP,443/TCP,15014/TCP</span>                                        <span class="nf">3m12s</span>
+
+<span class="nf">NAME</span>                                   <span class="nf">READY</span>   <span class="nf">UP-TO-DATE</span>   <span class="nf">AVAILABLE</span>   <span class="nf">AGE</span>
+<span class="nf">deployment.apps</span><span class="nv">/istio-egressgateway</span>    <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">87s</span>
+<span class="nf">deployment.apps</span><span class="nv">/istio-ingressgateway</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">86s</span>
+<span class="nf">deployment.apps</span><span class="nv">/istiod</span>                 <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">3m13s</span>
+
+<span class="nf">NAME</span>                                              <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>
+<span class="nf">replicaset.apps</span><span class="nv">/istio-egressgateway-c9cbbd99f</span>     <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">87s</span>
+<span class="nf">replicaset.apps</span><span class="nv">/istio-ingressgateway-7c8bc47b49</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">86s</span>
+<span class="nf">replicaset.apps</span><span class="nv">/istiod-765596f7ff</span>                 <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">3m13s</span>
+</code></pre></div></div>
+
+<p><strong>Step xx: Configure auto proxy injection</strong></p>
+
+<ul>
+  <li>Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later. Use below command to configure default namespance with Istio sidecar proxy.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">label</span> <span class="nf">namespace</span> <span class="nf">default</span> <span class="nf">istio-injection=enabled</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check label by using below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">namespace</span> <span class="nf">default</span>
+</code></pre></div></div>
+
+<p><strong>Step xx: Create .net core application</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/location:1.0.1</span> <span class="nf">.</span>
+</code></pre></div></div>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
+
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\service.yml</span>
+</code></pre></div></div>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/bff.web:1.0.4</span> <span class="nf">.</span>
+</code></pre></div></div>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
+</code></pre></div></div>
+
+<p><strong>Step xx: Check pods have proxy auto-injected</strong></p>
+
+<ul>
+  <li>By default istio will be injected automatically under this namespace.</li>
+  <li>Use the following command to check pods have proxy auto-injected.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span>   <span class="err">//</span> <span class="nf">To</span> <span class="nf">check</span> <span class="nf">pods</span>
+</code></pre></div></div>
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                                      <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
+<span class="nf">locationapi-deployment-77774f96cb-glm8m</span>   <span class="mf">2</span><span class="nv">/2</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">12m</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Show the locationapi proxy setup using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">pods</span> <span class="nf">locationapi-deployment-77774f96cb-glm8m</span>  
+</code></pre></div></div>
+
+<ul>
+  <li>Find all proxy container using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span> <span class="nf">--filter</span> <span class="nf">name=istio-proxy_*</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check proxy processes for the locationapi</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span> <span class="nf">--filter</span> <span class="nf">name=istio-proxy_locationapi-deployment*</span> <span class="nf">-q</span>
+</code></pre></div></div>
+
+<p><strong>Visualizing Service Mesh</strong></p>
+
+<p><strong>Install Kiali dashboard</strong></p>
+
+<ul>
+  <li>Go to the Istio’s directory. Install Kiali and other addons and wait for them to be deployed. Execute below command inside Istio folder.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">samples</span><span class="nv">/addons</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Execute below command and wait till get success roll out message.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">rollout</span> <span class="nf">status</span> <span class="nf">deployment</span><span class="nv">/kiali</span> <span class="nf">-n</span> <span class="nf">istio-system</span>
+</code></pre></div></div>
+
+<p>Note: If there are errors trying to install the addons, try running the command again. There may be some timing issues which will be resolved when the command is run again.</p>
+
+<ul>
+  <li>Verify the deployment with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">po</span> <span class="nf">-n</span> <span class="nf">istio-system</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                                    <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
+<span class="nf">grafana-6ccd56f4b6-sc894</span>                <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">13m</span>
+<span class="nf">istio-egressgateway-c9cbbd99f-wk265</span>     <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">87m</span>
+<span class="nf">istio-ingressgateway-7c8bc47b49-xpvvc</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">87m</span>
+<span class="nf">istiod-765596f7ff-2p72v</span>                 <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">89m</span>
+<span class="nf">jaeger-5d44bc5c5d-g2wcl</span>                 <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">13m</span>
+<span class="nf">kiali-79b86ff5bc-cqwrp</span>                  <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">13m</span>
+<span class="nf">prometheus-64fd8ccd65-lglld</span>             <span class="mf">2</span><span class="nv">/2</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">13m</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now run the Kiali dashboard using the below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">kiali</span>
+</code></pre></div></div>
+<p>Kiali dashboard will be open. Hit the gateway URL http://localhost:8011/Countries/GetAll several times and you will get the reflect in kiali dashbaord.</p>
+
+<p><strong>Step xx: Monitoring with Prometheus &amp; Grafana</strong></p>
+
+<ul>
+  <li>Check Prometheus and Grafana is running using the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">po</span> <span class="nf">-n</span> <span class="nf">istio-system</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Run Prometheus dashboard using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">prometheus</span>
+</code></pre></div></div>
+
+<p>View graph in diffrent ways like -</p>
+
+<ul>
+  <li>Select istio_requests_total.</li>
+  <li>Switch to Graph.</li>
+  <li>
+    <p>Check Status/Targets - Kubernetes service discovery.</p>
+  </li>
+  <li>Run Grafana dashboard using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">grafana</span>
+</code></pre></div></div>
+
+<p><strong>Step xx: Distributed Tracing using Jaegar UI</strong></p>
+
+<ul>
+  <li>Run Jaeger UI using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">jaeger</span>
+</code></pre></div></div>
+
+<p><strong>Kubectl Commands</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">ns</span>                   <span class="err">//</span> <span class="nf">Get</span> <span class="nf">all</span> <span class="nf">namesapces</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span> <span class="nf">-n</span> <span class="nf">istio-system</span>   <span class="err">//</span> <span class="nf">Get</span> <span class="nf">services</span> <span class="nf">under</span> <span class="nf">istio-system</span> <span class="nf">name</span> <span class="nf">space</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">all</span> <span class="nf">-n</span> <span class="nf">istio-system</span>   <span class="err">//</span> <span class="nf">Get</span> <span class="nf">all</span> <span class="nf">under</span> <span class="nf">istio-system</span> <span class="nf">name</span> <span class="nf">space</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">ns</span> <span class="nf">istio-system</span>    <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">namespace</span> <span class="nf">name</span> <span class="nf">istio-system</span>
+
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">all</span>                   <span class="err">//</span> <span class="nf">Get</span> <span class="nf">everything</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">kubernetes</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">pods</span>         <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">pods</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">pods</span> <span class="nf">--namespace=foo</span>  <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">pods</span> <span class="nf">under</span> <span class="nf">the</span> <span class="nf">namespace</span> <span class="nf">foo</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">deployments</span> <span class="nf">--namespace=foo</span> <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">deployments</span> <span class="nf">under</span> <span class="nf">the</span> <span class="nf">namespace</span> <span class="nf">foo</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">namespaces</span>  <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">name</span> <span class="nf">spaces</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">svc</span>           <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">services</span>
+
+<span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">--all</span> <span class="nf">deployments</span>    <span class="err">//</span> <span class="nf">Delete</span> <span class="nf">all</span> <span class="nf">deployments</span>
+
+</code></pre></div></div>
+
+<p><strong>Docker Commands</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rm</span> <span class="nf">-vf</span> <span class="nf">$</span><span class="s">(docker ps -aq)</span>     <span class="err">//</span> <span class="nf">To</span> <span class="nf">delete</span> <span class="nf">all</span> <span class="nf">containers</span> <span class="nf">including</span> <span class="nf">its</span> <span class="nf">volumes</span> <span class="nf">use</span>
+
+<span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">-f</span> <span class="nf">$</span><span class="s">(docker images -aq)</span>  <span class="err">//</span> <span class="nf">To</span> <span class="nf">delete</span> <span class="nf">all</span> <span class="nf">the</span> <span class="nf">images</span>
+
+<span class="nf">docker</span> <span class="nf">images</span>                       <span class="err">//</span> <span class="nf">To</span> <span class="nf">check</span> <span class="nf">docker</span> <span class="nf">images</span>
+
+<span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/location:1.0.1</span> <span class="nf">.</span>  <span class="err">//</span> <span class="nf">create</span> <span class="nf">a</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">name</span> <span class="nf">mahedee</span><span class="nv">/location:1.0.1</span>
+
+
+</code></pre></div></div>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/Auth.JWTv01">Source Code</a></strong></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#jwt" class="page__taxonomy-item" rel="tag">JWT</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2009-01-29T00:00:00+00:00">January 29, 2009</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Configure+service+mesh+using+istio+with+an+asp.net+core+applications+on+Kubernetes%20https%3A%2F%2Fmahedee.net%2F%2Fservice-mesh-istio%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fservice-mesh-istio%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fservice-mesh-istio%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/sample-post/" class="pagination--pager" title="Learn About Microsoft SQL Server Disaster Recovery Best Practices
+">Previous</a>
+    
+    
+      <a href="/some-important-links/" class="pagination--pager" title="Some important links
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/API-gateway-using-ocelot-in-asp.net-core-application/" rel="permalink">API gateway using ocelot in asp.net core application
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balanci...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Application-health-monitoring-using-asp.net-core/" rel="permalink">Application health monitoring using asp.net core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Health monitoring provides real-time information about the state of the application. It’s a very crucial part for large distributed application. Especially, ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/authentication-and-authorization-using-react.js-and-asp.net-core/" rel="permalink">Authentication and authorization using react.js and asp.net core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  16 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In the previous article, I have shown you how to create a back end application for authentication and authorization using JWT and .net core. In this article,...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/authentication-and-authorization-using-JWT-in-asp.net-core-application/" rel="permalink">Authentication and authorization using JWT in asp.net core application
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  28 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Authentication and authorization is a key part of an application. Sometimes we struggle to implement authentication and authorization in a web api applicatio...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//service-mesh-istio/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/service-mesh-istio"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

@@ -312,7 +312,7 @@
 
 
 
-  5 minute read
+  9 minute read
 </p>
           
         </header>
@@ -324,27 +324,31 @@
 
 <p>A service mesh is a configurable infrustructure layer. It have capabilities to handle service-to-service communication, resilency, and many cross-cutting concerns. Proxy is a key component of service mesh. Sidecar proxy is injected in each services in this concept. Here I will show you service mesh communication using Istio with asp.net core applications on Kubernetes environment.</p>
 
-<p><strong>Tools and Technology used</strong><br />
-The following tools and technologies has been used for this application</p>
+<p>Istio is an open platform for providing a uniform way to integrate microservices, manage traffic flow accross microservices, enforce policies and aggregate telemetry data. Istio uses following tools -</p>
+
 <ul>
-  <li>Visual Studio 2019</li>
-  <li>Visual C#</li>
-  <li>ASP.NET Core Web API</li>
-  <li>Postman - for api testing</li>
+  <li>Prometheus: It monitors everything in the cluster.</li>
+  <li>Grafana: Data visualization tools.</li>
+  <li>Jaeger: It’s used for distributed tracing.</li>
 </ul>
 
-<p>Let’s have a look to the implementation of the project.</p>
-
-<p><strong>Step xx: Create an asp.net core web api application</strong></p>
-<ol>
-  <li>Select File-&gt;New-&gt;Project-&gt;ASP.NET Core Web Application</li>
-  <li>Choose project and solution name</li>
-  <li>Click “Create” button</li>
-</ol>
-
-<p><strong>Step xx: Download Istio</strong></p>
+<p><strong>Tools and Technology used</strong><br />
+The following tools and technologies used to configure Istio</p>
 <ul>
-  <li>Go to the linke below and download “istio-1.12.2-win.zip”<br />
+  <li>Visual Studio 2022</li>
+  <li>Visual C#</li>
+  <li>ASP.NET Core Web API</li>
+  <li>Ocelot</li>
+  <li>Docker desktop</li>
+  <li>Kubernetes</li>
+  <li>Istio</li>
+</ul>
+
+<p>Let’s configure Istio on asp.net core web api applications.</p>
+
+<p><strong>Step 1: Download Istio</strong></p>
+<ul>
+  <li>Go to the link below and download “istio-1.12.2-win.zip”<br />
 https://github.com/istio/istio/releases/tag/1.12.2</li>
 </ul>
 
@@ -358,13 +362,13 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <li>
     <p>Then installation directory contains:</p>
     <ul>
-      <li>Sample applications in sample/ directory</li>
-      <li>The istioctl client binary in the bin/ directory</li>
+      <li>Sample applications in sample/directory</li>
+      <li>The istioctl client binary in the bin/directory</li>
     </ul>
   </li>
 </ul>
 
-<p><strong>Step xx: Add istioctl client to your path</strong></p>
+<p><strong>Step 2: Add istioctl client to your path</strong></p>
 
 <ul>
   <li>Use the following command in git bash to add istioctl client to your path.</li>
@@ -373,19 +377,19 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">export</span> <span class="nf">PATH=$PWD</span><span class="nv">/bin:$PATH</span>
 </code></pre></div></div>
 
-<p>Note: The above command doesn’t run on powershell. If you close the git bash, you will not get istioctl. You have to run the above command again.</p>
+<p>Note: The above command doesn’t run on powershell. So, use git bash. If you close the git bash, istioctl doesn’t work. You have to run the above command again.</p>
 
 <ul>
-  <li>To check istioctl client use the following command.</li>
+  <li>To check istioctl client use the following command in git bash.</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span>
 </code></pre></div></div>
 
-<p><strong>Step xx: Install Istio</strong></p>
+<p><strong>Step 3: Install Istio</strong></p>
 
 <ul>
-  <li>For this installation, we use the demo configuration profile. It’s selected to have a good set of defaults for testing, but there are other profiles for production or performance testing. Use below command to install Istio.</li>
+  <li>For installation, we use the demo configuration profile. It’s selected to have a good set of defaults for testing, but there are other profiles for production or performance testing. Use below command to install Istio.</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">install</span> <span class="nf">--set</span> <span class="nf">profile=demo</span> <span class="nf">-y</span>
@@ -420,7 +424,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="nf">replicaset.apps</span><span class="nv">/istiod-765596f7ff</span>                 <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">3m13s</span>
 </code></pre></div></div>
 
-<p><strong>Step xx: Configure auto proxy injection</strong></p>
+<p><strong>Step 4: Configure for auto proxy injection</strong></p>
 
 <ul>
   <li>Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later. Use below command to configure default namespance with Istio sidecar proxy.</li>
@@ -436,15 +440,335 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">namespace</span> <span class="nf">default</span>
 </code></pre></div></div>
 
-<p><strong>Step xx: Create .net core application</strong></p>
+<p><strong>Step 5: Create asp.net core applications</strong></p>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/location:1.0.1</span> <span class="nf">.</span>
+<ul>
+  <li>Create 4 asp.net core web api projects.</li>
+  <li>Projects names are Catalog.API, Location.API, Ordering.API and BFF.Web.</li>
+</ul>
+
+<p><strong>Step 6: Organize Catalog.API Project</strong></p>
+
+<ul>
+  <li>Add the following nuget packages in the project.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.InMemory</span>
+<span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
 </code></pre></div></div>
+
+<ul>
+  <li>Add a model class name Product in the model folder.</li>
+</ul>
+
+<p><strong>Product.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Model</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+    <span class="p">{</span>
+        <span class="p">[</span><span class="n">Key</span><span class="p">]</span>
+        <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">AvailableStock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">RestockThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Add CatalogContext class in Db folder.</li>
+</ul>
+
+<p><strong>CatalogContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">CatalogContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">DbContextOptionsBuilder</span> <span class="n">optionsBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">optionsBuilder</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Configure InMemory database and modify Program class as follows.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"CatalogDB"</span><span class="p">));</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create ProductsController in Controllers folder</li>
+</ul>
+
+<p><strong>ProductsController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">nullable</span> <span class="n">disable</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Catalog.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProductsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CatalogContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ProductsController</span><span class="p">(</span><span class="n">CatalogContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetProducts</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// PUT: api/Products/5</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"Edit/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">product</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">ProductExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: api/Products</span>
+        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"Add"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">PostProduct</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetProduct"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">product</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// DELETE: api/Products/5</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"Delete/{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">ProductExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Add Dockerfile in the Catalog.API Project</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+<span class="k">EXPOSE</span><span class="s"> 443</span>
+
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+<span class="k">COPY</span><span class="s"> ["/Catalog.API.csproj", "Catalog.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"Catalog.API/Catalog.API.csproj"</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Catalog.API.dll"]</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Go to director where dockerfile reside and run the following command to build docker image.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/catalog:1.0.1</span> <span class="nf">.</span>
+</code></pre></div></div>
+
+<p>Note: Don’t forgot to add . at the end of the command.</p>
+
+<ul>
+  <li>To configure pod add the following to file with code in Deploy/k8s folder</li>
+</ul>
+
+<p><strong>deployment.yml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># Configure Deployment</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">catalogapi-deployment</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">catalogapi-pod</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">catalogapi-pod</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">catalogapi-container</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/catalog:1.0.1</span>
+        <span class="na">resources</span><span class="pi">:</span>
+          <span class="na">limits</span><span class="pi">:</span>
+            <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">128Mi"</span> <span class="c1"># 128 mili bytes</span>
+            <span class="na">cpu</span><span class="pi">:</span> <span class="s2">"</span><span class="s">500m"</span>     <span class="c1"># 500 mili cpu</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+
+
+</code></pre></div></div>
+<p><strong>service.yml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Configure service</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">catalogapi-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">catalogapi-pod</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+  <span class="c1">#type: LoadBalancer # use LoadBalancer if you want to accesss out side of pod</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Go to the Deploy/k8s directory and run the following commands.</li>
+</ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
 
 <span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\service.yml</span>
 </code></pre></div></div>
+
+<p>—-For location—</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/bff.web:1.0.4</span> <span class="nf">.</span>
 </code></pre></div></div>
@@ -452,7 +776,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
 </code></pre></div></div>
 
-<p><strong>Step xx: Check pods have proxy auto-injected</strong></p>
+<p><strong>Step 7: Check pods have proxy auto-injected</strong></p>
 
 <ul>
   <li>By default istio will be injected automatically under this namespace.</li>
@@ -464,14 +788,14 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <p>Output:</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                                      <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
-<span class="nf">locationapi-deployment-77774f96cb-glm8m</span>   <span class="mf">2</span><span class="nv">/2</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">12m</span>
+<span class="nf">catalogapi-deployment-68d56ccddd-sqfnj</span>    <span class="mf">2</span><span class="nv">/2</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">14m</span>
 </code></pre></div></div>
 
 <ul>
-  <li>Show the locationapi proxy setup using the following command</li>
+  <li>Show the catalogapi proxy setup using the following command</li>
 </ul>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">pods</span> <span class="nf">locationapi-deployment-77774f96cb-glm8m</span>  
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">pods</span> <span class="nf">catalogapi-deployment-68d56ccddd-sqfnj</span> 
 </code></pre></div></div>
 
 <ul>
@@ -485,7 +809,84 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <li>Check proxy processes for the locationapi</li>
 </ul>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span> <span class="nf">--filter</span> <span class="nf">name=istio-proxy_locationapi-deployment*</span> <span class="nf">-q</span>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span> <span class="nf">--filter</span> <span class="nf">name=istio-proxy_catalogapi-deployment*</span> <span class="nf">-q</span>
+</code></pre></div></div>
+
+<p><strong>Step 8: Organize Location.API</strong></p>
+
+<ul>
+  <li>Create a Controller name CountriesController in the Controllers folder as follows.</li>
+</ul>
+
+<p><strong>CountriesController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Location.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CountriesController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+      <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+      <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span><span class="s">"America"</span><span class="p">,</span><span class="s">"Bangladesh"</span><span class="p">,</span> <span class="s">"Canada"</span> <span class="p">};</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Add docker file in the project root directory as follows.</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+<span class="k">EXPOSE</span><span class="s"> 443</span>
+
+<span class="k">ENV</span><span class="s"> ASPNETCORE_URLS=http://*:80;</span>
+<span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
+
+<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+
+<span class="k">COPY</span><span class="s"> ["/Location.API.csproj", "Location.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"Location.API/Location.API.csproj"</span>
+
+<span class="k">WORKDIR</span><span class="s"> "/src/Location.API"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/Location.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"Location.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"Location.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Location.API.dll"]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Go to the root directory where Dockerfile reside and run the following command to build docker image.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/location:1.0.1</span> <span class="nf">.</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Go to the Deploy/k8s directory and run the following commands.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
+
+<span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\service.yml</span>
 </code></pre></div></div>
 
 <p><strong>Visualizing Service Mesh</strong></p>

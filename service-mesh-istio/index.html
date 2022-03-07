@@ -312,7 +312,7 @@
 
 
 
-  14 minute read
+  15 minute read
 </p>
           
         </header>
@@ -741,10 +741,12 @@ curl -L https://istio.io/downloadIstio | sh -</p>
         <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
 
 
+
 </code></pre></div></div>
 <p><strong>service.yml</strong></p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Configure service</span>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># Configure service</span>
 <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
 <span class="na">metadata</span><span class="pi">:</span>
@@ -753,9 +755,9 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">app</span><span class="pi">:</span> <span class="s">catalogapi-pod</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8001</span>
     <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-  <span class="c1">#type: LoadBalancer # use LoadBalancer if you want to accesss out side of pod</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span> <span class="c1"># use LoadBalancer if you want to accesss out side of pod</span>
 
 </code></pre></div></div>
 
@@ -913,7 +915,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">app</span><span class="pi">:</span> <span class="s">locationapi-pod</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8002</span>
     <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
   <span class="c1">#type: LoadBalancer</span>
 </code></pre></div></div>
@@ -1208,14 +1210,14 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
 <span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">locationapi-service</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">orderingapi-service</span>
 <span class="na">spec</span><span class="pi">:</span>
   <span class="na">selector</span><span class="pi">:</span>
-    <span class="na">app</span><span class="pi">:</span> <span class="s">locationapi-pod</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">orderingapi-pod</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8080</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">8003</span>
     <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-  <span class="c1">#type: LoadBalancer</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
 </code></pre></div></div>
 
 <ul>
@@ -1244,51 +1246,42 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <p><strong>ocelot.json</strong></p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
   </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Countries/GetAll"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locationapi-service"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="err">//</span><span class="w"> </span><span class="err">Configure</span><span class="w"> </span><span class="err">caching</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">cache</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">expire</span><span class="w"> </span><span class="err">after</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="err">seconds.</span><span class="w">
-      </span><span class="nl">"FileCacheOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"TtlSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"countriescaching"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Countries/GetAll"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">],</span><span class="w">
-
-      </span><span class="err">//</span><span class="w"> </span><span class="err">Enable</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">sensative</span><span class="w"> </span><span class="err">Routing/URL</span><span class="w">
-      </span><span class="nl">"RouteIsCaseSensitive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
 
     </span><span class="err">//---Catalog</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">------------//</span><span class="w">
-
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"catalogapi-service"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8001</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
 
       </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Catalog/{url}"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
 
     </span><span class="err">//---Catalog</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">------------//</span><span class="w">
+
+    </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locationapi-service"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8002</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Location/{url}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+
 
     </span><span class="err">//---Ordering</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">Catch</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">Routing</span><span class="w">
@@ -1298,7 +1291,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
       </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"orderingapi-service"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8080</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8003</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
 
@@ -1421,7 +1414,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <li>Go to director where dockerfile reside and run the following command to build docker image.</li>
 </ul>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/bff.web:1.0.4</span> <span class="nf">.</span>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">image</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">mahedee</span><span class="nv">/bff.web:1.0.1</span> <span class="nf">.</span>
 </code></pre></div></div>
 
 <ul>
@@ -1446,7 +1439,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">bffweb-container</span>
-        <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/bff.web:1.0.4</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/bff.web:1.0.1</span>
         <span class="na">resources</span><span class="pi">:</span>
           <span class="na">limits</span><span class="pi">:</span>
             <span class="na">memory</span><span class="pi">:</span> <span class="s2">"</span><span class="s">128Mi"</span>
@@ -1477,6 +1470,38 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">.\deployment.yml</span>
 </code></pre></div></div>
+
+<ul>
+  <li>Now you can running services using in the kubernetes using the following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nf">NAME</span>                  <span class="nf">TYPE</span>           <span class="nf">CLUSTER-IP</span>       <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>          <span class="nf">AGE</span>
+<span class="nf">bffweb-service</span>        <span class="nf">LoadBalancer</span>   <span class="nf">10.111.186.235</span>   <span class="nf">localhost</span>     <span class="nf">8011:31690</span><span class="nv">/TCP</span>   <span class="nf">10m</span>
+<span class="nf">catalogapi-service</span>    <span class="nf">LoadBalancer</span>   <span class="nf">10.101.130.94</span>    <span class="nf">localhost</span>     <span class="nf">8001:30710</span><span class="nv">/TCP</span>   <span class="nf">138m</span>
+<span class="nf">kubernetes</span>            <span class="nf">ClusterIP</span>      <span class="nf">10.96.0.1</span>        <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>          <span class="nf">3d20h</span>
+<span class="nf">locationapi-service</span>   <span class="nf">ClusterIP</span>      <span class="nf">10.100.204.33</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">8002</span><span class="nv">/TCP</span>         <span class="nf">7m57s</span>
+<span class="nf">orderingapi-service</span>   <span class="nf">LoadBalancer</span>   <span class="nf">10.96.12.11</span>      <span class="nf">localhost</span>     <span class="nf">8003:31264</span><span class="nv">/TCP</span>   <span class="nf">15m</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>You can now access catalog api, location api and ordering api using bffweb using the following URL</li>
+  <li>
+    <p>You can use postman for CRUD Operation</p>
+
+    <p>http://localhost:8011/Catalog/api/Products/GetAll</p>
+
+    <p>http://localhost:8011/Location/api/Countries/GetAll</p>
+
+    <p>http://localhost:8011/Ordering/api/Orders/GetAll</p>
+  </li>
+</ul>
 
 <p><strong>Visualizing Service Mesh</strong></p>
 

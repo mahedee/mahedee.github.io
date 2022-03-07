@@ -312,7 +312,7 @@
 
 
 
-  15 minute read
+  18 minute read
 </p>
           
         </header>
@@ -1505,10 +1505,10 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <p><strong>Visualizing Service Mesh</strong></p>
 
-<p><strong>Install Kiali dashboard</strong></p>
+<p><strong>Step 11: Install Kiali dashboard</strong></p>
 
 <ul>
-  <li>Go to the Istio’s directory. Install Kiali and other addons and wait for them to be deployed. Execute below command inside Istio folder.</li>
+  <li>Go to the Istio’s directory. Install Kiali and other addons and wait for them to be deployed. Execute below command inside Istio folder. Use Git bash instead of powershell.</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">samples</span><span class="nv">/addons</span>
@@ -1548,9 +1548,18 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">kiali</span>
 </code></pre></div></div>
-<p>Kiali dashboard will be open. Hit the gateway URL http://localhost:8011/Countries/GetAll several times and you will get the reflect in kiali dashbaord.</p>
+<p>Kiali dashboard will be open. 
+Hit the gateway URL. Use the following URL and hit several times and you will get the reflect in kiali dashbaord as below.</p>
 
-<p><strong>Step xx: Monitoring with Prometheus &amp; Grafana</strong></p>
+<p>http://localhost:8011/Catalog/api/Products/GetAll</p>
+
+<p>http://localhost:8011/Location/api/Countries/GetAll</p>
+
+<p>http://localhost:8011/Ordering/api/Orders/GetAll</p>
+
+<p><img src="/assets/images/posts/2022/Kiali.PNG" alt="" /></p>
+
+<p><strong>Step 12: Monitoring with Prometheus &amp; Grafana</strong></p>
 
 <ul>
   <li>Check Prometheus and Grafana is running using the following command.</li>
@@ -1571,16 +1580,24 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <ul>
   <li>Select istio_requests_total.</li>
   <li>Switch to Graph.</li>
-  <li>
-    <p>Check Status/Targets - Kubernetes service discovery.</p>
-  </li>
+  <li>Check Status/Targets - Kubernetes service discovery.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/Prometheus.PNG" alt="" /></p>
+
+<ul>
   <li>Run Grafana dashboard using the following command</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">grafana</span>
 </code></pre></div></div>
+<ul>
+  <li>Go to Dashboar-&gt;Manage-&gt;Istio and see the dashboar as below.</li>
+</ul>
 
-<p><strong>Step xx: Distributed Tracing using Jaegar UI</strong></p>
+<p><img src="/assets/images/posts/2022/Grafana.PNG" alt="" /></p>
+
+<p><strong>Step 13: Distributed Tracing using Jaegar UI</strong></p>
 
 <ul>
   <li>Run Jaeger UI using the following command</li>
@@ -1589,7 +1606,9 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">istioctl</span> <span class="nf">dashboard</span> <span class="nf">jaeger</span>
 </code></pre></div></div>
 
-<p><strong>Logging from Istio and Envoy</strong></p>
+<p><img src="/assets/images/posts/2022/jaeger.PNG" alt="" /></p>
+
+<p><strong>Step 14: Logging from Istio and Envoy</strong></p>
 
 <ul>
   <li>Create a YAML file and name the file elasticsearch.yaml  and write below code.</li>
@@ -1597,14 +1616,170 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <p><strong>elasticsearch.yaml</strong></p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Logging Namespace. All below are a part of this namespace.</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Namespace</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">logging</span>
+<span class="nn">---</span>
+<span class="c1"># Elasticsearch Service</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">9200</span>
+    <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">db</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+<span class="nn">---</span>
+<span class="c1"># Elasticsearch Deployment</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+      <span class="na">annotations</span><span class="pi">:</span>
+        <span class="na">sidecar.istio.io/inject</span><span class="pi">:</span> <span class="s2">"</span><span class="s">false"</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">docker.elastic.co/elasticsearch/elasticsearch-oss:6.1.1</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+        <span class="na">resources</span><span class="pi">:</span>
+          <span class="c1"># need more cpu upon initialization, therefore burstable class</span>
+          <span class="na">limits</span><span class="pi">:</span>
+            <span class="na">cpu</span><span class="pi">:</span> <span class="s">1000m</span>
+          <span class="na">requests</span><span class="pi">:</span>
+            <span class="na">cpu</span><span class="pi">:</span> <span class="s">100m</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">discovery.type</span>
+            <span class="na">value</span><span class="pi">:</span> <span class="s">single-node</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">9200</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">db</span>
+          <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">9300</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">transport</span>
+          <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+        <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/data</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">elasticsearch</span>
+        <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+
+</code></pre></div></div>
 <ul>
   <li>Create a YAML file and name the file kibana.yaml  and write below code.</li>
 </ul>
 
 <p><strong>kibana.yaml</strong></p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Kibana Service</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kibana</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">kibana</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">5601</span>
+    <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="s">ui</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">kibana</span>
+<span class="nn">---</span>
+<span class="c1"># Kibana Deployment</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kibana</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">kibana</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">kibana</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">kibana</span>
+      <span class="na">annotations</span><span class="pi">:</span>
+        <span class="na">sidecar.istio.io/inject</span><span class="pi">:</span> <span class="s2">"</span><span class="s">false"</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kibana</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">docker.elastic.co/kibana/kibana-oss:6.1.1</span>
+        <span class="na">resources</span><span class="pi">:</span>
+          <span class="c1"># need more cpu upon initialization, therefore burstable class</span>
+          <span class="na">limits</span><span class="pi">:</span>
+            <span class="na">cpu</span><span class="pi">:</span> <span class="s">1000m</span>
+          <span class="na">requests</span><span class="pi">:</span>
+            <span class="na">cpu</span><span class="pi">:</span> <span class="s">100m</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">ELASTICSEARCH_URL</span>
+            <span class="na">value</span><span class="pi">:</span> <span class="s">http://elasticsearch:9200</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">5601</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">ui</span>
+          <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">networking.istio.io/v1alpha3</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Gateway</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kibana-gateway</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">istio</span><span class="pi">:</span> <span class="s">ingressgateway</span>
+  <span class="na">servers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span>
+      <span class="na">number</span><span class="pi">:</span> <span class="m">15033</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">http-kibana</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">HTTP</span>
+    <span class="na">hosts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">*"</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">networking.istio.io/v1alpha3</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">VirtualService</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kibana-vs</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">logging</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">hosts</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s2">"</span><span class="s">*"</span>
+  <span class="na">gateways</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">kibana-gateway</span>
+  <span class="na">http</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">match</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">15033</span>
+    <span class="na">route</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">destination</span><span class="pi">:</span>
+        <span class="na">host</span><span class="pi">:</span> <span class="s">kibana</span>
+        <span class="na">port</span><span class="pi">:</span>
+          <span class="na">number</span><span class="pi">:</span> <span class="m">5601</span>
+
+</code></pre></div></div>
 
 <ul>
   <li>Create a YAML file and name the file fluentd.yaml  and write below code.</li>
@@ -1612,7 +1787,123 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <p><strong>fluentd.yaml</strong></p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">rules</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">"</span>
+    <span class="na">resources</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">pods</span>
+      <span class="pi">-</span> <span class="s">namespaces</span>
+    <span class="na">verbs</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">get</span>
+      <span class="pi">-</span> <span class="s">list</span>
+      <span class="pi">-</span> <span class="s">watch</span>
+<span class="nn">---</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRoleBinding</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+<span class="na">subjects</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="nn">---</span>
+<span class="c1"># Fluentd Service</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd-es</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">fluentd-es</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd-tcp</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">24224</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">24224</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd-udp</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">24224</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">UDP</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">24224</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">fluentd-logging</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">DaemonSet</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">fluentd-logging</span>
+    <span class="na">version</span><span class="pi">:</span> <span class="s">v1</span>
+    <span class="na">kubernetes.io/cluster-service</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">fluentd-logging</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">fluentd-logging</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="s">v1</span>
+        <span class="na">kubernetes.io/cluster-service</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">serviceAccount</span><span class="pi">:</span> <span class="s">fluentd</span>
+      <span class="na">serviceAccountName</span><span class="pi">:</span> <span class="s">fluentd</span>
+      <span class="na">tolerations</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">node-role.kubernetes.io/master</span>
+          <span class="na">effect</span><span class="pi">:</span> <span class="s">NoSchedule</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">fluentd</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">fluent/fluentd-kubernetes-daemonset:v1.3-debian-elasticsearch</span>
+          <span class="na">env</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">FLUENT_ELASTICSEARCH_HOST</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">elasticsearch.logging"</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">FLUENT_ELASTICSEARCH_PORT</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">9200"</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">FLUENT_ELASTICSEARCH_SCHEME</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http"</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">FLUENT_UID</span>
+              <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0"</span>
+          <span class="na">resources</span><span class="pi">:</span>
+            <span class="na">limits</span><span class="pi">:</span>
+              <span class="na">memory</span><span class="pi">:</span> <span class="s">200Mi</span>
+            <span class="na">requests</span><span class="pi">:</span>
+              <span class="na">cpu</span><span class="pi">:</span> <span class="s">100m</span>
+              <span class="na">memory</span><span class="pi">:</span> <span class="s">200Mi</span>
+          <span class="na">volumeMounts</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+              <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/log</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlibdockercontainers</span>
+              <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/lib/docker/containers</span>
+              <span class="na">readOnly</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">terminationGracePeriodSeconds</span><span class="pi">:</span> <span class="m">30</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlog</span>
+          <span class="na">hostPath</span><span class="pi">:</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">/var/log</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">varlibdockercontainers</span>
+          <span class="na">hostPath</span><span class="pi">:</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">/var/lib/docker/containers</span>
+
+
+</code></pre></div></div>
 
 <ul>
   <li>Now execute all above file with below commands.</li>
@@ -1639,17 +1930,63 @@ curl -L https://istio.io/downloadIstio | sh -</p>
   <li>Now browse kibana using http://localhost:8001/</li>
 </ul>
 
-<p><strong>Step xx: Configure Istio to Log to Fluentd</strong></p>
+<p><strong>Step 15: Configure Istio to Log to Fluentd</strong></p>
 
 <p>Now we are going to configure Istio to use the same FluentD instance, and send proxy logs through FluentD into Elasticsearch.
 It will be actual adapter configuration that I mentioned earler.</p>
+
 <ul>
   <li>Create a YAMl file and name the file fluentd-istio.yaml and write below code.</li>
 </ul>
 
 <p><strong>fluentd-istio.yaml</strong></p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Configuration for logentry instances</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">config.istio.io/v1alpha2</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">instance</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">newlog</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">istio-system</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">compiledTemplate</span><span class="pi">:</span> <span class="s">logentry</span>
+  <span class="na">params</span><span class="pi">:</span>
+    <span class="na">severity</span><span class="pi">:</span> <span class="s1">'</span><span class="s">"info"'</span>
+    <span class="na">timestamp</span><span class="pi">:</span> <span class="s">request.time</span>
+    <span class="na">variables</span><span class="pi">:</span>
+      <span class="na">source</span><span class="pi">:</span> <span class="s">source.labels["app"] | source.workload.name | "unknown"</span>
+      <span class="na">user</span><span class="pi">:</span> <span class="s">source.user | "unknown"</span>
+      <span class="na">destination</span><span class="pi">:</span> <span class="s">destination.labels["app"] | destination.workload.name | "unknown"</span>
+      <span class="na">responseCode</span><span class="pi">:</span> <span class="s">response.code | </span><span class="m">0</span>
+      <span class="na">responseSize</span><span class="pi">:</span> <span class="s">response.size | </span><span class="m">0</span>
+      <span class="na">latency</span><span class="pi">:</span> <span class="s">response.duration | "0ms"</span>
+    <span class="na">monitored_resource_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">"UNSPECIFIED"'</span>
+<span class="nn">---</span>
+<span class="c1"># Configuration for a Fluentd handler</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">config.istio.io/v1alpha2</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">handler</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">handler</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">istio-system</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">compiledAdapter</span><span class="pi">:</span> <span class="s">fluentd</span>
+  <span class="na">params</span><span class="pi">:</span>
+    <span class="na">address</span><span class="pi">:</span> <span class="s2">"</span><span class="s">fluentd-es.kube-system:24224"</span>
+<span class="nn">---</span>
+<span class="c1"># Rule to send logentry instances to the Fluentd handler</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">config.istio.io/v1alpha2</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">rule</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">newlogtofluentd</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">istio-system</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">match</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span> <span class="c1"># match for all requests</span>
+  <span class="na">actions</span><span class="pi">:</span>
+   <span class="pi">-</span> <span class="na">handler</span><span class="pi">:</span> <span class="s">handler</span>
+     <span class="na">instances</span><span class="pi">:</span>
+     <span class="pi">-</span> <span class="s">newlog</span>
+<span class="nn">---</span>
+
+</code></pre></div></div>
 
 <ul>
   <li>Apply the below command</li>

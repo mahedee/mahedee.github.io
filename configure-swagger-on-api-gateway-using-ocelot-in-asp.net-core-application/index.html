@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>API gateway using ocelot in asp.net core application - Think Simple</title>
-<meta name="description" content="API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.">
+<!-- begin _includes/seo.html --><title>Configure Swagger on api gateway using ocelot in asp.net core application - Think Simple</title>
+<meta name="description" content="Swagger configuration on API gateway is not as simple as you are configure normal application. You have to configure it in different way. In this article I will create an API gateway using ocelot and asp.net core application and show you how to configure swagger on API gateway.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="API gateway using ocelot in asp.net core application">
-<meta property="og:url" content="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/">
+<meta property="og:title" content="Configure Swagger on api gateway using ocelot in asp.net core application">
+<meta property="og:url" content="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/">
 
 
-  <meta property="og:description" content="API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2022-02-10T00:00:00+00:00">
+  <meta property="og:description" content="Swagger configuration on API gateway is not as simple as you are configure normal application. You have to configure it in different way. In this article I will create an API gateway using ocelot and asp.net core application and show you how to configure swagger on API gateway.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2022-03-10T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/">
+
+<link rel="canonical" href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="API gateway using ocelot in asp.net core application">
-    <meta itemprop="description" content="API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.">
-    <meta itemprop="datePublished" content="February 10, 2022">
+    <meta itemprop="headline" content="Configure Swagger on api gateway using ocelot in asp.net core application">
+    <meta itemprop="description" content="Swagger configuration on API gateway is not as simple as you are configure normal application. You have to configure it in different way. In this article I will create an API gateway using ocelot and asp.net core application and show you how to configure swagger on API gateway.">
+    <meta itemprop="datePublished" content="March 10, 2022">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">API gateway using ocelot in asp.net core application
+          <h1 id="page-title" class="page__title" itemprop="headline">Configure Swagger on api gateway using ocelot in asp.net core application
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  7 minute read
+  6 minute read
 </p>
           
         </header>
@@ -324,7 +324,7 @@
 
 <p><strong>Introduction</strong></p>
 
-<p>API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.</p>
+<p>Swagger configuration on API gateway is not as simple as you are configure normal application. You have to configure it in different way. In this article I will create an API gateway using ocelot and asp.net core application and show you how to configure swagger on API gateway.</p>
 
 <p><strong>Tools and technologies used</strong></p>
 <ul>
@@ -334,7 +334,8 @@
   <li>Entity Framework</li>
   <li>ASP.NET Core Web API</li>
   <li>C#</li>
-  <li>Ocelot</li>
+  <li>Ocelot and</li>
+  <li>MMLib.SwaggerForOcelot</li>
 </ul>
 
 <p><strong>Implementation</strong></p>
@@ -374,7 +375,9 @@
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Provider.Polly</span>
 <span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Cache.CacheManager</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MMLib.SwaggerForOcelot</span>
 </code></pre></div></div>
 
 <p><strong>Step 3: Organize Catalog.API Project</strong></p>
@@ -488,7 +491,7 @@
   <li>Create a conroller class name ProductsController in Catalog.API/Controllers folder</li>
 </ul>
 
-<p><strong>CatalogContoller.cs</strong></p>
+<p><strong>CatalogController.cs</strong></p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span><span class="n">nullable</span> <span class="n">disable</span>
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
@@ -837,155 +840,174 @@
 <p><strong>Step 6: Organize BFF.Web (API Gateway)  Project</strong></p>
 
 <ul>
-  <li>Add a configuraton file for api gateway. I keep this file name - ocelot.json. Add this file in the root directory.</li>
+  <li>Create a folder name Routes and add the following files in that folder</li>
 </ul>
 
-<p><strong>ocelot.json</strong></p>
+<p><strong>ocelot.catalog.api.json</strong></p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
   </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Countries/GetAll"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"catalog"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7003</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7282"</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
-
-      </span><span class="err">//</span><span class="w"> </span><span class="err">Configure</span><span class="w"> </span><span class="err">caching</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">cache</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">expire</span><span class="w"> </span><span class="err">after</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="err">seconds.</span><span class="w">
-      </span><span class="nl">"FileCacheOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"TtlSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"countriescaching"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Countries/GetAll"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">],</span><span class="w">
-
-      </span><span class="err">//</span><span class="w"> </span><span class="err">Enable</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">sensative</span><span class="w"> </span><span class="err">Routing/URL</span><span class="w">
-      </span><span class="nl">"RouteIsCaseSensitive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="err">//---Location</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
-
-    </span><span class="err">//</span><span class="w"> </span><span class="err">Catalog</span><span class="w"> </span><span class="err">Services</span><span class="w">
-    </span><span class="err">//------------------//</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/GetAll"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="err">//</span><span class="w"> </span><span class="err">Implement</span><span class="w"> </span><span class="err">rate</span><span class="w"> </span><span class="err">limiting</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">maximum</span><span class="w"> </span><span class="err">admitted</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="mi">5</span><span class="err">s.</span><span class="w">
-      </span><span class="nl">"RateLimitOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"ClientWhitelist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-          </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">array</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">specify</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">clients</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">affected</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">rate-limiting</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="nl">"EnableRateLimiting"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5s"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"PeriodTimespan"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/GetAll"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Add"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Add"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Post"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Edit/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Edit/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Put"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/Products/Delete/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7282</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Products/Delete/{id}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="err">//---Catalog</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">------------//</span><span class="w">
-
-    </span><span class="err">//---Ordering</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">Start</span><span class="w"> </span><span class="err">----------//</span><span class="w">
-    </span><span class="err">//</span><span class="w"> </span><span class="err">Catch</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">Routing</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7126</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/catalog/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELETE"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
-
-  </span><span class="p">],</span><span class="w">
-
-  </span><span class="err">//---Ordering</span><span class="w"> </span><span class="err">Service:</span><span class="w"> </span><span class="err">End</span><span class="w"> </span><span class="err">----------//</span><span class="w">
-
-  </span><span class="err">//https://localhost:</span><span class="mi">7282</span><span class="err">/api/Products/GetAll</span><span class="w">
-
-  </span><span class="nl">"GlobalConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="err">//</span><span class="w"> </span><span class="err">enable</span><span class="w"> </span><span class="err">request</span><span class="w"> </span><span class="err">correleation</span><span class="w"> </span><span class="err">id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">capture</span><span class="w"> </span><span class="err">request</span><span class="w"> </span><span class="err">information</span><span class="w">
-    </span><span class="nl">"RequestIdKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"X-Correlation-Id"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"BaseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7205/"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre></div></div>
+
+<p><strong>ocelot.location.api.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7003"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/location/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELETE"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>ocelot.ordering.api.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ordering"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7126"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/ordering/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELETE"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>ocelot.global.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"GlobalConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"BaseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5205"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>ocelot.SwaggerEndPoints.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"SwaggerEndPoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bffweb"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BFF.Web"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5205/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location.API"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5205/location/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"catalog"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Catalog.API"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5205/catalog/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ordering"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ordering.API"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5205/catalog/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add AlterUpstream Class in Config Folder</li>
+</ul>
+
+<p><strong>AlterUpstream.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json.Linq</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">BFF.Web.Config</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AlterUpstream</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">AlterUpstreamSwaggerJson</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">,</span> <span class="kt">string</span> <span class="n">swaggerJson</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">swagger</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">swaggerJson</span><span class="p">);</span>
+            <span class="c1">// ... alter upstream json</span>
+            <span class="k">return</span> <span class="n">swagger</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="n">Formatting</span><span class="p">.</span><span class="n">Indented</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <ul>
   <li>Modify Program.cs file as follows</li>
@@ -993,17 +1015,27 @@
 
 <p><strong>Program.cs</strong></p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Ocelot.DependencyInjection</span><span class="p">;</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">BFF.Web.Config</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">MMLib.SwaggerForOcelot.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.DependencyInjection</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Ocelot.Middleware</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Ocelot.Cache.CacheManager</span><span class="p">;</span>
-
+<span class="k">using</span> <span class="nn">Ocelot.Provider.Polly</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
 
+<span class="kt">var</span> <span class="n">routes</span> <span class="p">=</span> <span class="s">"Routes"</span><span class="p">;</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">AddOcelotWithSwaggerSupport</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">Folder</span> <span class="p">=</span> <span class="n">routes</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">).</span><span class="nf">AddPolly</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerForOcelot</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">);</span>
 
 <span class="kt">var</span> <span class="n">environment</span> <span class="p">=</span> <span class="n">Environment</span><span class="p">.</span><span class="nf">GetEnvironmentVariable</span><span class="p">(</span><span class="s">"ASPNETCORE_ENVIRONMENT"</span><span class="p">);</span>
 <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">SetBasePath</span><span class="p">(</span><span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">())</span>
-    <span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="s">"ocelot.json"</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span> <span class="n">reloadOnChange</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddOcelot</span><span class="p">(</span><span class="n">routes</span><span class="p">,</span> <span class="n">builder</span><span class="p">.</span><span class="n">Environment</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">AddEnvironmentVariables</span><span class="p">();</span>
 
 
@@ -1014,17 +1046,7 @@
 <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
 
 <span class="c1">// Swagger for ocelot</span>
-<span class="c1">//builder.Services.AddSwaggerForOcelot(builder.Configuration);</span>
-<span class="c1">//builder.Services.AddSwaggerForOcelot();</span>
 <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="c1">//For ocelot</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">()</span>
-    
-    <span class="c1">// Added for caching</span>
-    <span class="p">.</span><span class="nf">AddCacheManager</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="n">x</span><span class="p">.</span><span class="nf">WithDictionaryHandle</span><span class="p">();</span>
-    <span class="p">});</span>
 
 <span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
 
@@ -1032,15 +1054,19 @@
 <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
 <span class="p">{</span>
     <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-    <span class="c1">//app.UseSwaggerForOcelotUI();</span>
 <span class="p">}</span>
 
-<span class="n">app</span><span class="p">.</span><span class="nf">UseOcelot</span><span class="p">();</span>
 
 <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
 
 <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerForOcelotUI</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">PathToSwaggerGenerator</span> <span class="p">=</span> <span class="s">"/swagger/docs"</span><span class="p">;</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">ReConfigureUpstreamSwaggerJson</span> <span class="p">=</span> <span class="n">AlterUpstream</span><span class="p">.</span><span class="n">AlterUpstreamSwaggerJson</span><span class="p">;</span>
+
+<span class="p">}).</span><span class="nf">UseOcelot</span><span class="p">().</span><span class="nf">Wait</span><span class="p">();</span>
 
 <span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
 
@@ -1052,97 +1078,16 @@
 
 <ul>
   <li>Now run multiple (all) projects and test application using postman.</li>
-  <li>You have to check application using api gateway.</li>
-  <li>For Location service, test using https://localhost:7205/Countries/GetAll</li>
-  <li>For Catalog service, test using https://localhost:7205/Products/{endpoints}</li>
-  <li>For Ordering service, test using https://localhost:7205/api/Orders/{endpoints}</li>
+  <li>Check all end point using api gateway and swagger using the following URL</li>
 </ul>
 
-<p><strong>Note:</strong></p>
-
-<p><strong>Configure caching in api gateway</strong></p>
+<p>https://localhost:7205/swagger/index.html</p>
 
 <ul>
-  <li>Added the following section in ocelot.json file.</li>
+  <li>Select Swagger definition from top right corner of BFF</li>
 </ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="nl">"FileCacheOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="nl">"TtlSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
-</span><span class="nl">"Region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"countriescaching"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<ul>
-  <li>Added the following code block in the  the Program.cs file as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//For ocelot</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">()</span>
-    
-    <span class="c1">// Added for caching</span>
-    <span class="p">.</span><span class="nf">AddCacheManager</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="n">x</span><span class="p">.</span><span class="nf">WithDictionaryHandle</span><span class="p">();</span>
-    <span class="p">});</span>
-
-</code></pre></div></div>
-
-<p><strong>Enable case sensative URL</strong></p>
-
-<ul>
-  <li>Add following blocks in ocelot.json for case sensative URL</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">      </span><span class="err">//</span><span class="w"> </span><span class="err">Enable</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">sensative</span><span class="w"> </span><span class="err">Routing/URL</span><span class="w">
-      </span><span class="nl">"RouteIsCaseSensitive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></code></pre></div></div>
-
-<p><strong>Implement rate limiting</strong></p>
-
-<ul>
-  <li>Add following blocks in ocelot.json for rate limiting</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="err">//</span><span class="w"> </span><span class="err">Implement</span><span class="w"> </span><span class="err">rate</span><span class="w"> </span><span class="err">limiting</span><span class="w">
-</span><span class="err">//</span><span class="w"> </span><span class="err">maximum</span><span class="w"> </span><span class="err">admitted</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="mi">5</span><span class="err">s.</span><span class="w">
-</span><span class="nl">"RateLimitOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="nl">"ClientWhitelist"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="err">//</span><span class="w"> </span><span class="err">This</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">an</span><span class="w"> </span><span class="err">array</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">specify</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">clients</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">affected</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">rate-limiting</span><span class="w">
-</span><span class="p">],</span><span class="w">
-</span><span class="nl">"EnableRateLimiting"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-</span><span class="nl">"Period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5s"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"PeriodTimespan"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-</span><span class="nl">"Limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong>Catch all routing</strong></p>
-
-<ul>
-  <li>Add following blocks in ocelot.json for catch all routing</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7126</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-
-    </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{url}"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Get"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Post"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Put"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Delete"</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot">Source code</a></strong></p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/ocelot-swagger">Source code</a></strong></p>
 
         
       </section>
@@ -1168,6 +1113,10 @@
       
       
       <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ocelot" class="page__taxonomy-item" rel="tag">ocelot</a><span class="sep">, </span>
     
       
       
@@ -1200,6 +1149,10 @@
     
       
       
+      <a href="/categories/#ocelot" class="page__taxonomy-item" rel="tag">Ocelot</a><span class="sep">, </span>
+    
+      
+      
       <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
     
     </span>
@@ -1207,30 +1160,29 @@
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-02-10T00:00:00+00:00">February 10, 2022</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-03-10T00:00:00+00:00">March 10, 2022</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=API+gateway+using+ocelot+in+asp.net+core+application%20https%3A%2F%2Fmahedee.net%2F%2FAPI-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Configure+Swagger+on+api+gateway+using+ocelot+in+asp.net+core+application%20https%3A%2F%2Fmahedee.net%2F%2Fconfigure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2FAPI-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fconfigure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2FAPI-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fconfigure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/Application-health-monitoring-using-asp.net-core/" class="pagination--pager" title="Application health monitoring using asp.net core
+      <a href="/configure-service-mesh-using-istio-with-asp.net-core-and-kubernetes/" class="pagination--pager" title="Configure service mesh using Istio with asp.net core applications on Kubernetes
 ">Previous</a>
     
     
-      <a href="/configure-service-mesh-using-istio-with-asp.net-core-and-kubernetes/" class="pagination--pager" title="Configure service mesh using Istio with asp.net core applications on Kubernetes
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -1263,7 +1215,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="permalink">Configure Swagger on api gateway using ocelot in asp.net core application
+        <a href="/configure-service-mesh-using-istio-with-asp.net-core-and-kubernetes/" rel="permalink">Configure service mesh using Istio with asp.net core applications on Kubernetes
 </a>
       
     </h2>
@@ -1273,10 +1225,10 @@
 
 
 
-  6 minute read
+  18 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Swagger configuration on API gateway is not as simple as you are configure normal application. You have to configure it in different way. In this article I w...</p>
+    <p class="archive__item-excerpt" itemprop="description">A service mesh is a configurable infrustructure layer. It have capabilities to handle service-to-service communication, resilency, and many cross-cutting con...</p>
   </article>
 </div>
 
@@ -1290,7 +1242,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/configure-service-mesh-using-istio-with-asp.net-core-and-kubernetes/" rel="permalink">Configure service mesh using Istio with asp.net core applications on Kubernetes
+        <a href="/API-gateway-using-ocelot-in-asp.net-core-application/" rel="permalink">API gateway using ocelot in asp.net core application
 </a>
       
     </h2>
@@ -1300,10 +1252,10 @@
 
 
 
-  19 minute read
+  7 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">A service mesh is a configurable infrustructure layer. It have capabilities to handle service-to-service communication, resilency, and many cross-cutting con...</p>
+    <p class="archive__item-excerpt" itemprop="description">API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balanci...</p>
   </article>
 </div>
 
@@ -1449,8 +1401,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//API-gateway-using-ocelot-in-asp.net-core-application/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/API-gateway-using-ocelot-in-asp.net-core-application"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

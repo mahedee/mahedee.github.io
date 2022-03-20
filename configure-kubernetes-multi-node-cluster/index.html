@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Configure kubernetes single node cluster and deploy an asp.net core application using docker hub - Think Simple</title>
-<meta name="description" content="Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project.">
+<!-- begin _includes/seo.html --><title>Configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub - Think Simple</title>
+<meta name="description" content="Installing and configuring multi-node kubernetes cluster is not always easy. In this article I will show you how to configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub">
-<meta property="og:url" content="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/">
+<meta property="og:title" content="Configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub">
+<meta property="og:url" content="https://mahedee.net//configure-kubernetes-multi-node-cluster/">
 
 
-  <meta property="og:description" content="Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project.">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-12-05T00:00:00+00:00">
+  <meta property="og:description" content="Installing and configuring multi-node kubernetes cluster is not always easy. In this article I will show you how to configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2021-12-07T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/">
+
+<link rel="canonical" href="https://mahedee.net//configure-kubernetes-multi-node-cluster/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub">
-    <meta itemprop="description" content="Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project.">
-    <meta itemprop="datePublished" content="December 05, 2021">
+    <meta itemprop="headline" content="Configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub">
+    <meta itemprop="description" content="Installing and configuring multi-node kubernetes cluster is not always easy. In this article I will show you how to configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub.">
+    <meta itemprop="datePublished" content="December 07, 2021">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Configure kubernetes single node cluster and deploy an asp.net core application using docker hub
+          <h1 id="page-title" class="page__title" itemprop="headline">Configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  7 minute read
+  8 minute read
 </p>
           
         </header>
@@ -323,39 +323,72 @@
         <!-- ## Create a sentiment analysis app using ML.NET -->
 
 <p><strong>Overview</strong><br />
-Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project. In this article, I will show you how to configure kubernetese single node cluster on local environment and deploy an asp.net core application using docker hub.</p>
+Kubernetes is an open-source container orchestration system for automating software deployment, scaling, and management. Google orignially designed Kubernetes, but the Cloud Native Computing Foundation (CNCF) now maintains the project. In this article, I will show you how to configure kubernetese multi-node cluster using containerd and deploy an asp.net core application using docker hub.</p>
 
-<p><strong>Tools and Technology used</strong></p>
+<p><strong>Prerequisite</strong></p>
 
-<p>The following tools and technologies has been used for this application</p>
+<p>In this article, I am going to describe the procedure of installation and configuration of Kubernetes on Virtual Machine. Here, I have used VMWare workstation and created 3 VM using the following requirements.</p>
 
+<p>System Requirements</p>
+<ol>
+  <li>Linux (Ubuntu 21.04)</li>
+  <li>CPU 2/4 Core</li>
+  <li>Ram 3/6 GB</li>
+  <li>Hardisk 15 GB</li>
+  <li>Container Runtime - Containerd</li>
+  <li>Make sure swap is disabled on the system.</li>
+</ol>
+
+<p>Note: Kubernetes version 1.20, Docker was the container runtime used. In version 1.20, Docker was deprecated and will be removed in 1.23, or later.</p>
+
+<p>Assumption for Network</p>
+<ol>
+  <li>We need network connectivity between all nodes in the cluster.</li>
+  <li>Ensure each system has unique Hostname.</li>
+  <li>Unique Mac Address for each system.</li>
+</ol>
+
+<p>Required Packages</p>
 <ul>
-  <li>Visual Studio 2022</li>
-  <li>Visual C#</li>
-  <li>ASP.NET Core Web API</li>
-  <li>Docker Desktop</li>
+  <li>Containerd - Uses for container runtime</li>
+  <li>Kubelet - Drive the work on individual nodes in a cluster.</li>
+  <li>Kubeadm - Kubeadm is a tool which is responsible for bootstraping a cluster and getting the cluster component up, running and configured. This tool also use to join additional nodes to a cluster.</li>
+  <li>Kubectl - This is the primary command line tool touse to administrate the workloads in a cluster.</li>
 </ul>
 
-<p><strong>Step 1: Install &amp; Setup Hyper-V</strong></p>
+<p>I will install all of the above packages in all nodes.</p>
+
+<p><strong>Step 1: Environment setup</strong></p>
 
 <ul>
-  <li>Go to Control Panel</li>
-  <li>On your left panel, click on Programs</li>
-  <li>Then click Programs and Features followed by Turn Windows features on and off.</li>
-  <li>Check Hyper-V and Windows Hypervisor Platform</li>
-  <li>Click OK</li>
+  <li>Install Ubuntu on 3 VMs to build kubernetes cluster with one control plane node/Master ndoe and two worker nodes.</li>
+  <li>I have used ubuntu-21.04-desktop-amd64.iso to configure Master and worker nodes.</li>
 </ul>
 
-<p><img src="/assets/images/posts/2021/windows-features.PNG" alt="" /></p>
+<p><img src="/assets/images/posts/2021/vm-nodes.PNG" alt="" /></p>
 
 <ul>
-  <li>Run the following command as Administrator on powershell and verify if Hyper-V is installed successfully on your machine:</li>
+  <li>
+    <p>Resources for Master Node</p>
+
+    <ul>
+      <li>Linux (Ubuntu 21.04)</li>
+      <li>CPU 2 Core</li>
+      <li>Memory 3 GB</li>
+      <li>Disk Space 15 GB</li>
+    </ul>
+  </li>
+  <li>
+    <p>Resources for Worker Node 1 and 2</p>
+
+    <ul>
+      <li>Linux (Ubuntu 21.04)</li>
+      <li>CPU 2 Core</li>
+      <li>Memory 3 GB</li>
+      <li>Disk Space 15 GB</li>
+    </ul>
+  </li>
 </ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Get-WindowsOptionalFeature</span> <span class="nf">-Online</span> <span class="nf">-FeatureName</span> <span class="nf">Microsoft-Hyper-V</span>
-</code></pre></div></div>
-
-<p><strong>Note:</strong> The above command didn’t work after installed WSL2 on Docker desktop. You may skip this step if you want to install latest version of Docker with WSL 2.</p>
 
 <p><strong>Step 2: Install Docker Desktop for Windows</strong></p>
 
@@ -1005,7 +1038,15 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
     
       
       
-      <a href="/tags/#kubernetes" class="page__taxonomy-item" rel="tag">kubernetes</a>
+      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">docker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#kubernetes" class="page__taxonomy-item" rel="tag">kubernetes</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#microservices" class="page__taxonomy-item" rel="tag">microservices</a>
     
     </span>
   </p>
@@ -1038,36 +1079,44 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
     
       
       
-      <a href="/categories/#kubernetes" class="page__taxonomy-item" rel="tag">Kubernetes</a>
+      <a href="/categories/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#kubernetes" class="page__taxonomy-item" rel="tag">Kubernetes</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#microservices" class="page__taxonomy-item" rel="tag">Microservices</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-12-05T00:00:00+00:00">December 05, 2021</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-12-07T00:00:00+00:00">December 07, 2021</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Configure+kubernetes+single+node+cluster+and+deploy+an+asp.net+core+application+using+docker+hub%20https%3A%2F%2Fmahedee.net%2F%2Fkubernetes-single-node-asp.net-docker-hub%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Configure+kubernetes+multi-node+cluster+using+containerd+and+deploy+an+asp.net+core+application+using+docker+hub%20https%3A%2F%2Fmahedee.net%2F%2Fconfigure-kubernetes-multi-node-cluster%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fkubernetes-single-node-asp.net-docker-hub%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fconfigure-kubernetes-multi-node-cluster%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fkubernetes-single-node-asp.net-docker-hub%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fconfigure-kubernetes-multi-node-cluster%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/Export-and-Import-Docker-images-and-container-with-asp.net-core-application/" class="pagination--pager" title="Export and Import Docker images and container with asp.net core application
+      <a href="/kubernetes-single-node-asp.net-docker-hub/" class="pagination--pager" title="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub
 ">Previous</a>
     
     
-      <a href="/configure-kubernetes-multi-node-cluster/" class="pagination--pager" title="Configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub
+      <a href="/authentication-and-authorization-using-JWT-in-asp.net-core-application/" class="pagination--pager" title="Authentication and authorization using JWT in asp.net core application
 ">Next</a>
     
   </nav>
@@ -1287,8 +1336,8 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/kubernetes-single-node-asp.net-docker-hub"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.net//configure-kubernetes-multi-node-cluster/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/configure-kubernetes-multi-node-cluster"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

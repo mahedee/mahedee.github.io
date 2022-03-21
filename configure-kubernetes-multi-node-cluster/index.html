@@ -312,7 +312,7 @@
 
 
 
-  3 minute read
+  5 minute read
 </p>
           
         </header>
@@ -541,6 +541,102 @@ Kubernetes is an open-source container orchestration system for automating softw
   <li>Save and exit.</li>
   <li>Reboot the system.</li>
 </ul>
+
+<p><strong>Step 5: Install and configure Containerd</strong></p>
+
+<p>We need to load the two modules and configure them to load on boot before start installing Containerd.</p>
+
+<ul>
+  <li>Write the below commands to load modules.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">modprobe</span> <span class="nf">overlay</span>
+<span class="nf">sudo</span> <span class="nf">modprobe</span> <span class="nf">br_netfilter</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write below command to make sure loaded modules are set on boot.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/modules-load.d/containerd.conf</span>
+<span class="nf">overlay</span>
+<span class="nf">br_netfilter</span>
+<span class="nf">EOF</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we need to Setup required sysctl parameters which persist across reboots. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/sysctl.d/99-kubernetes-cri.conf</span>
+<span class="nf">net.bridge.bridge-nf-call-iptables</span>  <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">net.ipv4.ip_forward</span>                 <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">net.bridge.bridge-nf-call-ip6tables</span> <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">EOF</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Apply sysctl parameters without reboot with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">sysctl</span> <span class="nf">--system</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now is the time to install containerd. Write below commands to install containerd.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">update</span>
+<span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<p>It will take some time to install containerd.</p>
+
+<ul>
+  <li>Create a directory for containerd configuration file using following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">mkdir</span> <span class="nf">-p</span> <span class="nv">/etc/containerd</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Set the cgroup driver for containerd to systemd which is required for the kubelet. Write the following command to open the config.toml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/containerd/config.toml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write the following command to generate default configuration file and write the generated output to config.toml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">containerd</span> <span class="nf">config</span> <span class="nf">default</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/containerd/config.toml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to set the cgroup driver for containerd to systemd which is required for the kubelet. Write below command to open the config.toml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/containerd/config.toml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>In the config.toml file, update SystemdCgroup. change it from SystemdCgroup = false to SystemdCgroup = true</li>
+</ul>
+
+<p>Note: Ctrl + w for search.</p>
+
+<p><img src="/assets/images/posts/2021/config-toml.PNG" alt="" /></p>
+
+<ul>
+  <li>Save and Exit.</li>
+  <li>Restart containerd with the new configuration. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">restart</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<p><strong>Step 6: Install and Configure Kubeadm, Kubelet and Kubectl</strong></p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

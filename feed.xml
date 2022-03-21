@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-21T06:24:22+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-21T08:34:27+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -8879,10 +8879,78 @@ Kubernetes is an open-source container orchestration system for automating softw
 </code></pre></div></div>
 <p>Output</p>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">1:</span> <span class="nf">lo:</span> <span class="p">&lt;</span><span class="nf">LOOPBACK,UP,LOWER_UP</span><span class="p">&gt;</span> <span class="nf">mtu</span> <span class="mf">65536</span> <span class="nf">qdisc</span> <span class="nf">noqueue</span> <span class="nf">state</span> <span class="nf">UNKNOWN</span> <span class="nf">mode</span> <span class="nf">DEFAULT</span> <span class="nf">group</span> <span class="nf">default</span> <span class="nf">qlen</span> <span class="mf">1000</span>
+    <span class="nf">link</span><span class="nv">/loopback</span> <span class="nf">00:00:00:00:00:00</span> <span class="nf">brd</span> <span class="nf">00:00:00:00:00:00</span>
+<span class="nf">2:</span> <span class="nf">ens33:</span> <span class="p">&lt;</span><span class="nf">BROADCAST,MULTICAST,UP,LOWER_UP</span><span class="p">&gt;</span> <span class="nf">mtu</span> <span class="mf">1500</span> <span class="nf">qdisc</span> <span class="nf">fq_codel</span> <span class="nf">state</span> <span class="nf">UP</span> <span class="nf">mode</span> <span class="nf">DEFAULT</span> <span class="nf">group</span> <span class="nf">default</span> <span class="nf">qlen</span> <span class="mf">1000</span>
+    <span class="nf">link</span><span class="nv">/ether</span> <span class="nf">00:0c:29:fa:a6:42</span> <span class="nf">brd</span> <span class="nf">ff:ff:ff:ff:ff:ff</span>
+    <span class="nf">altname</span> <span class="nf">enp2s1</span>
+</code></pre></div></div>
 
-<p>```
-<strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
+<p>From the above output, we can see that the ethernet interface name is ens33.</p>
+
+<ul>
+  <li>Write the below command on terminal to assign static IP address on the network interface.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/netplan/01-network-manager-all.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the yml file with the below code.</li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Let NetworkManager manage all devices on this system</span>
+<span class="na">network</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="m">2</span>
+  <span class="na">renderer</span><span class="pi">:</span> <span class="s">NetworkManager</span>
+  <span class="na">ethernets</span><span class="pi">:</span>
+    <span class="na">ens33</span><span class="pi">:</span>
+      <span class="na">dhcp4</span><span class="pi">:</span> <span class="no">false</span>
+      <span class="na">addresses</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">192.168.233.10/16</span><span class="pi">]</span>
+      <span class="na">gateway4</span><span class="pi">:</span> <span class="s">192.168.233.2</span>
+      <span class="na">nameservers</span><span class="pi">:</span>
+        <span class="na">addresses</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">192.168.233.2</span><span class="pi">,</span><span class="nv">8.8.8.8</span><span class="pi">]</span>
+</code></pre></div></div>
+<ul>
+  <li>Save and exit.</li>
+  <li>Apply the changes by running the following command on the terminal.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">netplan</span> <span class="nf">apply</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to update hosts file, as we have decided earlier about the host name and IP addresses of each Node. Write below command to open the hosts editor.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/hosts</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the page with below text. Hosts file includes name to IP mapping for VMs.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">192.168.233.10</span>  <span class="nf">mh-master</span>
+<span class="nf">192.168.233.11</span>  <span class="nf">mh-n1</span>
+<span class="nf">192.168.233.12</span>  <span class="nf">mh-n2</span>
+</code></pre></div></div>
+<p><img src="/assets/images/posts/2021/ip-mapping.PNG" alt="" /></p>
+
+<ul>
+  <li>Save and exit.</li>
+  <li>Reboot the system.</li>
+</ul>
+
+<p><strong>Step 3: Installation of OpenSSH-Server</strong></p>
+
+<ul>
+  <li>Run the following command to install openssh-server.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">openssh-server</span> 
+</code></pre></div></div>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 
 <!-- **References**  
 1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create -->]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Kubernetes" /><category term="Microservices" /><category term="Docker" /><category term="aspnet" /><category term="aspnetcore" /><category term="csharp" /><category term="kubernetes" /><category term="microservices" /><category term="docker" /><summary type="html"><![CDATA[Installing and configuring multi-node kubernetes cluster is not always easy. In this article I will show you how to configure kubernetes multi-node cluster using containerd and deploy an asp.net core application using docker hub.]]></summary></entry><entry><title type="html">Configure kubernetes single node cluster and deploy an asp.net core application using docker hub</title><link href="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/" rel="alternate" type="text/html" title="Configure kubernetes single node cluster and deploy an asp.net core application using docker hub" /><published>2021-12-05T00:00:00+00:00</published><updated>2021-12-05T00:00:00+00:00</updated><id>https://mahedee.net//kubernetes-single-node-asp.net-docker-hub</id><content type="html" xml:base="https://mahedee.net//kubernetes-single-node-asp.net-docker-hub/"><![CDATA[<!-- ## Create a sentiment analysis app using ML.NET -->

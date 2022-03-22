@@ -312,7 +312,7 @@
 
 
 
-  5 minute read
+  8 minute read
 </p>
           
         </header>
@@ -637,6 +637,193 @@ Kubernetes is an open-source container orchestration system for automating softw
 </code></pre></div></div>
 
 <p><strong>Step 6: Install and Configure Kubeadm, Kubelet and Kubectl</strong></p>
+
+<ul>
+  <li>Install curl using following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt</span> <span class="nf">install</span> <span class="nf">curl</span>
+</code></pre></div></div>
+
+<p>Or</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">curl</span>
+</code></pre></div></div>
+
+<p>Note: If you see any process locking message. Restart the VM.</p>
+
+<ul>
+  <li>First we need to add Google’s apt repository gpg key to our system so that we can trust the repository. Write below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">curl</span> <span class="nf">-s</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/packages.cloud.google.com/apt/doc/apt-key.gpg</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">apt-key</span> <span class="nb">add</span> <span class="nf">--</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Warning:</span> <span class="nf">apt-key</span> <span class="nf">is</span> <span class="nf">deprecated.</span> <span class="nf">Manage</span> <span class="nf">keyring</span> <span class="nf">files</span> <span class="nf">in</span> <span class="nf">trusted.gpg.d</span> <span class="nf">instead</span> <span class="s">(see apt-key(8))</span><span class="nf">.</span>
+<span class="nf">OK</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add the Kubernetes apt repository and that going to configure that local apt repository to our local system. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">bash</span> <span class="nf">-c</span> <span class="nf">'cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="p">&gt;</span><span class="nv">/etc/apt/sources.list.d/kubernetes.list</span>
+<span class="nf">deb</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span><span class="err">/</span> <span class="nf">kubernetes-xenial</span> <span class="nf">main</span>
+<span class="nf">EOF'</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the package list and use apt-cache policy to inspect versions available in the repository. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">update</span>
+<span class="nf">apt-cache</span> <span class="nf">policy</span> <span class="nf">kubelet</span> <span class="nf">|</span> <span class="nf">head</span> <span class="nf">-n</span> <span class="mf">20</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to Install the required packages, if needed we can request a specific version.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">VERSION=1.21.0-00</span>
+<span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">kubelet=$VERSION</span> <span class="nf">kubeadm=$VERSION</span> <span class="nf">kubectl=$VERSION</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write below command to mark all four packages hold and this will prevent these packages from being updated.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-mark</span> <span class="nf">hold</span> <span class="nf">kubelet</span> <span class="nf">kubeadm</span> <span class="nf">kubectl</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check the status of kubelet with below command. The kubelet will enter a crashloop until a cluster is created or the node is joined to an existing cluster.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">status</span> <span class="nf">kubelet.service</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check the status of Containerd with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">status</span> <span class="nf">containerd.service</span>
+</code></pre></div></div>
+
+<p>If you see the containerd is active and running, it means it is up and loaded and in a proper state.</p>
+
+<ul>
+  <li>Ensure Kubelet and Containerd are set to start when the system starts up. Write below command to execute.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">kubelet.service</span>
+<span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">containerd.service</span>
+</code></pre></div></div>
+
+<p><strong>Step 7:Install and configure control plane / Master node</strong></p>
+
+<p><strong>Creating a Cluster</strong></p>
+
+<ul>
+  <li>Write the below command to download calico.yaml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">wget</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/docs.projectcalico.org/manifests/calico.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Open calico.yaml and find the setting for Pod Network IP address range CALICO_IPV4POOL_CIDR, adjust if needed for your infrastructure to ensure that the Pod network IP, range doesn’t overlap with other networks in our infrastructure.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nf">calico.yaml</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2021/calico.PNG" alt="" /></p>
+
+<p>As you can see the value for CALICO_IPV4POOL_CIDR is 192.168.0.0/16. All pods are going to be allocated IP’s from that network range. We need to make sure that the network range should not overlap with other network in our infracture. Exit without update anything in this page.</p>
+
+<ul>
+  <li>Generate a default kubeadm init configuration file. This defines the settings of the cluster being built. Write below command to create kubeconfig init configuration file. This configuration file is going to define the settings of the cluster that kubeadm going to built for us.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubeadm</span> <span class="nf">config</span> <span class="nb">print</span> <span class="nf">init-defaults</span> <span class="nf">|</span> <span class="nf">tee</span> <span class="nf">ClusterConfiguration.yaml</span>
+</code></pre></div></div>
+<p><img src="/assets/images/posts/2021/clusterconfiguration.PNG" alt="" /></p>
+
+<p>advertiseAddress is the IP address of the API Server and we are going to update that to our IP address of our Control Plane Node which is our cluster going to be 192.168.254.10. we are also going to update criSocket from dockershim to container runtime we are using which is containerd.</p>
+
+<ul>
+  <li>Change the address of the localAPIEndpoint.advertiseAddress to the Control Plane Node’s IP address. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sed</span> <span class="nf">-i</span> <span class="nf">'s</span><span class="err">/</span>  <span class="nf">advertiseAddress:</span> <span class="nf">1.2.3.4</span><span class="err">/</span>  <span class="nf">advertiseAddress:</span> <span class="nf">192.168.233.10</span><span class="nv">/'</span> <span class="nf">ClusterConfiguration.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Set the CRI Socket to point to containerd with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sed</span> <span class="nf">-i</span> <span class="nf">'s</span><span class="err">/</span>  <span class="nf">criSocket:</span> <span class="nf">\</span><span class="nv">/var\/run\/dockershim\.sock</span><span class="err">/</span>  <span class="nf">criSocket:</span> <span class="nf">\</span><span class="nv">/run\/containerd\/containerd\.sock/'</span> <span class="nf">ClusterConfiguration.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Added configuration to set the node name for the control plane node to the actual hostname.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sed</span> <span class="nf">-i</span> <span class="nf">'s</span><span class="err">/</span>  <span class="nf">name:</span> <span class="nf">node</span><span class="err">/</span>  <span class="nf">name:</span> <span class="nf">mh-master</span><span class="nv">/'</span> <span class="nf">ClusterConfiguration.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Set the cgroupDriver to system for the kubelet. This configuration is not exist default that generated by kubeadm so we are going to add that to our cluster configuration file. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="nf">|</span> <span class="nf">cat</span> <span class="p">&gt;&gt;</span>  <span class="nf">ClusterConfiguration.yaml</span>
+<span class="nf">---</span>
+<span class="nf">apiVersion:</span> <span class="nf">kubelet.config.k8s.io</span><span class="nv">/v1beta1</span>
+<span class="nf">kind:</span> <span class="nf">KubeletConfiguration</span>
+<span class="nf">cgroupDriver:</span> <span class="nf">systemd</span>
+<span class="nf">EOF</span>
+
+</code></pre></div></div>
+<ul>
+  <li>Review the Cluster configuration file, update the version to match what you’ve installed. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="nf">ClusterConfiguration.yaml</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2021/clusterconfiguration_review.PNG" alt="" /></p>
+
+<ul>
+  <li>Now we are going to bootstrap our cluster and going to add CRI socket since there’s a check for docker in the kubeadm init process.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">kubeadm</span> <span class="nf">init</span> <span class="nf">\</span>
+    <span class="nf">--config=ClusterConfiguration.yaml</span> <span class="nf">\</span>
+    <span class="nf">--cri-socket</span> <span class="nv">/run/containerd/containerd.sock</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Configure our account on the Control Plane Node to have admin access to the API server from a non-privileged account. Create a directory by below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">mkdir</span> <span class="nf">-p</span> <span class="nf">$HOME</span><span class="nv">/.kube</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now copy that admin.conf file into our users home directory so we can use that to connect to kubernetes.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">cp</span> <span class="nf">-i</span> <span class="nv">/etc/kubernetes/admin.conf</span> <span class="nf">$HOME</span><span class="nv">/.kube/config</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We are now going to change the permissions on that so regular user can access the file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">chown</span> <span class="nf">$</span><span class="s">(id -u)</span><span class="nf">:$</span><span class="s">(id -g)</span> <span class="nf">$HOME</span><span class="nv">/.kube/config</span>
+</code></pre></div></div>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

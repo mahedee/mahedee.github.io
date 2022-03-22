@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-22T04:21:09+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-22T04:33:26+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -9254,6 +9254,91 @@ Kubernetes is an open-source container orchestration system for automating softw
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">chown</span> <span class="nf">$</span><span class="s">(id -u)</span><span class="nf">:$</span><span class="s">(id -g)</span> <span class="nf">$HOME</span><span class="nv">/.kube/config</span>
 </code></pre></div></div>
+
+<p><strong>Step 8: Creating a Pod Network</strong></p>
+
+<ul>
+  <li>Deploy yaml file for pod network References with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">calico.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Look for the all the system pods and calico pods to change to Running. The DNS pod won’t start (pending) until the Pod network is deployed and Running.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">--all-namespaces</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAMESPACE</span>     <span class="nf">NAME</span>                                       <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
+<span class="nf">kube-system</span>   <span class="nf">calico-kube-controllers-6fd7b9848d-vhjxp</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">113s</span>
+<span class="nf">kube-system</span>   <span class="nf">calico-node-zbtrv</span>                          <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">113s</span>
+<span class="nf">kube-system</span>   <span class="nf">coredns-558bd4d5db-njgwh</span>                   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m23s</span>
+<span class="nf">kube-system</span>   <span class="nf">coredns-558bd4d5db-w2rx7</span>                   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m23s</span>
+<span class="nf">kube-system</span>   <span class="nf">etcd-mh-master</span>                             <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m30s</span>
+<span class="nf">kube-system</span>   <span class="nf">kube-apiserver-mh-master</span>                   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m30s</span>
+<span class="nf">kube-system</span>   <span class="nf">kube-controller-manager-mh-master</span>          <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m30s</span>
+<span class="nf">kube-system</span>   <span class="nf">kube-proxy-bbrh9</span>                           <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m23s</span>
+<span class="nf">kube-system</span>   <span class="nf">kube-scheduler-mh-master</span>                   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">9m30s</span>
+
+</code></pre></div></div>
+
+<p>All pods are running.</p>
+
+<ul>
+  <li>
+    <p>Control plane pods:</p>
+
+    <ul>
+      <li>etcd-mh-master</li>
+      <li>kube-apiserver-mh-master</li>
+      <li>kube-controller-manager-mh-master</li>
+      <li>kube-scheduler-mh-master</li>
+    </ul>
+  </li>
+  <li>Kube proxy Pod:
+    <ul>
+      <li>kube-proxy-bbrh9 (This pod is going to implement service networking on individual nodes)</li>
+    </ul>
+  </li>
+  <li>Core DNS Pods:
+    <ul>
+      <li>coredns-558bd4d5db-njgwh</li>
+      <li>coredns-558bd4d5db-w2rx7</li>
+    </ul>
+  </li>
+  <li>Calico Pods:
+    <ul>
+      <li>calico-kube-controllers-6fd7b9848d-vhjxp</li>
+      <li>calico-node-zbtrv</li>
+    </ul>
+  </li>
+  <li>You can also check with below command for continuous iteration status of each pods.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">--all-namespaces</span> <span class="nf">--watch</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Get a list of our current nodes with below command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check out the systemd unit and it’s no longer crash looping because it has static pods to start.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">status</span> <span class="nf">kubelet.service</span>
+</code></pre></div></div>
+
+<p>You can exit by pressing ( ctrl+c );</p>
+
+<p><strong>Step 9: Static Pod manifests</strong></p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

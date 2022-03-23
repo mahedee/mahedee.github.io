@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-22T04:33:26+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-23T03:40:48+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -9339,6 +9339,350 @@ Kubernetes is an open-source container orchestration system for automating softw
 <p>You can exit by pressing ( ctrl+c );</p>
 
 <p><strong>Step 9: Static Pod manifests</strong></p>
+
+<ul>
+  <li>Check static pod manifests on the Control Plane Node with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ls</span> <span class="nv">/etc/kubernetes/manifests</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">etcd.yaml</span>  <span class="nf">kube-apiserver.yaml</span>  <span class="nf">kube-controller-manager.yaml</span>  <span class="nf">kube-scheduler.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You can also look more closely at API server and etcd’s manifest with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">more</span> <span class="nv">/etc/kubernetes/manifests/etcd.yaml</span>
+<span class="nf">sudo</span> <span class="nf">more</span> <span class="nv">/etc/kubernetes/manifests/kube-apiserver.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check out the directory where the kubeconfig files live for each of the control plane pods.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ls</span> <span class="nv">/etc/kubernetes</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">admin.conf</span>  <span class="nf">controller-manager.conf</span>  <span class="nf">kubelet.conf</span>  <span class="nf">manifests</span>  <span class="nf">pki</span>  <span class="nf">scheduler.conf</span>
+</code></pre></div></div>
+
+<p><strong>Configure Worker Nodes</strong></p>
+
+<p><strong>Step 10: Configure Host name, Hosts file and define a static IP address</strong></p>
+
+<ul>
+  <li>
+    <p>Assume that you have already installed Ubuntu on the VM with the mentioned configuration for the Node1.</p>
+  </li>
+  <li>Configure Static IP on Master Node
+    <ul>
+      <li>Go to to right corner of desktop -&gt; Wired Connection -&gt;Wired Settings -&gt; Setting of Wired Tab -&gt; Ipv4 -&gt; Set the IP, Gateway and DNS as below.<br />
+<img src="/assets/images/posts/2021/node1-ip.PNG" alt="" /></li>
+    </ul>
+  </li>
+  <li>Login into Node1 VM and open Terminal.</li>
+  <li>Write below command to update the host name.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/hostname</span>
+</code></pre></div></div>
+
+<p>A text editor will open and update the name to mh-n1 and save and exit.</p>
+
+<p><img src="/assets/images/posts/2021/node1-hostname.PNG" alt="" /></p>
+
+<ul>
+  <li>Write below command to identify the name of the Ethernet interface.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ip</span> <span class="nf">link</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">1:</span> <span class="nf">lo:</span> <span class="p">&lt;</span><span class="nf">LOOPBACK,UP,LOWER_UP</span><span class="p">&gt;</span> <span class="nf">mtu</span> <span class="mf">65536</span> <span class="nf">qdisc</span> <span class="nf">noqueue</span> <span class="nf">state</span> <span class="nf">UNKNOWN</span> <span class="nf">mode</span> <span class="nf">DEFAULT</span> <span class="nf">group</span> <span class="nf">default</span> <span class="nf">qlen</span> <span class="mf">1000</span>
+    <span class="nf">link</span><span class="nv">/loopback</span> <span class="nf">00:00:00:00:00:00</span> <span class="nf">brd</span> <span class="nf">00:00:00:00:00:00</span>
+<span class="nf">2:</span> <span class="nf">ens33:</span> <span class="p">&lt;</span><span class="nf">BROADCAST,MULTICAST,UP,LOWER_UP</span><span class="p">&gt;</span> <span class="nf">mtu</span> <span class="mf">1500</span> <span class="nf">qdisc</span> <span class="nf">fq_codel</span> <span class="nf">state</span> <span class="nf">UP</span> <span class="nf">mode</span> <span class="nf">DEFAULT</span> <span class="nf">group</span> <span class="nf">default</span> <span class="nf">qlen</span> <span class="mf">1000</span>
+    <span class="nf">link</span><span class="nv">/ether</span> <span class="nf">00:0c:29:32:3d:0f</span> <span class="nf">brd</span> <span class="nf">ff:ff:ff:ff:ff:ff</span>
+    <span class="nf">altname</span> <span class="nf">enp2s1</span>
+</code></pre></div></div>
+
+<p>As we can see that our ethernet interface name is ens33.</p>
+<ul>
+  <li>To assign a static IP address on the network interface, open the YAML configuration file with a text editor with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/netplan/01-network-manager-all.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the page with below code.</li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">network</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="m">2</span>
+  <span class="na">renderer</span><span class="pi">:</span> <span class="s">NetworkManager</span>
+  <span class="na">ethernets</span><span class="pi">:</span>
+    <span class="na">ens33</span><span class="pi">:</span>
+      <span class="na">dhcp4</span><span class="pi">:</span> <span class="no">false</span>
+      <span class="na">addresses</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">192.168.233.11/16</span><span class="pi">]</span>
+      <span class="na">gateway4</span><span class="pi">:</span> <span class="s">192.168.233.2</span>
+      <span class="na">nameservers</span><span class="pi">:</span>
+        <span class="na">addresses</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">192.168.233.2</span><span class="pi">,</span><span class="nv">8.8.8.8</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Save and exit</li>
+  <li>Apply the changes by running the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">netplan</span> <span class="nf">apply</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to update hosts file, as we have decided earlier about the host name and IP addresses of each Node. Write below command to open the hosts editor.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/hosts</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Hosts file includes name to IP mappings for VMs. Update the page with below text.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">192.168.233.10</span>  <span class="nf">mh-master</span>
+<span class="nf">192.168.233.11</span>  <span class="nf">mh-n1</span>
+<span class="nf">192.168.233.12</span>  <span class="nf">mh-n2</span> 
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2021/node1-hosts.PNG" alt="" /></p>
+
+<ul>
+  <li>Save and exit.</li>
+  <li>Reboot the system.</li>
+</ul>
+
+<p><strong>Step 11: Installation of OpenSSH-Server</strong></p>
+
+<ul>
+  <li>Now we have to install openshh-server. Run the following command:</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">openssh-server</span>  
+</code></pre></div></div>
+
+<p><strong>Step 12: Turn off swap space</strong></p>
+
+<ul>
+  <li>We need disable swap before we start doing any other process. Write below command to swapoff.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">swapoff</span> <span class="nf">-a</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Open fstab file and delete or comment swap line as below, I have commented the swapfile line. Write below command to open fstab file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/fstab</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Save and exit.</li>
+  <li>Reboot the system.</li>
+</ul>
+
+<p><strong>Step 13: Installation and Configuration of Containerd</strong></p>
+
+<p>We are going to load two modules and configure them to load on boot before start installing Containerd. The process of installing containerd is same as we did for Master Node.</p>
+
+<ul>
+  <li>Write below commands to load modules.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">modprobe</span> <span class="nf">overlay</span>
+<span class="nf">sudo</span> <span class="nf">modprobe</span> <span class="nf">br_netfilter</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write below command to make sure loaded modules are set on boot.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/modules-load.d/containerd.conf</span>
+<span class="nf">overlay</span>
+<span class="nf">br_netfilter</span>
+<span class="nf">EOF</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Now we need to Setup, required sysctl parameters which persist across reboots. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/sysctl.d/99-kubernetes-cri.conf</span>
+<span class="nf">net.bridge.bridge-nf-call-iptables</span>  <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">net.ipv4.ip_forward</span>                 <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">net.bridge.bridge-nf-call-ip6tables</span> <span class="nf">=</span> <span class="mf">1</span>
+<span class="nf">EOF</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Apply sysctl parameters without reboot with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">sysctl</span> <span class="nf">--system</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now is the time to install containerd. Write below commands to install containerd.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">update</span>
+<span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We need to apply some configuration specific to containerd, first we will create a directory for a containerd configuration file to keep, then we will use containerd command to generate default configuration file and write the generated output to config.toml file with below commands.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">mkdir</span> <span class="nf">-p</span> <span class="nv">/etc/containerd</span>
+<span class="nf">sudo</span> <span class="nf">containerd</span> <span class="nf">config</span> <span class="nf">default</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/containerd/config.toml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to set the cgroup driver for containerd to systemd which is required for the kubelet. Write below command to open the config.toml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nv">/etc/containerd/config.toml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>In the config.toml file, update SystemdCgroup. change it from SystemdCgroup = false to SystemdCgroup = true</li>
+</ul>
+
+<p><img src="/assets/images/posts/2021/node1-config-toml.PNG" alt="" /></p>
+
+<ul>
+  <li>
+    <p>Save &amp; Exit.</p>
+  </li>
+  <li>
+    <p>Restart containerd with the new configuration. Write below command.</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">restart</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<p><strong>Step 14: Install and Configure Kubeadm, Kubelet and Kubectl</strong></p>
+
+<ul>
+  <li>Now we are going to Install Kubernetes packages - kubeadm, kubelet and kubectl. 
+First we need to add Google’s apt repository gpg key to our system so that we can trust the repository. Write below command. (please install curl if not installed)</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">curl</span>
+
+<span class="nf">curl</span> <span class="nf">-s</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/packages.cloud.google.com/apt/doc/apt-key.gpg</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">apt-key</span> <span class="nb">add</span> <span class="nf">-</span>
+
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Warning:</span> <span class="nf">apt-key</span> <span class="nf">is</span> <span class="nf">deprecated.</span> <span class="nf">Manage</span> <span class="nf">keyring</span> <span class="nf">files</span> <span class="nf">in</span> <span class="nf">trusted.gpg.d</span> <span class="nf">instead</span> <span class="s">(see apt-key(8))</span><span class="nf">.</span>
+<span class="nf">OK</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add the Kubernetes apt repository and that going to configure that local apt repository to our local system. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">bash</span> <span class="nf">-c</span> <span class="nf">'cat</span> <span class="p">&lt;&lt;</span><span class="nf">EOF</span> <span class="p">&gt;</span><span class="nv">/etc/apt/sources.list.d/kubernetes.list</span>
+<span class="nf">deb</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span><span class="err">/</span> <span class="nf">kubernetes-xenial</span> <span class="nf">main</span>
+<span class="nf">EOF'</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the package list and use apt-cache policy to inspect versions available in the repository. Write below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">update</span>
+<span class="nf">apt-cache</span> <span class="nf">policy</span> <span class="nf">kubelet</span> <span class="nf">|</span> <span class="nf">head</span> <span class="nf">-n</span> <span class="mf">20</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubelet:</span>
+  <span class="nf">Installed:</span> <span class="s">(none)</span>
+  <span class="nf">Candidate:</span> <span class="nf">1.23.5-00</span>
+  <span class="nf">Version</span> <span class="nf">table:</span>
+     <span class="nf">1.23.5-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.23.4-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.23.3-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.23.2-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.23.1-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.23.0-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.22.8-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+     <span class="nf">1.22.7-00</span> <span class="mf">500</span>
+        <span class="mf">500</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/apt.kubernetes.io</span> <span class="nf">kubernetes-xenial</span><span class="nv">/main</span> <span class="nf">amd64</span> <span class="nf">Packages</span>
+</code></pre></div></div>
+<p>In the output, we can see different versions of kubelet that are available as packages in the repository.</p>
+
+<ul>
+  <li>Now we are going to Install the required packages, if needed we can request a specific version.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">VERSION=1.21.0-00</span>
+<span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">kubelet=$VERSION</span> <span class="nf">kubeadm=$VERSION</span> <span class="nf">kubectl=$VERSION</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write below command to mark all four packages hold and this will prevent these packages from being updated.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">apt-mark</span> <span class="nf">hold</span> <span class="nf">kubelet</span> <span class="nf">kubeadm</span> <span class="nf">kubectl</span> <span class="nf">containerd</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check the status of kubelet with below command. The kubelet will enter a crashloop until a cluster is created or the node is joined to an existing cluster.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">status</span> <span class="nf">kubelet.service</span>
+</code></pre></div></div>
+<ul>
+  <li>
+    <p>You can exit by pressing ( ctrl+c )</p>
+  </li>
+  <li>
+    <p>Check the status of Containerd with below command.</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">status</span> <span class="nf">containerd.service</span>
+</code></pre></div></div>
+<p>We can see that Containerd is active and running, so it is up and loaded and in a proper state.</p>
+
+<ul>
+  <li>Ensure Kubelet and Containerd are set to start when the system starts up. Write below command to execute.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">kubelet.service</span>
+<span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">containerd.service</span>
+</code></pre></div></div>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

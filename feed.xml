@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-24T03:58:23+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-24T15:16:39+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -9977,6 +9977,149 @@ cat &gt; dashboard-adminuser.yaml</p>
 
 <p><strong>Deploy an asp.net core application in a pod to the target node</strong></p>
 
+<p><strong>Step 18: Assign level to the nodes</strong></p>
+
+<p>Now we are going to deploy a containerized pod to target node. Before we assign the pod we are going to set a label for node.</p>
+
+<ul>
+  <li>Check current label of nodes with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span> <span class="nf">--show-labels</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>        <span class="nf">STATUS</span>   <span class="nf">ROLES</span>                  <span class="nf">AGE</span>     <span class="nf">VERSION</span>   <span class="nf">LABELS</span>
+<span class="nf">mh-master</span>   <span class="nf">Ready</span>    <span class="nf">control-plane,master</span>   <span class="nf">2d10h</span>   <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-master,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node-role.kubernetes.io/master=,node.kubernetes.io/exclude-from-external-load-balancers=</span>
+<span class="nf">mh-n1</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">27h</span>     <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-n1,kubernetes.io/os=linux</span>
+<span class="nf">mh-n2</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">27h</span>     <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-n2,kubernetes.io/os=linux</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to set custom label for nodes. I have decided to set the label for mh-n1 will be env=dev and mh-n2 will be env=prod. Use below commands to set labels for nodes.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">label</span> <span class="nf">nodes</span> <span class="nf">mh-n1</span> <span class="nf">env=dev</span>
+<span class="nf">kubectl</span> <span class="nf">label</span> <span class="nf">nodes</span> <span class="nf">mh-n2</span> <span class="nf">env=prod</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We can recheck label name again with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span> <span class="nf">--show-labels</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>        <span class="nf">STATUS</span>   <span class="nf">ROLES</span>                  <span class="nf">AGE</span>     <span class="nf">VERSION</span>   <span class="nf">LABELS</span>
+<span class="nf">mh-master</span>   <span class="nf">Ready</span>    <span class="nf">control-plane,master</span>   <span class="nf">2d10h</span>   <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-master,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node-role.kubernetes.io/master=,node.kubernetes.io/exclude-from-external-load-balancers=</span>
+<span class="nf">mh-n1</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">27h</span>     <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,env=dev,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-n1,kubernetes.io/os=linux</span>
+<span class="nf">mh-n2</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">27h</span>     <span class="nf">v1.21.0</span>   <span class="nf">beta.kubernetes.io</span><span class="nv">/arch=amd64,beta.kubernetes.io/os=linux,env=prod,kubernetes.io/arch=amd64,kubernetes.io/hostname=mh-n2,kubernetes.io/os=linux</span>
+</code></pre></div></div>
+
+<p><strong>Step 19: Deploying Resources Declaratively</strong></p>
+
+<p>Now we are going to deploy pod declaratively with YAML file.</p>
+
+<ul>
+  <li>We are going to use dry-run=client to create a yaml manifest file for deployment with a container image. We could write the yaml by hand, but we can use dry-run=client to build it for us. Write below command to generate yaml manifest file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">create</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
+     <span class="nf">--image=mahedee</span><span class="nv">/hrm:1.0.1</span> <span class="nf">\</span>
+     <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="nf">|</span> <span class="nf">more</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+  <span class="na">strategy</span><span class="pi">:</span> <span class="pi">{}</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/hrm:1.0.1</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+        <span class="na">resources</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">status</span><span class="pi">:</span> <span class="pi">{}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Let’s write this deployment yaml out to file. We are now redirecting previously generated output to deployment.yaml file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">create</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
+     <span class="nf">--image=mahedee</span><span class="nv">/hrm:1.0.1</span> <span class="nf">\</span>
+     <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="p">&gt;</span> <span class="nf">deployment.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Edit deployment.yaml file to set a node label. Use below command to edit the file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nf">deployment.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Update the file with below text.</li>
+</ul>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+  <span class="na">strategy</span><span class="pi">:</span> <span class="pi">{}</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/hrm:1.0.1</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+        <span class="na">resources</span><span class="pi">:</span> <span class="pi">{}</span>
+      <span class="na">nodeSelector</span><span class="pi">:</span>
+       <span class="na">env</span><span class="pi">:</span> <span class="s">dev</span>
+<span class="na">status</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use below command to execute the deployment.yaml manifest file.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">deployment.yaml</span>
+</code></pre></div></div>
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">deployment.apps</span><span class="nv">/hrm</span> <span class="nf">created</span>
+</code></pre></div></div>
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 
 <!-- **References**  

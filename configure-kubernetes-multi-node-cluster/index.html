@@ -312,7 +312,7 @@
 
 
 
-  22 minute read
+  23 minute read
 </p>
           
         </header>
@@ -1690,6 +1690,92 @@ cat &gt; dashboard-adminuser.yaml</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">deployment.apps</span><span class="nv">/hrm</span> <span class="nf">created</span>
 </code></pre></div></div>
+
+<ul>
+  <li>Now generate the yaml for the service with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">expose</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
+     <span class="nf">--port=80</span> <span class="nf">--target-port=8080</span> <span class="nf">\</span>
+     <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="nf">|</span> <span class="nf">more</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Write the service yaml manifest to a file.</p>
+  </li>
+  <li>
+    <p>Use below command to execute the service yaml file declaratively.</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">service.yaml</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">service</span><span class="nv">/hrm</span> <span class="nf">created</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check out our current state, Deployment, ReplicaSet, Pod and a Service.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">all</span> <span class="nf">-o</span> <span class="nf">wide</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                       <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>     <span class="nf">IP</span>               <span class="nf">NODE</span>    <span class="nf">NOMINATED</span> <span class="nf">NODE</span>   <span class="nf">READINESS</span> <span class="nf">GATES</span>
+<span class="nf">pod</span><span class="nv">/hrm-6587bcb74d-9jvzt</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">8m45s</span>   <span class="nf">172.16.191.195</span>   <span class="nf">mh-n1</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+
+<span class="nf">NAME</span>                 <span class="nf">TYPE</span>        <span class="nf">CLUSTER-IP</span>      <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>   <span class="nf">AGE</span>     <span class="nf">SELECTOR</span>
+<span class="nf">service</span><span class="nv">/hrm</span>          <span class="nf">ClusterIP</span>   <span class="nf">10.101.59.183</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">80</span><span class="nv">/TCP</span>    <span class="nf">82s</span>     <span class="nf">app=hrm</span>
+<span class="nf">service</span><span class="nv">/kubernetes</span>   <span class="nf">ClusterIP</span>   <span class="nf">10.96.0.1</span>       <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>   <span class="nf">2d11h</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+
+<span class="nf">NAME</span>                  <span class="nf">READY</span>   <span class="nf">UP-TO-DATE</span>   <span class="nf">AVAILABLE</span>   <span class="nf">AGE</span>     <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>              <span class="nf">SELECTOR</span>
+<span class="nf">deployment.apps</span><span class="nv">/hrm</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">8m45s</span>   <span class="nf">hrm</span>          <span class="nf">mahedee</span><span class="nv">/hrm:1.0.1</span>   <span class="nf">app=hrm</span>
+
+<span class="nf">NAME</span>                             <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>     <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>              <span class="nf">SELECTOR</span>
+<span class="nf">replicaset.apps</span><span class="nv">/hrm-6587bcb74d</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">8m45s</span>   <span class="nf">hrm</span>          <span class="nf">mahedee</span><span class="nv">/hrm:1.0.1</span>   <span class="nf">app=hrm,pod-template-hash=6587bcb74d</span>
+</code></pre></div></div>
+
+<p>We can see recent deployed pod and service from the above output and running without error. hrm pod has been deployed to mh-n1 node as per configuration of label. See first row.</p>
+
+<ul>
+  <li>Kubectl create deployment we executed, it created a deployment for us. Let’s look more closely at that deployment.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">deployment</span> <span class="nf">hrm</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>   <span class="nf">READY</span>   <span class="nf">UP-TO-DATE</span>   <span class="nf">AVAILABLE</span>   <span class="nf">AGE</span>
+<span class="nf">hrm</span>    <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">13m</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Deployments are made of ReplicaSets and ReplicaSets create Pods!</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">replicaset</span>
+<span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">mh-master@mhmaster-virtual-machine:~$</span> <span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">replicaset</span>
+<span class="nf">NAME</span>             <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>
+<span class="nf">hrm-6587bcb74d</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">15m</span>
+
+<span class="nf">mh-master@mhmaster-virtual-machine:~$</span> <span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span>
+<span class="nf">NAME</span>                   <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
+<span class="nf">hrm-6587bcb74d-9jvzt</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">15m</span>
+
+<span class="nf">mh-master@mhmaster-virtual-machine:~$</span> 
+</code></pre></div></div>
+
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 
 <!-- **References**  

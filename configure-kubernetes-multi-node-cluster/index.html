@@ -312,7 +312,7 @@
 
 
 
-  15 minute read
+  18 minute read
 </p>
           
         </header>
@@ -1123,6 +1123,7 @@ Kubernetes is an open-source container orchestration system for automating softw
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">mkdir</span> <span class="nf">-p</span> <span class="nv">/etc/containerd</span>
+
 <span class="nf">sudo</span> <span class="nf">containerd</span> <span class="nf">config</span> <span class="nf">default</span> <span class="nf">|</span> <span class="nf">sudo</span> <span class="nf">tee</span> <span class="nv">/etc/containerd/config.toml</span>
 </code></pre></div></div>
 
@@ -1217,6 +1218,7 @@ First we need to add Google’s apt repository gpg key to our system so that we 
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">VERSION=1.21.0-00</span>
+
 <span class="nf">sudo</span> <span class="nf">apt-get</span> <span class="nf">install</span> <span class="nf">-y</span> <span class="nf">kubelet=$VERSION</span> <span class="nf">kubeadm=$VERSION</span> <span class="nf">kubectl=$VERSION</span>
 </code></pre></div></div>
 
@@ -1251,16 +1253,126 @@ First we need to add Google’s apt repository gpg key to our system so that we 
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">kubelet.service</span>
+
 <span class="nf">sudo</span> <span class="nf">systemctl</span> <span class="nf">enable</span> <span class="nf">containerd.service</span>
 </code></pre></div></div>
 
-<p><strong>Configure Worker Nodes 2</strong></p>
+<p><strong>Step 15: Configure Worker Nodes 2</strong></p>
 
 <ul>
   <li>Please follow the same instruction to configure Node 2, except update the IP address to 192.168.233.12 and Host name to mh-n2</li>
 </ul>
 
-<p><strong>Join the Node to the Cluster</strong></p>
+<p><strong>Step 16: Join the Node to the Cluster</strong></p>
+
+<p>As we have already configured Master and worker nodes, now is the time to connect Nodes with cluster. We going to need both bootstrap token and also the CA Cert hash to join nodes with cluster. We can copy these information from the output of kubeadm init.
+Bootstrap token is a timed ticket and it has 24 hours lifecyle which means a new token need to be generate after 24 hours.</p>
+
+<ul>
+  <li>Login into Master Node and write below command to check if any token is active or not.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">kubeadm</span> <span class="nf">token</span> <span class="nf">list</span>
+</code></pre></div></div>
+
+<p>As we can see, we did not get any result because we don’t have any created token or token has been timed out or expired. In your case, you might get a token if you check after kubeadm init process.</p>
+
+<ul>
+  <li>Now we are going to generate a new token with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubeadm</span> <span class="nf">token</span> <span class="nf">create</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">w8fovt.svvzo8jntyrdqzph</span>
+</code></pre></div></div>
+
+<p>We can see that a new token has been created. If you check token list now, a new token will be found on the list.</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubeadm</span> <span class="nf">token</span> <span class="nf">list</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We can find CA Cert Hash on the Control Plane Node with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">openssl</span> <span class="nf">x509</span> <span class="nf">-pubkey</span> <span class="nf">-in</span> <span class="nv">/etc/kubernetes/pki/ca.crt</span> <span class="nf">|</span> <span class="nf">openssl</span> <span class="nf">rsa</span> <span class="nf">-pubin</span> <span class="nf">-outform</span> <span class="nf">der</span> <span class="mf">2</span><span class="p">&gt;</span><span class="nv">/dev/null</span> <span class="nf">|</span> <span class="nf">openssl</span> <span class="nf">dgst</span> <span class="nf">-sha256</span> <span class="nf">-hex</span> <span class="nf">|</span> <span class="nf">sed</span> <span class="nf">'s</span><span class="nv">/^.*</span> <span class="err">/</span><span class="nv">/'</span>
+</code></pre></div></div>
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">318fba0270967d24200c9eaf21857a7d90bce44a857aa8ea397337e8afe7c18d</span>
+</code></pre></div></div>
+
+<p>Now we can take all of these information and make the join command with kubeadm joins by specifying the bootstrap token and CA Cert Hash but there is another way to connect nodes with cluster. We are going to join nodes with cluster with command.</p>
+
+<ul>
+  <li>We can also use print-join-command to generate token and print the join command in the proper format. Write below command and generate the join command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubeadm</span> <span class="nf">token</span> <span class="nf">create</span> <span class="nf">--print-join-command</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubeadm</span> <span class="nf">join</span> <span class="nf">192.168.233.10:6443</span> <span class="nf">--token</span> <span class="nf">xgsdjp.1u45r4zhk6uhuv43</span> <span class="nf">--discovery-token-ca-cert-hash</span> <span class="nf">sha256:318fba0270967d24200c9eaf21857a7d90bce44a857aa8ea397337e8afe7c18d</span> 
+</code></pre></div></div>
+
+<p>We can see above well-formatted join command with the proper parameters and values including the location of the API Server, the Bootstrap token and CA Cert Hash.</p>
+
+<p>Now we are going to copy the above generated command and going to use this command on Worker nodes to connect with cluster.</p>
+
+<ul>
+  <li>Login into Node1 and use previously generated command from master node. In my case, generated command is below which I am going to use in Node1 and Node2.</li>
+</ul>
+
+<p>sudo kubeadm join 192.168.233.10:6443 –token xgsdjp.1u45r4zhk6uhuv43 –discovery-token-ca-cert-hash sha256:318fba0270967d24200c9eaf21857a7d90bce44a857aa8ea397337e8afe7c18d</p>
+
+<p>***Note: Above command will be different in your case. Use your generated command instead of using above command.</p>
+
+<p><img src="/assets/images/posts/2021/node1-join.PNG" alt="" /></p>
+
+<p>On the above output we can see, it executes the preflight checks first and then wait for the kubelet to perform the TLS Bootstrap process. We can also see from the bottom output that the node has been joined to the cluster. 
+We have use the same command on Node 2, in my case mh-n2.</p>
+
+<p><img src="/assets/images/posts/2021/node2-join.PNG" alt="" /></p>
+
+<ul>
+  <li>Login back to Control Plane or Master Node, write below command to verify all connected nodes.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>        <span class="nf">STATUS</span>   <span class="nf">ROLES</span>                  <span class="nf">AGE</span>     <span class="nf">VERSION</span>
+<span class="nf">mh-master</span>   <span class="nf">Ready</span>    <span class="nf">control-plane,master</span>   <span class="nf">31h</span>     <span class="nf">v1.21.0</span>
+<span class="nf">mh-n1</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">2m47s</span>   <span class="nf">v1.21.0</span>
+<span class="nf">mh-n2</span>       <span class="nf">Ready</span>    <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>                 <span class="nf">92s</span>     <span class="nf">v1.21.0</span>
+</code></pre></div></div>
+
+<p>***Note: Above output might say Not Ready until the networking pod is created on the new node.
+From the above output we can see both nodes are connected on the cluster and status is ready.</p>
+
+<ul>
+  <li>On the Control Plane Node, watch for the calico pod and the kube-proxy to change to Running on the newly added nodes by below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">--all-namespaces</span> <span class="nf">--watch</span>
+</code></pre></div></div>
+
+<p><strong>Step 17: Deploying the Dashboard UI</strong></p>
+
+<p>Dashboard is a web-based Kubernetes user interface which we can use to deploy containerized applications to a Kubernetes cluster, troubleshoot the containerized application, and manage the cluster resources. Dashboard also provides information on the state of Kubernetes resources in the cluster and on any errors that may have occurred.</p>
+
+<ul>
+  <li>The Dashboard UI is not deployed by default. To deploy it, run the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml</span>
+</code></pre></div></div>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

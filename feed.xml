@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-24T03:21:42+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-03-24T03:58:23+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Swagger on api gateway using ocelot in asp.net core application</title><link href="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/" rel="alternate" type="text/html" title="Configure Swagger on api gateway using ocelot in asp.net core application" /><published>2022-03-18T00:00:00+00:00</published><updated>2022-03-18T00:00:00+00:00</updated><id>https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application</id><content type="html" xml:base="https://mahedee.net//configure-swagger-on-api-gateway-using-ocelot-in-asp.net-core-application/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
 
 <p><strong>Introduction</strong></p>
 
@@ -9798,11 +9798,184 @@ From the above output we can see both nodes are connected on the cluster and sta
 <p>Dashboard is a web-based Kubernetes user interface which we can use to deploy containerized applications to a Kubernetes cluster, troubleshoot the containerized application, and manage the cluster resources. Dashboard also provides information on the state of Kubernetes resources in the cluster and on any errors that may have occurred.</p>
 
 <ul>
-  <li>The Dashboard UI is not deployed by default. To deploy it, run the following command.</li>
+  <li>The Dashboard UI is not deployed by default. To deploy it, run the following command on master node.</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml</span>
 </code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">namespace</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">serviceaccount</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">service</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">secret</span><span class="nv">/kubernetes-dashboard-certs</span> <span class="nf">created</span>
+<span class="nf">secret</span><span class="nv">/kubernetes-dashboard-csrf</span> <span class="nf">created</span>
+<span class="nf">secret</span><span class="nv">/kubernetes-dashboard-key-holder</span> <span class="nf">created</span>
+<span class="nf">configmap</span><span class="nv">/kubernetes-dashboard-settings</span> <span class="nf">created</span>
+<span class="nf">role.rbac.authorization.k8s.io</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">clusterrole.rbac.authorization.k8s.io</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">rolebinding.rbac.authorization.k8s.io</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">clusterrolebinding.rbac.authorization.k8s.io</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">deployment.apps</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">created</span>
+<span class="nf">service</span><span class="nv">/dashboard-metrics-scraper</span> <span class="nf">created</span>
+<span class="nf">deployment.apps</span><span class="nv">/dashboard-metrics-scraper</span> <span class="nf">created</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Let’s check the namespaces with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">ns</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                   <span class="nf">STATUS</span>   <span class="nf">AGE</span>
+<span class="nf">default</span>                <span class="nf">Active</span>   <span class="nf">47h</span>
+<span class="nf">kube-node-lease</span>        <span class="nf">Active</span>   <span class="nf">47h</span>
+<span class="nf">kube-public</span>            <span class="nf">Active</span>   <span class="nf">47h</span>
+<span class="nf">kube-system</span>            <span class="nf">Active</span>   <span class="nf">47h</span>
+<span class="nf">kubernetes-dashboard</span>   <span class="nf">Active</span>   <span class="nf">79s</span>
+</code></pre></div></div>
+
+<p>On the above output, we can see a new namesapce - kubernetes-dashboard in the list.</p>
+
+<ul>
+  <li>Now is the time to check if any pods are running on newly created namespaces with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">pods</span> <span class="nf">-o</span> <span class="nf">wide</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                                         <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>     <span class="nf">IP</span>               <span class="nf">NODE</span>    <span class="nf">NOMINATED</span> <span class="nf">NODE</span>   <span class="nf">READINESS</span> <span class="nf">GATES</span>
+<span class="nf">dashboard-metrics-scraper-856586f554-dvmvg</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">3m59s</span>   <span class="nf">172.16.191.193</span>   <span class="nf">mh-n1</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+<span class="nf">kubernetes-dashboard-67484c44f6-sbgbf</span>        <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">3m59s</span>   <span class="nf">172.16.96.129</span>    <span class="nf">mh-n2</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+</code></pre></div></div>
+<p>We can see that two pods are running within above namespace.</p>
+
+<ul>
+  <li>Check the service type with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">svc</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                        <span class="nf">TYPE</span>        <span class="nf">CLUSTER-IP</span>       <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>    <span class="nf">AGE</span>
+<span class="nf">dashboard-metrics-scraper</span>   <span class="nf">ClusterIP</span>   <span class="nf">10.111.160.160</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">8000</span><span class="nv">/TCP</span>   <span class="nf">5m58s</span>
+<span class="nf">kubernetes-dashboard</span>        <span class="nf">ClusterIP</span>   <span class="nf">10.101.169.107</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>    <span class="nf">5m59s</span>
+</code></pre></div></div>
+<p>Default service type is ClusterIP and it cannot be access from outside the cluster. We don’t need to modify Service file because we are not going to expose the cluster to the outside world.</p>
+
+<ul>
+  <li>
+    <p>Create a file and name the file dashboard-adminuser.yaml with below command.
+cat &gt; dashboard-adminuser.yaml</p>
+  </li>
+  <li>
+    <p>Copy and paste following code on dashboard-adminuser.yaml file.</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">apiVersion:</span> <span class="nf">v1</span>
+<span class="nf">kind:</span> <span class="nf">Namespace</span>
+<span class="nf">metadata:</span>
+  <span class="nf">name:</span> <span class="nf">kubernetes-dashboard</span>
+<span class="nf">---</span>
+<span class="nf">apiVersion:</span> <span class="nf">v1</span>
+<span class="nf">kind:</span> <span class="nf">ServiceAccount</span>
+<span class="nf">metadata:</span>
+  <span class="nf">name:</span> <span class="nf">admin-user</span>
+  <span class="nf">namespace:</span> <span class="nf">kubernetes-dashboard</span>
+<span class="nf">---</span>
+<span class="nf">apiVersion:</span> <span class="nf">rbac.authorization.k8s.io</span><span class="nv">/v1</span>
+<span class="nf">kind:</span> <span class="nf">ClusterRoleBinding</span>
+<span class="nf">metadata:</span>
+  <span class="nf">name:</span> <span class="nf">admin-user</span>
+<span class="nf">roleRef:</span>
+  <span class="nf">apiGroup:</span> <span class="nf">rbac.authorization.k8s.io</span>
+  <span class="nf">kind:</span> <span class="nf">ClusterRole</span>
+  <span class="nf">name:</span> <span class="nf">cluster-admin</span>
+<span class="nf">subjects:</span>
+<span class="nf">-</span> <span class="nf">kind:</span> <span class="nf">ServiceAccount</span>
+  <span class="nf">name:</span> <span class="nf">admin-user</span>
+  <span class="nf">namespace:</span> <span class="nf">kubernetes-dashboard</span>
+
+<span class="nf">```ps</span>
+
+<span class="nf">Note:</span> <span class="nf">Ctrl</span> <span class="nf">+</span> <span class="nf">C</span> <span class="nf">to</span> <span class="nb">exit</span>
+
+<span class="nf">*</span> <span class="nf">You</span> <span class="nf">can</span> <span class="nf">check</span> <span class="nf">the</span> <span class="nf">pasted</span> <span class="nf">code</span> <span class="nf">on</span> <span class="nf">dashboard-adminuser.yaml</span> <span class="nf">file</span> <span class="nf">using</span> <span class="nf">following</span> <span class="nf">command.</span>
+
+<span class="nf">```ps</span>
+<span class="nf">sudo</span> <span class="nf">nano</span> <span class="nf">dashboard-adminuser.yaml</span>
+</code></pre></div></div>
+
+<ul>
+  <li>As we are using new cluster binding so we need to delete the existing Cluster Binding section from kubernetes-dashboard file, otherwise an error will return. Use below command to delete.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">delete</span> <span class="nf">clusterrolebinding</span> <span class="nf">kubernetes-dashboard</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Now we are going to execute newly created file with below command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">apply</span> <span class="nf">-f</span> <span class="nf">dashboard-adminuser.yaml</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">namespace</span><span class="nv">/kubernetes-dashboard</span> <span class="nf">unchanged</span>
+<span class="nf">serviceaccount</span><span class="nv">/admin-user</span> <span class="nf">created</span>
+<span class="nf">clusterrolebinding.rbac.authorization.k8s.io</span><span class="nv">/admin-user</span> <span class="nf">created</span>
+</code></pre></div></div>
+<ul>
+  <li>Now we need to find token we can use to log in. Execute following command:</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">-n</span> <span class="nf">kubernetes-dashboard</span> <span class="nb">get</span> <span class="nf">secret</span> <span class="nf">$</span><span class="s">(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}")</span> <span class="nf">-o</span> <span class="nf">go-template=""</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2021/token.PNG" alt="" /></p>
+
+<p>From the above output we can see a new token has been generated, we can copy the above output token to login into dashboard.</p>
+
+<ul>
+  <li>Use following command to enable the access to the Dashboard using the kubectl command-line tool.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">proxy</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Starting</span> <span class="nf">to</span> <span class="nf">serve</span> <span class="nf">on</span> <span class="nf">127.0.0.1:8001</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Use below URL to access the dashboard.</li>
+</ul>
+
+<p>http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</p>
+
+<ul>
+  <li>Use above created token and click sign in button.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2021/dashboard-1.PNG" alt="" /></p>
+
+<p>Workload section will show empty because we have not deployed any containerized pod yet. You can click cluster tab on left pane and will find list of cluster roles, Namespaces, Nodes and Storage Classes. You will find two nodes in the list of Nodes.</p>
+
+<p><img src="/assets/images/posts/2021/dashboard-2.PNG" alt="" /></p>
+
+<p><strong>Deploy an asp.net core application in a pod to the target node</strong></p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
 

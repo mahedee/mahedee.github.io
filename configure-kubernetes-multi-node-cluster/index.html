@@ -312,7 +312,7 @@
 
 
 
-  23 minute read
+  25 minute read
 </p>
           
         </header>
@@ -1552,7 +1552,7 @@ cat &gt; dashboard-adminuser.yaml</p>
 <p>Now we are going to deploy a containerized pod to target node. Before we assign the pod we are going to set a label for node.</p>
 
 <ul>
-  <li>Check current label of nodes with below command.</li>
+  <li>Check current label of nodes with below command in master node terminal.</li>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">nodes</span> <span class="nf">--show-labels</span>
@@ -1599,7 +1599,7 @@ cat &gt; dashboard-adminuser.yaml</p>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">create</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
-     <span class="nf">--image=mahedee</span><span class="nv">/hrm:1.0.1</span> <span class="nf">\</span>
+     <span class="nf">--image=docker.io</span><span class="nv">/mahedee/hrm:1.0.1</span> <span class="nf">\</span>
      <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="nf">|</span> <span class="nf">more</span>
 </code></pre></div></div>
 
@@ -1625,10 +1625,11 @@ cat &gt; dashboard-adminuser.yaml</p>
         <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/hrm:1.0.1</span>
+      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">docker.io/mahedee/hrm:1.0.1</span>
         <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
         <span class="na">resources</span><span class="pi">:</span> <span class="pi">{}</span>
 <span class="na">status</span><span class="pi">:</span> <span class="pi">{}</span>
+
 
 </code></pre></div></div>
 
@@ -1637,7 +1638,7 @@ cat &gt; dashboard-adminuser.yaml</p>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">create</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
-     <span class="nf">--image=mahedee</span><span class="nv">/hrm:1.0.1</span> <span class="nf">\</span>
+     <span class="nf">--image=docker.io</span><span class="nv">/mahedee/hrm:1.0.1</span> <span class="nf">\</span>
      <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="p">&gt;</span> <span class="nf">deployment.yaml</span>
 </code></pre></div></div>
 
@@ -1652,7 +1653,7 @@ cat &gt; dashboard-adminuser.yaml</p>
   <li>Update the file with below text.</li>
 </ul>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">piVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
 <span class="na">metadata</span><span class="pi">:</span>
   <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
@@ -1672,11 +1673,11 @@ cat &gt; dashboard-adminuser.yaml</p>
         <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">mahedee/hrm:1.0.1</span>
+      <span class="pi">-</span> <span class="na">image</span><span class="pi">:</span> <span class="s">docker.io/mahedee/hrm:1.0.1</span>
         <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8011</span>
         <span class="na">resources</span><span class="pi">:</span> <span class="pi">{}</span>
-      <span class="na">nodeSelector</span><span class="pi">:</span>
-       <span class="na">env</span><span class="pi">:</span> <span class="s">dev</span>
 <span class="na">status</span><span class="pi">:</span> <span class="pi">{}</span>
 </code></pre></div></div>
 
@@ -1696,13 +1697,47 @@ cat &gt; dashboard-adminuser.yaml</p>
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">expose</span> <span class="nf">deployment</span> <span class="nf">hrm</span> <span class="nf">\</span>
-     <span class="nf">--port=80</span> <span class="nf">--target-port=8080</span> <span class="nf">\</span>
+     <span class="nf">--port=80</span> <span class="nf">--target-port=8011</span> <span class="nf">\</span>
      <span class="nf">--dry-run=client</span> <span class="nf">-o</span> <span class="nf">yaml</span> <span class="nf">|</span> <span class="nf">more</span>
 </code></pre></div></div>
 
 <ul>
+  <li>Write the service yaml manifest to a file. Target port is 8011. Because image internal port is 8011</li>
+</ul>
+
+<p>kubectl expose deployment hrm <br />
+     –port=80 –target-port=8011 <br />
+     –dry-run=client -o yaml &gt; service.yaml</p>
+
+<ul>
+  <li>Modify the service using the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">sudo</span> <span class="nf">nano</span> <span class="nf">service.yaml</span>
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">piVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">creationTimestamp</span><span class="pi">:</span> <span class="no">null</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">hrm</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+    <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8011</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">hrm</span>
+<span class="na">status</span><span class="pi">:</span>
+  <span class="na">loadBalancer</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div>
+
+<ul>
   <li>
-    <p>Write the service yaml manifest to a file.</p>
+    <p>Save and Exit</p>
   </li>
   <li>
     <p>Use below command to execute the service yaml file declaratively.</p>
@@ -1721,26 +1756,38 @@ cat &gt; dashboard-adminuser.yaml</p>
   <li>Check out our current state, Deployment, ReplicaSet, Pod and a Service.</li>
 </ul>
 
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pod</span> <span class="nf">-o</span> <span class="nf">wide</span>
+</code></pre></div></div>
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                   <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>   <span class="nf">IP</span>              <span class="nf">NODE</span>    <span class="nf">NOMINATED</span> <span class="nf">NODE</span>   <span class="nf">READINESS</span> <span class="nf">GATES</span>
+<span class="nf">hrm-697468d799-t48rb</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">25m</span>   <span class="nf">172.16.96.133</span>   <span class="nf">mh-n2</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>In the above, we see pod is running on mh-n2 means node 2</p>
+
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">all</span> <span class="nf">-o</span> <span class="nf">wide</span>
 </code></pre></div></div>
 
 <p>Output:</p>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>                       <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>     <span class="nf">IP</span>               <span class="nf">NODE</span>    <span class="nf">NOMINATED</span> <span class="nf">NODE</span>   <span class="nf">READINESS</span> <span class="nf">GATES</span>
-<span class="nf">pod</span><span class="nv">/hrm-6587bcb74d-9jvzt</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">8m45s</span>   <span class="nf">172.16.191.195</span>   <span class="nf">mh-n1</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nf">NAME</span>                       <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>   <span class="nf">IP</span>              <span class="nf">NODE</span>    <span class="nf">NOMINATED</span> <span class="nf">NODE</span>   <span class="nf">READINESS</span> <span class="nf">GATES</span>
+<span class="nf">pod</span><span class="nv">/hrm-697468d799-t48rb</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">27m</span>   <span class="nf">172.16.96.133</span>   <span class="nf">mh-n2</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>           <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
 
-<span class="nf">NAME</span>                 <span class="nf">TYPE</span>        <span class="nf">CLUSTER-IP</span>      <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>   <span class="nf">AGE</span>     <span class="nf">SELECTOR</span>
-<span class="nf">service</span><span class="nv">/hrm</span>          <span class="nf">ClusterIP</span>   <span class="nf">10.101.59.183</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">80</span><span class="nv">/TCP</span>    <span class="nf">82s</span>     <span class="nf">app=hrm</span>
-<span class="nf">service</span><span class="nv">/kubernetes</span>   <span class="nf">ClusterIP</span>   <span class="nf">10.96.0.1</span>       <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>   <span class="nf">2d11h</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+<span class="nf">NAME</span>                 <span class="nf">TYPE</span>        <span class="nf">CLUSTER-IP</span>      <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>        <span class="nf">AGE</span>    <span class="nf">SELECTOR</span>
+<span class="nf">service</span><span class="nv">/hrm</span>          <span class="nf">NodePort</span>    <span class="nf">10.103.252.75</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="nf">80:32614</span><span class="nv">/TCP</span>   <span class="nf">24m</span>    <span class="nf">app=hrm</span>
+<span class="nf">service</span><span class="nv">/kubernetes</span>   <span class="nf">ClusterIP</span>   <span class="nf">10.96.0.1</span>       <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>        <span class="nf">5d4h</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
 
-<span class="nf">NAME</span>                  <span class="nf">READY</span>   <span class="nf">UP-TO-DATE</span>   <span class="nf">AVAILABLE</span>   <span class="nf">AGE</span>     <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>              <span class="nf">SELECTOR</span>
-<span class="nf">deployment.apps</span><span class="nv">/hrm</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">8m45s</span>   <span class="nf">hrm</span>          <span class="nf">mahedee</span><span class="nv">/hrm:1.0.1</span>   <span class="nf">app=hrm</span>
+<span class="nf">NAME</span>                  <span class="nf">READY</span>   <span class="nf">UP-TO-DATE</span>   <span class="nf">AVAILABLE</span>   <span class="nf">AGE</span>   <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>                        <span class="nf">SELECTOR</span>
+<span class="nf">deployment.apps</span><span class="nv">/hrm</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="mf">1</span>            <span class="mf">1</span>           <span class="nf">27m</span>   <span class="nf">hrm</span>          <span class="nf">docker.io</span><span class="nv">/mahedee/hrm:1.0.1</span>   <span class="nf">app=hrm</span>
 
-<span class="nf">NAME</span>                             <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>     <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>              <span class="nf">SELECTOR</span>
-<span class="nf">replicaset.apps</span><span class="nv">/hrm-6587bcb74d</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">8m45s</span>   <span class="nf">hrm</span>          <span class="nf">mahedee</span><span class="nv">/hrm:1.0.1</span>   <span class="nf">app=hrm,pod-template-hash=6587bcb74d</span>
+<span class="nf">NAME</span>                             <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>   <span class="nf">CONTAINERS</span>   <span class="nf">IMAGES</span>                        <span class="nf">SELECTOR</span>
+<span class="nf">replicaset.apps</span><span class="nv">/hrm-697468d799</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">27m</span>   <span class="nf">hrm</span>          <span class="nf">docker.io</span><span class="nv">/mahedee/hrm:1.0.1</span>   <span class="nf">app=hrm,pod-template-hash=697468d799</span>
+
 </code></pre></div></div>
 
-<p>We can see recent deployed pod and service from the above output and running without error. hrm pod has been deployed to mh-n1 node as per configuration of label. See first row.</p>
+<p>We can see recent deployed pod and service from the above output and running without error. hrm pod has been deployed to mh-n2 node as per configuration of label. See first row.</p>
 
 <ul>
   <li>Kubectl create deployment we executed, it created a deployment for us. Let’s look more closely at that deployment.</li>
@@ -1767,19 +1814,99 @@ cat &gt; dashboard-adminuser.yaml</p>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">mh-master@mhmaster-virtual-machine:~$</span> <span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">replicaset</span>
 <span class="nf">NAME</span>             <span class="nf">DESIRED</span>   <span class="nf">CURRENT</span>   <span class="nf">READY</span>   <span class="nf">AGE</span>
-<span class="nf">hrm-6587bcb74d</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">15m</span>
-
+<span class="nf">hrm-697468d799</span>   <span class="mf">1</span>         <span class="mf">1</span>         <span class="mf">1</span>       <span class="nf">29m</span>
 <span class="nf">mh-master@mhmaster-virtual-machine:~$</span> <span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">pods</span>
 <span class="nf">NAME</span>                   <span class="nf">READY</span>   <span class="nf">STATUS</span>    <span class="nf">RESTARTS</span>   <span class="nf">AGE</span>
-<span class="nf">hrm-6587bcb74d-9jvzt</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">15m</span>
+<span class="nf">hrm-697468d799-t48rb</span>   <span class="mf">1</span><span class="nv">/1</span>     <span class="nf">Running</span>   <span class="mf">0</span>          <span class="nf">30m</span>
 
-<span class="nf">mh-master@mhmaster-virtual-machine:~$</span> 
 </code></pre></div></div>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/kubernetes-demo/KubernetesDemo">Source Code</a></strong></p>
+<ul>
+  <li>Check running service using the following command.</li>
+</ul>
 
-<!-- **References**  
-1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create -->
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>         <span class="nf">TYPE</span>        <span class="nf">CLUSTER-IP</span>      <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>        <span class="nf">AGE</span>
+<span class="nf">hrm</span>          <span class="nf">NodePort</span>    <span class="nf">10.103.252.75</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="nf">80:32614</span><span class="nv">/TCP</span>   <span class="nf">27m</span>
+<span class="nf">kubernetes</span>   <span class="nf">ClusterIP</span>   <span class="nf">10.96.0.1</span>       <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="mf">443</span><span class="nv">/TCP</span>        <span class="nf">5d5h</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Check service information using following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nb">get</span> <span class="nf">svc</span> <span class="nf">hrm</span>
+</code></pre></div></div>
+<p>Output:</p>
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">NAME</span>   <span class="nf">TYPE</span>       <span class="nf">CLUSTER-IP</span>      <span class="nf">EXTERNAL-IP</span>   <span class="nf">PORT</span><span class="s">(S)</span>        <span class="nf">AGE</span>
+<span class="nf">hrm</span>    <span class="nf">NodePort</span>   <span class="nf">10.103.252.75</span>   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>        <span class="nf">80:32614</span><span class="nv">/TCP</span>   <span class="nf">33m</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Acces the service inside the cluster using curl command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">curl</span> <span class="nf">http:</span><span class="err">/</span><span class="nv">/10.103.252.75:80/swagger/index.html</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We can also get that information from using describe.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">kubectl</span> <span class="nf">describe</span> <span class="nf">service</span> <span class="nf">hrm</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Name:</span>                     <span class="nf">hrm</span>
+<span class="nf">Namespace:</span>                <span class="nf">default</span>
+<span class="nf">Labels:</span>                   <span class="nf">app=hrm</span>
+<span class="nf">Annotations:</span>              <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+<span class="nf">Selector:</span>                 <span class="nf">app=hrm</span>
+<span class="nf">Type:</span>                     <span class="nf">NodePort</span>
+<span class="nf">IP</span> <span class="nf">Family</span> <span class="nf">Policy:</span>         <span class="nf">SingleStack</span>
+<span class="nf">IP</span> <span class="nf">Families:</span>              <span class="nf">IPv4</span>
+<span class="nf">IP:</span>                       <span class="nf">10.103.252.75</span>
+<span class="nf">IPs:</span>                      <span class="nf">10.103.252.75</span>
+<span class="nf">Port:</span>                     <span class="p">&lt;</span><span class="nf">unset</span><span class="p">&gt;</span>  <span class="mf">80</span><span class="nv">/TCP</span>
+<span class="nf">TargetPort:</span>               <span class="mf">8011</span><span class="nv">/TCP</span>
+<span class="nf">NodePort:</span>                 <span class="p">&lt;</span><span class="nf">unset</span><span class="p">&gt;</span>  <span class="mf">32614</span><span class="nv">/TCP</span>
+<span class="nf">Endpoints:</span>                <span class="nf">172.16.96.133:8011</span>
+<span class="nf">Session</span> <span class="nf">Affinity:</span>         <span class="nf">None</span>
+<span class="nf">External</span> <span class="nf">Traffic</span> <span class="nf">Policy:</span>  <span class="nf">Cluster</span>
+<span class="nf">Events:</span>                   <span class="p">&lt;</span><span class="nf">none</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Access the service using the following URL on the browser.</li>
+</ul>
+
+<p>http://localhost:32614/swagger/index.html</p>
+
+<p>Output:</p>
+
+<p><img src="/assets/images/posts/2021/hrm-output.PNG" alt="" /></p>
+
+<p><strong>Step 20: Verify with Dashboard UI</strong></p>
+
+<ul>
+  <li>Log back to dashboard UI to verify the current state. (Follow step -17)</li>
+</ul>
+
+<p><img src="/assets/images/posts/2021/k8s-dashboard.PNG" alt="" /></p>
+
+<p><img src="/assets/images/posts/2021/k8s-pods.PNG" alt="" /></p>
+
+<p>From the above image, I see pod is running on node 2 and everything running health.</p>
+
+<p>Thanks for your long patients</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/hrm">Source Code</a></strong></p>
+
 
         
       </section>

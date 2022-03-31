@@ -312,7 +312,7 @@
 
 
 
-  4 minute read
+  8 minute read
 </p>
           
         </header>
@@ -395,6 +395,426 @@ The following tools and technologies are used to configure CI/CD</p>
 
 <p><strong>Step 6: Create an asp.net core web api project</strong></p>
 
+<p><strong>Step 6.1: Create an Web api project</strong></p>
+
+<ul>
+  <li>Create a ASP.NET Core Web API Project Name HRM.API. Keep Solution name as HRM.</li>
+</ul>
+
+<p><strong>Step 6.2: Install the nuget packages</strong></p>
+
+<ul>
+  <li>Install the following nuget packages on HRM.API project.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span> <span class="nf">6.0.3</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.InMemory</span> <span class="nf">6.0.3</span>
+</code></pre></div></div>
+
+<p><strong>Step 6.3: Create model class</strong></p>
+
+<ul>
+  <li>Create a model class name - Employee in Models folder.</li>
+</ul>
+
+<p><strong>Employee.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">HRM.API.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FathersName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">MothersName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">DateOfBirth</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6.4: Create Context and Seed data generator class in Db folder</strong></p>
+
+<p><strong>HRMContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HRMContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">HRMContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>SeedDataGenerator.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">SeedDataGenerator</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="n">IServiceProvider</span> <span class="n">serviceProvider</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HRMContext</span><span class="p">(</span>
+                <span class="n">serviceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;&gt;()))</span>
+            <span class="p">{</span>
+                <span class="c1">// Check any employee exists </span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="k">return</span><span class="p">;</span> <span class="c1">// Data already exists no need to generate</span>
+                <span class="p">}</span>
+
+                <span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span>
+                    <span class="k">new</span> <span class="n">Employee</span>
+                    <span class="p">{</span>
+                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Md. Mahedee Hasan"</span><span class="p">,</span>
+                        <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Head of Software Development"</span><span class="p">,</span>
+                        <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Yeasin Bhuiyan"</span><span class="p">,</span>
+                        <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Moriom Begum"</span><span class="p">,</span>
+                        <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1984</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">19</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                    <span class="p">},</span>
+
+                    <span class="k">new</span> <span class="n">Employee</span>
+                    <span class="p">{</span>
+                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Khaleda Islam"</span><span class="p">,</span>
+                        <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">,</span>
+                        <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Shahidul Islam"</span><span class="p">,</span>
+                        <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Momtaz Begum"</span><span class="p">,</span>
+                        <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1990</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">29</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                    <span class="p">},</span>
+
+                    <span class="k">new</span> <span class="n">Employee</span>
+                    <span class="p">{</span>
+                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Tahiya Hasan Arisha"</span><span class="p">,</span>
+                        <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Jr. Software Engineer"</span><span class="p">,</span>
+                        <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Md. Mahedee Hasan"</span><span class="p">,</span>
+                        <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Khaleda Islam"</span><span class="p">,</span>
+                        <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">2017</span><span class="p">,</span> <span class="m">09</span><span class="p">,</span> <span class="m">17</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                    <span class="p">},</span>
+
+                    <span class="k">new</span> <span class="n">Employee</span>
+                    <span class="p">{</span>
+                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Humaira Hasan"</span><span class="p">,</span>
+                        <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Jr. Software Engineer"</span><span class="p">,</span>
+                        <span class="n">FathersName</span> <span class="p">=</span> <span class="s">"Md. Mahedee Hasan"</span><span class="p">,</span>
+                        <span class="n">MothersName</span> <span class="p">=</span> <span class="s">"Khaleda Islam"</span><span class="p">,</span>
+                        <span class="n">DateOfBirth</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">2021</span><span class="p">,</span> <span class="m">03</span><span class="p">,</span> <span class="m">17</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">,</span> <span class="m">00</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">);</span>
+                <span class="n">context</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 6.5:Create Repository and It’s Interface in Repository folder</strong></p>
+
+<p><strong>IEmployeeRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Repository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeRepository</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">SelectAllEmployees</span><span class="p">();</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">SelectEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">UpdateEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>EmployeeRepository.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Repository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeRepository</span> <span class="p">:</span> <span class="n">IEmployeeRepository</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">HRMContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeRepository</span><span class="p">(</span><span class="n">HRMContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">SelectAllEmployees</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">allemployess</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">allemployess</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">SelectEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">employee</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">UpdateEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="s">"Cannot be updated!"</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">employee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="s">"Data updated successfully!"</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">EmployeeExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="s">"Data not found!"</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+                <span class="k">return</span> <span class="s">"Data saved successfully!"</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="s">"Data not found!"</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="s">"Data deleted successfully!"</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">EmployeeExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6.6: Create Employee Service class and it’s interface in Services folder</strong></p>
+
+<p><strong>IEmployeeService</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">();</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="k">public</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>EmployeeService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.API.Repository</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">HRM.API.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span> <span class="p">:</span> <span class="n">IEmployeeService</span>
+    <span class="p">{</span>
+        <span class="n">IEmployeeRepository</span> <span class="n">_employeeRepository</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">IEmployeeRepository</span> <span class="n">repository</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_employeeRepository</span> <span class="p">=</span> <span class="n">repository</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectAllEmployees</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SelectEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">EditEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">UpdateEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">SaveEmployee</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">RemoveEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">_employeeRepository</span><span class="p">.</span><span class="nf">DeleteEmployee</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">exp</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="p">(</span><span class="n">exp</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6.7: Modify Program.cs file</strong></p>
+
+<ul>
+  <li>Modify Program.cs file for InMemory database and Enable Swagger for both dev and release.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HRM.API.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.API.Repository</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HRM.API.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="c1">// Configure in memory database</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"HRMDB"</span><span class="p">));</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+
+<span class="c1">//Register DI</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IEmployeeRepository</span><span class="p">,</span> <span class="n">EmployeeRepository</span><span class="p">&gt;();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IEmployeeService</span><span class="p">,</span> <span class="n">EmployeeService</span><span class="p">&gt;();</span>
+
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+
+<span class="c1">// 2. Find the service within the scope to use</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="c1">// 3. Get the instance of HRMContext in our service layer</span>
+    <span class="kt">var</span> <span class="n">services</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="n">services</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">HRMContext</span><span class="p">&gt;();</span>
+
+    <span class="c1">// 4. Call the SeedDataGenerator to generate seed data</span>
+    <span class="n">SeedDataGenerator</span><span class="p">.</span><span class="nf">Initialize</span><span class="p">(</span><span class="n">services</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="c1">//app.UseSwagger();</span>
+    <span class="c1">//app.UseSwaggerUI();</span>
+<span class="p">}</span>
+
+<span class="c1">// To show both development and deployment</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
 <p><strong>Step 7: Create a publish profile on our application</strong></p>
 
 <ul>
@@ -403,7 +823,7 @@ The following tools and technologies are used to configure CI/CD</p>
   <li>Select Folder and click Next.</li>
   <li>Release location is like - bin\Release\net6.0\publish\</li>
   <li>Click Finish</li>
-  <li>From more action rename the profile as - JenkinsProfile</li>
+  <li>From “more action” rename the profile as - JenkinsProfile</li>
   <li>
     <p>You will see two folders are created in Properties -&gt; PublishProfiles folder. Their name is - JenkinsProfile.pubxml and JenkinsProfile.pubxml.user</p>
   </li>
@@ -433,7 +853,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <li>Commit and push this changes on the github.</li>
 </ul>
 
-<p><strong>Step 7: Install Microsoft Web Deploy</strong></p>
+<p><strong>Step 8: Install Microsoft Web Deploy</strong></p>
 
 <ul>
   <li>Download and install latest version of Microsoft web deploy, if it is not already installed. In my case, it is already installed with visual studio 2022.</li>

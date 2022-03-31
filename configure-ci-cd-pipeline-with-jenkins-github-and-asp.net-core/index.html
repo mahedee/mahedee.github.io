@@ -312,7 +312,7 @@
 
 
 
-  8 minute read
+  9 minute read
 </p>
           
         </header>
@@ -853,28 +853,34 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <li>Commit and push this changes on the github.</li>
 </ul>
 
-<p><strong>Step 8: Install Microsoft Web Deploy</strong></p>
+<p><strong>Step 8: Create a test project name HRM.Test on the same solution</strong></p>
+
+<ul>
+  <li>Add necessary test cases for HRM.API</li>
+</ul>
+
+<p><strong>Step 9: Install Microsoft Web Deploy</strong></p>
 
 <ul>
   <li>Download and install latest version of Microsoft web deploy, if it is not already installed. In my case, it is already installed with visual studio 2022.</li>
 </ul>
 
-<p><strong>Step 8: Create Credentials Id</strong></p>
+<p><strong>Step 10: Create Credentials Id</strong></p>
 
 <ul>
-  <li>Navigate to Manage to “Manage Jenkins” -&gt; Manage Credentials -&gt; Click Jenkins -&gt; Click Global Credentials (Unrestricted) -&gt; Click Adding some credentials.</li>
+  <li>Navigate to “Manage Jenkins” -&gt; Manage Credentials -&gt; Click Jenkins -&gt; Click Global Credentials (Unrestricted) -&gt; Click Adding some credentials.</li>
 </ul>
 
 <p><img src="/assets/images/posts/2022/jenkins-6.PNG" alt="" /></p>
 
 <ul>
-  <li>In this case, I have given my git password as password.</li>
+  <li>In this case, I have given my Github user name and password.</li>
   <li>Fill the form and click OK</li>
   <li>Id will be generated automatically.</li>
   <li>Back to Global credentials (unrestricted) and click Update. You will get ID here.</li>
 </ul>
 
-<p><strong>Step 9: Create Pipeline using Jenkins</strong></p>
+<p><strong>Step 11: Create Pipeline using Jenkins</strong></p>
 
 <ul>
   <li>Click “Create a job” on the Jenkins home page.</li>
@@ -883,7 +889,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <p><img src="/assets/images/posts/2022/jenkins-3.PNG" alt="" /></p>
 
 <ul>
-  <li>Select Pipeline of the next screen, give a name of the pipeline, I am giving the name of pipeline is HRMPipelines and Click Ok.</li>
+  <li>Select Pipeline of the next screen, give a name of the pipeline, I am giving the name of pipeline is “HRMPipelines” and Click Ok.</li>
 </ul>
 
 <p><img src="/assets/images/posts/2022/jenkins-4.PNG" alt="" /></p>
@@ -926,13 +932,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   stage('Deploy') {
     steps {
     // Stop IIS
-    //bat 'net stop "w3svc"'
+    bat 'net stop "w3svc"'
     
     // Deploy package to IIS
     bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:package="%WORKSPACE%\\jenkins-demo\\HRM\\HRM.API\\bin\\Debug\\net6.0\\HRM.API.zip" -dest:auto -setParam:"IIS Web Application Name"="HRM.Web" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
     
     // Start IIS again
-    //bat 'net start "w3svc"'
+    bat 'net start "w3svc"'
     }
  }
 
@@ -940,11 +946,24 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 } 
 </code></pre>
 
-<p><strong>Step 10: Configure Build Triggers</strong></p>
+<p>This is the sequential script for the pipeline to execute the stages one by one. Here we used 5 steps - Checkout, Build, Test, Release, Deploy</p>
+
+<p>Stage 1 - Checkout: In this stage, we provide the URL and Git repository, branch as main and git credentials id. Which I have created on step 10. I pull the source code to workspace. Default workspace is - C:\ProgramData\Jenkins.jenkins\workspace</p>
+
+<p>Stage 2 - Build: In this stage, I have build the specific project. Here HRM.API. Keep in mind you have to direct the location where sln file exists.</p>
+
+<p>Stage 3 - Test : In this stage, I have run test project providing test project link.</p>
+
+<p>Stage 4 - Release: In this stage, A release package HRM.zip is created in the mentioned location which is provided on JenkinsProfile.pubxml. You may check each steps output using console after executing pipeline.</p>
+
+<p>Stage 5 - Deploy: In this tage, first stop IIS. Then deploy package to IIS and then Start IIS again. So, I have used three bat command here.</p>
+
+<p><strong>Step 12: Configure Build Triggers</strong></p>
 
 <ul>
+  <li>Navigate to HRMPipelines -&gt; Build Triggers</li>
   <li>Mark GitHub hook trigger for GITScm polling and Pool SCM</li>
-  <li>Type schedule as * * * * *  which means, keep checking the Git repository and as soon as commit/check-in is done, trigger the build process. Here there is a space after each star.</li>
+  <li>Type schedule as * * * * *  which means, keep checking the Git repository and as soon as commit/check-in is done, trigger the build process. Note: there is a space after each star.</li>
 </ul>
 
 <p><img src="/assets/images/posts/2022/jenkins-7.PNG" alt="" /></p>
@@ -958,7 +977,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   </li>
 </ul>
 
-<p><strong>Step 11: Run pipeline manually</strong></p>
+<p><strong>Step 13: Run pipeline manually</strong></p>
 
 <ul>
   <li>Go to the dashboard</li>
@@ -968,7 +987,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 
 <p><img src="/assets/images/posts/2022/jenkins-8.PNG" alt="" /></p>
 
-<p><strong>Step 12: Change application and see output</strong></p>
+<p><strong>Step 13: Change application and see output</strong></p>
 
 <ul>
   <li>Change a little bit on your application</li>
@@ -979,6 +998,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <p>Now test your application using the following URL:</p>
 
 <p>http://localhost:8012/swagger/index.html</p>
+
+<ul>
+  <li>Here I have hosted the application on 8012 port on IIS.</li>
+</ul>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/jenkins-demo">Source Code</a></strong></p>
 

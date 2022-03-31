@@ -312,7 +312,7 @@
 
 
 
-  9 minute read
+  10 minute read
 </p>
           
         </header>
@@ -859,13 +859,30 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <li>Add necessary test cases for HRM.API</li>
 </ul>
 
-<p><strong>Step 9: Install Microsoft Web Deploy</strong></p>
+<p><strong>Step 9: Build and Run Unit Test cases localy</strong></p>
+
+<ul>
+  <li>To build the application locally. Go to the directory of the HRM.API applycation where solution file exists.</li>
+  <li>Run the following command on terminal to build the application.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">D:\Projects\Github\code-sample02\jenkins-demo\HRM</span><span class="p">&gt;</span> <span class="nf">dotnet</span> <span class="nf">build</span> <span class="nf">.\HRM.sln</span>
+</code></pre></div></div>
+
+<ul>
+  <li>To Run unit test locally go the directory where test project file exists and run the following command.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">D:\Projects\Github\code-sample02\jenkins-demo\HRM\HRM.Test</span><span class="p">&gt;</span> <span class="nf">dotnet</span> <span class="nf">test</span> <span class="nf">.\HRM.Test.csproj</span>
+</code></pre></div></div>
+
+<p><strong>Step 10: Install Microsoft Web Deploy</strong></p>
 
 <ul>
   <li>Download and install latest version of Microsoft web deploy, if it is not already installed. In my case, it is already installed with visual studio 2022.</li>
 </ul>
 
-<p><strong>Step 10: Create Credentials Id</strong></p>
+<p><strong>Step 11: Create Credentials Id</strong></p>
 
 <ul>
   <li>Navigate to “Manage Jenkins” -&gt; Manage Credentials -&gt; Click Jenkins -&gt; Click Global Credentials (Unrestricted) -&gt; Click Adding some credentials.</li>
@@ -880,7 +897,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <li>Back to Global credentials (unrestricted) and click Update. You will get ID here.</li>
 </ul>
 
-<p><strong>Step 11: Create Pipeline using Jenkins</strong></p>
+<p><strong>Step 12: Create Pipeline using Jenkins</strong></p>
 
 <ul>
   <li>Click “Create a job” on the Jenkins home page.</li>
@@ -958,7 +975,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 
 <p>Stage 5 - Deploy: In this tage, first stop IIS. Then deploy package to IIS and then Start IIS again. So, I have used three bat command here.</p>
 
-<p><strong>Step 12: Configure Build Triggers</strong></p>
+<p><strong>Step 13: Configure Build Triggers</strong></p>
 
 <ul>
   <li>Navigate to HRMPipelines -&gt; Build Triggers</li>
@@ -977,7 +994,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   </li>
 </ul>
 
-<p><strong>Step 13: Run pipeline manually</strong></p>
+<p><strong>Step 14: Run pipeline manually</strong></p>
 
 <ul>
   <li>Go to the dashboard</li>
@@ -987,7 +1004,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 
 <p><img src="/assets/images/posts/2022/jenkins-8.PNG" alt="" /></p>
 
-<p><strong>Step 13: Change application and see output</strong></p>
+<p><strong>Step 15: Change application and see output</strong></p>
 
 <ul>
   <li>Change a little bit on your application</li>

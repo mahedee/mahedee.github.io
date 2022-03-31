@@ -312,7 +312,7 @@
 
 
 
-  2 minute read
+  4 minute read
 </p>
           
         </header>
@@ -401,7 +401,32 @@ The following tools and technologies used to configure Istio</p>
   <li>Release location is like - bin\Release\net6.0\publish\</li>
   <li>Click Finish</li>
   <li>From more action rename the profile as - JenkinsProfile</li>
-  <li>You will see two folders are created in Properties -&gt; PublishProfiles folder. Their name is - JenkinsProfile.pubxml and JenkinsProfile.pubxml.user</li>
+  <li>
+    <p>You will see two folders are created in Properties -&gt; PublishProfiles folder. Their name is - JenkinsProfile.pubxml and JenkinsProfile.pubxml.user</p>
+  </li>
+  <li>Modify the pubxml file in Properties/PublishProfiles/JnekinsProfile.pubxml</li>
+  <li>Change WebPublishMethod to Package from FileSystem as like below.</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="c">&lt;!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+--&gt;</span>
+<span class="nt">&lt;Project</span> <span class="na">ToolsVersion=</span><span class="s">"4.0"</span> <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/developer/msbuild/2003"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;DeleteExistingFiles&gt;</span>False<span class="nt">&lt;/DeleteExistingFiles&gt;</span>
+    <span class="nt">&lt;ExcludeApp_Data&gt;</span>False<span class="nt">&lt;/ExcludeApp_Data&gt;</span>
+    <span class="nt">&lt;LaunchSiteAfterPublish&gt;</span>True<span class="nt">&lt;/LaunchSiteAfterPublish&gt;</span>
+    <span class="nt">&lt;LastUsedBuildConfiguration&gt;</span>Release<span class="nt">&lt;/LastUsedBuildConfiguration&gt;</span>
+    <span class="nt">&lt;LastUsedPlatform&gt;</span>Any CPU<span class="nt">&lt;/LastUsedPlatform&gt;</span>
+    <span class="nt">&lt;PublishProvider&gt;</span>FileSystem<span class="nt">&lt;/PublishProvider&gt;</span>
+    <span class="nt">&lt;PublishUrl&gt;</span>bin\Release\net6.0\publish\<span class="nt">&lt;/PublishUrl&gt;</span>
+    <span class="nt">&lt;WebPublishMethod&gt;</span>Package<span class="nt">&lt;/WebPublishMethod&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+<span class="nt">&lt;/Project&gt;</span>
+</code></pre></div></div>
+
+<ul>
   <li>Commit and push this changes on the github.</li>
 </ul>
 
@@ -411,11 +436,126 @@ The following tools and technologies used to configure Istio</p>
   <li>Download and install latest version of Microsoft web deploy, if it is not already installed. In my case, it is already installed with visual studio 2022.</li>
 </ul>
 
-<p><strong>Step 8: Create Pipeline using Jenkins</strong></p>
+<p><strong>Step 8: Create Credentials Id</strong></p>
+
+<ul>
+  <li>Navigate to Manage to “Manage Jenkins” -&gt; Manage Credentials -&gt; Click Jenkins -&gt; Click Global Credentials (Unrestricted) -&gt; Click Adding some credentials.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-6.PNG" alt="" /></p>
+
+<ul>
+  <li>In this case, I have given my git password as password.</li>
+  <li>Fill the form and click OK</li>
+  <li>Id will be generated automatically.</li>
+  <li>Back to Global credentials (unrestricted) and click Update. You will get ID here.</li>
+</ul>
+
+<p><strong>Step 9: Create Pipeline using Jenkins</strong></p>
 
 <ul>
   <li>Click “Create a job” on the Jenkins home page.</li>
 </ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-3.PNG" alt="" /></p>
+
+<ul>
+  <li>Select Pipeline of the next screen, give a name of the pipeline, I am giving the name of pipeline is HRMPipelines and Click Ok.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-4.PNG" alt="" /></p>
+
+<ul>
+  <li>Now add follwoing script on Pipleline section as mentioned below.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-5.PNG" alt="" /></p>
+
+<pre><code class="language-Groovy">pipeline {  
+ agent any  
+ environment {  
+  dotnet = 'C:\\Program Files\\dotnet\\dotnet.exe'  
+ }  
+ stages {  
+  stage('Checkout') {  
+   steps {
+       git credentialsId: 'aee7d65a-33a7-4616-ab5e-4a1598289b1b', url: 'https://github.com/mahedee/code-sample02.git', branch: 'main'
+   }  
+  }  
+ stage('Build') {  
+   steps {  
+    bat 'dotnet build %WORKSPACE%\\jenkins-demo\\HRM\\HRM.sln --configuration Release' 
+    //bat 'dotnet build C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\HRMPipelines\\jenkins-demo\\HRM\\HRM.sln --configuration Release'  
+   }  
+  }  
+  stage('Test') {  
+   steps {  
+    bat 'dotnet test %WORKSPACE%\\jenkins-demo\\HRM\\HRM.Test\\HRM.Test.csproj --logger:trx'  
+   }  
+  }
+  
+  stage("Release"){
+      steps {
+      bat 'dotnet build  %WORKSPACE%\\jenkins-demo\\HRM\\HRM.sln /p:PublishProfile=" %WORKSPACE%\\jenkins-demo\\HRM\\HRM.API\\Properties\\PublishProfiles\\JenkinsProfile.pubxml" /p:Platform="Any CPU" /p:DeployOnBuild=true /m'
+    }
+  }
+  
+  stage('Deploy') {
+    steps {
+    // Stop IIS
+    //bat 'net stop "w3svc"'
+    
+    // Deploy package to IIS
+    bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:package="%WORKSPACE%\\jenkins-demo\\HRM\\HRM.API\\bin\\Debug\\net6.0\\HRM.API.zip" -dest:auto -setParam:"IIS Web Application Name"="HRM.Web" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+    
+    // Start IIS again
+    //bat 'net start "w3svc"'
+    }
+ }
+
+ }  
+} 
+</code></pre>
+
+<p><strong>Step 10: Configure Build Triggers</strong></p>
+
+<ul>
+  <li>Mark GitHub hook trigger for GITScm polling and Pool SCM</li>
+  <li>Type schedule as * * * * *  which means, keep checking the Git repository and as soon as commit/check-in is done, trigger the build process. Here there is a space after each star.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-7.PNG" alt="" /></p>
+
+<ul>
+  <li>
+    <p>You can use  */15 * * * * if you want to run pipeline after 15 minutes of push on main.</p>
+  </li>
+  <li>
+    <p>Click Save</p>
+  </li>
+</ul>
+
+<p><strong>Step 11: Run pipeline manually</strong></p>
+
+<ul>
+  <li>Go to the dashboard</li>
+  <li>Click HRMPipelines</li>
+  <li>Click Build Now and you will see the following screen. It means, build and deployment completed sucessfully.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/jenkins-8.PNG" alt="" /></p>
+
+<p><strong>Step 12: Change application and see output</strong></p>
+
+<ul>
+  <li>Change a little bit on your application</li>
+  <li>Commit and push it to the Github</li>
+  <li>Wait a bit and you will see the build and deployed successfully.</li>
+</ul>
+
+<p>Now test your application using the following URL:</p>
+
+<p>http://localhost:8012/swagger/index.html</p>
 
 <p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/jenkins-demo">Source Code</a></strong></p>
 

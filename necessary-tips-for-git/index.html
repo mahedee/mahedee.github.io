@@ -351,7 +351,19 @@ For all unstaged files in current working directory use:
       </li>
     </ul>
   </li>
+  <li>Move git repository to another repository with history</li>
 </ul>
+
+<pre><code class="language-github">cd existing_repo
+
+git remote rename origin old-origin
+
+git remote add origin http://192.168.104.33/gitlab-instance-f3a04ace/Monitoring.git
+
+git push -u origin --all
+
+git push -u origin --tags
+</code></pre>
 
         
       </section>

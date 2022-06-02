@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-05-23T09:12:58+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure CI/CD pipeline with Jenkins and Github using an asp.net core application</title><link href="https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core/" rel="alternate" type="text/html" title="Configure CI/CD pipeline with Jenkins and Github using an asp.net core application" /><published>2022-03-25T00:00:00+00:00</published><updated>2022-03-25T00:00:00+00:00</updated><id>https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core</id><content type="html" xml:base="https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core/"><![CDATA[<p><strong>Overview</strong></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-06-02T12:05:36+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure CI/CD pipeline with Jenkins and Github using an asp.net core application</title><link href="https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core/" rel="alternate" type="text/html" title="Configure CI/CD pipeline with Jenkins and Github using an asp.net core application" /><published>2022-03-25T00:00:00+00:00</published><updated>2022-03-25T00:00:00+00:00</updated><id>https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core</id><content type="html" xml:base="https://mahedee.net//configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core/"><![CDATA[<p><strong>Overview</strong></p>
 
 <p>Jenkins is an open source automation server to facilitate CI/CD. It helps to automate software development jobs like building, testing, and deploying. In this article we are going to show you how to configure CI/CD pipeline with Jenkins and Github for an ASP.NET Core Web API application.</p>
 
@@ -1821,12 +1821,12 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <p><strong>Dockerfile</strong></p>
 
 <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">EXPOSE</span><span class="s"> 80</span>
 <span class="k">EXPOSE</span><span class="s"> 443</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
 <span class="k">WORKDIR</span><span class="s"> /src</span>
 <span class="k">COPY</span><span class="s"> ["/Catalog.API.csproj", "Catalog.API/"]</span>
 <span class="k">RUN </span>dotnet restore <span class="s2">"Catalog.API/Catalog.API.csproj"</span>
@@ -1835,10 +1835,10 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
 <span class="k">RUN </span>dotnet build <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
 
-<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
 <span class="k">RUN </span>dotnet publish <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
 
-<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Catalog.API.dll"]</span>
@@ -1984,7 +1984,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <p><strong>Dockerfile</strong></p>
 
 <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">EXPOSE</span><span class="s"> 80</span>
 <span class="k">EXPOSE</span><span class="s"> 443</span>
@@ -1992,7 +1992,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_URLS=http://*:80;</span>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
 <span class="k">WORKDIR</span><span class="s"> /src</span>
 
 <span class="k">COPY</span><span class="s"> ["/Location.API.csproj", "Location.API/"]</span>
@@ -2003,10 +2003,10 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">WORKDIR</span><span class="s"> "/src/Location.API"</span>
 <span class="k">RUN </span>dotnet build <span class="s2">"Location.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
 
-<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
 <span class="k">RUN </span>dotnet publish <span class="s2">"Location.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
 
-<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Location.API.dll"]</span>
@@ -2286,7 +2286,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <p><strong>Dockerfile</strong></p>
 
-<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">EXPOSE</span><span class="s"> 80</span>
 <span class="k">EXPOSE</span><span class="s"> 443</span>
@@ -2294,7 +2294,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_URLS=http://*:80;</span>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
 <span class="k">WORKDIR</span><span class="s"> /src</span>
 <span class="k">COPY</span><span class="s"> ["/Ordering.API.csproj", "Ordering.API/"]</span>
 <span class="k">RUN </span>dotnet restore <span class="s2">"Ordering.API/Ordering.API.csproj"</span>
@@ -2303,10 +2303,10 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">WORKDIR</span><span class="s"> "/src/Ordering.API"</span>
 <span class="k">RUN </span>dotnet build <span class="s2">"Ordering.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
 
-<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
 <span class="k">RUN </span>dotnet publish <span class="s2">"Ordering.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
 
-<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Ordering.API.dll"]</span>
@@ -2753,7 +2753,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 
 <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">EXPOSE</span><span class="s"> 80</span>
 <span class="k">EXPOSE</span><span class="s"> 443</span>
@@ -2761,7 +2761,7 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_URLS=http://*:80;</span>
 <span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
 <span class="k">WORKDIR</span><span class="s"> /src</span>
 <span class="k">COPY</span><span class="s"> ["/BFF.Web.csproj", "BFF.Web/"]</span>
 <span class="k">RUN </span>dotnet restore <span class="s2">"BFF.Web/BFF.Web.csproj"</span>
@@ -2771,10 +2771,10 @@ curl -L https://istio.io/downloadIstio | sh -</p>
 <span class="k">WORKDIR</span><span class="s"> "/src/BFF.Web"</span>
 <span class="k">RUN </span>dotnet build <span class="s2">"BFF.Web.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
 
-<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
 <span class="k">RUN </span>dotnet publish <span class="s2">"BFF.Web.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
 
-<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "BFF.Web.dll"]</span>
@@ -11561,7 +11561,7 @@ Kubernetes is an open-source container orchestration system for automating softw
 
 <div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/aspnet:6.0 AS base</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">EXPOSE</span><span class="s"> 80</span>
 <span class="k">EXPOSE</span><span class="s"> 443</span>
@@ -11574,7 +11574,7 @@ Kubernetes is an open-source container orchestration system for automating softw
 <span class="k">ENV</span><span class="s"> ASPNETCORE_ENVIRONMENT=Development</span>
 
 
-<span class="k">FROM</span><span class="s"> mcr.microsoft.com/dotnet/sdk:6.0 AS build</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
 <span class="k">WORKDIR</span><span class="s"> /src</span>
 <span class="k">COPY</span><span class="s"> ["/Catalog.API.csproj", "Catalog.API/"]</span>
 <span class="k">RUN </span>dotnet restore <span class="s2">"Catalog.API/Catalog.API.csproj"</span>
@@ -11584,10 +11584,10 @@ Kubernetes is an open-source container orchestration system for automating softw
 <span class="k">WORKDIR</span><span class="s"> "/src/Catalog.API"</span>
 <span class="k">RUN </span>dotnet build <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
 
-<span class="k">FROM</span><span class="s"> build AS publish</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
 <span class="k">RUN </span>dotnet publish <span class="s2">"Catalog.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
 
-<span class="k">FROM</span><span class="s"> base AS final</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
 <span class="k">WORKDIR</span><span class="s"> /app</span>
 <span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
 <span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "Catalog.API.dll"]</span>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-06-08T12:02:43+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">How to create SSH fingerprint for Azure DevOps</title><link href="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/" rel="alternate" type="text/html" title="How to create SSH fingerprint for Azure DevOps" /><published>2022-04-10T00:00:00+00:00</published><updated>2022-04-10T00:00:00+00:00</updated><id>https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops</id><content type="html" xml:base="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/"><![CDATA[<p>It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-06-09T04:06:00+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">How to create SSH fingerprint for Azure DevOps</title><link href="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/" rel="alternate" type="text/html" title="How to create SSH fingerprint for Azure DevOps" /><published>2022-04-10T00:00:00+00:00</published><updated>2022-04-10T00:00:00+00:00</updated><id>https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops</id><content type="html" xml:base="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/"><![CDATA[<p>It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.</p>
 
 <p><strong>Step 1:Create SSH Keys</strong></p>
 
@@ -67,7 +67,33 @@
 
 <p><strong>Problem</strong></p>
 
-<p><strong>Solution</strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Command" /><category term="Source Control" /><category term="command" /><category term="sourcecontrol" /><summary type="html"><![CDATA[It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.]]></summary></entry><entry><title type="html">Dot net command at a glance</title><link href="https://mahedee.net//dotnet-command-at-a-glance/" rel="alternate" type="text/html" title="Dot net command at a glance" /><published>2022-04-05T00:00:00+00:00</published><updated>2022-04-05T00:00:00+00:00</updated><id>https://mahedee.net//dotnet-command-at-a-glance</id><content type="html" xml:base="https://mahedee.net//dotnet-command-at-a-glance/"><![CDATA[<ul>
+<p>After configuring SSH, I got the following error while tried to clone repository.</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">git@ssh.dev.azure.com:v3</span><span class="nv">/yourorganization/yourrepository</span>
+</code></pre></div></div>
+
+<p>I was getting the following message:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git@ssh.dev.azure.com's</span> <span class="nf">password:</span>
+</code></pre></div></div>
+
+<p>I have tried all using all sorts of password but failed.</p>
+
+<p><strong>Solution</strong></p>
+
+<ol>
+  <li>OpenSSH Authentication Agent was disabled on my PC. I started the service.</li>
+</ol>
+
+<p><img src="/assets/images/posts/2022/ssh-05.PNG" alt="" /></p>
+
+<ol>
+  <li>SSH.exe was not added on environment varaible. I have added it on environment variable.</li>
+</ol>
+
+<p><img src="/assets/images/posts/2022/ssh-06.PNG" alt="" /></p>
+
+<p>Then I tried to clone the repository and It was working fine.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Command" /><category term="Source Control" /><category term="command" /><category term="sourcecontrol" /><summary type="html"><![CDATA[It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.]]></summary></entry><entry><title type="html">Dot net command at a glance</title><link href="https://mahedee.net//dotnet-command-at-a-glance/" rel="alternate" type="text/html" title="Dot net command at a glance" /><published>2022-04-05T00:00:00+00:00</published><updated>2022-04-05T00:00:00+00:00</updated><id>https://mahedee.net//dotnet-command-at-a-glance</id><content type="html" xml:base="https://mahedee.net//dotnet-command-at-a-glance/"><![CDATA[<ul>
   <li><strong>Verify the dotnet version</strong></li>
 </ul>
 

@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Most used docker commands - Think Simple</title>
-<meta name="description" content="Most used necessary docker commands which are using daily">
+<meta name="description" content="Most used necessary docker commands which are using everyday">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://mahedee.net//commands-for-docker/">
 
 
-  <meta property="og:description" content="Most used necessary docker commands which are using daily">
+  <meta property="og:description" content="Most used necessary docker commands which are using everyday">
 
 
 
@@ -297,7 +297,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Most used docker commands">
-    <meta itemprop="description" content="Most used necessary docker commands which are using daily">
+    <meta itemprop="description" content="Most used necessary docker commands which are using everyday">
     <meta itemprop="datePublished" content="January 01, 2009">
     
 
@@ -312,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
           
         </header>
@@ -322,16 +322,33 @@
         
         <h2 id="some-most-used-commands-for-docker">Some most used commands for docker</h2>
 
-<p><strong>Stop all docker containers</strong></p>
+<ul>
+  <li><strong>Remove all docker images</strong>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>See list of running containers</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">ps</span>
+</code></pre></div></div>
+<ul>
+  <li><strong>Restart a container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">restart</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">name</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Stop all docker containers</strong></li>
+</ul>
 
 <pre><code class="language-cmd">docker stop $(docker ps -a -q)
 </code></pre>
 <p><strong>Remove all docker containers</strong></p>
 <pre><code class="language-cmd">docker rm $(docker ps -a -q)
 </code></pre>
-<p><strong>Remove all docker images</strong></p>
-<pre><code class="language-cmd">docker rmi $(docker images -q)
-</code></pre>
+
 <p><strong>Deleting no longer needed containers (stopped)</strong></p>
 <pre><code class="language-cmd">docker container prune
 </code></pre>
@@ -346,6 +363,59 @@
 <p><strong>Same for unused networks</strong></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network prune
 </code></pre></div></div>
+
+<ul>
+  <li><strong>SSH into container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="p">&lt;</span><span class="nf">container-id</span><span class="p">&gt;</span> <span class="nf">sh</span>
+<span class="p">&gt;&gt;</span><span class="nf">ls</span> <span class="s">(Type ls to see all files and directory)</span>
+<span class="p">&gt;&gt;</span><span class="nb">exit</span> <span class="s">(type exit to return from the container)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>View information about your container using command</strong>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">C:\Users\mahedee</span><span class="p">&gt;</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="nf">b73cb9467f5a</span> <span class="nf">sh</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">app</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">Controllers</span>  <span class="nf">Dockerfile</span>  <span class="nf">HRM.API.csproj</span>  <span class="nf">HRM.API.csproj.user</span>  <span class="nf">Program.cs</span>  <span class="nf">Properties</span>  <span class="nf">WeatherForecast.cs</span>  <span class="nf">appsettings.Development.json</span>  <span class="nf">appsettings.json</span>  <span class="nf">bin</span>  <span class="nf">obj</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">src</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">HRM.API</span>  <span class="nf">HRM.API.sln</span>  <span class="nf">bin</span>  <span class="nf">docker-compose.dcproj</span>  <span class="nf">docker-compose.override.yml</span>  <span class="nf">docker-compose.yml</span>  <span class="nf">obj</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">bin</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">Debug</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">debug</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">HRM.API.deps.json</span>  <span class="nf">HRM.API.exe</span>  <span class="nf">HRM.API.runtimeconfig.json</span>  <span class="nf">Swashbuckle.AspNetCore.Swagger.dll</span>     <span class="nf">Swashbuckle.AspNetCore.SwaggerUI.dll</span>  <span class="nf">appsettings.json</span>
+<span class="nf">HRM.API.dll</span>        <span class="nf">HRM.API.pdb</span>  <span class="nf">Microsoft.OpenApi.dll</span>       <span class="nf">Swashbuckle.AspNetCore.SwaggerGen.dll</span>  <span class="nf">appsettings.Development.json</span>
+<span class="nf">#</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>View information about your container user Visual Studio</strong></p>
+
+<ul>
+  <li>Use Ctrl+Q to activate Visual Studio Search Box, and type containers.</li>
+  <li>Or, Go to View &gt; Other Windows &gt; Containers.</li>
+</ul>
+
+<!-- References
+https://docs.microsoft.com/en-us/visualstudio/containers/view-and-diagnose-containers?view=vs-2022 
+
+https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
+
+
+-->
+
+<p>__</p>
 
         
       </section>

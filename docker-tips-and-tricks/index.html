@@ -312,7 +312,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -334,6 +334,13 @@
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">--version</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Login to docker</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
 </code></pre></div></div>
 
 <ul>
@@ -510,6 +517,74 @@
 </ul>
 
 <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">inspect</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Run a docker image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Syntax:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="p">&lt;</span><span class="nf">host</span> <span class="nf">port</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">image</span> <span class="nf">port</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nf">any</span> <span class="nf">tag</span> <span class="nf">name</span><span class="p">&gt;</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="nf">8777:80</span> <span class="nf">test2</span>  
+<span class="nf">Explanation:</span> 
+<span class="nf">Here</span> <span class="nf">test2</span> <span class="nf">is</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span> <span class="nf">which</span> <span class="nf">already</span> <span class="nf">running</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Login to docker and push an image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span>  
+<span class="nf">Explanation:</span> 
+<span class="nf">Here</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Setting the API Port with an Environment Variable inside a container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">export</span> <span class="nf">ASPNETCORE_URLS=http:</span><span class="err">/</span><span class="nv">/+:80</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To see docker event in json format</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">events</span> <span class="nf">--format</span> <span class="nf">''</span>
+
+<span class="nf">Tips:</span>
+<span class="nf">Run</span> <span class="nf">this</span> <span class="nf">command</span> <span class="nf">in</span> <span class="nf">another</span> <span class="nf">windows</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To detach docker compose file</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">up</span> <span class="nf">-d</span>
+</code></pre></div></div>
+<ul>
+  <li><strong>To see the log while running docker compose file</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">logs</span> <span class="nf">-f</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Stop and remove containers, networks, images, and volumes</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">down</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Remove one or more images</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="p">&lt;</span><span class="nf">repository</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">tag</span><span class="p">&gt;</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="nf">mahedee</span><span class="nv">/webapi:build</span>
 </code></pre></div></div>
 
 <!-- References

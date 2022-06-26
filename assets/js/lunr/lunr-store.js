@@ -115,7 +115,7 @@ var store = [{
         "url": "https://mahedee.net//sql-server-common-interview-questions/",
         "teaser":null},{
         "title": "Ringing buzzer with C : Embedded system beginning – 2",
-        "excerpt":"  ","categories": ["C","Embedded System"],
+        "excerpt":"  Source Code  ","categories": ["C","Embedded System"],
         "tags": ["c","embeddedsystem"],
         "url": "https://mahedee.net//ringing-buzzer-with-c-embedded-system-beginning-2/",
         "teaser":null},{
@@ -141,7 +141,7 @@ var store = [{
         "teaser":null},{
         "title": "Color a row of excel based on cell date time value (Today)",
         "excerpt":"   Select all rows of excel in which you want to apply formula. There must be a date time filed on which you will apply rule. Suppose, column A is date time column and it is started from A2   Conditional Formatting -&gt; New Rule -&gt; Use formula to determine which cell to format   Write in format value text box:  =$A2=TODAY()   Click Format button -&gt; select fill tab -&gt; and select color -&gt; Click Ok   Finally click ok in the dialog box to apply.  ","categories": ["MS Office","Troubleshooting"],
-        "tags": ["MS Office","Troubleshooting"],
+        "tags": ["msoffice","troubleshooting"],
         "url": "https://mahedee.net//color-a-row-of-excel-based-on-cell-date-time-value-today/",
         "teaser":null},{
         "title": "Set a fixed amount of memory in SQL Server (Using SQL Server Management Studio)",

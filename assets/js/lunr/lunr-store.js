@@ -14,15 +14,15 @@ var store = [{
         "tags": ["aspnet","csharp"],
         "url": "https://mahedee.net//service-mesh-istio/",
         "teaser":null},{
-        "title": "Some important links",
-        "excerpt":"   How to Install XAMPP and WordPress Locally on Windows PC  ","categories": ["Links"],
-        "tags": ["uncategorized","links"],
-        "url": "https://mahedee.net//some-important-links/",
-        "teaser":null},{
         "title": "Run Jekyll on local machine",
         "excerpt":"  Go to root directory   Run the following command  bundle exec jekyll serve -w  You will see an url like  Server address: http://127.0.0.1:4000  Go to this url and see locally &lt;!– ### References     Test –&gt;  ","categories": ["Blog","Jekyll"],
         "tags": ["testag","jekyll"],
         "url": "https://mahedee.net//run-minimal-mistake-locally-on-windows/",
+        "teaser":null},{
+        "title": "Some important links",
+        "excerpt":"   How to Install XAMPP and WordPress Locally on Windows PC  ","categories": ["Links"],
+        "tags": ["uncategorized","links"],
+        "url": "https://mahedee.net//some-important-links/",
         "teaser":null},{
         "title": "Install jekyll on windows step by step",
         "excerpt":"Install jekyll on windows step by step   Here is the list of tools or plugins I needed to install to run the blog locally.   Windows      Install jekyll on windows   VSCode extensions      Markdown All in One   Code Spell Checker   Steps      run bundle install (first time only)   bundle exec jekyll serve to serve the application   Tools that didn’t work   For some unknown reason, installing via choco didn’t didn’t work.      Chocolatey (Kept)   Jekyll (Removed)  ","categories": ["Blog","Configuration","Jekyll"],
@@ -893,4 +893,9 @@ var store = [{
         "excerpt":"এক রাজার এক মন্ত্রী ছিলো যে সবকিছুর ক্ষেত্রে বলতো “আল্লাহ যা করেন ভালোর জন্যই করেন”।   একবার রাজার হাত কেটে গেলো এবং মন্ত্রী ঐ একই কথা বললো “আল্লাহ যা করেন ভালোর জন্যই করেন।”   মন্ত্রীর এই কথা শুনে রাজা এতোটাই রাগান্বিত হলো যে তাকে বন্দি করে কারাগারে পাঠালো।   নিজের কারাগারের ফায়সালায়ও মন্ত্রীর সেই একই কথা “আল্লাহ যা করেন ভালোর জন্যই করেন।”   রাজা এবং মন্ত্রী সবসময় একসাথে জংগলে শিকারে বের হতো।   কিন্তু এবার রাজা একা গেলেন কারণ মন্ত্রী তখন কারাগারে।   শিকার করার সময় হঠাৎ জংলি লোকেরা এসে রাজাকে ধরে নিয়ে গেলো এবং তাকে তাদের দেবতার জন্য বলি দিতে মনস্থির করলো।   এক পর্যায়ে তারা দেখলো রাজার হাত কাটা এবং এই ধরনের ব্যক্তিকে তারা বলির অযোগ্য মনে করে। ফলে তারা রাজাকে ছেড়ে দিলো।   সুবহান আল্লাহ।   রাজা তখন বুঝতে পারলো যে তার হাত কাটাই তার জন্য কল্যাণকর ছিলো।   রাজা তখন মন্ত্রীকে ছেড়ে দিলো এবং জিজ্ঞেস করলো, “আমার হাত কাটা নাহয় ভালোর জন্য ছিলো কিন্তু তোমার কারাবন্দী হওয়া কিভাবে ভালো ছিলো”?   তখন মন্ত্রী বললো, সবসময় তো শিকারে আপনি আর আমি বের হই অথচ এবার আপনি একা ছিলেন।   যদি আমিও আপনার সাথে থাকতাম তাহলে আপনার জায়গায় আমি বলি হয়ে যেতাম কারণ আমার হাত কাটা ছিলো না।   অতএব কারাগারে থাকাই আমার জন্য কল্যাণের ছিলো। সুতরাং আল্লাহ যা করেন ভালোর জন্যই করেন।   আমরা বুঝি বা না বুঝি প্রতিটা ঘটে যাওয়া ঘটনাই আমাদের জন্য কল্যাণকর যদিও আপাত দৃষ্টিতে তা আমাদের জন্য ক্ষতি মনে হয়।           সংগৃহিত            গল্পের সত্যতা আল্লাহ ভালো জানেন তবে শিক্ষনীয়      ","categories": [],
         "tags": null,
         "url": "https://mahedee.net//2009-02-03-allah-ja-koren-valor-jonnei-koren/",
+        "teaser":null},{
+        "title": null,
+        "excerpt":"আইনস্টাইনের যিনি ড্রাইভার ছিলেন,   তিনি একবার আইনস্টাইনকে বললেন– “স্যার, আপনি প্রতিটি সভায় যে ভাষণ দেন সেগুলো শুনে শুনে আমার মুখস্থ হয়ে গেছে।”   আইনস্টাইন তো অবাক!!!   উনি বললেন– “বেশ, এর পরের মিটিংএ যেখানে যাবো তারা আমাকে চেনেন না, তুমি ওখানে আমার হয়ে ভাষণ দিয়ে দিও। আর আমি ড্রাইভার হয়ে বসে থাকব।”   যেমনি বলা তেমনি কাজ। পরের দিন সভায় তো ড্রাইভার উঠে গেলেন স্টেজে। হুবহু আইনস্টাইন এর ভাষণ গড় গড় করে বলে গেলেন।   উপস্থিত বিদ্বজ্জনেরা তুমুল করতালি দিলেন।   এরপর তারা ড্রাইভারকে আইনস্টাইন ভেবেই গাড়িতে পৌঁছে দিতে এলেন।   সেই সময়ে একজন অধ্যাপক ড্রাইভারকে জিজ্ঞেস করলেন–  “স্যার, ঐ আপেক্ষিক তত্ত্বের যে সংজ্ঞাটা বললেন, সেটা আরেকবার সংক্ষেপে বুঝিয়ে দেবেন?”   আসল আইনস্টাইন দেখলেন এ তো মহাবিপদ! এবার ড্রাইভার ধরা পড়ে যাবে। কিন্তু তিনি ড্রাইভারের উত্তর শুনে তাজ্জব বনে গেলেন।   ড্রাইভার উত্তর দিলো– “এই সহজ জিনিসটা আপনার মাথায় ঢোকেনি? আমার ড্রাইভারকে জিজ্ঞেস করুন, সে বুঝিয়ে দেবে।”   বিঃদ্রঃ- জ্ঞানী ব্যাক্তিদের সাথে চলাফেরা করলে আপনিও জ্ঞানী হয়ে উঠবেন। আপনি যেমন মানুষের সাথে মিশবেন তেমনই আপনার চরিত্র গড়ে উঠবে।   এই জন্যই বলে– “সৎ সঙ্গে স্বর্গবাস। অসৎ সঙ্গে সর্বনাশ।”   সংগৃহিত  ","categories": [],
+        "tags": null,
+        "url": "https://mahedee.net//2009-04-03-einstein-er-driver/",
         "teaser":null}]

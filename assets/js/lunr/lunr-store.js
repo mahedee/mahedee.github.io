@@ -34,6 +34,11 @@ var store = [{
         "tags": ["uncategorized","links"],
         "url": "https://mahedee.net//some-important-links/",
         "teaser":null},{
+        "title": "আইনস্টাইনের ড্রাইভার",
+        "excerpt":"আইনস্টাইনের যিনি ড্রাইভার ছিলেন,   তিনি একবার আইনস্টাইনকে বললেন– “স্যার, আপনি প্রতিটি সভায় যে ভাষণ দেন সেগুলো শুনে শুনে আমার মুখস্থ হয়ে গেছে।”   আইনস্টাইন তো অবাক!!!   উনি বললেন– “বেশ, এর পরের মিটিংএ যেখানে যাবো তারা আমাকে চেনেন না, তুমি ওখানে আমার হয়ে ভাষণ দিয়ে দিও। আর আমি ড্রাইভার হয়ে বসে থাকব।”   যেমনি বলা তেমনি কাজ। পরের দিন সভায় তো ড্রাইভার উঠে গেলেন স্টেজে। হুবহু আইনস্টাইন এর ভাষণ গড় গড় করে বলে গেলেন।   উপস্থিত বিদ্বজ্জনেরা তুমুল করতালি দিলেন।   এরপর তারা ড্রাইভারকে আইনস্টাইন ভেবেই গাড়িতে পৌঁছে দিতে এলেন।   সেই সময়ে একজন অধ্যাপক ড্রাইভারকে জিজ্ঞেস করলেন–  “স্যার, ঐ আপেক্ষিক তত্ত্বের যে সংজ্ঞাটা বললেন, সেটা আরেকবার সংক্ষেপে বুঝিয়ে দেবেন?”   আসল আইনস্টাইন দেখলেন এ তো মহাবিপদ! এবার ড্রাইভার ধরা পড়ে যাবে। কিন্তু তিনি ড্রাইভারের উত্তর শুনে তাজ্জব বনে গেলেন।   ড্রাইভার উত্তর দিলো– “এই সহজ জিনিসটা আপনার মাথায় ঢোকেনি? আমার ড্রাইভারকে জিজ্ঞেস করুন, সে বুঝিয়ে দেবে।”   বিঃদ্রঃ- জ্ঞানী ব্যাক্তিদের সাথে চলাফেরা করলে আপনিও জ্ঞানী হয়ে উঠবেন। আপনি যেমন মানুষের সাথে মিশবেন তেমনই আপনার চরিত্র গড়ে উঠবে।   এই জন্যই বলে– “সৎ সঙ্গে স্বর্গবাস। অসৎ সঙ্গে সর্বনাশ।”   সংগৃহিত  ","categories": ["Bangla","Lesson Learned","Story","Collected"],
+        "tags": ["Bangla","lessonlearned","story","collected"],
+        "url": "https://mahedee.net//einstein-er-driver-copy/",
+        "teaser":null},{
         "title": "Install jekyll on windows step by step",
         "excerpt":"Install jekyll on windows step by step   Here is the list of tools or plugins I needed to install to run the blog locally.   Windows      Install jekyll on windows   VSCode extensions      Markdown All in One   Code Spell Checker   Steps      run bundle install (first time only)   bundle exec jekyll serve to serve the application   Tools that didn’t work   For some unknown reason, installing via choco didn’t didn’t work.      Chocolatey (Kept)   Jekyll (Removed)  ","categories": ["Blog","Configuration","Jekyll"],
         "tags": ["jekyll","uncategorized"],

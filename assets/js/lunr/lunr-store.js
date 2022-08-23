@@ -184,6 +184,11 @@ var store = [{
         "tags": ["msoffice","troubleshooting"],
         "url": "https://mahedee.net//color-a-row-of-excel-based-on-cell-date-time-value-today/",
         "teaser":null},{
+        "title": "Important Tools and Technologies",
+        "excerpt":"Database     Redis Desktop Manager            Read the Docs       Tutorial          ","categories": ["Tools","Technologies","Links","Software"],
+        "tags": ["tools","technologies","links","software"],
+        "url": "https://mahedee.net//important-tools-and-technologies/",
+        "teaser":null},{
         "title": "Set a fixed amount of memory in SQL Server (Using SQL Server Management Studio)",
         "excerpt":"Min Server memory and max server memory are two server memory options in SQL Server to configure the amount of memory (in megabytes) in the buffer pool used by an instance. SQL Server can change its memory requirements dynamically by default. But you can configure it based on your system memory.   Follow the following steps to set fixed amount of memory in SQL Server.      Right click on server and select Properties in Object Explorer.         Click/Select Memory node like below screen.         Under Server Memory Options, enter the amount that you want forMinimum server memory and Maximum server memory. Here I used 4500 MB on basis of my system capacity.   Default settings:   Min server memory = 0  Max server memory = 2147483647 MB  ","categories": ["SQL Server","Troubleshooting","Database"],
         "tags": ["sqlserver","troubleshooting","database"],

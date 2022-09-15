@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>HTTP Error 404.3 - Think Simple</title>
-<meta name="description" content="hi">
+<!-- begin _includes/seo.html --><title>How to connect SQL Server from docker container using SSMS - Think Simple</title>
+<meta name="description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="HTTP Error 404.3">
-<meta property="og:url" content="https://mahedee.net//http-error-404-3/">
+<meta property="og:title" content="How to connect SQL Server from docker container using SSMS">
+<meta property="og:url" content="https://mahedee.net//how-to-connet-sql-server-from-docker-using-ssms/">
 
 
-  <meta property="og:description" content="hi">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2013-02-10T00:00:00+00:00">
+  <meta property="og:description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2022-04-10T00:00:00+00:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="https://mahedee.net//http-error-404-3/">
+
+<link rel="canonical" href="https://mahedee.net//how-to-connet-sql-server-from-docker-using-ssms/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="HTTP Error 404.3">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="February 10, 2013">
+    <meta itemprop="headline" content="How to connect SQL Server from docker container using SSMS">
+    <meta itemprop="description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
+    <meta itemprop="datePublished" content="April 10, 2022">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">HTTP Error 404.3
+          <h1 id="page-title" class="page__title" itemprop="headline">How to connect SQL Server from docker container using SSMS
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -320,19 +320,36 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Did you find the error “HTTP Error 404.3” ? Yes, I found the error at the time of deploying my ASP.NET web application to IIS 7. I found the following error (screen shot).</p>
+        <p>Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio.</p>
 
-<p><img src="/assets/images/posts/2013/Untitled.jpg" alt="" /></p>
+<p><strong>Sample docker-compose.yml</strong></p>
 
-<p><img src="/assets/images/posts/2013/config.jpg" alt="" /></p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">sqldbsaga</span><span class="pi">:</span>
+   <span class="na">image</span><span class="pi">:</span> <span class="s">mcr.microsoft.com/mssql/server:2019-latest</span> 
+</code></pre></div></div>
 
-<p><strong>To solve the error follow the following steps:</strong></p>
+<p><strong>docker-compose.override.yml</strong></p>
 
-<p>Step 1: Go to Control Panel -&gt; Programs and Features -&gt; Turn Windows Features on or off</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">sqldbsaga</span><span class="pi">:</span>
+   <span class="na">environment</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">SA_PASSWORD=MyPass@word</span>
+    <span class="pi">-</span> <span class="s">ACCEPT_EULA=Y</span>
+   <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">5533:1433"</span>
+   <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">kyc-saga-sqldb:/var/opt/mssql</span>
+</code></pre></div></div>
+<p><strong>Now connect using SSMS</strong></p>
+<ul>
+  <li>Run docker compose file</li>
+  <li>Run SQL server management studio</li>
+  <li>Server name should be - localhos, port name</li>
+  <li>Password would be MyPass@word as below image</li>
+</ul>
 
-<p>Step 2: Mark the features as like following image.</p>
+<p><img src="/assets/images/posts/2022/docker-ssms.PNG" alt="" /></p>
 
-<p>Step 3: Click OK and reset IIS.</p>
+<p>Then, click Connect.</p>
 
         
       </section>
@@ -353,11 +370,11 @@
     
       
       
-      <a href="/tags/#iis" class="page__taxonomy-item" rel="tag">iis</a><span class="sep">, </span>
+      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a>
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a>
     
     </span>
   </p>
@@ -378,40 +395,40 @@
     
       
       
-      <a href="/categories/#iis" class="page__taxonomy-item" rel="tag">IIS</a><span class="sep">, </span>
+      <a href="/categories/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
     
       
       
-      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a>
+      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2013-02-10T00:00:00+00:00">February 10, 2013</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-04-10T00:00:00+00:00">April 10, 2022</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=HTTP+Error+404.3%20https%3A%2F%2Fmahedee.net%2F%2Fhttp-error-404-3%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=How+to+connect+SQL+Server+from+docker+container+using+SSMS%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhttp-error-404-3%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhttp-error-404-3%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/most-used-quote-motivational-bangla/" class="pagination--pager" title="বানী চিরন্তনী
+      <a href="/dotnet-command-at-a-glance/" class="pagination--pager" title="Dot net command at a glance
 ">Previous</a>
     
     
-      <a href="/unlock-files-which-is-locked-by-someone-in-tfs/" class="pagination--pager" title="Unlock file(S) which is locked by someone in TFS
+      <a href="/docker-tips-and-tricks/" class="pagination--pager" title="Tips and tricks for docker
 ">Next</a>
     
   </nav>
@@ -500,7 +517,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/how-to-connet-sql-server-from-docker-using-ssms/" rel="permalink">How to connect SQL Server from docker container using SSMS
+        <a href="/dotnet-command-at-a-glance/" rel="permalink">Dot net command at a glance
 </a>
       
     </h2>
@@ -513,7 +530,8 @@
   less than 1 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Se...</p>
+    <p class="archive__item-excerpt" itemprop="description">Sometime we need to use dotnet command to create, build and run an application. Here, I have shared some common used dotnet commands
+</p>
   </article>
 </div>
 
@@ -527,7 +545,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/dotnet-command-at-a-glance/" rel="permalink">Dot net command at a glance
+        <a href="/configure-ci-cd-pipeline-with-jenkins-github-and-asp.net-core/" rel="permalink">Configure CI/CD pipeline with Jenkins and Github using an asp.net core application
 </a>
       
     </h2>
@@ -537,11 +555,10 @@
 
 
 
-  1 minute read
+  10 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Sometime we need to use dotnet command to create, build and run an application. Here, I have shared some common used dotnet commands
-</p>
+    <p class="archive__item-excerpt" itemprop="description">Jenkins is an open source automation server to facilitate CI/CD. It helps to automate software development jobs like building, testing, and deploying. In thi...</p>
   </article>
 </div>
 
@@ -633,8 +650,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//http-error-404-3/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/http-error-404-3"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "https://mahedee.net//how-to-connet-sql-server-from-docker-using-ssms/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/how-to-connet-sql-server-from-docker-using-ssms"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

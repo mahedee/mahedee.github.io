@@ -1,4 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-12-15T09:11:10+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure QoS in API Gateway using ocelot and Polly</title><link href="https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/" rel="alternate" type="text/html" title="Configure QoS in API Gateway using ocelot and Polly" /><published>2022-06-07T00:00:00+00:00</published><updated>2022-06-07T00:00:00+00:00</updated><id>https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly</id><content type="html" xml:base="https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/"><![CDATA[<p><strong>Introduction</strong><br />
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2022-12-15T12:02:14+00:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">How to host .net core NuGet Packages in GitHub Packages Registry</title><link href="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/" rel="alternate" type="text/html" title="How to host .net core NuGet Packages in GitHub Packages Registry" /><published>2022-06-15T00:00:00+00:00</published><updated>2022-06-15T00:00:00+00:00</updated><id>https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry</id><content type="html" xml:base="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/"><![CDATA[<p><strong>Introduction</strong></p>
+
+<p>GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.</p>
+
+<p><strong>Tools and Technology uses</strong></p>
+<ul>
+  <li>Visual Studio 2022</li>
+  <li>.NET 6</li>
+  <li>Visual C#</li>
+  <li>GitHub</li>
+</ul>
+
+<p><strong>Implementation</strong></p>
+
+<p><strong>Step 1: Create a personal access token (PAT) from GitHub</strong></p>
+
+<ul>
+  <li>Login into you GitHub</li>
+  <li>Go to settings -&gt; Developer Settings -&gt; Personal Access Tokens</li>
+  <li>Click “Generate new token” button</li>
+  <li>Type Note for the token, expiration days</li>
+  <li>
+    <p>Select scope for the token – here I have selected repo, write:packages, delete:packages as shown below.</p>
+
+    <p><img src="/assets/images/posts/2022/package-01.PNG" alt="" /></p>
+  </li>
+  <li>Now click “Generate Toke” at the bottom of the panel</li>
+  <li>Copy the token and store the token for further use because you cannot find it later</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/package-02.PNG" alt="" /></p>
+
+<p><strong>Step – 2: Add Nuget Source in visual studio</strong></p>
+<ul>
+  <li>Type the following command to add source</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nb">add</span> <span class="nf">source</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/nuget.pkg.github.com/mahedee/index.json</span> <span class="nf">--name</span> <span class="nf">github-mahedee</span> <span class="nf">--username</span> <span class="nf">mahedee</span> <span class="nf">--password</span> <span class="p">&lt;</span><span class="nf">Your</span> <span class="nf">personal</span> <span class="nf">Access</span> <span class="nf">Token</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>You will see a source is added in C:\Users\mahedee\AppData\Roaming\NuGet\NuGet.Config file</p>
+  </li>
+  <li>Optional: You can also add source from visual studio Tools -&gt; Options -&gt; NuGet Package Manager -&gt; Package Sources</li>
+  <li>Restart visual studio to get new nuget package source</li>
+</ul>
+
+<p><strong>Step – 3: Create a class library to publish in GitHub Packages</strong></p>
+<ul>
+  <li>Create a class library name – ‘CryptoEngine”</li>
+  <li>Create a class CryptoGenerator as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">System.Security.Cryptography</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">CryptoEngine</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CryptoGenerator</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">GenerateSha256Hash</span><span class="p">(</span><span class="kt">string</span> <span class="n">plainText</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create a SHA256   </span>
+            <span class="k">using</span> <span class="p">(</span><span class="n">SHA256</span> <span class="n">sha256Hash</span> <span class="p">=</span> <span class="n">SHA256</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="c1">// ComputeHash - returns byte array  </span>
+                <span class="kt">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="p">=</span> <span class="n">sha256Hash</span><span class="p">.</span><span class="nf">ComputeHash</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">plainText</span><span class="p">));</span>
+
+                <span class="c1">// Convert byte array to a string   </span>
+                <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="n">builder</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"x2"</span><span class="p">));</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Click right button on class library project -&gt; Package -&gt; General</li>
+  <li>Mark “Produce a package file during build operations”</li>
+  <li>Type Package ID, Package Version, Authors, Company, Product, Description</li>
+  <li>Type repository URL – A github repository and save</li>
+  <li>Now you will see the csproj file as follows</li>
+</ul>
+
+<p><strong>CryptoEngine.csproj</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;TargetFramework&gt;</span>net6.0<span class="nt">&lt;/TargetFramework&gt;</span>
+    <span class="nt">&lt;ImplicitUsings&gt;</span>enable<span class="nt">&lt;/ImplicitUsings&gt;</span>
+    <span class="nt">&lt;Nullable&gt;</span>enable<span class="nt">&lt;/Nullable&gt;</span>
+    <span class="nt">&lt;GeneratePackageOnBuild&gt;</span>True<span class="nt">&lt;/GeneratePackageOnBuild&gt;</span>
+    <span class="nt">&lt;PackageId&gt;</span>Mahedee.CryptoEngine<span class="nt">&lt;/PackageId&gt;</span>
+    <span class="nt">&lt;Version&gt;</span>1.0.0<span class="nt">&lt;/Version&gt;</span>
+    <span class="nt">&lt;Authors&gt;</span>Mahedee hasan<span class="nt">&lt;/Authors&gt;</span>
+    <span class="nt">&lt;Company&gt;</span>Mahedee.NET<span class="nt">&lt;/Company&gt;</span>
+    <span class="nt">&lt;Product&gt;</span>CryptoEngine<span class="nt">&lt;/Product&gt;</span>
+    <span class="nt">&lt;Description&gt;</span>Chipper text generator<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;RepositoryUrl&gt;</span>https://github.com/mahedee/public-packages<span class="nt">&lt;/RepositoryUrl&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+
+<span class="nt">&lt;/Project&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create a NuGet Package</strong></p>
+
+<ul>
+  <li>Click right button on project and select Pack</li>
+  <li>A NuGet package will be generated in bin/Debug folder – In this case the nuget package name is Mahedee.CryptoEngine.1.0.0.nupkg</li>
+  <li>Or, Go to the directory where .csproj file exists and right the following command to generate nuget package</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">pack</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Push NuGet package to GitHub Package Registry</strong></p>
+
+<ul>
+  <li>Go to the directory where package generated – bin/Debug in this case.</li>
+  <li>Type following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nf">push</span> <span class="nf">.\Mahedee.CryptoEngine.1.0.0.nupkg</span> <span class="nf">--api-key</span> <span class="p">&lt;</span><span class="nf">your</span> <span class="nf">github</span> <span class="nf">access</span> <span class="nf">token</span><span class="p">&gt;</span> <span class="nf">--source</span> <span class="nf">github-mahedee</span>
+</code></pre></div></div>
+
+<p>Here github-mahedee is my nuget source name for visual studio. Already added in step – 2.</p>
+
+<ul>
+  <li>Now login to your Github account and go to Packages tab, you will see a package is uploaded. In this case package name is Mahedee.CryptoEngine</li>
+</ul>
+
+<p><strong>Step 6: Use already uploaded package in a project</strong></p>
+<ul>
+  <li>If Nuget package source is not added, add it using step – 2</li>
+  <li>Go to package manager console</li>
+  <li>Select Package Source as “github-mahedee” and type following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Mahedee.CryptoEngine</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Or right button on project -&gt; Manage Nuget Packages</li>
+  <li>Select Package source “github-mahedee”</li>
+  <li>Browse and install package Mahedee.CryptoEngine</li>
+</ul>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="GitHub" /><category term="NuGet" /><category term="Packages" /><category term="csharp" /><category term="aspnetcore" /><category term="github" /><category term="nuget" /><category term="packages" /><summary type="html"><![CDATA[GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.]]></summary></entry><entry><title type="html">Configure QoS in API Gateway using ocelot and Polly</title><link href="https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/" rel="alternate" type="text/html" title="Configure QoS in API Gateway using ocelot and Polly" /><published>2022-06-07T00:00:00+00:00</published><updated>2022-06-07T00:00:00+00:00</updated><id>https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly</id><content type="html" xml:base="https://mahedee.net//Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/"><![CDATA[<p><strong>Introduction</strong><br />
 API Gateway is an entry point for backend application. It maintains routing, authentication, logging, service discovery etc. Ocelot is used to design and develop API gateway for .net based application. QoS is generally configured in API gateway which provides different priorities for different applications, users or traffic. In this article, we will configure and discuss Quality of Services (QoS) using ocelot and Polly on ASP.NET Core web API project.</p>
 
 <p><strong>What is Quality of Service (QoS)?</strong><br />
@@ -5254,810 +5409,4 @@ It will be actual adapter configuration that I mentioned earler.</p>
 
 </span></code></pre></div></div>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><summary type="html"><![CDATA[API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.]]></summary></entry><entry><title type="html">Application health monitoring using asp.net core</title><link href="https://mahedee.net//Application-health-monitoring-using-asp.net-core/" rel="alternate" type="text/html" title="Application health monitoring using asp.net core" /><published>2022-02-03T00:00:00+00:00</published><updated>2022-02-03T00:00:00+00:00</updated><id>https://mahedee.net//Application-health-monitoring-using-asp.net-core</id><content type="html" xml:base="https://mahedee.net//Application-health-monitoring-using-asp.net-core/"><![CDATA[<!-- ## Playing with Clean Architecture and CQRS pattern using asp.net core EF and Dapper -->
-
-<p><strong>Introduction</strong></p>
-
-<p>Health monitoring provides real-time information about the state of the application. It’s a very crucial part for large distributed application. Especially, microservies based application. In this article, I will show you how to monitor application’s health in different ways.</p>
-
-<p><strong>Tools and technologies used</strong></p>
-<ul>
-  <li>Visual Studio 2022</li>
-  <li>.NET 6.0</li>
-  <li>SQL Server</li>
-  <li>Entity Framework</li>
-  <li>ASP.NET Core Web API</li>
-  <li>C#</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1: Create solution and projects.</strong></p>
-
-<ul>
-  <li>Create a solution name HealthCheck</li>
-  <li>Add 4 new web api project, name - Admin.API, Customer.API, Location.API and WebStatus in the solution.</li>
-</ul>
-
-<p>Here WebStatus project will monitor health of Admin.API, Customer.API and Location.API project and display result on watchdog.</p>
-
-<p><strong>Step 2: Install nuget packages.</strong></p>
-
-<ul>
-  <li>Install following nuget package in Admin.API Project</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Install following nuget packages in Customer.API Project</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.SqlServer</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Newtonsoft.Json</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">System.Data.SqlClient</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Install following nuget packages in Location.API Project</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.Client</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.SqlServer</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Install following nuget packages in WebStatus Project</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">AspNetCore.HealthChecks.UI.InMemory.Storage</span>
-</code></pre></div></div>
-
-<p><strong>Step 3: Configure Admin.API project for health check</strong></p>
-
-<ul>
-  <li>Modify Program.cs file is as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="c1">// Register required services for health checks</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">();</span>
-
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Registered healthcheck service using</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">();</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Added healthcheck end point using following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Now you can run and check the application health using the following URL</p>
-
-    <p>https://localhost:7147/hc</p>
-
-    <p>https://localhost:7147/liveness</p>
-  </li>
-</ul>
-
-<p><strong>Step 4: Configure Customer.API project for health check</strong></p>
-
-<ul>
-  <li>Add ConnectionString in appsettings.json file as follows</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"CustomerDBConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=Demo.CustomerDB;User Id=sa;Password=secret@pass;"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<ul>
-  <li>Add CustomerDbContext class in Customer.API/Db folder
-<strong>CustomerDbContext.cs</strong></li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Customer.API.Db</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">CustomerDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>Add DatabaseHealthCheck and HealthCheckResponse class in Customer.API/Utility folder</li>
-</ul>
-
-<p><strong>DatabaseHealthCheck.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Data.SqlClient</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Customer.API.Utility</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">DatabaseHealthCheck</span> <span class="p">:</span> <span class="n">IHealthCheck</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="n">IConfiguration</span> <span class="n">_configuration</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nf">DatabaseHealthCheck</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">configuration</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_configuration</span> <span class="p">=</span> <span class="n">configuration</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">HealthCheckResult</span><span class="p">&gt;</span> <span class="nf">CheckHealthAsync</span><span class="p">(</span><span class="n">HealthCheckContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span> <span class="p">=</span> <span class="k">default</span><span class="p">)</span>
-        <span class="p">{</span>
-            
-            <span class="kt">string</span> <span class="n">_connectionString</span> <span class="p">=</span> <span class="n">_configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">);</span>
-
-            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">connection</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SqlConnection</span><span class="p">(</span><span class="n">_connectionString</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="k">try</span>
-                <span class="p">{</span>
-                    <span class="n">connection</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span>
-                <span class="p">}</span>
-                <span class="k">catch</span> <span class="p">(</span><span class="n">SqlException</span><span class="p">)</span>
-                <span class="p">{</span>
-                    <span class="c1">// return HealthCheckResult.Healthy();</span>
-                    <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">FromResult</span><span class="p">(</span><span class="k">new</span> <span class="nf">HealthCheckResult</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Registration</span><span class="p">.</span><span class="n">FailureStatus</span><span class="p">,</span> <span class="s">"Cannot connect to Demo.CustomerDB"</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="n">HealthCheckResult</span><span class="p">.</span><span class="nf">Healthy</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-<p><strong>HealthCheckResponse.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Customer.API.Utility</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">HealthCheckResponse</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="n">Task</span> <span class="nf">CustomResponseWriter</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">HealthReport</span> <span class="n">healthReport</span><span class="p">)</span>
-        <span class="p">{</span>
-
-            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
-
-            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="k">new</span>
-            <span class="p">{</span>
-                <span class="n">status</span> <span class="p">=</span> <span class="n">healthReport</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(),</span>
-                <span class="n">errors</span> <span class="p">=</span> <span class="n">healthReport</span><span class="p">.</span><span class="n">Entries</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="p">{</span>
-                    <span class="n">key</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span>
-                    <span class="k">value</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span>
-                <span class="p">})</span>
-            <span class="p">});</span>
-
-            <span class="k">return</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="nf">WriteHealthCheckUIResponse</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">healthReport</span><span class="p">);</span>
-            <span class="c1">//return context.Response.WriteAsync(result);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Modify Program.cs file is as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Customer.API.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Customer.API.Utility</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Diagnostics.HealthChecks</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="c1">// Sql server health check with name "customersql" with custom healtcheck</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddCheck</span><span class="p">&lt;</span><span class="n">DatabaseHealthCheck</span><span class="p">&gt;(</span><span class="s">"customersql"</span><span class="p">);</span>
-
-
-<span class="c1">// Create DbContext</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">))</span>
-    <span class="p">);</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="s">"customerdbcontext"</span><span class="p">);</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">();</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">HealthCheckResponse</span><span class="p">.</span><span class="n">CustomResponseWriter</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthcheck</span> <span class="p">=&gt;</span> <span class="n">healthcheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customersql"</span><span class="p">;</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customersql"</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
-<span class="c1">//.RequireAuthorization();</span>
-
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customerdbcontext"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Supress cache headers</span>
-    <span class="n">AllowCachingResponses</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
-
-    <span class="c1">// Customize the HTTP Status code</span>
-    <span class="n">ResultStatusCodes</span> <span class="p">=</span>
-    <span class="p">{</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span>
-    <span class="p">},</span>
-
-    <span class="c1">// filters the health checks so that only those tagged with sql</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthCheck</span> <span class="p">=&gt;</span> <span class="n">healthCheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customerdbcontext"</span><span class="p">,</span>
-
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">//Predicate = _ =&gt; true,</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability</span>
-<span class="c1">//to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Checking sql server’s health with a name customersql using following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddCheck</span><span class="p">&lt;</span><span class="n">DatabaseHealthCheck</span><span class="p">&gt;(</span><span class="s">"customersql"</span><span class="p">);</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Checking sql server’s health using dbcontext of EF using following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"CustomerDBConnection"</span><span class="p">))</span>
-    <span class="p">);</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">CustomerDbContext</span><span class="p">&gt;(</span><span class="s">"customerdbcontext"</span><span class="p">);</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Added healthcheck end point for different services seperatedly using the following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kt">var</span> <span class="n">options</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">();</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResultStatusCodes</span><span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">HealthCheckResponse</span><span class="p">.</span><span class="n">CustomResponseWriter</span><span class="p">;</span>
-<span class="n">options</span><span class="p">.</span><span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthcheck</span> <span class="p">=&gt;</span> <span class="n">healthcheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customersql"</span><span class="p">;</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customersql"</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
-<span class="c1">//.RequireAuthorization();</span>
-
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHealthChecks</span><span class="p">(</span><span class="s">"/customerdbcontext"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Supress cache headers</span>
-    <span class="n">AllowCachingResponses</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
-
-    <span class="c1">// Customize the HTTP Status code</span>
-    <span class="n">ResultStatusCodes</span> <span class="p">=</span>
-    <span class="p">{</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Healthy</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Degraded</span><span class="p">]</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status200OK</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">HealthStatus</span><span class="p">.</span><span class="n">Unhealthy</span><span class="p">]=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status503ServiceUnavailable</span>
-    <span class="p">},</span>
-
-    <span class="c1">// filters the health checks so that only those tagged with sql</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">healthCheck</span> <span class="p">=&gt;</span> <span class="n">healthCheck</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">"customerdbcontext"</span><span class="p">,</span>
-
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">//Predicate = _ =&gt; true,</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability</span>
-<span class="c1">//to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Now you can run and check the application health using the following URL</p>
-
-    <p>https://localhost:7145/hc</p>
-
-    <p>https://localhost:7145/customersql</p>
-
-    <p>https://localhost:7145/customerdbcontext</p>
-
-    <p>https://localhost:7145/liveness</p>
-  </li>
-</ul>
-
-<p><strong>Step 5: Configure Location.API project for health check</strong></p>
-
-<ul>
-  <li>Add ConnectionString in appsettings.json file as follows</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"CustomerDBConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=Demo.LocationDB;User Id=sa;Password=secret@pass;"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<ul>
-  <li>Add CustomerDbContext class in Customer.API/Persistence folder</li>
-</ul>
-
-<p><strong>LocationDbContext.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-
-<span class="k">namespace</span> <span class="nn">Location.API.Persistence</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">LocationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">LocationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>Modify Program.cs file is as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Location.API.Persistence</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-
-<span class="c1">// Sql server health check </span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
-        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
-
-<span class="c1">// Create DbContext</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
-    <span class="p">);</span>
-
-<span class="c1">// DbContext health check for EF core</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Checking sql server’s health using following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
-        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Checking sql server’s health using dbcontext of EF using following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
-    <span class="p">);</span>
-
-<span class="c1">// DbContext health check for EF core</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>Added healthcheck end point to check the application health</li>
-  <li>Here application will be healthy when both sql server and application is up and running. Otherwise, it will be un healthy.</li>
-</ul>
-
-<p><strong>Program.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">HealthChecks.UI.Client</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Location.API.Persistence</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics.HealthChecks</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-
-<span class="c1">// Sql server health check </span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="nf">AddSqlServer</span><span class="p">(</span>
-        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">));</span>
-
-<span class="c1">// Create DbContext</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-       <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-           <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"LocationDBConnection"</span><span class="p">))</span>
-    <span class="p">);</span>
-
-<span class="c1">// DbContext health check for EF core</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecks</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">AddDbContextCheck</span><span class="p">&lt;</span><span class="n">LocationDbContext</span><span class="p">&gt;(</span><span class="s">"locationdbcontext"</span><span class="p">);</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="c1">// Cofigure for health check</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/hc"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">_</span> <span class="p">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="n">ResponseWriter</span> <span class="p">=</span> <span class="n">UIResponseWriter</span><span class="p">.</span><span class="n">WriteHealthCheckUIResponse</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="c1">//a basic health probe configuration that reports the app's availability to process requests (liveness) is sufficient to discover the status of the app.</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecks</span><span class="p">(</span><span class="s">"/liveness"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">HealthCheckOptions</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Predicate</span> <span class="p">=</span> <span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"self"</span><span class="p">),</span>
-<span class="p">});</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Now you can run and check the application health using the following URL</p>
-
-    <p>https://localhost:7232/hc</p>
-
-    <p>https://localhost:7232/liveness</p>
-  </li>
-</ul>
-
-<p><strong>Step 6: Configure WebStatus project for to monitors others 3 application’s health</strong></p>
-
-<ul>
-  <li>Configure HealthCheckUI in appsettings.json file as follows</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"HealthChecksUI"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"HealthChecks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Admin.API"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7147/hc"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/hc"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API -&gt; CustomerDB"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/customersql"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Customer.API -&gt; CustomerDbContext"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7145/customerdbcontext"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-
-      </span><span class="err">//Location</span><span class="w"> </span><span class="err">service</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location.API"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"Uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7232/hc"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-
-    </span><span class="nl">"EvaluationTimeInSeconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"MinimumSecondsBetweenFailureNotifications"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-</span></code></pre></div></div>
-
-<ul>
-  <li>Modify Program.cs file is as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="c1">// Configure service for healthcheck</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecksUI</span><span class="p">().</span><span class="nf">AddInMemoryStorage</span><span class="p">();</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="c1">// Cofigure methods for healthcheck</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecksUI</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-
-</code></pre></div></div>
-
-<ul>
-  <li>Here, Added HealthCheckUI using the following code</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Configure service for healthcheck</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddHealthChecksUI</span><span class="p">().</span><span class="nf">AddInMemoryStorage</span><span class="p">();</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="c1">// Cofigure methods for healthcheck</span>
-<span class="n">app</span><span class="p">.</span><span class="nf">MapHealthChecksUI</span><span class="p">();</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Now now all(multiple) projects at a time and monitor all application’s</p>
-
-    <p>https://localhost:7188/healthchecks-ui#/healthchecks</p>
-  </li>
-</ul>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/health-check/HealthCheck">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><summary type="html"><![CDATA[Health monitoring provides real-time information about the state of the application. It's a very crucial part for large distributed application. Especially, microservies based application. In this article, I will show you how to monitor application's health in different ways.]]></summary></entry></feed>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Web API" /><category term="ASP.NET Core" /><category term="C#" /><category term="webapi" /><category term="aspnetcore" /><category term="csharp" /><summary type="html"><![CDATA[API Gateway is an API management tools that sits between a client application and backend application. It agregates different services, maintain load balancing and work as reverse proxy. Ocelot is an api managment tool which is very powerful and best fit for .net application.]]></summary></entry></feed>

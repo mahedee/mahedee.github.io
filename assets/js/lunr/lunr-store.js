@@ -75,7 +75,7 @@ var store = [{
         "url": "https://mahedee.net//some-important-note/",
         "teaser":null},{
         "title": "Essential plugins for Visual Studio code",
-        "excerpt":"Essential plugins for Visual Studio code      C#   Java Extension Pack   Markdown Preview Enhanced   Kubernetes   YAML   Angular Language Service   https://marketplace.visualstudio.com/items?itemName=johnpapa.Angular2   HTML CSS Support  ","categories": ["Markdown","VS Code"],
+        "excerpt":"Essential plugins for Visual Studio code      C#   Java Extension Pack   Markdown Preview Enhanced   Kubernetes   YAML   Angular Language Service   Angular Snippets   HTML CSS Support   VS Code Live Server  ","categories": ["Markdown","VS Code"],
         "tags": ["vscode"],
         "url": "https://mahedee.net//essential-plugins-for-vs-code/",
         "teaser":null},{

@@ -20,7 +20,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
 <meta property="og:title" content="Building a web application using React and asp.net core(Part 02)">
-<meta property="og:url" content="https://mahedee.net//building-a-web-application-using-react-and-asp.net-core-part-02/">
+<meta property="og:url" content="http://localhost:4000/building-a-web-application-using-react-and-asp.net-core-part-02/">
 
 
   <meta property="og:description" content="In the previous article, I have shown you how to create a back end application using asp.net core web api. I have created some api end points for employee profile. In this article, I will design react pages, connect with api end points and perform CRUD operation using react.">
@@ -31,7 +31,7 @@
 
 
 
-  <meta property="article:published_time" content="2021-03-11T00:00:00+00:00">
+  <meta property="article:published_time" content="2021-03-11T00:00:00-04:00">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="https://mahedee.net//building-a-web-application-using-react-and-asp.net-core-part-02/">
+<link rel="canonical" href="http://localhost:4000/building-a-web-application-using-react-and-asp.net-core-part-02/">
 
 
 
@@ -53,7 +53,7 @@
     
       "@type": "Person",
       "name": "Mahedee Hasan",
-      "url": "https://mahedee.net//"
+      "url": "http://localhost:4000/"
     
   }
 </script>
@@ -344,14 +344,14 @@
 <span class="c1">// export keyword is a new feature in ES6 let export your functions , </span>
 <span class="c1">// variables so you can get access to them in other js files</span>
 
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">Employees</span> <span class="kd">extends</span> <span class="nx">Component</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">Employees</span> <span class="kd">extends</span> <span class="nc">Component</span>
 <span class="p">{</span>
-    <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
-        <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="nf">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
+        <span class="nf">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeEdit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeEdit</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeDelete</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeDelete</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onEmployeeCreate</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onEmployeeCreate</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeEdit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeEdit</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeDelete</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeDelete</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onEmployeeCreate</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onEmployeeCreate</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
             <span class="na">employees</span><span class="p">:</span> <span class="p">[],</span>
@@ -364,40 +364,40 @@
     <span class="cm">/*Lifecycle Method: The componentDidMount() method runs after 
     the component output has been rendered to the DOM.*/</span>
 
-    <span class="nx">componentDidMount</span><span class="p">(){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">populateEmployeesData</span><span class="p">();</span>
+    <span class="nf">componentDidMount</span><span class="p">(){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">populateEmployeesData</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="c1">// Event handler for create button</span>
-    <span class="nx">onEmployeeCreate</span><span class="p">()</span>
+    <span class="nf">onEmployeeCreate</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
-        <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/create</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/create</span><span class="dl">'</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// Event handler for edit button</span>
-    <span class="nx">OnEmployeeEdit</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
+    <span class="nc">OnEmployeeEdit</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
-        <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/edit/</span><span class="dl">'</span><span class="o">+</span><span class="nx">id</span><span class="p">);</span>
+        <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/edit/</span><span class="dl">'</span><span class="o">+</span><span class="nx">id</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="c1">// Event handler for delete button</span>
-    <span class="nx">OnEmployeeDelete</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
+    <span class="nc">OnEmployeeDelete</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
-        <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/delete/</span><span class="dl">'</span><span class="o">+</span><span class="nx">id</span><span class="p">);</span>
+        <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/delete/</span><span class="dl">'</span><span class="o">+</span><span class="nx">id</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nx">populateEmployeesData</span><span class="p">(){</span>
-        <span class="nx">axios</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/GetEmployees</span><span class="dl">"</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">populateEmployeesData</span><span class="p">(){</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/GetEmployees</span><span class="dl">"</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
             <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="na">employees</span><span class="p">:</span> <span class="nx">response</span><span class="p">,</span> <span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="dl">""</span><span class="p">});</span>
-        <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="na">employees</span><span class="p">:</span> <span class="p">[],</span> <span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">failed</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Employess could not be loaded!</span><span class="dl">"</span><span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span><span class="na">employees</span><span class="p">:</span> <span class="nx">response</span><span class="p">,</span> <span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="dl">""</span><span class="p">});</span>
+        <span class="p">}).</span><span class="nf">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span><span class="na">employees</span><span class="p">:</span> <span class="p">[],</span> <span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">failed</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Employess could not be loaded!</span><span class="dl">"</span><span class="p">});</span>
         <span class="p">});</span>
     <span class="p">}</span>
 
-    <span class="nx">renderAllEmployeeTable</span><span class="p">(</span><span class="nx">employees</span><span class="p">){</span>
-        <span class="k">return</span><span class="p">(</span>
+    <span class="nf">renderAllEmployeeTable</span><span class="p">(</span><span class="nx">employees</span><span class="p">){</span>
+        <span class="nf">return</span><span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">table</span> <span class="na">className</span><span class="p">=</span><span class="s">"table table-striped"</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
                     <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
@@ -411,15 +411,15 @@
                 <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
                     <span class="si">{</span>
-                        <span class="nx">employees</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span> <span class="p">(</span>
+                        <span class="nx">employees</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span> <span class="p">(</span>
                             <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">key</span><span class="p">=</span><span class="si">{</span><span class="nx">employee</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span><span class="p">&gt;</span>
                                 <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">employee</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
                                 <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">employee</span><span class="p">.</span><span class="nx">designation</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
                                 <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">employee</span><span class="p">.</span><span class="nx">fathersName</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
                                 <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">employee</span><span class="p">.</span><span class="nx">mothersName</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeEdit</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="si">}</span>  <span class="na">className</span><span class="p">=</span> <span class="s">"btn btn-success"</span><span class="p">&gt;</span>Edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span> || 
-                                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">OnEmployeeDelete</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="si">}</span> <span class="na">className</span><span class="p">=</span> <span class="s">"btn btn-danger"</span><span class="p">&gt;</span>Delete<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span><span class="si">{</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nf">toISOString</span><span class="p">().</span><span class="nf">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nc">OnEmployeeEdit</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="si">}</span>  <span class="na">className</span><span class="p">=</span> <span class="s">"btn btn-success"</span><span class="p">&gt;</span>Edit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span> || 
+                                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nc">OnEmployeeDelete</span><span class="p">(</span><span class="nx">employee</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="si">}</span> <span class="na">className</span><span class="p">=</span> <span class="s">"btn btn-danger"</span><span class="p">&gt;</span>Delete<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
                             <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
                         <span class="p">))</span>
                     <span class="si">}</span>
@@ -428,20 +428,20 @@
         <span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nx">render</span><span class="p">(){</span>
+    <span class="nf">render</span><span class="p">(){</span>
 
         <span class="kd">let</span> <span class="nx">content</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">loading</span> <span class="p">?</span> <span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">em</span><span class="p">&gt;</span>Loading...<span class="p">&lt;/</span><span class="nt">em</span><span class="p">&gt;</span>
             <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
         <span class="p">):(</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">renderAllEmployeeTable</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">employees</span><span class="p">)</span>
+            <span class="k">this</span><span class="p">.</span><span class="nf">renderAllEmployeeTable</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">employees</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="k">return</span><span class="p">(</span>
+        <span class="nf">return</span><span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Employee<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
-                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">onEmployeeCreate</span><span class="p">()</span><span class="si">}</span> <span class="na">className</span><span class="p">=</span><span class="s">"btn btn-primary"</span><span class="p">&gt;</span>Create<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span><span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">onEmployeeCreate</span><span class="p">()</span><span class="si">}</span> <span class="na">className</span><span class="p">=</span><span class="s">"btn btn-primary"</span><span class="p">&gt;</span>Create<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
                 <span class="si">{</span><span class="nx">content</span><span class="si">}</span>
             <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
         <span class="p">);</span>
@@ -454,17 +454,17 @@
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">axios</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">axios</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">Create</span> <span class="kd">extends</span> <span class="nx">Component</span><span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">Create</span> <span class="kd">extends</span> <span class="nc">Component</span><span class="p">{</span>
 
-    <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
-        <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="nf">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
+        <span class="nf">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
 
         <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
@@ -477,41 +477,41 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">name</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeDesignation</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeDesignation</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">designation</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeFathersName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeFathersName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">fathersName</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">})</span>
 
     <span class="p">}</span>
 
-    <span class="nx">onChangeMothersName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeMothersName</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">mothersName</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">})</span>
 
     <span class="p">}</span>
 
-    <span class="nx">onChangeDOB</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeDOB</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">dateOfBirth</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">})</span>
 
     <span class="p">}</span>
 
-    <span class="nx">onSubmit</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nf">onSubmit</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
 
         <span class="kd">let</span> <span class="nx">employeeObj</span> <span class="o">=</span> <span class="p">{</span>
@@ -522,13 +522,13 @@
             <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">dateOfBirth</span>
         <span class="p">}</span>
 
-        <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/AddEmployee</span><span class="dl">"</span><span class="p">,</span> <span class="nx">employeeObj</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
-            <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/AddEmployee</span><span class="dl">"</span><span class="p">,</span> <span class="nx">employeeObj</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
-    <span class="nx">render</span><span class="p">(){</span>
-        <span class="k">return</span><span class="p">(</span>
+    <span class="nf">render</span><span class="p">(){</span>
+        <span class="nf">return</span><span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"row"</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"col-md-4"</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Add new employee<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
@@ -577,16 +577,16 @@
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">axios</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">axios</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">Edit</span> <span class="kd">extends</span> <span class="nx">Component</span> <span class="p">{</span>
-    <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">Edit</span> <span class="kd">extends</span> <span class="nc">Component</span> <span class="p">{</span>
+    <span class="nf">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDesignation</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeFathersName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeMothersName</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onChangeDOB</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onSubmit</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
             <span class="na">id</span> <span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
@@ -599,63 +599,63 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="nx">componentDidMount</span><span class="p">(){</span>
+    <span class="nf">componentDidMount</span><span class="p">(){</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">match</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
-        <span class="nx">axios</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/Employee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span><span class="p">{</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/Employee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span><span class="p">{</span>
             <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">employee</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
                 <span class="na">id</span> <span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
                 <span class="na">name</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
                 <span class="na">designation</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">designation</span><span class="p">,</span>
                 <span class="na">fathersName</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">fathersName</span><span class="p">,</span>
                 <span class="na">mothersName</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">mothersName</span><span class="p">,</span>
-                <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+                <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nf">toISOString</span><span class="p">().</span><span class="nf">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
             <span class="p">})</span>
         <span class="p">})</span>
         <span class="c1">//alert(id);</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">name</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">});</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeDesignation</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeDesignation</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">designation</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">});</span>
     <span class="p">}</span>
 
-    <span class="nx">onChangeFathersName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeFathersName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">fathersName</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">});</span>
 
     <span class="p">}</span>
 
-    <span class="nx">onChangeMothersName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeMothersName</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">mothersName</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">});</span>
 
     <span class="p">}</span>
 
-    <span class="nx">onChangeDOB</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+    <span class="nf">onChangeDOB</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
             <span class="na">dateOfBirth</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
         <span class="p">});</span>
     <span class="p">}</span>
 
 
-    <span class="nx">onUpdateCancel</span><span class="p">(){</span>
+    <span class="nf">onUpdateCancel</span><span class="p">(){</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
-        <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nx">onSubmit</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+    <span class="nf">onSubmit</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
        
-        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">match</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
         <span class="kd">let</span> <span class="nx">employeeObj</span> <span class="o">=</span> <span class="p">{</span>
@@ -664,16 +664,16 @@
             <span class="na">designation</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">designation</span><span class="p">,</span>
             <span class="na">fathersName</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">fathersName</span><span class="p">,</span>
             <span class="na">mothersName</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">mothersName</span><span class="p">,</span>
-            <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">()</span>
+            <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nf">toISOString</span><span class="p">()</span>
         <span class="p">}</span>
 
-        <span class="nx">axios</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/EditEmployee/</span><span class="dl">"</span><span class="o">+</span><span class="nx">id</span><span class="p">,</span> <span class="nx">employeeObj</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
-            <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/EditEmployee/</span><span class="dl">"</span><span class="o">+</span><span class="nx">id</span><span class="p">,</span> <span class="nx">employeeObj</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
-    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span>
+    <span class="nf">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">return </span><span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"row"</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"col-md-4"</span><span class="p">&gt;</span>
                     <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Edit Employee<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
@@ -721,12 +721,12 @@
 <div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">axios</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">axios</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">Delete</span> <span class="kd">extends</span> <span class="nx">Component</span><span class="p">{</span>
-    <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
-        <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">Delete</span> <span class="kd">extends</span> <span class="nc">Component</span><span class="p">{</span>
+    <span class="nf">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
+        <span class="nf">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">onCancel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onCancel</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onConfirmation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onConfirmation</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onCancel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onCancel</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">onConfirmation</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onConfirmation</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
             <span class="na">name</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
@@ -737,41 +737,41 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="nx">componentDidMount</span><span class="p">(){</span>
+    <span class="nf">componentDidMount</span><span class="p">(){</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">match</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
-        <span class="nx">axios</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/Employee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span><span class="p">{</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/Employee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">employee</span> <span class="o">=&gt;</span><span class="p">{</span>
             <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">employee</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+            <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
                 <span class="na">id</span> <span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
                 <span class="na">name</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
                 <span class="na">designation</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">designation</span><span class="p">,</span>
                 <span class="na">fathersName</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">fathersName</span><span class="p">,</span>
                 <span class="na">mothersName</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">mothersName</span><span class="p">,</span>
-                <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+                <span class="na">dateOfBirth</span><span class="p">:</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">dateOfBirth</span><span class="p">).</span><span class="nf">toISOString</span><span class="p">().</span><span class="nf">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
             <span class="p">})</span>
         <span class="p">})</span>
     <span class="p">}</span>
 
-    <span class="nx">onCancel</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">onCancel</span><span class="p">()</span> <span class="p">{</span>
         <span class="kd">const</span> <span class="p">{</span> <span class="nx">history</span> <span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
-        <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="nx">onConfirmation</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
-        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nf">onConfirmation</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
 
         <span class="kd">const</span> <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">match</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
         <span class="kd">const</span> <span class="p">{</span><span class="nx">history</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
         
-        <span class="nx">axios</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/DeleteEmployee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
-            <span class="nx">history</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">axios</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="dl">"</span><span class="s2">api/Employees/DeleteEmployee/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">result</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">history</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">/employees</span><span class="dl">'</span><span class="p">);</span>
         <span class="p">})</span>
 
     <span class="p">}</span> 
 
 
-    <span class="nx">render</span><span class="p">(){</span>
-        <span class="k">return</span><span class="p">(</span>
+    <span class="nf">render</span><span class="p">(){</span>
+        <span class="nf">return</span><span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Delete<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
                 <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Are you sure you want to delete this?<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
@@ -844,11 +844,11 @@
 <span class="k">import</span> <span class="p">{</span> <span class="nx">Edit</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./components/Employee/Edit</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">Delete</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./components/Employee/Delete</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">App</span> <span class="kd">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nc">App</span> <span class="kd">extends</span> <span class="nc">Component</span> <span class="p">{</span>
   <span class="kd">static</span> <span class="nx">displayName</span> <span class="o">=</span> <span class="nx">App</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
 
-  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span>
+  <span class="nf">render </span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">return </span><span class="p">(</span>
       <span class="p">&lt;</span><span class="nc">Layout</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nc">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="p">=</span><span class="s">'/'</span> <span class="na">component</span><span class="p">=</span><span class="si">{</span><span class="nx">Home</span><span class="si">}</span> <span class="p">/&gt;</span>
         <span class="p">&lt;</span><span class="nc">Route</span> <span class="na">path</span><span class="p">=</span><span class="s">'/employees'</span> <span class="na">component</span><span class="p">=</span><span class="si">{</span><span class="nx">Employees</span><span class="si">}</span> <span class="p">/&gt;</span>
@@ -875,26 +875,26 @@
 <span class="k">import</span> <span class="p">{</span> <span class="nx">Link</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-router-dom</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="dl">'</span><span class="s1">./NavMenu.css</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kd">class</span> <span class="nx">NavMenu</span> <span class="kd">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">NavMenu</span> <span class="kd">extends</span> <span class="nc">Component</span> <span class="p">{</span>
   <span class="kd">static</span> <span class="nx">displayName</span> <span class="o">=</span> <span class="nx">NavMenu</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
 
-  <span class="kd">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="nf">constructor </span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">toggleNavbar</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">toggleNavbar</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">toggleNavbar</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">toggleNavbar</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
       <span class="na">collapsed</span><span class="p">:</span> <span class="kc">true</span>
     <span class="p">};</span>
   <span class="p">}</span>
 
-  <span class="nx">toggleNavbar</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+  <span class="nf">toggleNavbar </span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nf">setState</span><span class="p">({</span>
       <span class="na">collapsed</span><span class="p">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">collapsed</span>
     <span class="p">});</span>
   <span class="p">}</span>
 
-  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span>
+  <span class="nf">render </span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">return </span><span class="p">(</span>
       <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nc">Navbar</span> <span class="na">className</span><span class="p">=</span><span class="s">"navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"</span> <span class="na">light</span><span class="p">&gt;</span>
           <span class="p">&lt;</span><span class="nc">Container</span><span class="p">&gt;</span>
@@ -1000,18 +1000,18 @@
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-03-11T00:00:00+00:00">March 11, 2021</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-03-11T00:00:00-04:00">March 11, 2021</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Building+a+web+application+using+React+and+asp.net+core%28Part+02%29%20https%3A%2F%2Fmahedee.net%2F%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Building+a+web+application+using+React+and+asp.net+core%28Part+02%29%20http%3A%2F%2Flocalhost%3A4000%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fbuilding-a-web-application-using-react-and-asp.net-core-part-02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -1028,15 +1028,6 @@
   </nav>
 
     </div>
-
-    
-      <div class="page__comments">
-  
-  
-      <h4 class="page__comments-title">Comments</h4>
-      <section id="disqus_thread"></section>
-    
-</div>
 
     
   </article>
@@ -1137,7 +1128,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/How-to-handle-Idempotentcy-in-distributed-system-using-aspnet-core/" rel="permalink">How to handle Idempotentcy in distributed system using asp.net core
+        <a href="/What-and-why-IValidatebleObject-in-C-sharp/" rel="permalink">What and why IValidatebleObject in C#
 </a>
       
     </h2>
@@ -1147,10 +1138,10 @@
 
 
 
-  7 minute read
+  2 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">In a distributed application, idempotent operation or idempotency refers to the property of an operation such that multiple identical requests have the same ...</p>
+    <p class="archive__item-excerpt" itemprop="description">IValidatableObject is an interface in C# that defines a method named Validate, which enables an object to perform custom validation logic. When you implement...</p>
   </article>
 </div>
 
@@ -1242,7 +1233,7 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://mahedee.net//building-a-web-application-using-react-and-asp.net-core-part-02/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.url = "http://localhost:4000/building-a-web-application-using-react-and-asp.net-core-part-02/";  // Replace PAGE_URL with your page's canonical URL variable
       this.page.identifier = "/building-a-web-application-using-react-and-asp.net-core-part-02"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE

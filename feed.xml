@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-22T19:34:39-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Configure Load Balancer using Eureka and ocelot with asp.net core and docker</title><link href="http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" rel="alternate" type="text/html" title="Configure Load Balancer using Eureka and ocelot with asp.net core and docker" /><published>2023-01-07T00:00:00-04:00</published><updated>2023-01-07T00:00:00-04:00</updated><id>http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core</id><content type="html" xml:base="http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/"><![CDATA[<p><strong>Introduction</strong></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-31T17:45:21-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Introduction to the Yield Statement</title><link href="http://localhost:4000/introduction-to-the-yield-statement/" rel="alternate" type="text/html" title="Introduction to the Yield Statement" /><published>2023-03-01T00:00:00-04:00</published><updated>2023-03-01T00:00:00-04:00</updated><id>http://localhost:4000/introduction-to-the-yield-statement</id><content type="html" xml:base="http://localhost:4000/introduction-to-the-yield-statement/"><![CDATA[<p><strong>Introduction</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement works by suspending the method’s execution and returning a value to the caller. When the method is called again, it continues executing from where it left off, remembering its previous state.</p>
+
+<p><strong>Basic Usage of the Yield Statement</strong></p>
+
+<p>To use the yield statement, you need to define a method that returns an <code class="language-plaintext highlighter-rouge">IEnumerable&lt;T&gt;</code> or <code class="language-plaintext highlighter-rouge">IEnumerator&lt;T&gt;</code> object. Inside the method, you can use the <code class="language-plaintext highlighter-rouge">yield return</code> statement to return a value from the sequence.</p>
+
+<p>Here’s an example of a method that returns a sequence of integers using the <code class="language-plaintext highlighter-rouge">yield</code> statement:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">GetNumbers</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">3</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">4</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>In this example, the <code class="language-plaintext highlighter-rouge">GetNumbers()</code> method defines a sequence of integers by using five <code class="language-plaintext highlighter-rouge">yield</code> return statements. When this method is called, it will return an <code class="language-plaintext highlighter-rouge">IEnumerable&lt;int&gt;</code> object that represents the sequence of integers.</p>
+
+<p>You can use a foreach loop to iterate over the sequence and retrieve each value:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="k">in</span> <span class="nf">GetNumbers</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code will output the following:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">1</span>
+<span class="mf">2</span>
+<span class="mf">3</span>
+<span class="mf">4</span>
+<span class="mf">5</span>
+</code></pre></div></div>
+
+<p><strong>Advanced Usage of the Yield Statement</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement can also be used with the <code class="language-plaintext highlighter-rouge">yield break</code> statement to stop the sequence early. Here’s an example of a method that returns a sequence of integers up to a specified limit:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">GetNumbersUpTo</span><span class="p">(</span><span class="kt">int</span> <span class="n">limit</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;=</span> <span class="n">limit</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">yield</span> <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In this example, the GetNumbersUpTo() method defines a sequence of integers up to a specified limit. It uses a for loop to generate the sequence, and then it uses the <code class="language-plaintext highlighter-rouge">yield break</code> statement to stop the sequence early.</p>
+
+<p>You can call this method and pass in a limit to get the sequence:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="k">in</span> <span class="nf">GetNumbersUpTo</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code will output the following:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">1</span>
+<span class="mf">2</span>
+<span class="mf">3</span>
+</code></pre></div></div>
+
+<p><strong>Conclusion</strong><br />
+The yield statement is a powerful feature in C# that allows you to define custom iterators that can return sequences of values. It can be used to create efficient and memory-friendly code when working with large data sets or when you need to retrieve data on-demand. By using the yield return and yield break statements, you can define complex sequences and stop them early when necessary.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="csharp" /><summary type="html"><![CDATA[The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.]]></summary></entry><entry><title type="html">Configure Load Balancer using Eureka and ocelot with asp.net core and docker</title><link href="http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" rel="alternate" type="text/html" title="Configure Load Balancer using Eureka and ocelot with asp.net core and docker" /><published>2023-01-07T00:00:00-04:00</published><updated>2023-01-07T00:00:00-04:00</updated><id>http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core</id><content type="html" xml:base="http://localhost:4000/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/"><![CDATA[<p><strong>Introduction</strong></p>
 
 <p>A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server.</p>
 
@@ -4895,279 +4970,4 @@ Here, BFF.Web project will act as API Gateway.</li>
 
 <p><img src="/assets/images/posts/2022/ssh-06.PNG" alt="" /></p>
 
-<p>Then I tried to clone the repository and It was working fine.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Command" /><category term="Source Control" /><category term="command" /><category term="sourcecontrol" /><summary type="html"><![CDATA[It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.]]></summary></entry><entry><title type="html">Tips and tricks for docker</title><link href="http://localhost:4000/docker-tips-and-tricks/" rel="alternate" type="text/html" title="Tips and tricks for docker" /><published>2022-05-06T00:00:00-03:00</published><updated>2022-05-06T00:00:00-03:00</updated><id>http://localhost:4000/docker-tips-and-tricks</id><content type="html" xml:base="http://localhost:4000/docker-tips-and-tricks/"><![CDATA[<h2 id="most-used-docker-commands-for-everyday">Most used docker commands for everyday</h2>
-
-<ul>
-  <li><strong>Docker help</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">-h</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To check docker version</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">--version</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Login to docker</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To see list of images</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">ls</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>List of Containers</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>See list of running containers</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">ps</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Restart a container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">restart</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">name</span><span class="p">&gt;</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To stop docker container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">stop</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Remove all docker images</strong>
-    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
-</code></pre></div>    </div>
-  </li>
-  <li><strong>Stop all docker containers</strong></li>
-</ul>
-
-<pre><code class="language-cmd">docker stop $(docker ps -a -q)
-</code></pre>
-<p><strong>Remove all docker containers</strong></p>
-<pre><code class="language-cmd">docker rm $(docker ps -a -q)
-</code></pre>
-
-<p><strong>Deleting no longer needed containers (stopped)</strong></p>
-<pre><code class="language-cmd">docker container prune
-</code></pre>
-
-<p><strong>Deleting no longer needed images</strong></p>
-<pre><code class="language-cmd">docker image prune
-</code></pre>
-
-<p><strong>Delete all volumes, which are not used by any existing container</strong></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
-</code></pre></div></div>
-<p><strong>Same for unused networks</strong></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network prune
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To run docker composer</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">up</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Build a docker image</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Syntax:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="p">&lt;</span><span class="nf">any</span> <span class="nf">tag</span> <span class="nf">name</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nf">directory</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">docker</span> <span class="nf">file</span><span class="p">&gt;</span>
-<span class="nf">Example:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">aspnetcore</span><span class="nv">/generator</span> <span class="nf">.</span>   
-<span class="nf">Explanation:</span> 
-<span class="nf">Here</span> <span class="nf">aspnetcore</span><span class="nv">/generator</span> <span class="nf">is</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="kr">and</span> <span class="nf">'.'</span> <span class="nf">means</span> <span class="nf">current</span> <span class="nf">directory</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To run a docker image</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="nf">8000:80</span> <span class="nf">mcr.microsoft.com</span><span class="nv">/dotnet/core/samples:aspnetapp</span>
-</code></pre></div></div>
-
-<p>The sample asp.net core application will run on http://localhost:8000. Here, 8000 is host machine port and 80 is container port.</p>
-
-<ul>
-  <li><strong>SSH into container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="p">&lt;</span><span class="nf">container-id</span><span class="p">&gt;</span> <span class="nf">sh</span>
-<span class="p">&gt;&gt;</span><span class="nf">ls</span> <span class="s">(Type ls to see all files and directory)</span>
-<span class="p">&gt;&gt;</span><span class="nb">exit</span> <span class="s">(type exit to return from the container)</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>View information about your container using command</strong>
-    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">C:\Users\mahedee</span><span class="p">&gt;</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="nf">b73cb9467f5a</span> <span class="nf">sh</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">app</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">Controllers</span>  <span class="nf">Dockerfile</span>  <span class="nf">HRM.API.csproj</span>  <span class="nf">HRM.API.csproj.user</span>  <span class="nf">Program.cs</span>  <span class="nf">Properties</span>  <span class="nf">WeatherForecast.cs</span>  <span class="nf">appsettings.Development.json</span>  <span class="nf">appsettings.json</span>  <span class="nf">bin</span>  <span class="nf">obj</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">src</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">HRM.API</span>  <span class="nf">HRM.API.sln</span>  <span class="nf">bin</span>  <span class="nf">docker-compose.dcproj</span>  <span class="nf">docker-compose.override.yml</span>  <span class="nf">docker-compose.yml</span>  <span class="nf">obj</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">bin</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">Debug</span>
-<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">debug</span>
-<span class="nf">#</span> <span class="nf">ls</span>
-<span class="nf">HRM.API.deps.json</span>  <span class="nf">HRM.API.exe</span>  <span class="nf">HRM.API.runtimeconfig.json</span>  <span class="nf">Swashbuckle.AspNetCore.Swagger.dll</span>     <span class="nf">Swashbuckle.AspNetCore.SwaggerUI.dll</span>  <span class="nf">appsettings.json</span>
-<span class="nf">HRM.API.dll</span>        <span class="nf">HRM.API.pdb</span>  <span class="nf">Microsoft.OpenApi.dll</span>       <span class="nf">Swashbuckle.AspNetCore.SwaggerGen.dll</span>  <span class="nf">appsettings.Development.json</span>
-<span class="nf">#</span>
-</code></pre></div>    </div>
-  </li>
-  <li><strong>Run a command in a running container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">exec</span> <span class="p">[</span><span class="nf">OPTIONS</span><span class="p">]</span> <span class="nf">CONTAINER</span> <span class="nf">COMMAND</span> <span class="p">[</span><span class="nf">ARG...</span><span class="p">]</span>
-
-<span class="nf">Example</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="mf">34717</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"echo</span> <span class="nf">a</span> <span class="nf">&amp;&amp;</span> <span class="nf">echo</span> <span class="nf">b"</span>
-<span class="kr">or</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="nf">my_container</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"echo</span> <span class="nf">a</span> <span class="nf">&amp;&amp;</span> <span class="nf">echo</span> <span class="nf">b"</span>
-<span class="kr">or</span> 
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="nf">my_container</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"dir"</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To run bash in a container</strong></li>
-</ul>
-
-<p>Syntax:</p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span> <span class="nf">bas</span>
-<span class="nf">Example:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="nf">2f7</span> <span class="nf">bash</span>
-</code></pre></div></div>
-
-<p><strong>View information about your container user Visual Studio</strong></p>
-
-<ul>
-  <li>Use Ctrl+Q to activate Visual Studio Search Box, and type containers.</li>
-  <li>Or, Go to View &gt; Other Windows &gt; Containers.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2022/vs-container.PNG" alt="" /></p>
-
-<p>For more information see <a href="https://docs.microsoft.com/en-us/visualstudio/containers/view-and-diagnose-containers?view=vs-2022">Use the Containers window</a></p>
-
-<ul>
-  <li><strong>Mounting a folder name ‘api’ into the container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-v</span> <span class="nf">$</span><span class="p">{</span><span class="nf">PWD</span><span class="p">}</span><span class="nf">:C:\api</span> <span class="nf">mcr.microsoft.com</span><span class="nv">/dotnet/core/runtime:3.1</span>
-</code></pre></div></div>
-<p>Here ${PWD} means current directory of host machine map to the directory C:\api into the container</p>
-
-<ul>
-  <li><strong>To inspect network and other information of a container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">inspect</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Run a docker image</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Syntax:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="p">&lt;</span><span class="nf">host</span> <span class="nf">port</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">image</span> <span class="nf">port</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nf">any</span> <span class="nf">tag</span> <span class="nf">name</span><span class="p">&gt;</span>
-<span class="nf">Example:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="nf">8777:80</span> <span class="nf">test2</span>  
-<span class="nf">Explanation:</span> 
-<span class="nf">Here</span> <span class="nf">test2</span> <span class="nf">is</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span> <span class="nf">which</span> <span class="nf">already</span> <span class="nf">running</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Login to docker and push an image</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span>  
-<span class="nf">Explanation:</span> 
-<span class="nf">Here</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Setting the API Port with an Environment Variable inside a container</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">export</span> <span class="nf">ASPNETCORE_URLS=http:</span><span class="err">/</span><span class="nv">/+:80</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To see docker event in json format</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">events</span> <span class="nf">--format</span> <span class="nf">''</span>
-
-<span class="nf">Tips:</span>
-<span class="nf">Run</span> <span class="nf">this</span> <span class="nf">command</span> <span class="nf">in</span> <span class="nf">another</span> <span class="nf">windows</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>To detach docker compose file</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">up</span> <span class="nf">-d</span>
-</code></pre></div></div>
-<ul>
-  <li><strong>To see the log while running docker compose file</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">logs</span> <span class="nf">-f</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Stop and remove containers, networks, images, and volumes</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">down</span>
-</code></pre></div></div>
-
-<ul>
-  <li><strong>Remove one or more images</strong></li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="p">&lt;</span><span class="nf">repository</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">tag</span><span class="p">&gt;</span>
-<span class="nf">Example:</span>
-<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="nf">mahedee</span><span class="nv">/webapi:build</span>
-</code></pre></div></div>
-
-<!-- References
-https://docs.microsoft.com/en-us/visualstudio/containers/view-and-diagnose-containers?view=vs-2022 
-
-https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
-
-
--->
-
-<p>__</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Docker" /><category term="Commands" /><category term="commands" /><category term="docker" /><summary type="html"><![CDATA[Some tips and tricks for docker may improve your work's quality. Here, I have tried to include some commands, tricks and tips which we use everyday]]></summary></entry></feed>
+<p>Then I tried to clone the repository and It was working fine.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Command" /><category term="Source Control" /><category term="command" /><category term="sourcecontrol" /><summary type="html"><![CDATA[It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.]]></summary></entry></feed>

@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Populate Dropdownlist With Selected Index - Think Simple</title>
-<meta name="description" content="hi">
+<!-- begin _includes/seo.html --><title>Introduction to the Yield Statement - Think Simple</title>
+<meta name="description" content="The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="Populate Dropdownlist With Selected Index">
-<meta property="og:url" content="http://localhost:4000/populate-dropdownlist-with-selected-index/">
+<meta property="og:title" content="Introduction to the Yield Statement">
+<meta property="og:url" content="http://localhost:4000/introduction-to-the-yield-statement/">
 
 
-  <meta property="og:description" content="hi">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2013-12-10T00:00:00-04:00">
+  <meta property="og:description" content="The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2023-03-01T00:00:00-04:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/populate-dropdownlist-with-selected-index/">
+
+<link rel="canonical" href="http://localhost:4000/introduction-to-the-yield-statement/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Populate Dropdownlist With Selected Index">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="December 10, 2013">
+    <meta itemprop="headline" content="Introduction to the Yield Statement">
+    <meta itemprop="description" content="The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.">
+    <meta itemprop="datePublished" content="March 01, 2023">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Populate Dropdownlist With Selected Index
+          <h1 id="page-title" class="page__title" itemprop="headline">Introduction to the Yield Statement
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  1 minute read
+  2 minute read
 </p>
           
         </header>
@@ -320,64 +320,82 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>This is a demo to populate asp.net dropdownlist by C#.</p>
+        <p><strong>Introduction</strong></p>
 
-<p><strong>Step 1: Create a asp.net dropdownlist</strong></p>
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.</p>
 
-<p>Create a dropdownlist in asp.net page. Here, I created a dropdownlist name ddlStudentInfo.</p>
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement works by suspending the method’s execution and returning a value to the caller. When the method is called again, it continues executing from where it left off, remembering its previous state.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">DropDownList</span> <span class="n">ID</span> <span class="p">=</span> <span class="s">"ddlStudentInfo"</span> <span class="n">runat</span> <span class="p">=</span> <span class="s">"server"</span> <span class="n">Height</span><span class="p">=</span><span class="s">"19px"</span> <span class="n">Width</span><span class="p">=</span><span class="s">"166px"</span><span class="p">&gt;&lt;/</span><span class="n">asp</span><span class="p">:</span><span class="n">DropDownList</span><span class="p">&gt;</span>
-</code></pre></div></div>
+<p><strong>Basic Usage of the Yield Statement</strong></p>
 
-<p><strong>Step 2: Create StudentInfo class</strong></p>
+<p>To use the yield statement, you need to define a method that returns an <code class="language-plaintext highlighter-rouge">IEnumerable&lt;T&gt;</code> or <code class="language-plaintext highlighter-rouge">IEnumerator&lt;T&gt;</code> object. Inside the method, you can use the <code class="language-plaintext highlighter-rouge">yield return</code> statement to return a value from the sequence.</p>
 
-<p>Create a student info class to create list of StudentInfo object.</p>
+<p>Here’s an example of a method that returns a sequence of integers using the <code class="language-plaintext highlighter-rouge">yield</code> statement:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">StudentInfo</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">GetNumbers</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<p><strong>Step 3: Populate dropdownlist</strong></p>
-
-<p>Create a list of StudentInfo object. Make it data source of dropdownlist and choose your selected index. Here, I choose selected index 2 means dropdownlist shows Asrafuzzaman as selected text and 3 as selected value. I have write all those in Page Load. You can do as you required.</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">void</span> <span class="nf">Page_Load</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-        <span class="n">List</span> <span class="n">lstStudentInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">List</span><span class="p">();</span>
-        
-        <span class="n">StudentInfo</span> <span class="n">objStudentInfo1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StudentInfo</span><span class="p">();</span>
-        <span class="n">objStudentInfo1</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
-        <span class="n">objStudentInfo1</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Mahedee Hasan"</span><span class="p">;</span>
-        
-        <span class="n">lstStudentInfo</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">objStudentInfo1</span><span class="p">);</span>
-        
-        <span class="n">StudentInfo</span> <span class="n">objStudentInfo2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StudentInfo</span><span class="p">();</span>
-        <span class="n">objStudentInfo2</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
-        <span class="n">objStudentInfo2</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Mahmud Ahsan"</span><span class="p">;</span>
-        <span class="n">lstStudentInfo</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">objStudentInfo2</span><span class="p">);</span>
-        
-        <span class="n">StudentInfo</span> <span class="n">objStudentInfo3</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StudentInfo</span><span class="p">();</span>
-        <span class="n">objStudentInfo3</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="m">3</span><span class="p">;</span>
-        <span class="n">objStudentInfo3</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Asrafuzzaman"</span><span class="p">;</span>
-        <span class="n">lstStudentInfo</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">objStudentInfo3</span><span class="p">);</span>
-        
-        <span class="n">StudentInfo</span> <span class="n">objStudentInfo4</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StudentInfo</span><span class="p">();</span>
-        <span class="n">objStudentInfo4</span><span class="p">.</span><span class="n">Id</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
-        <span class="n">objStudentInfo4</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Enamul Haque"</span><span class="p">;</span>
-        <span class="n">lstStudentInfo</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">objStudentInfo4</span><span class="p">);</span>
-        
-        <span class="n">ddlStudentInfo</span><span class="p">.</span><span class="n">DataSource</span> <span class="p">=</span> <span class="n">lstStudentInfo</span><span class="p">;</span>
-        <span class="n">ddlStudentInfo</span><span class="p">.</span><span class="n">DataValueField</span> <span class="p">=</span> <span class="s">"Id"</span><span class="p">;</span>
-        <span class="n">ddlStudentInfo</span><span class="p">.</span><span class="n">DataTextField</span> <span class="p">=</span> <span class="s">"Name"</span><span class="p">;</span>
-        <span class="n">ddlStudentInfo</span><span class="p">.</span><span class="n">SelectedIndex</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span> <span class="c1">//Selected index 2 means selected value is 3 and text is Asrafuzzaman</span>
-        <span class="n">ddlStudentInfo</span><span class="p">.</span><span class="nf">DataBind</span><span class="p">();</span>
- 
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">1</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">2</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">3</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">4</span><span class="p">;</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="m">5</span><span class="p">;</span>
 <span class="p">}</span>
 
 </code></pre></div></div>
 
+<p>In this example, the <code class="language-plaintext highlighter-rouge">GetNumbers()</code> method defines a sequence of integers by using five <code class="language-plaintext highlighter-rouge">yield</code> return statements. When this method is called, it will return an <code class="language-plaintext highlighter-rouge">IEnumerable&lt;int&gt;</code> object that represents the sequence of integers.</p>
+
+<p>You can use a foreach loop to iterate over the sequence and retrieve each value:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="k">in</span> <span class="nf">GetNumbers</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code will output the following:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">1</span>
+<span class="mf">2</span>
+<span class="mf">3</span>
+<span class="mf">4</span>
+<span class="mf">5</span>
+</code></pre></div></div>
+
+<p><strong>Advanced Usage of the Yield Statement</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">yield</code> statement can also be used with the <code class="language-plaintext highlighter-rouge">yield break</code> statement to stop the sequence early. Here’s an example of a method that returns a sequence of integers up to a specified limit:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="nf">GetNumbersUpTo</span><span class="p">(</span><span class="kt">int</span> <span class="n">limit</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;=</span> <span class="n">limit</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">yield</span> <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In this example, the GetNumbersUpTo() method defines a sequence of integers up to a specified limit. It uses a for loop to generate the sequence, and then it uses the <code class="language-plaintext highlighter-rouge">yield break</code> statement to stop the sequence early.</p>
+
+<p>You can call this method and pass in a limit to get the sequence:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="k">in</span> <span class="nf">GetNumbersUpTo</span><span class="p">(</span><span class="m">3</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code will output the following:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">1</span>
+<span class="mf">2</span>
+<span class="mf">3</span>
+</code></pre></div></div>
+
+<p><strong>Conclusion</strong><br />
+The yield statement is a powerful feature in C# that allows you to define custom iterators that can return sequences of values. It can be used to create efficient and memory-friendly code when working with large data sets or when you need to retrieve data on-demand. By using the yield return and yield break statements, you can define complex sequences and stop them early when necessary.</p>
 
         
       </section>
@@ -395,10 +413,6 @@
   <p class="page__taxonomy">
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
     <span itemprop="keywords">
-    
-      
-      
-      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
     
       
       
@@ -423,10 +437,6 @@
     
       
       
-      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
-    
-      
-      
       <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
     
     </span>
@@ -434,30 +444,29 @@
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2013-12-10T00:00:00-04:00">December 10, 2013</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-01T00:00:00-04:00">March 01, 2023</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Populate+Dropdownlist+With+Selected+Index%20http%3A%2F%2Flocalhost%3A4000%2Fpopulate-dropdownlist-with-selected-index%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Introduction+to+the+Yield+Statement%20http%3A%2F%2Flocalhost%3A4000%2Fintroduction-to-the-yield-statement%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fpopulate-dropdownlist-with-selected-index%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fintroduction-to-the-yield-statement%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fpopulate-dropdownlist-with-selected-index%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fintroduction-to-the-yield-statement%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/file-upload-to-server-with-asp-net/" class="pagination--pager" title="File upload to server with ASP.Net
+      <a href="/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" class="pagination--pager" title="Configure Load Balancer using Eureka and ocelot with asp.net core and docker
 ">Previous</a>
     
     
-      <a href="/object-oriented-programming-at-a-glance/" class="pagination--pager" title="Generate image On the fly using ASP.NET
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -481,33 +490,6 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/introduction-to-the-yield-statement/" rel="permalink">Introduction to the Yield Statement
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  2 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of val...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
         <a href="/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" rel="permalink">Configure Load Balancer using Eureka and ocelot with asp.net core and docker
 </a>
       
@@ -518,7 +500,7 @@
 
 
 
-  10 minute read
+  9 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minim...</p>
@@ -545,7 +527,7 @@
 
 
 
-  19 minute read
+  20 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Event sourcing is a most important pattern to design a microservice based application. If you are working with multiple services in a microservice based appl...</p>
@@ -572,10 +554,37 @@
 
 
 
-  4 minute read
+  3 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">.NET gives us opportunity to create custom template for future use and GitHub packages registry is most popular now a days to host custom template. In this a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/What-and-why-IValidatebleObject-in-C-sharp/" rel="permalink">What and why IValidatebleObject in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">IValidatableObject is an interface in C# that defines a method named Validate, which enables an object to perform custom validation logic. When you implement...</p>
   </article>
 </div>
 
@@ -667,8 +676,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/populate-dropdownlist-with-selected-index/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/populate-dropdownlist-with-selected-index"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "http://localhost:4000/introduction-to-the-yield-statement/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/introduction-to-the-yield-statement"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

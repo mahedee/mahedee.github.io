@@ -1,4 +1,134 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-31T17:45:21-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Introduction to the Yield Statement</title><link href="http://localhost:4000/introduction-to-the-yield-statement/" rel="alternate" type="text/html" title="Introduction to the Yield Statement" /><published>2023-03-01T00:00:00-04:00</published><updated>2023-03-01T00:00:00-04:00</updated><id>http://localhost:4000/introduction-to-the-yield-statement</id><content type="html" xml:base="http://localhost:4000/introduction-to-the-yield-statement/"><![CDATA[<p><strong>Introduction</strong></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-31T23:05:10-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Extension Methods in C# - An Introduction with Examples and Output</title><link href="http://localhost:4000/extension-method-in-csharp/" rel="alternate" type="text/html" title="Extension Methods in C# - An Introduction with Examples and Output" /><published>2023-03-10T00:00:00-04:00</published><updated>2023-03-10T00:00:00-04:00</updated><id>http://localhost:4000/extension-method-in-csharp</id><content type="html" xml:base="http://localhost:4000/extension-method-in-csharp/"><![CDATA[<p><strong>Introduction</strong></p>
+
+<p>Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.</p>
+
+<p><strong>What are Extension Methods?</strong></p>
+
+<p>An extension method is a static method that is used to extend the functionality of an existing class without modifying the original class definition. Extension methods are defined in a static class and must be marked with the “this” keyword before the first parameter. This tells the compiler that the method is an extension method and can be called as if it were a member of the extended class.</p>
+
+<p>Extension methods are typically used to add functionality to classes that cannot be modified directly, such as classes in the .NET Framework. They are also useful for creating reusable code that can be shared across multiple projects.</p>
+
+<p><strong>Example of Extension Method</strong></p>
+
+<p>Here’s an example of how to create an extension method that adds a new method to the String class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">StringExtensions</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="k">this</span> <span class="kt">string</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>In this example, the “IsNullOrEmpty” method is added to the String class as an extension method. The method checks whether the string is null or empty and returns a boolean value.</p>
+
+<p>To use the extension method, simply call it as if it were a member of the String class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">string</span> <span class="n">str</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">result</span> <span class="p">=</span> <span class="n">str</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>In this example, the “IsNullOrEmpty” method is called on a null string. Because it is an extension method, it can be called even though the String class does not have a method with this name.</p>
+
+<p><strong>Output of the Extension Method Example</strong></p>
+
+<p>The output of the above code will be “true”, since the string “str” is null and the “IsNullOrEmpty” method returns true for null strings.</p>
+
+<p>Here’s another example that demonstrates how to create an extension method that calculates the sum of an array of integers:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">IntExtensions</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Sum</span><span class="p">(</span><span class="k">this</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">values</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">int</span> <span class="k">value</span> <span class="k">in</span> <span class="n">values</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">sum</span> <span class="p">+=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">To</span> <span class="n">use</span> <span class="n">the</span> <span class="n">extension</span> <span class="n">method</span><span class="p">,</span> <span class="n">simply</span> <span class="n">call</span> <span class="n">it</span> <span class="k">as</span> <span class="k">if</span> <span class="n">it</span> <span class="n">were</span> <span class="n">a</span> <span class="n">member</span> <span class="n">of</span> <span class="n">the</span> <span class="kt">int</span> <span class="n">array</span><span class="p">:</span>
+
+<span class="err">```</span><span class="n">csharp</span>
+<span class="kt">int</span><span class="p">[]</span> <span class="n">values</span> <span class="p">=</span> <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span> <span class="p">};</span>
+<span class="kt">int</span> <span class="n">sum</span> <span class="p">=</span> <span class="n">values</span><span class="p">.</span><span class="nf">Sum</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p>In this example, the “Sum” method is called on an int array. Because it is an extension method, it can be called even though the int class does not have a method with this name.</p>
+
+<p><strong>Output of the Extension Method Example</strong></p>
+
+<p>The output of the above code will be “15”, since the “Sum” method calculates the sum of the values in the array.</p>
+
+<p><strong>Another Example</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExtensionMethodsExample</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">MathExtensions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">double</span> <span class="nf">RoundTo</span><span class="p">(</span><span class="k">this</span> <span class="kt">double</span> <span class="n">number</span><span class="p">,</span> <span class="kt">int</span> <span class="n">decimalPlaces</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">double</span> <span class="n">multiplier</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="n">decimalPlaces</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Round</span><span class="p">(</span><span class="n">number</span> <span class="p">*</span> <span class="n">multiplier</span><span class="p">)</span> <span class="p">/</span> <span class="n">multiplier</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Factorial</span><span class="p">(</span><span class="k">this</span> <span class="kt">int</span> <span class="n">number</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="p">==</span> <span class="m">0</span> <span class="p">||</span> <span class="n">number</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="m">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="n">number</span> <span class="p">*</span> <span class="nf">Factorial</span><span class="p">(</span><span class="n">number</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">double</span> <span class="n">pi</span> <span class="p">=</span> <span class="m">3.141592653589793</span><span class="p">;</span>
+            <span class="kt">double</span> <span class="n">roundedPi</span> <span class="p">=</span> <span class="n">pi</span><span class="p">.</span><span class="nf">RoundTo</span><span class="p">(</span><span class="m">4</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Pi rounded to 4 decimal places: </span><span class="p">{</span><span class="n">roundedPi</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+
+            <span class="kt">int</span> <span class="n">num</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">factorial</span> <span class="p">=</span> <span class="n">num</span><span class="p">.</span><span class="nf">Factorial</span><span class="p">();</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Factorial of </span><span class="p">{</span><span class="n">num</span><span class="p">}</span><span class="s">: </span><span class="p">{</span><span class="n">factorial</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>In this example, we have created a static class called “MathExtensions” that contains two extension methods: “RoundTo” and “Factorial”.</p>
+
+<p>The “RoundTo” method takes a double number and an integer number of decimal places, and returns the number rounded to the specified number of decimal places.</p>
+
+<p>The “Factorial” method takes an integer number and calculates its factorial.</p>
+
+<p>In the Main method, we have created a double variable “pi” and called the “RoundTo” method on it to round it to 4 decimal places. We have also created an integer variable “num” and called the “Factorial” method on it to calculate its factorial.</p>
+
+<p>The output of this code will be:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Pi</span> <span class="nf">rounded</span> <span class="nf">to</span> <span class="mf">4</span> <span class="nf">decimal</span> <span class="nf">places:</span> <span class="mf">3.1416</span>
+<span class="nf">Factorial</span> <span class="nf">of</span> <span class="nf">5:</span> <span class="mf">120</span>
+</code></pre></div></div>
+
+<p>This advanced example demonstrates how extension methods can be used to add complex functionality to existing classes, such as calculating the factorial of an integer or rounding a double to a specified number of decimal places.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>Extension methods are a powerful feature in C# that allow developers to add new functionality to existing classes without modifying the original source code. They are defined in a static class and must be marked with the “this” keyword before the first parameter. Extension methods are typically used to add functionality to classes that cannot be modified directly, such as classes in the .NET Framework. They are also useful for creating reusable code that can be shared across multiple projects.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="csharp" /><summary type="html"><![CDATA[Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.]]></summary></entry><entry><title type="html">Introduction to the Yield Statement</title><link href="http://localhost:4000/introduction-to-the-yield-statement/" rel="alternate" type="text/html" title="Introduction to the Yield Statement" /><published>2023-03-01T00:00:00-04:00</published><updated>2023-03-01T00:00:00-04:00</updated><id>http://localhost:4000/introduction-to-the-yield-statement</id><content type="html" xml:base="http://localhost:4000/introduction-to-the-yield-statement/"><![CDATA[<p><strong>Introduction</strong></p>
 
 <p>The <code class="language-plaintext highlighter-rouge">yield</code> statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of values, but instead of returning all of the values at once, it can return them one at a time as requested. This is particularly useful when working with large data sets or when you want to avoid loading all of the data into memory at once.</p>
 
@@ -4875,99 +5005,4 @@ Here, BFF.Web project will act as API Gateway.</li>
 
 <p><img src="/assets/images/posts/2022/qos-03-4.PNG" alt="" /></p>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot-qos">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="Web API" /><category term="Microservices" /><category term="Ocelot" /><category term="Poly" /><category term="csharp" /><category term="aspnetcore" /><category term="webapi" /><category term="microservices" /><category term="ocelot" /><category term="poly" /><summary type="html"><![CDATA[API Gateway is an entry point for backend application. It maintains routing, authentication, logging, service discovery etc. Ocelot is used to design and develop API gateway for .net based application. QoS is generally configured in API gateway which provides different priorities for different applications, users or traffic. In this article, we will configure and discuss Quality of Services (QoS) using ocelot and Polly on ASP.NET Core web API project]]></summary></entry><entry><title type="html">How to create SSH fingerprint for Azure DevOps</title><link href="http://localhost:4000/how-to-create-ssh-fingerprint-for-azure-devops/" rel="alternate" type="text/html" title="How to create SSH fingerprint for Azure DevOps" /><published>2022-05-10T00:00:00-03:00</published><updated>2022-05-10T00:00:00-03:00</updated><id>http://localhost:4000/how-to-create-ssh-fingerprint-for-azure-devops</id><content type="html" xml:base="http://localhost:4000/how-to-create-ssh-fingerprint-for-azure-devops/"><![CDATA[<p>It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.</p>
-
-<p><strong>Step 1:Create SSH Keys</strong></p>
-
-<ul>
-  <li>Create a folder if not exists - name .ssh in the following directory.</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\mahedee
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Go to run and type: <code class="language-plaintext highlighter-rouge">%userprofile%\.ssh</code></p>
-  </li>
-  <li>
-    <p>Run the powershell command in the following directory.</p>
-  </li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\mahedee\.ssh
-</code></pre></div></div>
-
-<ul>
-  <li>Run the follwing command on powershell.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ssh-keygen</span> <span class="nf">-C</span> <span class="nf">"test-git-dev-azure.com"</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/posts/2022/ssh-01.PNG" alt="" /></p>
-
-<p><strong>Step 2: Add the public key to Azure DevOps</strong></p>
-
-<ul>
-  <li>Now go to the Azure DevOps web portal. Go to the avatar on the upper right corner. Select SSH public keys.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2022/ssh-02.PNG" alt="" /></p>
-
-<ul>
-  <li>Select + New Key button on the upper right corner.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2022/ssh-03.PNG" alt="" /></p>
-
-<ul>
-  <li>Copy the key from <code class="language-plaintext highlighter-rouge">C:\Users\mahedee\.ssh\id_rsa.pub</code> . The content of the id_rsa.pub file that you have already generated and pest the content on Public Key Data text box as belows.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2022/ssh-04.PNG" alt="" /></p>
-
-<ul>
-  <li>Now click add button.</li>
-</ul>
-
-<p><strong>Step 3: Clone your repository</strong></p>
-
-<ul>
-  <li>Now run powershell command and clone a repository using SSH as bellows.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">git@ssh.dev.azure.com:v3</span><span class="nv">/yourorganization/yourrepository</span>
-</code></pre></div></div>
-
-<p><strong>Troubleshooting</strong></p>
-
-<p><strong>Problem</strong></p>
-
-<p>After configuring SSH, I got the following error while tried to clone repository.</p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">git@ssh.dev.azure.com:v3</span><span class="nv">/yourorganization/yourrepository</span>
-</code></pre></div></div>
-
-<p>I was getting the following message:</p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git@ssh.dev.azure.com's</span> <span class="nf">password:</span>
-</code></pre></div></div>
-
-<p>I have tried all using all sorts of password but failed.</p>
-
-<p><strong>Solution</strong></p>
-
-<ol>
-  <li>OpenSSH Authentication Agent was disabled on my PC. I started the service.</li>
-</ol>
-
-<p><img src="/assets/images/posts/2022/ssh-05.PNG" alt="" /></p>
-
-<ol>
-  <li>SSH.exe was not added on environment varaible. I have added it on environment variable.</li>
-</ol>
-
-<p><img src="/assets/images/posts/2022/ssh-06.PNG" alt="" /></p>
-
-<p>Then I tried to clone the repository and It was working fine.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Command" /><category term="Source Control" /><category term="command" /><category term="sourcecontrol" /><summary type="html"><![CDATA[It seems easy to create SSH fingerprint and connect Azure DevOps or Github. But, sometimes, we face some problem which is hectic. In this step by step article, I am going to show you how to create SSH fingerprint for Azure DevOps and clone a repository.]]></summary></entry></feed>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot-qos">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="Web API" /><category term="Microservices" /><category term="Ocelot" /><category term="Poly" /><category term="csharp" /><category term="aspnetcore" /><category term="webapi" /><category term="microservices" /><category term="ocelot" /><category term="poly" /><summary type="html"><![CDATA[API Gateway is an entry point for backend application. It maintains routing, authentication, logging, service discovery etc. Ocelot is used to design and develop API gateway for .net based application. QoS is generally configured in API gateway which provides different priorities for different applications, users or traffic. In this article, we will configure and discuss Quality of Services (QoS) using ocelot and Polly on ASP.NET Core web API project]]></summary></entry></feed>

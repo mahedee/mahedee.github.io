@@ -1,4 +1,206 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-31T23:05:10-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Extension Methods in C# - An Introduction with Examples and Output</title><link href="http://localhost:4000/extension-method-in-csharp/" rel="alternate" type="text/html" title="Extension Methods in C# - An Introduction with Examples and Output" /><published>2023-03-10T00:00:00-04:00</published><updated>2023-03-10T00:00:00-04:00</updated><id>http://localhost:4000/extension-method-in-csharp</id><content type="html" xml:base="http://localhost:4000/extension-method-in-csharp/"><![CDATA[<p><strong>Introduction</strong></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-15T15:46:07-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Think Simple</title><subtitle>hi</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Singleton design pattern using C#</title><link href="http://localhost:4000/singleton-design-pattern/" rel="alternate" type="text/html" title="Singleton design pattern using C#" /><published>2023-04-15T00:00:00-03:00</published><updated>2023-04-15T00:00:00-03:00</updated><id>http://localhost:4000/singleton-design-pattern</id><content type="html" xml:base="http://localhost:4000/singleton-design-pattern/"><![CDATA[<p><strong>Design Pattern</strong></p>
+
+<p>A software design pattern is a general, reusable solution to a commonly occurring problem in software design. Design patterns are typically documented in a standardized format, making it easy for developers to understand and apply them to their own software projects. It is like a template to solve a problem.</p>
+
+<p><strong>Singleton Design Pattern</strong></p>
+
+<p>The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.</p>
+
+<p>The Singleton pattern is used when you want to:</p>
+
+<ul>
+  <li>Ensure that only one instance of a class is created.</li>
+  <li>Provide a single point of access to that instance.</li>
+  <li>Manage a shared resource.</li>
+</ul>
+
+<p>Some downside of implementing the Singleton Pattern are</p>
+
+<ul>
+  <li>It can make unit testing more challenging since it introduces a global state to the application.</li>
+  <li>It limiting potential parallelism in the program through the use of locking.</li>
+</ul>
+
+<p>In C#, there are several methods to implement a singleton pattern. The singleton pattern commonly includes the following attributes:</p>
+
+<ul>
+  <li>A single constructor that is private and has no parameters.</li>
+  <li>A sealed class.</li>
+  <li>A static variable that holds a reference to the single instance that is created.</li>
+  <li>A public and static method that provides access to the created instance.</li>
+</ul>
+
+<p><strong>Implementation of Singleton by C#</strong></p>
+
+<p><strong>Step 1: Create EmployeeInfo class</strong></p>
+
+<p>This poco class is to hold employee information.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+</code></pre></div></div>
+<p><strong>Step 2: Create a singleton class</strong></p>
+
+<p>Here EmployeeService is a singleton class. Constructor of this class is private so that nobody can create its instance from outside.  Instance() is a static method which creates instance of the singleton class. It actually forces that only one instance of the object will be created. Lock() is used to create instance of the singleton pattern in thread safe manner in multi threaded environment. The other two methods are used to add employee information in list and get employee salary. These two are as usual method.Don’t mix up Singleton class and Static class. Keep in mind; in static class everything must be static like Method, constructor, properties. But in singleton class it is not required. Hope, you will be clear after the following example.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">SingletonEmployeeService</span>
+    <span class="p">{</span>
+        <span class="c1">// singleton static object</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="n">SingletonEmployeeService</span> <span class="n">instance</span><span class="p">;</span>
+
+        <span class="c1">// an object to use in a singleton class</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+        <span class="c1">// Restrict to create object of singleton class</span>
+        <span class="k">private</span> <span class="nf">SingletonEmployeeService</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">employees</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// The static method to provide global access to the singleton object</span>
+        <span class="c1">// Get singleton object of SingletonEmployeeService class</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">SingletonEmployeeService</span> <span class="nf">GetInstance</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Thread safe singleton</span>
+                <span class="k">lock</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">SingletonEmployeeService</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">instance</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SingletonEmployeeService</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Add employee to the employees list</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Get name of the employee by Id</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetEmployeeName</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+        
+            <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">).</span><span class="nf">First</span><span class="p">().</span><span class="n">Name</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">name</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here’s how the code works:</p>
+
+<ul>
+  <li>The class is marked as “sealed”, which means it cannot be inherited.</li>
+  <li>The class has a private static object named “instance”, which holds the reference to the single instance of the class.</li>
+  <li>The class also has a private List of Employee objects, which is the actual data that this class is managing.</li>
+  <li>The constructor of the class is marked as private, which means that it can only be called from within the class itself. This ensures that no other code can create an instance of the class.</li>
+  <li>The only way to access the singleton instance of the class is through the public static method named “GetInstance()”, which checks whether the instance has been created already. If not, it creates a new instance of the class in a thread-safe manner using a lock statement.</li>
+  <li>lock() is used to create instance of the singleton pattern in thread safe manner in multi threaded environment.</li>
+  <li>The class has two public methods, “AddEmployee()” and “GetEmployeeName()”, which can be used to add an employee to the employees list and to get the name of an employee by their ID, respectively.</li>
+</ul>
+
+<p><strong>Step 3: Access the singleton class</strong></p>
+
+<p>This class creates an instance of singleton class by EmployeeService objEmployeeService = EmployeeService.Instance(); and access singleton class.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+
+            <span class="n">Employee</span> <span class="n">emp1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Employee</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"John"</span><span class="p">,</span> <span class="n">Age</span> <span class="p">=</span> <span class="m">30</span> <span class="p">};</span>
+            <span class="n">Employee</span> <span class="n">emp2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Employee</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Abraham"</span><span class="p">,</span> <span class="n">Age</span> <span class="p">=</span> <span class="m">40</span><span class="p">};</span>
+            
+
+            <span class="c1">// Create singleton instance using GetInstance method not new</span>
+            <span class="n">SingletonEmployeeService</span> <span class="n">singletonEmployeeService</span> <span class="p">=</span> <span class="n">SingletonEmployeeService</span><span class="p">.</span><span class="nf">GetInstance</span><span class="p">();</span>
+            
+            <span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">AddEmployee</span><span class="p">(</span><span class="n">emp1</span><span class="p">);</span>
+            <span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">AddEmployee</span><span class="p">(</span><span class="n">emp2</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">GetEmployeeName</span><span class="p">(</span><span class="m">2</span><span class="p">));</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Output:</span>
+    <span class="c1">// Abraham</span>
+
+</code></pre></div></div>
+
+<p>This C# code shows an example of how to use the SingletonEmployeeService class to manage employee data. The main() method creates two Employee objects and adds them to the singleton instance of the SingletonEmployeeService class using the AddEmployee() method. It then retrieves the name of the employee with ID=2 using the GetEmployeeName() method and prints it to the console.</p>
+
+<p>The key thing to note here is that the SingletonEmployeeService class is accessed using the GetInstance() method, rather than creating a new instance using the “new” keyword. This ensures that there is only one instance of the SingletonEmployeeService class in the application and that it is globally accessible.</p>
+
+<p>The code creates two Employee objects with different ID, Name, and Age values and adds them to the employees list of the singleton instance using the AddEmployee() method. Then, it retrieves the name of the employee with ID=2 using the GetEmployeeName() method, which returns the name of the employee as “Abraham” and prints it to the console using the Console.WriteLine() method.</p>
+
+<p>Overall, this code demonstrates how the Singleton pattern can be used to ensure that there is only one instance of a class in the application and how this instance can be accessed globally to manage data in a centralized manner.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/singleton-pattern">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="OOP" /><category term="C#" /><category term="Design Pattern" /><category term="OOP" /><category term="csharp" /><category term="designpattern" /><summary type="html"><![CDATA[The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.]]></summary></entry><entry><title type="html">JavaScript setInterval method with some example</title><link href="http://localhost:4000/some-example-of-javascript-setInterval-method/" rel="alternate" type="text/html" title="JavaScript setInterval method with some example" /><published>2023-04-10T00:00:00-03:00</published><updated>2023-04-10T00:00:00-03:00</updated><id>http://localhost:4000/some-example-of-javascript-setInterval-method</id><content type="html" xml:base="http://localhost:4000/some-example-of-javascript-setInterval-method/"><![CDATA[<p><strong>Introduction</strong></p>
+
+<p>JavaScript provides a built-in method called setInterval that allows you to execute a function or a piece of code repeatedly at a specified time interval. This can be useful for a variety of tasks, such as updating the content of a webpage, polling a server for new data, or animating an element on the page.</p>
+
+<p><strong>Examples</strong></p>
+
+<p>To use setInterval, you simply need to pass a function or a code block as the first argument, and the time interval (in milliseconds) as the second argument. Here’s a simple example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<p>In this example, the setInterval method will execute the arrow function every 1000 milliseconds (or 1 second), logging the message “Hello, world!” to the console.</p>
+
+<p>You can also pass a regular function as the first argument to setInterval, like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nf">setInterval</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This code will have the same effect as the previous example, but using a named function instead of an arrow function.</p>
+
+<p>Another useful feature of setInterval is that it returns a unique ID that you can use to stop the interval using the clearInterval method. Here’s an example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">intervalID</span> <span class="o">=</span> <span class="nf">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+<span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">clearInterval</span><span class="p">(</span><span class="nx">intervalID</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In this code, we store the interval ID returned by setInterval in a variable called intervalID. Then, after 5 seconds (5000 milliseconds) have elapsed, we use the clearInterval method to stop the interval by passing the intervalID variable as an argument.</p>
+
+<p>Finally, you can also pass arguments to the function being executed by setInterval. Here’s an example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nf">incrementCount</span><span class="p">(</span><span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">count</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Count is now </span><span class="p">${</span><span class="nx">count</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nf">setInterval</span><span class="p">(</span><span class="nx">incrementCount</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In this example, we’re using the incrementCount function to increment a count variable by a specified step. We pass the value 2 as the third argument to setInterval, which is then passed as the step argument to incrementCount.</p>
+
+<p>These are just a few examples of how you can use the setInterval method in JavaScript to execute code at a specified time interval. Whether you’re updating the content of a webpage or animating an element, setInterval is a powerful tool that can help you achieve your goals.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="JavaScript" /><category term="javascript" /><summary type="html"><![CDATA[Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.]]></summary></entry><entry><title type="html">Extension Methods in C# - An Introduction with Examples and Output</title><link href="http://localhost:4000/extension-method-in-csharp/" rel="alternate" type="text/html" title="Extension Methods in C# - An Introduction with Examples and Output" /><published>2023-03-10T00:00:00-04:00</published><updated>2023-03-10T00:00:00-04:00</updated><id>http://localhost:4000/extension-method-in-csharp</id><content type="html" xml:base="http://localhost:4000/extension-method-in-csharp/"><![CDATA[<p><strong>Introduction</strong></p>
 
 <p>Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.</p>
 
@@ -4327,682 +4529,4 @@ Eureka also provides some additional features such as load balancing, failover, 
 
 <p><img src="/assets/images/posts/2022/sd-03.PNG" alt="" /></p>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/sd-demo">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="Eureka" /><category term="Microservices" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnetcore" /><category term="eureka" /><category term="microservices" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Service discovery is a process in microservice architecture that enables dynamic registration and lookup of services in a network environment. It allows microservices to discover each other, establish communication, and collaborate to complete a task. This helps to improve resilience, scalability, and flexibility of microservice-based systems. In this article, I will show you how to configure service discovery with ocelot in API gateway]]></summary></entry><entry><title type="html">How to host .net core NuGet Packages in GitHub Packages Registry</title><link href="http://localhost:4000/How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/" rel="alternate" type="text/html" title="How to host .net core NuGet Packages in GitHub Packages Registry" /><published>2022-06-15T00:00:00-03:00</published><updated>2022-06-15T00:00:00-03:00</updated><id>http://localhost:4000/How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry</id><content type="html" xml:base="http://localhost:4000/How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/"><![CDATA[<p><strong>Introduction</strong></p>
-
-<p>GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.</p>
-
-<p><strong>Tools and Technology uses</strong></p>
-<ul>
-  <li>Visual Studio 2022</li>
-  <li>.NET 6</li>
-  <li>Visual C#</li>
-  <li>GitHub</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1: Create a personal access token (PAT) from GitHub</strong></p>
-
-<ul>
-  <li>Login into you GitHub</li>
-  <li>Go to settings -&gt; Developer Settings -&gt; Personal Access Tokens</li>
-  <li>Click “Generate new token” button</li>
-  <li>Type Note for the token, expiration days</li>
-  <li>
-    <p>Select scope for the token – here I have selected repo, write:packages, delete:packages as shown below.</p>
-
-    <p><img src="/assets/images/posts/2022/package-01.PNG" alt="" /></p>
-  </li>
-  <li>Now click “Generate Toke” at the bottom of the panel</li>
-  <li>Copy the token and store the token for further use because you cannot find it later</li>
-</ul>
-
-<p><img src="/assets/images/posts/2022/package-02.PNG" alt="" /></p>
-
-<p><strong>Step – 2: Add Nuget Source in visual studio</strong></p>
-<ul>
-  <li>Type the following command to add source</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nb">add</span> <span class="nf">source</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/nuget.pkg.github.com/mahedee/index.json</span> <span class="nf">--name</span> <span class="nf">github-mahedee</span> <span class="nf">--username</span> <span class="nf">mahedee</span> <span class="nf">--password</span> <span class="p">&lt;</span><span class="nf">Your</span> <span class="nf">personal</span> <span class="nf">Access</span> <span class="nf">Token</span><span class="p">&gt;</span>
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>You will see a source is added in C:\Users\mahedee\AppData\Roaming\NuGet\NuGet.Config file</p>
-  </li>
-  <li>Optional: You can also add source from visual studio Tools -&gt; Options -&gt; NuGet Package Manager -&gt; Package Sources</li>
-  <li>Restart visual studio to get new nuget package source</li>
-</ul>
-
-<p><strong>Step – 3: Create a class library to publish in GitHub Packages</strong></p>
-<ul>
-  <li>Create a class library name – ‘CryptoEngine”</li>
-  <li>Create a class CryptoGenerator as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">System.Security.Cryptography</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">CryptoEngine</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CryptoGenerator</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">GenerateSha256Hash</span><span class="p">(</span><span class="kt">string</span> <span class="n">plainText</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// Create a SHA256   </span>
-            <span class="k">using</span> <span class="p">(</span><span class="n">SHA256</span> <span class="n">sha256Hash</span> <span class="p">=</span> <span class="n">SHA256</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="c1">// ComputeHash - returns byte array  </span>
-                <span class="kt">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="p">=</span> <span class="n">sha256Hash</span><span class="p">.</span><span class="nf">ComputeHash</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">plainText</span><span class="p">));</span>
-
-                <span class="c1">// Convert byte array to a string   </span>
-                <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
-                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-                <span class="p">{</span>
-                    <span class="n">builder</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"x2"</span><span class="p">));</span>
-                <span class="p">}</span>
-                <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Click right button on class library project -&gt; Package -&gt; General</li>
-  <li>Mark “Produce a package file during build operations”</li>
-  <li>Type Package ID, Package Version, Authors, Company, Product, Description</li>
-  <li>Type repository URL – A github repository and save</li>
-  <li>Now you will see the csproj file as follows</li>
-</ul>
-
-<p><strong>CryptoEngine.csproj</strong></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk"</span><span class="nt">&gt;</span>
-
-  <span class="nt">&lt;PropertyGroup&gt;</span>
-    <span class="nt">&lt;TargetFramework&gt;</span>net6.0<span class="nt">&lt;/TargetFramework&gt;</span>
-    <span class="nt">&lt;ImplicitUsings&gt;</span>enable<span class="nt">&lt;/ImplicitUsings&gt;</span>
-    <span class="nt">&lt;Nullable&gt;</span>enable<span class="nt">&lt;/Nullable&gt;</span>
-    <span class="nt">&lt;GeneratePackageOnBuild&gt;</span>True<span class="nt">&lt;/GeneratePackageOnBuild&gt;</span>
-    <span class="nt">&lt;PackageId&gt;</span>Mahedee.CryptoEngine<span class="nt">&lt;/PackageId&gt;</span>
-    <span class="nt">&lt;Version&gt;</span>1.0.0<span class="nt">&lt;/Version&gt;</span>
-    <span class="nt">&lt;Authors&gt;</span>Mahedee hasan<span class="nt">&lt;/Authors&gt;</span>
-    <span class="nt">&lt;Company&gt;</span>Mahedee.NET<span class="nt">&lt;/Company&gt;</span>
-    <span class="nt">&lt;Product&gt;</span>CryptoEngine<span class="nt">&lt;/Product&gt;</span>
-    <span class="nt">&lt;Description&gt;</span>Chipper text generator<span class="nt">&lt;/Description&gt;</span>
-    <span class="nt">&lt;RepositoryUrl&gt;</span>https://github.com/mahedee/public-packages<span class="nt">&lt;/RepositoryUrl&gt;</span>
-  <span class="nt">&lt;/PropertyGroup&gt;</span>
-
-<span class="nt">&lt;/Project&gt;</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 4: Create a NuGet Package</strong></p>
-
-<ul>
-  <li>Click right button on project and select Pack</li>
-  <li>A NuGet package will be generated in bin/Debug folder – In this case the nuget package name is Mahedee.CryptoEngine.1.0.0.nupkg</li>
-  <li>Or, Go to the directory where .csproj file exists and right the following command to generate nuget package</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">pack</span>
-</code></pre></div></div>
-
-<p><strong>Step 5: Push NuGet package to GitHub Package Registry</strong></p>
-
-<ul>
-  <li>Go to the directory where package generated – bin/Debug in this case.</li>
-  <li>Type following command</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nf">push</span> <span class="nf">.\Mahedee.CryptoEngine.1.0.0.nupkg</span> <span class="nf">--api-key</span> <span class="p">&lt;</span><span class="nf">your</span> <span class="nf">github</span> <span class="nf">access</span> <span class="nf">token</span><span class="p">&gt;</span> <span class="nf">--source</span> <span class="nf">github-mahedee</span>
-</code></pre></div></div>
-
-<p>Here github-mahedee is my nuget source name for visual studio. Already added in step – 2.</p>
-
-<ul>
-  <li>Now login to your Github account and go to Packages tab, you will see a package is uploaded. In this case package name is Mahedee.CryptoEngine</li>
-</ul>
-
-<p><strong>Step 6: Use already uploaded package in a project</strong></p>
-<ul>
-  <li>If Nuget package source is not added, add it using step – 2</li>
-  <li>Go to package manager console</li>
-  <li>Select Package Source as “github-mahedee” and type following command</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Mahedee.CryptoEngine</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Or right button on project -&gt; Manage Nuget Packages</li>
-  <li>Select Package source “github-mahedee”</li>
-  <li>Browse and install package Mahedee.CryptoEngine</li>
-</ul>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/dotnet-core-nuget-github">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="GitHub" /><category term="NuGet" /><category term="Packages" /><category term="csharp" /><category term="aspnetcore" /><category term="github" /><category term="nuget" /><category term="packages" /><summary type="html"><![CDATA[GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.]]></summary></entry><entry><title type="html">Configure QoS in API Gateway using ocelot and Polly</title><link href="http://localhost:4000/Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/" rel="alternate" type="text/html" title="Configure QoS in API Gateway using ocelot and Polly" /><published>2022-06-07T00:00:00-03:00</published><updated>2022-06-07T00:00:00-03:00</updated><id>http://localhost:4000/Configure-QoS-in-API-Gateway-using-ocelot-and-Polly</id><content type="html" xml:base="http://localhost:4000/Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/"><![CDATA[<p><strong>Introduction</strong><br />
-API Gateway is an entry point for backend application. It maintains routing, authentication, logging, service discovery etc. Ocelot is used to design and develop API gateway for .net based application. QoS is generally configured in API gateway which provides different priorities for different applications, users or traffic. In this article, we will configure and discuss Quality of Services (QoS) using ocelot and Polly on ASP.NET Core web API project.</p>
-
-<p><strong>What is Quality of Service (QoS)?</strong><br />
-QoS provides different priorities to different applications, users or data flow. We have already mentioned, Ocelot is used to design API Gateway and Ocelot uses Polly to achieve QoS.</p>
-
-<p>The QoSOptions node contains three important properties.</p>
-<ul>
-  <li>
-    <p><strong>ExceptionsAllowedBeforeBreaking</strong><br />
-This value must greater than 0. It means that the circuit breaker will break after a certain number of exceptions occur. For example:</p>
-  </li>
-  <li>
-    <p><strong>DurationOfBreak</strong><br />
-This value specifies how long the circuit breaker will stay open after it is tripped. The unit of this value is milliseconds. For example: 5000 means 5 seconds</p>
-  </li>
-  <li>
-    <p><strong>TimeoutValue</strong><br />
-This value specifies that a request will automatically be timed out if it takes more than this value. The unit of this value is milliseconds as well. For example: 3000 means 3 seconds.</p>
-  </li>
-</ul>
-
-<p><strong>Tools and Technology used</strong></p>
-<ul>
-  <li>Visual Studio 2022</li>
-  <li>.NET 6.0</li>
-  <li>In Memory Database</li>
-  <li>Entity Framework</li>
-  <li>ASP.NET Core Web API</li>
-  <li>Visual C#</li>
-  <li>Ocelot and</li>
-  <li>MMLib.SwaggerForOcelot</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1: Create solution and projects.</strong></p>
-
-<ul>
-  <li>Create a solution name QoS.</li>
-  <li>Add 2 new web api projects, name – Catalog.API, BFF.Web<br />
-Here, BFF.Web project will act as API Gateway.</li>
-</ul>
-
-<p><strong>Step 2: Install nuget packages.</strong></p>
-
-<ul>
-  <li>Install following nuget packages in Catalog.API</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.InMemory</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.VisualStudio.Web.CodeGeneration.Design</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Install following nuget packages in BFF.Web</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MMLib.SwaggerForOcelot</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot</span>
-<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Provider.Polly</span>
-</code></pre></div></div>
-
-<p><strong>Step 3: Organize Catalog.API</strong></p>
-
-<ul>
-  <li>Create CatalogItem model in Model folder</li>
-</ul>
-
-<p><strong>CatalogItem.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Catalog.API.Model</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogItem</span>
-    <span class="p">{</span>
-        <span class="p">[</span><span class="n">Key</span><span class="p">]</span>
-        <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">AvailableStock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">RestockThreshold</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Create DbContext class as CatalogContext in Db folder</li>
-</ul>
-
-<p><strong>CatalogContext.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Catalog.API.Db</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">CatalogContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-
-        <span class="p">}</span>
-
-        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">DbContextOptionsBuilder</span> <span class="n">optionsBuilder</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">base</span><span class="p">.</span><span class="nf">OnConfiguring</span><span class="p">(</span><span class="n">optionsBuilder</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;</span> <span class="n">CatalogItems</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Create SeedDataProvider class in Db folder</li>
-</ul>
-
-<p><strong>SeedDataProvider.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Catalog.API.Db</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">SeedDataProvider</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="n">CatalogContext</span> <span class="n">catalogContext</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span><span class="p">(!</span><span class="n">catalogContext</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="kt">var</span> <span class="n">catalogs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;</span>
-                <span class="p">{</span>
-                    <span class="k">new</span> <span class="n">CatalogItem</span>
-                    <span class="p">{</span>
-                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"T-Shirt"</span><span class="p">,</span>
-                        <span class="n">Description</span> <span class="p">=</span> <span class="s">"Cats Eye T-Shirt"</span><span class="p">,</span>
-                        <span class="n">Price</span> <span class="p">=</span> <span class="m">1000</span><span class="p">,</span>
-                        <span class="n">AvailableStock</span> <span class="p">=</span> <span class="m">100</span><span class="p">,</span>
-                        <span class="n">RestockThreshold</span> <span class="p">=</span> <span class="m">10</span>
-                    <span class="p">},</span>
-
-                    <span class="k">new</span> <span class="n">CatalogItem</span>
-                    <span class="p">{</span>
-                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Samsung Mobile"</span><span class="p">,</span>
-                        <span class="n">Description</span> <span class="p">=</span> <span class="s">"Samsung A30"</span><span class="p">,</span>
-                        <span class="n">Price</span> <span class="p">=</span> <span class="m">30000</span><span class="p">,</span>
-                        <span class="n">AvailableStock</span> <span class="p">=</span> <span class="m">100</span><span class="p">,</span>
-                        <span class="n">RestockThreshold</span> <span class="p">=</span> <span class="m">5</span>
-                    <span class="p">},</span>
-
-                    <span class="k">new</span> <span class="n">CatalogItem</span>
-                    <span class="p">{</span>
-                        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Meril Beauty Soap"</span><span class="p">,</span>
-                        <span class="n">Description</span> <span class="p">=</span> <span class="s">"Beauty Soap"</span><span class="p">,</span>
-                        <span class="n">Price</span> <span class="p">=</span> <span class="m">40</span><span class="p">,</span>
-                        <span class="n">AvailableStock</span> <span class="p">=</span> <span class="m">500</span><span class="p">,</span>
-                        <span class="n">RestockThreshold</span> <span class="p">=</span> <span class="m">20</span>
-                    <span class="p">}</span>
-                <span class="p">};</span>
-
-                <span class="n">catalogContext</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">catalogs</span><span class="p">);</span>
-                <span class="n">catalogContext</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Modify Program class as follows.</li>
-</ul>
-
-<p><strong>Program.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"CatalogDB"</span><span class="p">));</span>
-
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// For Seed data generation</span>
-<span class="k">using</span><span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">services</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">;</span>
-    <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">services</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;();</span>
-    <span class="n">SeedDataProvider</span><span class="p">.</span><span class="nf">Initialize</span><span class="p">(</span><span class="n">db</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-</code></pre></div></div>
-
-<p>Here, the following line is used to configure in memory database</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;(</span><span class="n">opt</span> <span class="p">=&gt;</span> <span class="n">opt</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"CatalogDB"</span><span class="p">));</span>
-</code></pre></div></div>
-
-<p>The following code snippet is used to initialize seed data</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span><span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="kt">var</span> <span class="n">services</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">;</span>
-    <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">services</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">CatalogContext</span><span class="p">&gt;();</span>
-    <span class="n">SeedDataProvider</span><span class="p">.</span><span class="nf">Initialize</span><span class="p">(</span><span class="n">db</span><span class="p">);</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Add CatalogItemsController class in Controllers folder as follows.</li>
-</ul>
-
-<p><strong>CatalogItemsController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">Catalog.API.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Catalog.API.Model</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">Catalog.API.Controllers</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CatalogItemsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CatalogContext</span> <span class="n">_context</span><span class="p">;</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">_count</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CatalogItemsController</span><span class="p">(</span><span class="n">CatalogContext</span> <span class="n">context</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/CatalogItems</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetCatalogItems</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">_count</span><span class="p">++;</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">_count</span> <span class="p">&lt;=</span> <span class="m">3</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="c1">// Sleep for 4 seconds</span>
-                <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">4000</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/CatalogItems/5</span>
-        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;&gt;</span> <span class="nf">GetCatalogItem</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="kt">var</span> <span class="n">catalogItem</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">catalogItem</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="n">catalogItem</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// PUT: api/CatalogItems/5</span>
-        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
-        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutCatalogItem</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">CatalogItem</span> <span class="n">catalogItem</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">catalogItem</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">catalogItem</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
-
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(!</span><span class="nf">CatalogItemExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                <span class="p">{</span>
-                    <span class="k">throw</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// POST: api/CatalogItems</span>
-        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
-        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;&gt;</span> <span class="nf">PostCatalogItem</span><span class="p">(</span><span class="n">CatalogItem</span> <span class="n">catalogItem</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Problem</span><span class="p">(</span><span class="s">"Entity set 'CatalogContext.CatalogItems'  is null."</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">catalogItem</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-
-            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetCatalogItem"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">catalogItem</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">catalogItem</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="c1">// DELETE: api/CatalogItems/5</span>
-        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteCatalogItem</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="kt">var</span> <span class="n">catalogItem</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">catalogItem</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">catalogItem</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-
-            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">CatalogItemExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">?.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">)).</span><span class="nf">GetValueOrDefault</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 4: Organize BFF.Web</strong></p>
-
-<p>In this stage, we are going to configure a gateway to communicate with other services using ocelot.</p>
-
-<ul>
-  <li>
-    <p>Create a folder name - Routes.dev in root directory and add the following files.  ocelot.catalog-api.json, ocelot.global.json, ocelot.SwaggerEndPoints.json in Routes.dev folder.</p>
-  </li>
-  <li>
-    <p>Now modify the json files as follows.</p>
-  </li>
-</ul>
-
-<p><strong>ocelot.catalog-api.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"catalog-api"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"DownstreamHostAndPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7282"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/catalog/{everything}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"DELETE"</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-
-      </span><span class="nl">"QoSOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"ExceptionsAllowedBeforeBreaking"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"DurationOfBreak"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"TimeoutValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p>QoSOptions section of the above file basically configure QoS for Catalog service. The above configuration means that if the server does not response for 3 minutes, it will throw timeout exception. If the server throws two exceptions, it will not be accessible for five minutes.</p>
-
-<p><strong>ocelot.global.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="nl">"GlobalConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"BaseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7205"</span><span class="w">
-    </span><span class="err">//</span><span class="nl">"ServiceDiscoveryProvider"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-
-    </span><span class="err">//</span><span class="w">  </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
-    </span><span class="err">//</span><span class="w">  </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">7205</span><span class="w">
-    </span><span class="err">//</span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p><strong>ocelot.SwaggerEndPoints.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="nl">"SwaggerEndPoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bffweb"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BFF.Web"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7205/swagger/v1/swagger.json"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"catalog-api"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Catalog.API"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://localhost:7205/catalog/swagger/v1/swagger.json"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-</span></code></pre></div></div>
-
-<p>Note: I have added the following code block in CatalogItemController to produce timeout manually.</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">CatalogItem</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetCatalogItems</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">_count</span><span class="p">++;</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">_count</span> <span class="p">&lt;=</span> <span class="m">3</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="c1">// Sleep for 4 seconds</span>
-                <span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">4000</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">CatalogItems</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-</code></pre></div></div>
-
-<p>Step 5: Run and test the application</p>
-
-<p>Now run both web projects. In the BFF.Web, select Catalog.API-1.0 from swagger definition (“Select a definition on the top right corner”) and execute the api (CatalogItems) as follows.</p>
-
-<p><img src="/assets/images/posts/2022/qos-01.PNG" alt="" /></p>
-
-<p>When we visit the first time (or quickly second time), it tells us that circuit is breaking for 5000 ms. Look at the console of BFF.Web.</p>
-
-<p><img src="/assets/images/posts/2022/qos-02.PNG" alt="" /></p>
-
-<p>Then, the second time (quickly) it tells us that the circuit is open, and we cannot visit the service for 3 seconds as follows.</p>
-
-<p><img src="/assets/images/posts/2022/qos-03.PNG" alt="" /></p>
-
-<p>After 3 seconds, the service is accessible. If you execute now, you will see the output like below.</p>
-
-<p><img src="/assets/images/posts/2022/qos-03-4.PNG" alt="" /></p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/api-gateway-ocelot-qos">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="Web API" /><category term="Microservices" /><category term="Ocelot" /><category term="Poly" /><category term="csharp" /><category term="aspnetcore" /><category term="webapi" /><category term="microservices" /><category term="ocelot" /><category term="poly" /><summary type="html"><![CDATA[API Gateway is an entry point for backend application. It maintains routing, authentication, logging, service discovery etc. Ocelot is used to design and develop API gateway for .net based application. QoS is generally configured in API gateway which provides different priorities for different applications, users or traffic. In this article, we will configure and discuss Quality of Services (QoS) using ocelot and Polly on ASP.NET Core web API project]]></summary></entry></feed>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/sd-demo">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="ASP.NET Core" /><category term="Eureka" /><category term="Microservices" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnetcore" /><category term="eureka" /><category term="microservices" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Service discovery is a process in microservice architecture that enables dynamic registration and lookup of services in a network environment. It allows microservices to discover each other, establish communication, and collaborate to complete a task. This helps to improve resilience, scalability, and flexibility of microservice-based systems. In this article, I will show you how to configure service discovery with ocelot in API gateway]]></summary></entry></feed>

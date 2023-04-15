@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Singleton design pattern using C# - Think Simple</title>
-<meta name="description" content="hi">
+<meta name="description" content="The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -23,7 +23,7 @@
 <meta property="og:url" content="http://localhost:4000/singleton-design-pattern/">
 
 
-  <meta property="og:description" content="hi">
+  <meta property="og:description" content="The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.">
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <meta property="article:published_time" content="2019-04-06T00:00:00-03:00">
+  <meta property="article:published_time" content="2023-04-15T00:00:00-03:00">
 
 
 
@@ -297,8 +297,8 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Singleton design pattern using C#">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="April 06, 2019">
+    <meta itemprop="description" content="The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.">
+    <meta itemprop="datePublished" content="April 15, 2023">
     
 
     <div class="page__inner-wrap">
@@ -312,7 +312,7 @@
 
 
 
-  2 minute read
+  5 minute read
 </p>
           
         </header>
@@ -322,155 +322,155 @@
         
         <p><strong>Design Pattern</strong></p>
 
-<p>Design pattern is a solution of known problems. These are strategies of solving commonly occurring problems. A design pattern is not a finish design. It is like a template to solve a problem.</p>
+<p>A software design pattern is a general, reusable solution to a commonly occurring problem in software design. Design patterns are typically documented in a standardized format, making it easy for developers to understand and apply them to their own software projects. It is like a template to solve a problem.</p>
 
 <p><strong>Singleton Design Pattern</strong></p>
 
-<p>Singleton is a software design pattern. It is restrict to create object more than once. This is actually needed when one object can perform its action in whole system. We frequently use a database connection object to connect with database. We don’t need multiple objects to create connection with database and close it. We can use singleton in this scenario.</p>
+<p>The Singleton pattern is a design pattern that restrict to create object more than once and provides a global point of access to that instance. This pattern is useful when you want to ensure that only one instance of a class is created and used throughout the entire application.</p>
+
+<p>The Singleton pattern is used when you want to:</p>
+
+<ul>
+  <li>Ensure that only one instance of a class is created.</li>
+  <li>Provide a single point of access to that instance.</li>
+  <li>Manage a shared resource.</li>
+</ul>
+
+<p>Some downside of implementing the Singleton Pattern are</p>
+
+<ul>
+  <li>It can make unit testing more challenging since it introduces a global state to the application.</li>
+  <li>It limiting potential parallelism in the program through the use of locking.</li>
+</ul>
+
+<p>In C#, there are several methods to implement a singleton pattern. The singleton pattern commonly includes the following attributes:</p>
+
+<ul>
+  <li>A single constructor that is private and has no parameters.</li>
+  <li>A sealed class.</li>
+  <li>A static variable that holds a reference to the single instance that is created.</li>
+  <li>A public and static method that provides access to the created instance.</li>
+</ul>
 
 <p><strong>Implementation of Singleton by C#</strong></p>
 
 <p><strong>Step 1: Create EmployeeInfo class</strong></p>
 
-<p>This class is to hold employee information.</p>
+<p>This poco class is to hold employee information.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
- 
-<span class="k">namespace</span> <span class="nn">Singleton</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeInfo</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
     <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">EmpName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">EmpDesignation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">MonthlySalary</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">}</span>
 
 </code></pre></div></div>
 <p><strong>Step 2: Create a singleton class</strong></p>
 
 <p>Here EmployeeService is a singleton class. Constructor of this class is private so that nobody can create its instance from outside.  Instance() is a static method which creates instance of the singleton class. It actually forces that only one instance of the object will be created. Lock() is used to create instance of the singleton pattern in thread safe manner in multi threaded environment. The other two methods are used to add employee information in list and get employee salary. These two are as usual method.Don’t mix up Singleton class and Static class. Keep in mind; in static class everything must be static like Method, constructor, properties. But in singleton class it is not required. Hope, you will be clear after the following example.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
- 
-<span class="k">namespace</span> <span class="nn">Singleton</span>
-<span class="p">{</span>
-    <span class="c1">///</span>
-    <span class="c1">/// EmployeeService is a singleton class</span>
-    <span class="c1">///</span>
-    
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">SingletonEmployeeService</span>
     <span class="p">{</span>
-    
-        <span class="c1">//Static object of singleton class</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="n">EmployeeService</span> <span class="n">instance</span><span class="p">;</span>
-        
-        <span class="k">private</span> <span class="n">List</span> <span class="n">lstEmployeeInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
-        
-        <span class="c1">///</span>
-        <span class="c1">/// Restrict to create object of Singleton class</span>
-        <span class="c1">///</span>
-        
-        <span class="k">private</span> <span class="nf">EmployeeService</span><span class="p">()</span>
+        <span class="c1">// singleton static object</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="n">SingletonEmployeeService</span> <span class="n">instance</span><span class="p">;</span>
+
+        <span class="c1">// an object to use in a singleton class</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+        <span class="c1">// Restrict to create object of singleton class</span>
+        <span class="k">private</span> <span class="nf">SingletonEmployeeService</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">lstEmployeeInfo</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">employees</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="n">lstEmployeeInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">List</span><span class="p">();</span>
+                <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;();</span>
             <span class="p">}</span>
         <span class="p">}</span>
-        
-        <span class="c1">///</span>
-        <span class="c1">/// The static method to provide global access to the singleton object.</span>
-        <span class="c1">///</span>
-        
-        <span class="c1">/// Singleton object of EmployeeService class</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="n">EmployeeService</span> <span class="nf">Instance</span><span class="p">()</span>
+
+        <span class="c1">// The static method to provide global access to the singleton object</span>
+        <span class="c1">// Get singleton object of SingletonEmployeeService class</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">SingletonEmployeeService</span> <span class="nf">GetInstance</span><span class="p">()</span>
         <span class="p">{</span>
-        
             <span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
             <span class="p">{</span>
-                <span class="c1">//Thread safe singleton</span>
-                
-                <span class="k">lock</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">EmployeeService</span><span class="p">))</span>
+                <span class="c1">// Thread safe singleton</span>
+                <span class="k">lock</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">SingletonEmployeeService</span><span class="p">))</span>
                 <span class="p">{</span>
-                    <span class="n">instance</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">EmployeeService</span><span class="p">();</span>
+                    <span class="n">instance</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SingletonEmployeeService</span><span class="p">();</span>
                 <span class="p">}</span>
             <span class="p">}</span>
-            
             <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
         <span class="p">}</span>
-        
-        <span class="c1">///</span>
-        <span class="c1">/// Add employee information to the Employee information list</span>
-        <span class="c1">///</span>
-        
-        <span class="c1">///</span>
-        
-        <span class="k">public</span> <span class="k">void</span> <span class="nf">AddEmployeeInfo</span><span class="p">(</span><span class="n">EmployeeInfo</span> <span class="n">objEmployeeInfo</span><span class="p">)</span>
+
+        <span class="c1">// Add employee to the employees list</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">AddEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="n">lstEmployeeInfo</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">objEmployeeInfo</span><span class="p">);</span>
+            <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
         <span class="p">}</span>
+
+        <span class="c1">// Get name of the employee by Id</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetEmployeeName</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
         
-        <span class="c1">///</span>
-        <span class="c1">/// Get Salary by Name</span>
-        <span class="c1">///</span>
-        
-        <span class="c1">////// Salary of Employee</span>
-        
-        <span class="k">public</span> <span class="kt">int</span> <span class="nf">GetEmployeeSalaryByName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">monthlySalary</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
-            <span class="k">foreach</span> <span class="p">(</span><span class="n">EmployeeInfo</span> <span class="n">objEmployeeInfo</span> <span class="k">in</span> <span class="n">lstEmployeeInfo</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">objEmployeeInfo</span><span class="p">.</span><span class="n">EmpName</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-                    <span class="n">monthlySalary</span> <span class="p">=</span> <span class="n">objEmployeeInfo</span><span class="p">.</span><span class="n">MonthlySalary</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="n">monthlySalary</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">).</span><span class="nf">First</span><span class="p">().</span><span class="n">Name</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">name</span><span class="p">;</span>
         <span class="p">}</span>
-    
+
     <span class="p">}</span>
-<span class="p">}</span>
 </code></pre></div></div>
 
-<p><strong>Step 3: Access singleton class</strong></p>
+<p>Here’s how the code works:</p>
+
+<ul>
+  <li>The class is marked as “sealed”, which means it cannot be inherited.</li>
+  <li>The class has a private static object named “instance”, which holds the reference to the single instance of the class.</li>
+  <li>The class also has a private List of Employee objects, which is the actual data that this class is managing.</li>
+  <li>The constructor of the class is marked as private, which means that it can only be called from within the class itself. This ensures that no other code can create an instance of the class.</li>
+  <li>The only way to access the singleton instance of the class is through the public static method named “GetInstance()”, which checks whether the instance has been created already. If not, it creates a new instance of the class in a thread-safe manner using a lock statement.</li>
+  <li>lock() is used to create instance of the singleton pattern in thread safe manner in multi threaded environment.</li>
+  <li>The class has two public methods, “AddEmployee()” and “GetEmployeeName()”, which can be used to add an employee to the employees list and to get the name of an employee by their ID, respectively.</li>
+</ul>
+
+<p><strong>Step 3: Access the singleton class</strong></p>
 
 <p>This class creates an instance of singleton class by EmployeeService objEmployeeService = EmployeeService.Instance(); and access singleton class.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
- 
-<span class="k">namespace</span> <span class="nn">Singleton</span>
-<span class="p">{</span>
-    <span class="k">class</span> <span class="nc">Program</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
     <span class="p">{</span>
         <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="n">EmployeeInfo</span> <span class="n">objEmpInfo1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">EmployeeInfo</span><span class="p">()</span> <span class="p">{</span> <span class="n">EmpName</span> <span class="p">=</span> <span class="s">"Mahedee"</span><span class="p">,</span> <span class="n">EmpDesignation</span> <span class="p">=</span> <span class="s">"Senior Software Engineer"</span><span class="p">,</span> <span class="n">MonthlySalary</span> <span class="p">=</span> <span class="m">00000</span> <span class="p">};</span>
-            <span class="n">EmployeeInfo</span> <span class="n">objEmpInfo2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">EmployeeInfo</span><span class="p">()</span> <span class="p">{</span> <span class="n">EmpName</span> <span class="p">=</span> <span class="s">"Kamal"</span><span class="p">,</span> <span class="n">EmpDesignation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">,</span> <span class="n">MonthlySalary</span> <span class="p">=</span> <span class="m">30000</span> <span class="p">};</span>
+
+            <span class="n">Employee</span> <span class="n">emp1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Employee</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"John"</span><span class="p">,</span> <span class="n">Age</span> <span class="p">=</span> <span class="m">30</span> <span class="p">};</span>
+            <span class="n">Employee</span> <span class="n">emp2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Employee</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Abraham"</span><span class="p">,</span> <span class="n">Age</span> <span class="p">=</span> <span class="m">40</span><span class="p">};</span>
             
-            <span class="c1">//Create a singleton object</span>
-            <span class="n">EmployeeService</span> <span class="n">objEmployeeService</span> <span class="p">=</span> <span class="n">EmployeeService</span><span class="p">.</span><span class="nf">Instance</span><span class="p">();</span>
+
+            <span class="c1">// Create singleton instance using GetInstance method not new</span>
+            <span class="n">SingletonEmployeeService</span> <span class="n">singletonEmployeeService</span> <span class="p">=</span> <span class="n">SingletonEmployeeService</span><span class="p">.</span><span class="nf">GetInstance</span><span class="p">();</span>
             
-            <span class="n">objEmployeeService</span><span class="p">.</span><span class="nf">AddEmployeeInfo</span><span class="p">(</span><span class="n">objEmpInfo1</span><span class="p">);</span>
-            <span class="n">objEmployeeService</span><span class="p">.</span><span class="nf">AddEmployeeInfo</span><span class="p">(</span><span class="n">objEmpInfo2</span><span class="p">);</span>
-            
-            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">objEmpInfo2</span><span class="p">.</span><span class="n">EmpName</span> <span class="p">+</span> <span class="s">" : "</span> <span class="p">+</span> <span class="n">objEmployeeService</span><span class="p">.</span><span class="nf">GetEmployeeSalaryByName</span><span class="p">(</span><span class="s">"Kamal"</span><span class="p">));</span>
-            
-            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>     
+            <span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">AddEmployee</span><span class="p">(</span><span class="n">emp1</span><span class="p">);</span>
+            <span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">AddEmployee</span><span class="p">(</span><span class="n">emp2</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">singletonEmployeeService</span><span class="p">.</span><span class="nf">GetEmployeeName</span><span class="p">(</span><span class="m">2</span><span class="p">));</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">}</span>
+
+    <span class="c1">// Output:</span>
+    <span class="c1">// Abraham</span>
+
 </code></pre></div></div>
 
-<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/Singleton">Source code</a></strong></p>
+<p>This C# code shows an example of how to use the SingletonEmployeeService class to manage employee data. The main() method creates two Employee objects and adds them to the singleton instance of the SingletonEmployeeService class using the AddEmployee() method. It then retrieves the name of the employee with ID=2 using the GetEmployeeName() method and prints it to the console.</p>
+
+<p>The key thing to note here is that the SingletonEmployeeService class is accessed using the GetInstance() method, rather than creating a new instance using the “new” keyword. This ensures that there is only one instance of the SingletonEmployeeService class in the application and that it is globally accessible.</p>
+
+<p>The code creates two Employee objects with different ID, Name, and Age values and adds them to the employees list of the singleton instance using the AddEmployee() method. Then, it retrieves the name of the employee with ID=2 using the GetEmployeeName() method, which returns the name of the employee as “Abraham” and prints it to the console using the Console.WriteLine() method.</p>
+
+<p>Overall, this code demonstrates how the Singleton pattern can be used to ensure that there is only one instance of a class in the application and how this instance can be accessed globally to manage data in a centralized manner.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/singleton-pattern">Source code</a></strong></p>
 
         
       </section>
@@ -495,7 +495,7 @@
     
       
       
-      <a href="/tags/#design-pattern" class="page__taxonomy-item" rel="tag">Design Pattern</a><span class="sep">, </span>
+      <a href="/tags/#designpattern" class="page__taxonomy-item" rel="tag">designpattern</a><span class="sep">, </span>
     
       
       
@@ -535,7 +535,7 @@
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-04-06T00:00:00-03:00">April 06, 2019</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-04-15T00:00:00-03:00">April 15, 2023</time></p>
         
       </footer>
 
@@ -553,12 +553,11 @@
       
   <nav class="pagination">
     
-      <a href="/iterator-design-pattern/" class="pagination--pager" title="Iterator design pattern with C#
+      <a href="/some-example-of-javascript-setInterval-method/" class="pagination--pager" title="JavaScript setInterval method with some example
 ">Previous</a>
     
     
-      <a href="/crystal-report-in-asp-net-step-by-step/" class="pagination--pager" title="Crystal Report With ASP.Net Step By Step
-">Next</a>
+      <a href="#" class="pagination--pager disabled">Next</a>
     
   </nav>
 
@@ -582,6 +581,33 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/some-example-of-javascript-setInterval-method/" rel="permalink">JavaScript setInterval method with some example
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/extension-method-in-csharp/" rel="permalink">Extension Methods in C# - An Introduction with Examples and Output
 </a>
       
@@ -592,7 +618,7 @@
 
 
 
-  4 minute read
+  3 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code...</p>
@@ -646,37 +672,10 @@
 
 
 
-  10 minute read
+  9 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minim...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/Application-of-Event-Sourcing-using-aspnet-core-DDD-EF-EventStoreDB-and-SQL-Server/" rel="permalink">Application of Event Sourcing using asp.net core, DDD, EF, EventStoreDB and SQL Server
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  19 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Event sourcing is a most important pattern to design a microservice based application. If you are working with multiple services in a microservice based appl...</p>
   </article>
 </div>
 

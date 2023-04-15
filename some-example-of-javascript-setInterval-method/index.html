@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to connect SQL Server from docker container using SSMS - Think Simple</title>
-<meta name="description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
+<!-- begin _includes/seo.html --><title>JavaScript setInterval method with some example - Think Simple</title>
+<meta name="description" content="Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,30 +19,30 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to connect SQL Server from docker container using SSMS">
-<meta property="og:url" content="http://localhost:4000/how-to-connet-sql-server-from-docker-using-ssms/">
+<meta property="og:title" content="JavaScript setInterval method with some example">
+<meta property="og:url" content="http://localhost:4000/some-example-of-javascript-setInterval-method/">
 
 
-  <meta property="og:description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2022-04-10T00:00:00-03:00">
+  <meta property="og:description" content="Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.">
 
 
 
 
 
-  
+
+
+  <meta property="article:published_time" content="2023-04-10T00:00:00-03:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/how-to-connet-sql-server-from-docker-using-ssms/">
+
+<link rel="canonical" href="http://localhost:4000/some-example-of-javascript-setInterval-method/">
 
 
 
@@ -296,15 +296,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to connect SQL Server from docker container using SSMS">
-    <meta itemprop="description" content="Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio">
-    <meta itemprop="datePublished" content="April 10, 2022">
+    <meta itemprop="headline" content="JavaScript setInterval method with some example">
+    <meta itemprop="description" content="Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code. This article will provide an introduction to extension methods, along with some examples and output to demonstrate how they work.">
+    <meta itemprop="datePublished" content="April 10, 2023">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to connect SQL Server from docker container using SSMS
+          <h1 id="page-title" class="page__title" itemprop="headline">JavaScript setInterval method with some example
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -312,7 +312,7 @@
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
           
         </header>
@@ -320,36 +320,60 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Sometimes we need to access database which is running in container. It’s simple but sometimes we cannot remember. Here, I will show you how to connect SQL Server from docker container using SQL Server Management Studio.</p>
+        <p><strong>Introduction</strong></p>
 
-<p><strong>Sample docker-compose.yml</strong></p>
+<p>JavaScript provides a built-in method called setInterval that allows you to execute a function or a piece of code repeatedly at a specified time interval. This can be useful for a variety of tasks, such as updating the content of a webpage, polling a server for new data, or animating an element on the page.</p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">sqldbsaga</span><span class="pi">:</span>
-   <span class="na">image</span><span class="pi">:</span> <span class="s">mcr.microsoft.com/mssql/server:2019-latest</span> 
+<p><strong>Examples</strong></p>
+
+<p>To use setInterval, you simply need to pass a function or a code block as the first argument, and the time interval (in milliseconds) as the second argument. Here’s a simple example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
 </code></pre></div></div>
 
-<p><strong>docker-compose.override.yml</strong></p>
+<p>In this example, the setInterval method will execute the arrow function every 1000 milliseconds (or 1 second), logging the message “Hello, world!” to the console.</p>
 
-<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">sqldbsaga</span><span class="pi">:</span>
-   <span class="na">environment</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">SA_PASSWORD=MyPass@word</span>
-    <span class="pi">-</span> <span class="s">ACCEPT_EULA=Y</span>
-   <span class="na">ports</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s2">"</span><span class="s">5533:1433"</span>
-   <span class="na">volumes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">kyc-saga-sqldb:/var/opt/mssql</span>
+<p>You can also pass a regular function as the first argument to setInterval, like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">sayHello</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nf">setInterval</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
 </code></pre></div></div>
-<p><strong>Now connect using SSMS</strong></p>
-<ul>
-  <li>Run docker compose file</li>
-  <li>Run SQL server management studio</li>
-  <li>Server name should be - localhos, port name</li>
-  <li>Password would be MyPass@word as below image</li>
-</ul>
 
-<p><img src="/assets/images/posts/2022/docker-ssms.PNG" alt="" /></p>
+<p>This code will have the same effect as the previous example, but using a named function instead of an arrow function.</p>
 
-<p>Then, click Connect.</p>
+<p>Another useful feature of setInterval is that it returns a unique ID that you can use to stop the interval using the clearInterval method. Here’s an example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">intervalID</span> <span class="o">=</span> <span class="nf">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, world!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+<span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nf">clearInterval</span><span class="p">(</span><span class="nx">intervalID</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In this code, we store the interval ID returned by setInterval in a variable called intervalID. Then, after 5 seconds (5000 milliseconds) have elapsed, we use the clearInterval method to stop the interval by passing the intervalID variable as an argument.</p>
+
+<p>Finally, you can also pass arguments to the function being executed by setInterval. Here’s an example:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nf">incrementCount</span><span class="p">(</span><span class="nx">step</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">count</span> <span class="o">+=</span> <span class="nx">step</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Count is now </span><span class="p">${</span><span class="nx">count</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nf">setInterval</span><span class="p">(</span><span class="nx">incrementCount</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>In this example, we’re using the incrementCount function to increment a count variable by a specified step. We pass the value 2 as the third argument to setInterval, which is then passed as the step argument to incrementCount.</p>
+
+<p>These are just a few examples of how you can use the setInterval method in JavaScript to execute code at a specified time interval. Whether you’re updating the content of a webpage or animating an element, setInterval is a powerful tool that can help you achieve your goals.</p>
+
 
         
       </section>
@@ -370,11 +394,7 @@
     
       
       
-      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a>
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">javascript</a>
     
     </span>
   </p>
@@ -395,40 +415,36 @@
     
       
       
-      <a href="/categories/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
-    
-      
-      
-      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
+      <a href="/categories/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-04-10T00:00:00-03:00">April 10, 2022</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-04-10T00:00:00-03:00">April 10, 2023</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+connect+SQL+Server+from+docker+container+using+SSMS%20http%3A%2F%2Flocalhost%3A4000%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=JavaScript+setInterval+method+with+some+example%20http%3A%2F%2Flocalhost%3A4000%2Fsome-example-of-javascript-setInterval-method%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsome-example-of-javascript-setInterval-method%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fhow-to-connet-sql-server-from-docker-using-ssms%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fsome-example-of-javascript-setInterval-method%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/dotnet-command-at-a-glance/" class="pagination--pager" title="Dot net command at a glance
+      <a href="/extension-method-in-csharp/" class="pagination--pager" title="Extension Methods in C# - An Introduction with Examples and Output
 ">Previous</a>
     
     
-      <a href="/docker-tips-and-tricks/" class="pagination--pager" title="Tips and tricks for docker
+      <a href="/singleton-design-pattern/" class="pagination--pager" title="Singleton design pattern using C#
 ">Next</a>
     
   </nav>
@@ -480,33 +496,6 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/some-example-of-javascript-setInterval-method/" rel="permalink">JavaScript setInterval method with some example
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  1 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
         <a href="/extension-method-in-csharp/" rel="permalink">Extension Methods in C# - An Introduction with Examples and Output
 </a>
       
@@ -517,7 +506,7 @@
 
 
 
-  4 minute read
+  3 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Extension methods are a powerful feature in C# that allows developers to add new functionality to existing classes without modifying the original source code...</p>
@@ -548,6 +537,33 @@
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">The yield statement is a powerful construct in C# that allows you to create custom iterators. It allows you to define a method that returns a sequence of val...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" rel="permalink">Configure Load Balancer using Eureka and ocelot with asp.net core and docker
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  9 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minim...</p>
   </article>
 </div>
 
@@ -639,8 +655,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/how-to-connet-sql-server-from-docker-using-ssms/";  // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = "/how-to-connet-sql-server-from-docker-using-ssms"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      this.page.url = "http://localhost:4000/some-example-of-javascript-setInterval-method/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/some-example-of-javascript-setInterval-method"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function() { // DON'T EDIT BELOW THIS LINE
       var d = document, s = d.createElement('script');

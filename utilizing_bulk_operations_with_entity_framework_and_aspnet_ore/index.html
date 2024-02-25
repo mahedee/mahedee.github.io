@@ -1,0 +1,1188 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Utilizing Bulk Operations with Entity Framework and ASP.NET Core - Think Simple</title>
+<meta name="description" content="Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Utilizing Bulk Operations with Entity Framework and ASP.NET Core">
+<meta property="og:url" content="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/">
+
+
+  <meta property="og:description" content="Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-02-25T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Utilizing Bulk Operations with Entity Framework and ASP.NET Core | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation." />
+<meta property="og:description" content="Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation." />
+<link rel="canonical" href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/" />
+<meta property="og:url" content="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-02-25T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-02-25T00:00:00-04:00","datePublished":"2024-02-25T00:00:00-04:00","description":"Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.","headline":"Utilizing Bulk Operations with Entity Framework and ASP.NET Core","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/"},"url":"https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">New Brunswick, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Utilizing Bulk Operations with Entity Framework and ASP.NET Core">
+    <meta itemprop="description" content="Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.">
+    <meta itemprop="datePublished" content="February 25, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Utilizing Bulk Operations with Entity Framework and ASP.NET Core
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A bulk operation refers to the execution of a single operation that involves multiple data entries or rows in a database, typically performed in a batch. Instead of processing each entry individually, bulk operations allow for the manipulation or retrieval of data in a more efficient manner.</p>
+
+<p>The benefits of bulk operations include:</p>
+
+<ol>
+  <li>
+    <p>Improved Performance: By processing multiple data entries in a single operation, bulk operations can significantly reduce the overhead associated with multiple individual operations, resulting in improved performance and reduced latency.</p>
+  </li>
+  <li>
+    <p>Reduced Resource Usage: Bulk operations require fewer resources compared to performing the same task iteratively on each data entry. This can lead to better utilization of system resources and improved scalability.</p>
+  </li>
+  <li>
+    <p>Enhanced Throughput: With the ability to handle large volumes of data more efficiently, bulk operations can increase the throughput of data processing tasks, allowing applications to handle higher workloads without sacrificing performance.</p>
+  </li>
+  <li>
+    <p>Minimized Database Overhead: Bulk operations can help minimize the overhead on the database server by reducing the number of transactions and communication overhead associated with processing individual data entries.</p>
+  </li>
+  <li>
+    <p>Simplified Code Logic: By consolidating multiple operations into a single bulk operation, developers can write simpler and more concise code, leading to easier maintenance and reduced complexity in application logic.</p>
+  </li>
+</ol>
+
+<p>To perform bulk operations in an ASP.NET Core application, we can leverage the capabilities of Entity Framework Core and the EFCore.BulkExtensions library. This article will explore the practical implementation of bulk operations using these tools, providing insights into how to optimize database operations and enhance application performance.</p>
+
+<p><strong>EFCore BulkExtensions</strong></p>
+
+<p>EFCore.BulkExtensions is a popular library that extends the functionality of Entity Framework Core by providing support for bulk operations such as bulk insert, update, delete, and merge. This library offers a convenient and efficient way to perform bulk operations on database entities, allowing developers to streamline data processing tasks and improve application performance.</p>
+
+<p>In this article, we will focus on the following bulk operations using EFCore.BulkExtensions and Entity Framework Core.</p>
+
+<p><strong>Tools and Technology Used</strong></p>
+
+<ul>
+  <li>ASP.net core Web API</li>
+  <li>Visual C#</li>
+  <li>Entity Framework</li>
+  <li>EFCore.BulkExtensions</li>
+  <li>SQL Server</li>
+</ul>
+
+<p><strong>Step 1: Create a asp.net core web api project name EFBulkBatch</strong></p>
+
+<p><strong>Step 2: Install the following nuget packages in the project.</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">EFCore.BulkExtensions</span>
+<span class="nf">Microsoft.AspNetCore.OpenApi</span>
+<span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create two Model class name Customer and Employee in Models folder</strong></p>
+
+<ul>
+  <li>Customer class will be used to perform bulk operation using Entity Framework.</li>
+  <li>Employee class will be used to perform bulk operation using EFCore.BulkExtensions.</li>
+</ul>
+
+<p><strong>Customer.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Phone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Employee.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create Db Context class name ApplicationDbContext in Db folder.</strong></p>
+
+<p><strong>ApplicationDbContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+            
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">Customers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Create CustomerService class in Manager folder to perform bulk operation using Entity Framework.</strong></p>
+
+<p><strong>Manager/CustomerService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_context</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use AddRange to add multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Update Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Update Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use UpdateRange to update multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">UpdateRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+ 
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="c1">// Use RemoveRange to delete multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">RemoveRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 6: Create EmployeeService class in Manager folder to perform bulk operation using EFCore.BulkExtensions.</strong></p>
+
+<p><strong>Manager/EmployeeService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFCore.BulkExtensions</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_dbContext</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">dbContext</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_dbContext</span> <span class="p">=</span> <span class="n">dbContext</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+         
+            <span class="c1">// Use BulkInsertAsync to add multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkInsertAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Update Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Update Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use BulkUpdateAsync to update multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkUpdateAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">_dbContext</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="c1">// Use BulkDeleteAsync to delete multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkDeleteAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 7: Add connection string in appsettings.json file</strong></p>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=.;Database=EFBulkBatchDB; User Id = sa; Password = YourPassword; TrustServerCertificate=True;"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>Step 8: Configure Program class as follows.</strong></p>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+            <span class="c1">// Add services to the container.</span>
+
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+            <span class="c1">// Register the DbContext with the DI container</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+                           <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
+
+            <span class="c1">// Register the Services with the DI container</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">EmployeeService</span><span class="p">&gt;();</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">CustomerService</span><span class="p">&gt;();</span>
+
+
+            <span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+            <span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+            <span class="c1">// Configure the HTTP request pipeline.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Create two Controller classes name CustomerController and EmployeeController in Controllers folder.</strong></p>
+
+<p><strong>Controllers/CustomerController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CustomerService</span> <span class="n">_customerService</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CustomerController</span><span class="p">(</span><span class="n">CustomerService</span> <span class="n">customerService</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">_customerService</span> <span class="p">=</span> <span class="n">customerService</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">AddBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span> 
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">UpdateBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">DeleteBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Controllers/EmployeeController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">EmployeeService</span> <span class="n">_employeeService</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeController</span><span class="p">(</span><span class="n">EmployeeService</span> <span class="n">employeeService</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_employeeService</span> <span class="p">=</span> <span class="n">employeeService</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">AddBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAysnc</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">UpdateBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">DeleteBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 10: Run migration command to create database and tables.</strong></p>
+
+<ul>
+  <li>Go to tools &gt; NuGet Package Manager &gt; Package Manager Console</li>
+  <li>Select EFBulkBatch from Default project dropdown</li>
+  <li>Run the following command in Package Manager Console window</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Add-Migration</span> <span class="nf">InitialCreate</span>
+<span class="nf">Update-Database</span>
+</code></pre></div></div>
+
+<p><strong>Step 11: Run the application and test the API using Postman or Swagger UI.</strong></p>
+
+<ul>
+  <li>Run the application</li>
+  <li>Open Postman or Swagger UI</li>
+  <li>Test the API using the endpoint and perform the bulk operation for insert, update and delete.</li>
+</ul>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/EFBulkBatch">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ef" class="page__taxonomy-item" rel="tag">ef</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#ef" class="page__taxonomy-item" rel="tag">EF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-02-25T00:00:00-04:00">February 25, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Utilizing+Bulk+Operations+with+Entity+Framework+and+ASP.NET+Core%20https%3A%2F%2Fmahedee.net%2F%2Futilizing_bulk_operations_with_entity_framework_and_aspnet_ore%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Futilizing_bulk_operations_with_entity_framework_and_aspnet_ore%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Futilizing_bulk_operations_with_entity_framework_and_aspnet_ore%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/optimistic_concurrency_management_aspnet_core_using_raw_sql/" class="pagination--pager" title="Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="permalink">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Effectively dealing with concurrency is crucial, especially in large business applications, and it plays a significant role in financial systems. This articl...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/" rel="permalink">Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  14 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/optimistic_concurrency_management_aspnet_core_using_hyper_media/" rel="permalink">Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Optimistic concurrency is a common method for handling such situations. In this article, I’ll show a simple way to manage concurrency in ASP.NET using hyperm...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/optimistic_concurrency_management_aspnet_core_etags_if_match_header/" rel="permalink">Optimistic Concurrency Management in ASP.NET Core Application Using ETags and If-Match Header
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Efficient concurrency management holds significant importance, especially in enterprise applications, with a heightened emphasis on financial systems. This a...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/utilizing_bulk_operations_with_entity_framework_and_aspnet_ore"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-mahedee-net.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

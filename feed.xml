@@ -1,4 +1,484 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-01-18T23:44:01-04:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET" /><published>2024-01-18T00:00:00-04:00</published><updated>2024-01-18T00:00:00-04:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/"><![CDATA[<p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. This article is designed to illustrate the practical aspects of managing optimistic concurrency in an ASP.NET Core application using raw SQL and ADO.NET.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-02-25T15:06:51-04:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Utilizing Bulk Operations with Entity Framework and ASP.NET Core</title><link href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/" rel="alternate" type="text/html" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" /><published>2024-02-25T00:00:00-04:00</published><updated>2024-02-25T00:00:00-04:00</updated><id>https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore</id><content type="html" xml:base="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_ore/"><![CDATA[<p>A bulk operation refers to the execution of a single operation that involves multiple data entries or rows in a database, typically performed in a batch. Instead of processing each entry individually, bulk operations allow for the manipulation or retrieval of data in a more efficient manner.</p>
+
+<p>The benefits of bulk operations include:</p>
+
+<ol>
+  <li>
+    <p>Improved Performance: By processing multiple data entries in a single operation, bulk operations can significantly reduce the overhead associated with multiple individual operations, resulting in improved performance and reduced latency.</p>
+  </li>
+  <li>
+    <p>Reduced Resource Usage: Bulk operations require fewer resources compared to performing the same task iteratively on each data entry. This can lead to better utilization of system resources and improved scalability.</p>
+  </li>
+  <li>
+    <p>Enhanced Throughput: With the ability to handle large volumes of data more efficiently, bulk operations can increase the throughput of data processing tasks, allowing applications to handle higher workloads without sacrificing performance.</p>
+  </li>
+  <li>
+    <p>Minimized Database Overhead: Bulk operations can help minimize the overhead on the database server by reducing the number of transactions and communication overhead associated with processing individual data entries.</p>
+  </li>
+  <li>
+    <p>Simplified Code Logic: By consolidating multiple operations into a single bulk operation, developers can write simpler and more concise code, leading to easier maintenance and reduced complexity in application logic.</p>
+  </li>
+</ol>
+
+<p>To perform bulk operations in an ASP.NET Core application, we can leverage the capabilities of Entity Framework Core and the EFCore.BulkExtensions library. This article will explore the practical implementation of bulk operations using these tools, providing insights into how to optimize database operations and enhance application performance.</p>
+
+<p><strong>EFCore BulkExtensions</strong></p>
+
+<p>EFCore.BulkExtensions is a popular library that extends the functionality of Entity Framework Core by providing support for bulk operations such as bulk insert, update, delete, and merge. This library offers a convenient and efficient way to perform bulk operations on database entities, allowing developers to streamline data processing tasks and improve application performance.</p>
+
+<p>In this article, we will focus on the following bulk operations using EFCore.BulkExtensions and Entity Framework Core.</p>
+
+<p><strong>Tools and Technology Used</strong></p>
+
+<ul>
+  <li>ASP.net core Web API</li>
+  <li>Visual C#</li>
+  <li>Entity Framework</li>
+  <li>EFCore.BulkExtensions</li>
+  <li>SQL Server</li>
+</ul>
+
+<p><strong>Step 1: Create a asp.net core web api project name EFBulkBatch</strong></p>
+
+<p><strong>Step 2: Install the following nuget packages in the project.</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">EFCore.BulkExtensions</span>
+<span class="nf">Microsoft.AspNetCore.OpenApi</span>
+<span class="nf">Microsoft.EntityFrameworkCore</span>
+<span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
+<span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create two Model class name Customer and Employee in Models folder</strong></p>
+
+<ul>
+  <li>Customer class will be used to perform bulk operation using Entity Framework.</li>
+  <li>Employee class will be used to perform bulk operation using EFCore.BulkExtensions.</li>
+</ul>
+
+<p><strong>Customer.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Phone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Employee.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create Db Context class name ApplicationDbContext in Db folder.</strong></p>
+
+<p><strong>ApplicationDbContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Db</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+            
+        <span class="p">}</span>
+        
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">Customers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Create CustomerService class in Manager folder to perform bulk operation using Entity Framework.</strong></p>
+
+<p><strong>Manager/CustomerService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_context</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use AddRange to add multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Update Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Update Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use UpdateRange to update multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">UpdateRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+ 
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkCustomerAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="c1">// Use RemoveRange to delete multiple entities</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">RemoveRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 6: Create EmployeeService class in Manager folder to perform bulk operation using EFCore.BulkExtensions.</strong></p>
+
+<p><strong>Manager/EmployeeService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFCore.BulkExtensions</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_dbContext</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">dbContext</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_dbContext</span> <span class="p">=</span> <span class="n">dbContext</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+         
+            <span class="c1">// Use BulkInsertAsync to add multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkInsertAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Update Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Update Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Use BulkUpdateAsync to update multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkUpdateAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">_dbContext</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+
+            <span class="c1">// Use BulkDeleteAsync to delete multiple entities</span>
+            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkDeleteAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
+        <span class="p">}</span>
+
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 7: Add connection string in appsettings.json file</strong></p>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=.;Database=EFBulkBatchDB; User Id = sa; Password = YourPassword; TrustServerCertificate=True;"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>Step 8: Configure Program class as follows.</strong></p>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+            <span class="c1">// Add services to the container.</span>
+
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+            <span class="c1">// Register the DbContext with the DI container</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+                           <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
+
+            <span class="c1">// Register the Services with the DI container</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">EmployeeService</span><span class="p">&gt;();</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">CustomerService</span><span class="p">&gt;();</span>
+
+
+            <span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+            <span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+            <span class="c1">// Configure the HTTP request pipeline.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+            <span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Create two Controller classes name CustomerController and EmployeeController in Controllers folder.</strong></p>
+
+<p><strong>Controllers/CustomerController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CustomerService</span> <span class="n">_customerService</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">CustomerController</span><span class="p">(</span><span class="n">CustomerService</span> <span class="n">customerService</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">_customerService</span> <span class="p">=</span> <span class="n">customerService</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">AddBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span> 
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">UpdateBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">DeleteBulkCustomerAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Controllers/EmployeeController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">EmployeeService</span> <span class="n">_employeeService</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeeController</span><span class="p">(</span><span class="n">EmployeeService</span> <span class="n">employeeService</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_employeeService</span> <span class="p">=</span> <span class="n">employeeService</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+
+
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">AddBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAysnc</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">UpdateBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">DeleteBulkDataAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 10: Run migration command to create database and tables.</strong></p>
+
+<ul>
+  <li>Go to tools &gt; NuGet Package Manager &gt; Package Manager Console</li>
+  <li>Select EFBulkBatch from Default project dropdown</li>
+  <li>Run the following command in Package Manager Console window</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Add-Migration</span> <span class="nf">InitialCreate</span>
+<span class="nf">Update-Database</span>
+</code></pre></div></div>
+
+<p><strong>Step 11: Run the application and test the API using Postman or Swagger UI.</strong></p>
+
+<ul>
+  <li>Run the application</li>
+  <li>Open Postman or Swagger UI</li>
+  <li>Test the API using the endpoint and perform the bulk operation for insert, update and delete.</li>
+</ul>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/EFBulkBatch">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET" /><published>2024-02-08T00:00:00-04:00</published><updated>2024-02-08T00:00:00-04:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/"><![CDATA[<p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. This article is designed to illustrate the practical aspects of managing optimistic concurrency in an ASP.NET Core application using raw SQL and ADO.NET.</p>
 
 <p><strong>Tools and Technology Used</strong></p>
 
@@ -8057,216 +8537,4 @@ It helps organizations maintain a record of user activity within their systems, 
 </ul>
 
 <p><img src="/assets/images/posts/2023/ef-audit-log.png" alt="" />
-<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogEFPlus">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Unlock the secrets of implementing a robust audit trail in your ASP.NET application with my detailed step-by-step guide. From configure to execution, discover how to seamlessly integrate an audit trail for comprehensive monitoring and enhanced data security.]]></summary></entry><entry><title type="html">Setup your own docker private registry in windows machine</title><link href="https://mahedee.net//setup-docker-private-registry/" rel="alternate" type="text/html" title="Setup your own docker private registry in windows machine" /><published>2023-05-05T00:00:00-03:00</published><updated>2023-05-05T00:00:00-03:00</updated><id>https://mahedee.net//setup-docker-private-registry</id><content type="html" xml:base="https://mahedee.net//setup-docker-private-registry/"><![CDATA[<p>A Docker private registry is a centralized repository for storing and managing Docker images in a private and secure environment. Docker images are lightweight, standalone, and executable packages that contain all the necessary components to run a software application, including the code, runtime, libraries, and system tools. Instead of relying on public Docker Hub repositories, a private registry allows organizations to host their own Docker images internally.</p>
-
-<p>Key features and benefits of a Docker private registry include:</p>
-
-<ol>
-  <li>
-    <p><strong>Security:</strong> Keep sensitive or proprietary Docker images within the organization’s network, preventing unauthorized access.</p>
-  </li>
-  <li>
-    <p><strong>Control:</strong> Maintain control over the distribution and versioning of Docker images, ensuring consistency across development, testing, and production environments.</p>
-  </li>
-  <li>
-    <p><strong>Performance:</strong> Reduce image pull times by hosting images locally, especially beneficial in environments with limited or intermittent internet connectivity.</p>
-  </li>
-  <li>
-    <p><strong>Customization:</strong> Tailor the registry to specific organizational requirements, adding authentication, access controls, and other features as needed.</p>
-  </li>
-  <li>
-    <p><strong>Compliance:</strong> Adhere to data protection and regulatory requirements by managing and securing Docker images internally.</p>
-  </li>
-</ol>
-
-<p><strong>Required Tools and Technologies</strong></p>
-<ul>
-  <li>Docker desktop</li>
-  <li><a href="https://hub.docker.com/_/registry">Docker Registry</a></li>
-  <li><a href="https://hub.docker.com/r/konradkleine/docker-registry-frontend/tags">Docker Registry front end</a></li>
-</ul>
-
-<p><strong>How to setup docker private registry</strong></p>
-
-<ol>
-  <li>
-    <p>Install docker desktop in your windows machine. You can download it from <a href="https://www.docker.com/products/docker-desktop">here</a></p>
-  </li>
-  <li>
-    <p>Pull registry and, docker-registry-frontend images and then run in a container. You can pull images and run images in a container using separate command. But here I use a docker compose file to run both images in the container using a single command.</p>
-  </li>
-</ol>
-
-<p>Here, registry image is used for storing and distributing of container images and artifacts and docker-registry-frontend is used as a frontend for the private registry.</p>
-
-<p><strong>docker-compose.yaml</strong></p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Version of the Docker Compose file</span>
-<span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3.7"</span>
-
-<span class="c1"># Definition of services in the Docker Compose file</span>
-<span class="na">services</span><span class="pi">:</span>
-
-  <span class="c1"># Service for the Docker Registry host</span>
-  <span class="na">docker-registry-host</span><span class="pi">:</span>
-    <span class="c1"># Docker image to be used for the service</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">registry</span>
-    
-    <span class="c1"># Port mapping - maps port 5000 on the host to port 5000 on the container</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">5000:5000</span>
-    
-    <span class="c1"># Volume mapping - mounts the local ./registry-data directory to /var/lib/registry in the container</span>
-    <span class="na">volumes</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">./registry-data:/var/lib/registry</span>
-    
-    <span class="c1"># Network configuration - connects the service to the 'docker-registry' network</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">docker-registry</span>
-
-  <span class="c1"># Service for the Docker Registry web UI</span>
-  <span class="na">docker-registry-host-web-ui</span><span class="pi">:</span>
-    <span class="c1"># Docker image to be used for the service</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">konradkleine/docker-registry-frontend:v2</span>
-    
-    <span class="c1"># Environment variables for the service</span>
-    <span class="na">environment</span><span class="pi">:</span>
-      <span class="na">ENV_DOCKER_REGISTRY_HOST</span><span class="pi">:</span> <span class="s">docker-registry-host</span>
-      <span class="na">ENV_DOCKER_REGISTRY_PORT</span><span class="pi">:</span> <span class="m">5000</span>
-    
-    <span class="c1"># Port mapping - maps port 8080 on the host to port 80 on the container</span>
-    <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">8088:80</span>
-    
-    <span class="c1"># Network configuration - connects the service to the 'docker-registry' network</span>
-    <span class="na">networks</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">docker-registry</span>
-
-<span class="c1"># Definition of a custom network named 'docker-registry'</span>
-<span class="na">networks</span><span class="pi">:</span>
-  <span class="na">docker-registry</span><span class="pi">:</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Now open windows terminal and go the directory where <code class="language-plaintext highlighter-rouge">docker-compose.yaml</code> file resides and run the following command.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker-compose</span> <span class="nf">up</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now you can access the docker registry frontend using the following url and you will see the following output.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">http:</span><span class="err">/</span><span class="nv">/localhost:8088/home</span>
-</code></pre></div></div>
-
-<p><img src="/assets/images/posts/2023/docker-registry01.png" alt="" /></p>
-
-<p><strong>Create a sample ASP.NET Core application and push images to the private registry</strong></p>
-
-<ul>
-  <li>
-    <p>Create a sample ASP.NET Core Web API application name - PrivateRegistryDemo</p>
-  </li>
-  <li>
-    <p>To see swagger in the release mode just comment out the following code in Program.cs file.</p>
-  </li>
-</ul>
-
-<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="c1">// Configure the HTTP request pipeline.</span>
-     <span class="c1">//if (app.Environment.IsDevelopment())</span>
-     <span class="c1">//{</span>
-         <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-         <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-     <span class="c1">//}</span>
-
-</code></pre></div></div>
-
-<ul>
-  <li>Add a docker file in the project and add following contents</li>
-</ul>
-
-<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
-
-<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:8.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
-<span class="k">USER</span><span class="s"> app</span>
-<span class="k">WORKDIR</span><span class="s"> /app</span>
-<span class="k">EXPOSE</span><span class="s"> 8080</span>
-<span class="k">EXPOSE</span><span class="s"> 8081</span>
-
-<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:8.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
-<span class="k">ARG</span><span class="s"> BUILD_CONFIGURATION=Release</span>
-<span class="k">WORKDIR</span><span class="s"> /src</span>
-<span class="k">COPY</span><span class="s"> ["PrivateRegistryDemo.csproj", "./"]</span>
-<span class="k">RUN </span>dotnet restore <span class="s2">"./PrivateRegistryDemo.csproj"</span>
-<span class="k">COPY</span><span class="s"> . .</span>
-<span class="k">WORKDIR</span><span class="s"> "/src/."</span>
-<span class="k">RUN </span>dotnet build <span class="s2">"PrivateRegistryDemo.csproj"</span> <span class="nt">-c</span> <span class="nv">$BUILD_CONFIGURATION</span> <span class="nt">-o</span> /app/build
-
-<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
-<span class="k">ARG</span><span class="s"> BUILD_CONFIGURATION=Release</span>
-<span class="k">RUN </span>dotnet publish <span class="s2">"PrivateRegistryDemo.csproj"</span> <span class="nt">-c</span> <span class="nv">$BUILD_CONFIGURATION</span> <span class="nt">-o</span> /app/publish /p:UseAppHost<span class="o">=</span><span class="nb">false</span>
-
-<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
-<span class="k">WORKDIR</span><span class="s"> /app</span>
-<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
-<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "PrivateRegistryDemo.dll"]</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now open the terminal and go to the project directory and run the following command to build the docker image.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">privateregistrydemo:1.0.0</span> <span class="nf">.</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now run the following command to tag the image.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">tag</span> <span class="nf">privateregistrydemo:1.0.0</span> <span class="nf">localhost:5000</span><span class="nv">/privateregistrydemo</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now run the following command to push the image to the private registry.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">push</span> <span class="nf">localhost:5000</span><span class="nv">/privateregistrydemo</span>
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Now you can see the pushed image in the private registry frontend.
-<img src="/assets/images/posts/2023/docker-registry02.png" alt="" /></p>
-  </li>
-  <li>
-    <p>Now you can pull the image from the private registry using the following command.</p>
-  </li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">pull</span> <span class="nf">localhost:5000</span><span class="nv">/privateregistrydemo</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now you can run the image in a container using the following command.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">-dp</span> <span class="nf">8080:8080</span> <span class="nf">--name</span> <span class="nf">private-registry-demo</span> <span class="nf">localhost:5000</span><span class="nv">/privateregistrydemo:latest</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Now you can access the application using the following url.</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">http:</span><span class="err">/</span><span class="nv">/localhost:8080/swagger/index.html</span>
-</code></pre></div></div>
-<p>or</p>
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">http:</span><span class="err">/</span><span class="nv">/localhost:8080/WeatherForecast</span>
-</code></pre></div></div>
-
-<ul>
-  <li>Alternative: You can create your own private Docker registry with Portus using Ubuntu.</li>
-</ul>
-
-<p><a href="https://github.com/mahedee/code-sample02/tree/main/PrivateRegistryDemo">Source Code</a></p>]]></content><author><name>Mahedee Hasan</name></author><category term="Docker" /><category term="DevOps" /><category term="docker" /><category term="devops" /><summary type="html"><![CDATA[Discover step-by-step instructions to set up your own Docker private registry on a Windows machine. Enhance your development workflow, improve container management, and boost security with a personalized Docker registry solution tailored to your Windows environment]]></summary></entry></feed>
+<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogEFPlus">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Unlock the secrets of implementing a robust audit trail in your ASP.NET application with my detailed step-by-step guide. From configure to execution, discover how to seamlessly integrate an audit trail for comprehensive monitoring and enhanced data security.]]></summary></entry></feed>

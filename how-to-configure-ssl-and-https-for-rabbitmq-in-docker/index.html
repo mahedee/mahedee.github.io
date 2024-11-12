@@ -1,0 +1,902 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to Configure SSL and HTTPS for RabbitMQ in Docker - Think Simple</title>
+<meta name="description" content="Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="How to Configure SSL and HTTPS for RabbitMQ in Docker">
+<meta property="og:url" content="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/">
+
+
+  <meta property="og:description" content="Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-02T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to Configure SSL and HTTPS for RabbitMQ in Docker | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="How to Configure SSL and HTTPS for RabbitMQ in Docker" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface." />
+<meta property="og:description" content="Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface." />
+<link rel="canonical" href="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" />
+<meta property="og:url" content="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-04-02T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to Configure SSL and HTTPS for RabbitMQ in Docker" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-04-02T00:00:00-04:00","datePublished":"2024-04-02T00:00:00-04:00","description":"Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.","headline":"How to Configure SSL and HTTPS for RabbitMQ in Docker","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/"},"url":"https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">New Brunswick, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to Configure SSL and HTTPS for RabbitMQ in Docker">
+    <meta itemprop="description" content="Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.">
+    <meta itemprop="datePublished" content="April 02, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to Configure SSL and HTTPS for RabbitMQ in Docker
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.</p>
+
+<p><strong>Prerequisites</strong></p>
+
+<p>To follow this guide, you’ll need:</p>
+<ol>
+  <li><strong>Docker Desktop</strong>: Installed and running on your machine.</li>
+  <li><strong>RabbitMQ Configuration Files</strong>: Basic familiarity with RabbitMQ configurations and SSL certificates.</li>
+  <li><strong>OpenSSL</strong>: To create self-signed certificates if needed.</li>
+</ol>
+
+<p><strong>Step 1: Create SSL/TLS Certificates</strong></p>
+
+<p>To secure RabbitMQ over SSL, you’ll need three key files:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>: Certificate Authority (CA) certificate. This file is required for RabbitMQ to validate client certificates.</li>
+  <li><code class="language-plaintext highlighter-rouge">server_certificate.pem</code>: Server certificate signed by the CA. This file is used by RabbitMQ to authenticate itself to clients.</li>
+  <li><code class="language-plaintext highlighter-rouge">server_key.pem</code>: Private key for the server certificate. This file is used by RabbitMQ to decrypt incoming client requests.</li>
+</ul>
+
+<p><strong>Creating Self-Signed Certificates</strong></p>
+
+<p><strong>1: Create a Certificate Authority (CA)</strong></p>
+
+<p>First, create a CA certificate to sign the server certificate.</p>
+
+<p>1.1 <strong>Generate a private key for the CA</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl genpkey <span class="nt">-algorithm</span> RSA <span class="nt">-out</span> ca_key.pem <span class="nt">-aes256</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be prompted to create a passphrase for the CA key. Remember this, as it will be needed to sign certificates.</li>
+</ul>
+
+<p>1.2 <strong>Generate a CA certificate</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl req <span class="nt">-x509</span> <span class="nt">-new</span> <span class="nt">-nodes</span> <span class="nt">-key</span> ca_key.pem <span class="nt">-sha256</span> <span class="nt">-days</span> 3650 <span class="nt">-out</span> ca_certificate.pem
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be asked to fill out details for the CA certificate (such as country, organization, etc.). This will generate the <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code> file.</li>
+  <li>You can keep everything blank if you’re creating a self-signed certificate for testing purposes.</li>
+</ul>
+
+<p><strong>2: Create the Server Certificate and Key</strong></p>
+
+<p>Next, create the server certificate that RabbitMQ will use, signed by your CA.</p>
+
+<p>2.1. <strong>Generate a private key for the server</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl genpkey <span class="nt">-algorithm</span> RSA <span class="nt">-out</span> server_key.pem
+</code></pre></div></div>
+
+<p>2.2. <strong>Create a Certificate Signing Request (CSR) for the server certificate</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl req <span class="nt">-new</span> <span class="nt">-key</span> server_key.pem <span class="nt">-out</span> server_csr.pem
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be prompted to enter details for the server. Be sure to set <code class="language-plaintext highlighter-rouge">Common Name (CN)</code> to the server’s hostname or IP address, as clients will check this when verifying the server’s identity.</li>
+  <li>You can keep other fields blank for testing purposes.</li>
+</ul>
+
+<p>2.3. <strong>Sign the server certificate with the CA</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl x509 <span class="nt">-req</span> <span class="nt">-in</span> server_csr.pem <span class="nt">-CA</span> ca_certificate.pem <span class="nt">-CAkey</span> ca_key.pem <span class="nt">-CAcreateserial</span> <span class="nt">-out</span> server_certificate.pem <span class="nt">-days</span> 3650 <span class="nt">-sha256</span>
+</code></pre></div></div>
+
+<ul>
+  <li>This step signs the <code class="language-plaintext highlighter-rouge">server_certificate.pem</code> with <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>, creating a valid SSL certificate for the server. The <code class="language-plaintext highlighter-rouge">-CAcreateserial</code> flag creates a <code class="language-plaintext highlighter-rouge">ca_certificate.srl</code> file that manages the CA’s serial numbers for certificates.</li>
+</ul>
+
+<p>After completing the above steps, you should have these files:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">ca_certificate.pem</code></strong>: The CA certificate file used to verify server identity.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">server_certificate.pem</code></strong>: The server’s signed certificate file.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">server_key.pem</code></strong>: The server’s private key file.</li>
+</ul>
+
+<p>These files can now be used in the <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> setup you configured earlier. Ensure the certificates are placed in the correct <code class="language-plaintext highlighter-rouge">certs</code> directory and that permissions are set to secure access to the private key (<code class="language-plaintext highlighter-rouge">server_key.pem</code>).</p>
+
+<p><strong>Step 2: Set Up <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code> for SSL and HTTPS</strong></p>
+
+<p>RabbitMQ requires configurations to enable SSL for AMQP client connections (on port 5671) and HTTPS for the Management UI (on port 15671). Let’s create a <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code> file with these configurations:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># SSL settings for the main AMQP listener (used for client connections over SSL/TLS)
+listeners.ssl.default = 5671                     # AMQP listener over SSL/TLS on port 5671
+ssl_options.cacertfile = /etc/rabbitmq/certs/ca_certificate.pem  # Path to the CA certificate to verify client certificates
+ssl_options.certfile = /etc/rabbitmq/certs/server_certificate.pem # Path to the server certificate for RabbitMQ
+ssl_options.keyfile = /etc/rabbitmq/certs/server_key.pem         # Path to the server private key for SSL
+ssl_options.verify = verify_peer                # Requires clients to present valid certificates (mutual authentication)
+ssl_options.fail_if_no_peer_cert = true         # Disconnects clients if they don't present a valid certificate
+
+# Enable HTTPS for the management interface
+management.listener.port = 15671                # Port for accessing RabbitMQ Management UI over HTTPS
+management.listener.ssl = true                  # Enable SSL for the management UI listener
+management.listener.ip = 0.0.0.0                # Bind to all available network interfaces to accept external connections
+
+# SSL options for HTTPS management listener
+management.listener.ssl_opts.cacertfile = /etc/rabbitmq/certs/ca_certificate.pem  # CA certificate for HTTPS verification
+management.listener.ssl_opts.certfile = /etc/rabbitmq/certs/server_certificate.pem # Server certificate for HTTPS
+management.listener.ssl_opts.keyfile = /etc/rabbitmq/certs/server_key.pem         # Private key for HTTPS
+management.listener.ssl_opts.verify = verify_none          # Allows clients to access without presenting a client certificate
+management.listener.ssl_opts.fail_if_no_peer_cert = false  # Does not require client certificates for HTTPS access
+
+</code></pre></div></div>
+
+<p>In this configuration:</p>
+<ul>
+  <li><strong>AMQP (5671)</strong>: The <code class="language-plaintext highlighter-rouge">verify_peer</code> and <code class="language-plaintext highlighter-rouge">fail_if_no_peer_cert</code> options enforce strict client certificate validation.</li>
+  <li><strong>Management UI (15671)</strong>: Allows HTTPS access without requiring client certificates.</li>
+</ul>
+
+<p>Save this file as <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code>.</p>
+
+<p><strong>Step 3: Configure <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> for RabbitMQ</strong></p>
+
+<p>To set up RabbitMQ with the configurations and certificates, we need to update <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.8'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">rabbitmq</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">rabbitmq:3-management</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">rabbitmq</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5671:5671"</span>         <span class="c1"># RabbitMQ SSL port</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">15671:15671"</span>       <span class="c1"># RabbitMQ management plugin port</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_DEFAULT_USER</span><span class="pi">:</span> <span class="s">user</span>             <span class="c1"># Default username</span>
+      <span class="na">RABBITMQ_DEFAULT_PASS</span><span class="pi">:</span> <span class="s">password</span>         <span class="c1"># Default password</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">rabbitmq_data:/var/lib/rabbitmq</span>      <span class="c1"># Data persistence</span>
+      <span class="pi">-</span> <span class="s">./certs:/etc/rabbitmq/certs</span>          <span class="c1"># Mount the certs directory of local machine to the container directory</span>
+      <span class="pi">-</span> <span class="s">./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf</span>  <span class="c1"># Custom RabbitMQ configuration file. This file is used to enable SSL and configure the SSL certificates. rabbitmq.conf file is mounted to the container directory /etc/rabbitmq/rabbitmq.conf</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">rabbitmq-server"</span><span class="pi">]</span>            <span class="c1"># Start the RabbitMQ server. This command is used to start the RabbitMQ server with the custom configuration file.</span>
+
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="na">rabbitmq_data</span><span class="pi">:</span>
+
+<span class="c1">#rabbitmq_data is mounted to /var/lib/rabbitmq inside the container. RabbitMQ stores its data in /var/lib/rabbitmq by default, so mounting a persistent volume to this location ensures that data generated by RabbitMQ is saved in the rabbitmq_data volume.</span>
+
+</code></pre></div></div>
+
+<p><strong>Explanation of the Volume Mounts</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">rabbitmq_data</code>: Ensures RabbitMQ data (queues, exchanges, etc.) persist across container restarts.</li>
+  <li><code class="language-plaintext highlighter-rouge">./certs</code>: Mounts the local certificates folder to <code class="language-plaintext highlighter-rouge">/etc/rabbitmq/certs</code> inside the container, where RabbitMQ can access them.</li>
+  <li><code class="language-plaintext highlighter-rouge">./rabbitmq.conf</code>: Mounts the custom configuration file into <code class="language-plaintext highlighter-rouge">/etc/rabbitmq/rabbitmq.conf</code> inside the container.</li>
+</ul>
+
+<p>The folder structure as follows:</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rabbitmq-ssl
+│   docker-compose.yml
+│   rabbitmq.conf
+│   certs/
+│       ca_certificate.pem
+│       server_certificate.pem
+│       server_key.pem
+</code></pre></div></div>
+
+<p><strong>Step 4: Start RabbitMQ and Verify SSL Configuration</strong></p>
+
+<ol>
+  <li>
+    <p>Run the following command to start the RabbitMQ container with HTTPS and SSL enabled:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Verify that RabbitMQ is listening on the correct ports:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
+</code></pre></div>    </div>
+    <p>You should see ports 5671 (for AMQP over SSL) and 15671 (for HTTPS management) mapped.</p>
+  </li>
+</ol>
+
+<p><strong>Step 5: Access the RabbitMQ Management UI over HTTPS</strong></p>
+
+<p>Open your browser and navigate to <code class="language-plaintext highlighter-rouge">https://localhost:15671</code>. If you’re using a self-signed certificate, you’ll likely see a security warning. Proceed by accepting the certificate to access the Management UI.</p>
+
+<p><strong>Step 6: Configure AMQP Clients for SSL Connections</strong></p>
+
+<p>For applications or services that connect to RabbitMQ over AMQP, use the following settings:</p>
+<ul>
+  <li><strong>URL</strong>: <code class="language-plaintext highlighter-rouge">amqps://localhost:5671</code></li>
+  <li><strong>CA Certificate</strong>: <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code> (for client validation)</li>
+</ul>
+
+<p>Client applications should verify the RabbitMQ server certificate by using <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>. Depending on the client library, you may need to specify additional SSL options.</p>
+
+<p><strong>Troubleshooting Tips</strong></p>
+
+<ul>
+  <li><strong>Permissions</strong>: Ensure that the <code class="language-plaintext highlighter-rouge">.pem</code> files are readable by the RabbitMQ process inside the container.</li>
+  <li><strong>SSL/TLS Version Compatibility</strong>: Some clients may have specific SSL/TLS requirements. Ensure your configuration aligns with the client’s requirements.</li>
+</ul>
+
+<p><strong>Conclusion</strong></p>
+
+<p>Setting up RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI greatly enhances security, especially in production environments. With these configurations, RabbitMQ can securely handle both AMQP client connections and browser-based management over HTTPS.</p>
+
+<p>Following these steps, you’ll have a robust, secure RabbitMQ instance that protects your data in transit and allows safe administration.</p>
+
+<p><strong>Note for docker container:</strong></p>
+<ul>
+  <li>docker exec -it rabbitmq bash - access the container terminal, rabbitmq is the container name</li>
+  <li>docker exec -it rabbitmq ls -l /etc/rabbitmq/certs - list the certs in the container</li>
+  <li>You can access container terminal from docker desktop as follows:
+    <ul>
+      <li>Click on the container</li>
+      <li>Click on Termianl tab</li>
+    </ul>
+  </li>
+</ul>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">docker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rabbitmq" class="page__taxonomy-item" rel="tag">rabbitmq</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ssl" class="page__taxonomy-item" rel="tag">ssl</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#docker" class="page__taxonomy-item" rel="tag">Docker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#rabbitmq" class="page__taxonomy-item" rel="tag">RabbitMQ</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#ssl" class="page__taxonomy-item" rel="tag">SSL</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-02T00:00:00-04:00">April 02, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+Configure+SSL+and+HTTPS+for+RabbitMQ+in+Docker%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-ssl-and-https-for-rabbitmq-in-docker%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-ssl-and-https-for-rabbitmq-in-docker%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-configure-ssl-and-https-for-rabbitmq-in-docker%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" class="pagination--pager" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" rel="permalink">Utilizing Bulk Operations with Entity Framework and ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="permalink">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Effectively dealing with concurrency is crucial, especially in large business applications, and it plays a significant role in financial systems. This articl...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/" rel="permalink">Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  14 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. T...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/optimistic_concurrency_management_aspnet_core_using_hyper_media/" rel="permalink">Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Optimistic concurrency is a common method for handling such situations. In this article, I’ll show a simple way to manage concurrency in ASP.NET using hyperm...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

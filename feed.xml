@@ -1,4 +1,222 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-03-02T16:51:06-04:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Utilizing Bulk Operations with Entity Framework and ASP.NET Core</title><link href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" rel="alternate" type="text/html" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" /><published>2024-03-02T00:00:00-04:00</published><updated>2024-03-02T00:00:00-04:00</updated><id>https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core</id><content type="html" xml:base="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/"><![CDATA[<p>A bulk operation refers to the execution of a single operation that involves multiple data entries or rows in a database, typically performed in a batch. Instead of processing each entry individually, bulk operations allow for the manipulation or retrieval of data in a more efficient manner.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-11-12T18:05:59-05:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">How to Configure SSL and HTTPS for RabbitMQ in Docker</title><link href="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" rel="alternate" type="text/html" title="How to Configure SSL and HTTPS for RabbitMQ in Docker" /><published>2024-04-02T00:00:00-04:00</published><updated>2024-04-02T00:00:00-04:00</updated><id>https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker</id><content type="html" xml:base="https://mahedee.net//how-to-configure-ssl-and-https-for-rabbitmq-in-docker/"><![CDATA[<p>Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.</p>
+
+<p><strong>Prerequisites</strong></p>
+
+<p>To follow this guide, you’ll need:</p>
+<ol>
+  <li><strong>Docker Desktop</strong>: Installed and running on your machine.</li>
+  <li><strong>RabbitMQ Configuration Files</strong>: Basic familiarity with RabbitMQ configurations and SSL certificates.</li>
+  <li><strong>OpenSSL</strong>: To create self-signed certificates if needed.</li>
+</ol>
+
+<p><strong>Step 1: Create SSL/TLS Certificates</strong></p>
+
+<p>To secure RabbitMQ over SSL, you’ll need three key files:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>: Certificate Authority (CA) certificate. This file is required for RabbitMQ to validate client certificates.</li>
+  <li><code class="language-plaintext highlighter-rouge">server_certificate.pem</code>: Server certificate signed by the CA. This file is used by RabbitMQ to authenticate itself to clients.</li>
+  <li><code class="language-plaintext highlighter-rouge">server_key.pem</code>: Private key for the server certificate. This file is used by RabbitMQ to decrypt incoming client requests.</li>
+</ul>
+
+<p><strong>Creating Self-Signed Certificates</strong></p>
+
+<p><strong>1: Create a Certificate Authority (CA)</strong></p>
+
+<p>First, create a CA certificate to sign the server certificate.</p>
+
+<p>1.1 <strong>Generate a private key for the CA</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl genpkey <span class="nt">-algorithm</span> RSA <span class="nt">-out</span> ca_key.pem <span class="nt">-aes256</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be prompted to create a passphrase for the CA key. Remember this, as it will be needed to sign certificates.</li>
+</ul>
+
+<p>1.2 <strong>Generate a CA certificate</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl req <span class="nt">-x509</span> <span class="nt">-new</span> <span class="nt">-nodes</span> <span class="nt">-key</span> ca_key.pem <span class="nt">-sha256</span> <span class="nt">-days</span> 3650 <span class="nt">-out</span> ca_certificate.pem
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be asked to fill out details for the CA certificate (such as country, organization, etc.). This will generate the <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code> file.</li>
+  <li>You can keep everything blank if you’re creating a self-signed certificate for testing purposes.</li>
+</ul>
+
+<p><strong>2: Create the Server Certificate and Key</strong></p>
+
+<p>Next, create the server certificate that RabbitMQ will use, signed by your CA.</p>
+
+<p>2.1. <strong>Generate a private key for the server</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl genpkey <span class="nt">-algorithm</span> RSA <span class="nt">-out</span> server_key.pem
+</code></pre></div></div>
+
+<p>2.2. <strong>Create a Certificate Signing Request (CSR) for the server certificate</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl req <span class="nt">-new</span> <span class="nt">-key</span> server_key.pem <span class="nt">-out</span> server_csr.pem
+</code></pre></div></div>
+
+<ul>
+  <li>You’ll be prompted to enter details for the server. Be sure to set <code class="language-plaintext highlighter-rouge">Common Name (CN)</code> to the server’s hostname or IP address, as clients will check this when verifying the server’s identity.</li>
+  <li>You can keep other fields blank for testing purposes.</li>
+</ul>
+
+<p>2.3. <strong>Sign the server certificate with the CA</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   openssl x509 <span class="nt">-req</span> <span class="nt">-in</span> server_csr.pem <span class="nt">-CA</span> ca_certificate.pem <span class="nt">-CAkey</span> ca_key.pem <span class="nt">-CAcreateserial</span> <span class="nt">-out</span> server_certificate.pem <span class="nt">-days</span> 3650 <span class="nt">-sha256</span>
+</code></pre></div></div>
+
+<ul>
+  <li>This step signs the <code class="language-plaintext highlighter-rouge">server_certificate.pem</code> with <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>, creating a valid SSL certificate for the server. The <code class="language-plaintext highlighter-rouge">-CAcreateserial</code> flag creates a <code class="language-plaintext highlighter-rouge">ca_certificate.srl</code> file that manages the CA’s serial numbers for certificates.</li>
+</ul>
+
+<p>After completing the above steps, you should have these files:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">ca_certificate.pem</code></strong>: The CA certificate file used to verify server identity.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">server_certificate.pem</code></strong>: The server’s signed certificate file.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">server_key.pem</code></strong>: The server’s private key file.</li>
+</ul>
+
+<p>These files can now be used in the <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> setup you configured earlier. Ensure the certificates are placed in the correct <code class="language-plaintext highlighter-rouge">certs</code> directory and that permissions are set to secure access to the private key (<code class="language-plaintext highlighter-rouge">server_key.pem</code>).</p>
+
+<p><strong>Step 2: Set Up <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code> for SSL and HTTPS</strong></p>
+
+<p>RabbitMQ requires configurations to enable SSL for AMQP client connections (on port 5671) and HTTPS for the Management UI (on port 15671). Let’s create a <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code> file with these configurations:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># SSL settings for the main AMQP listener (used for client connections over SSL/TLS)
+listeners.ssl.default = 5671                     # AMQP listener over SSL/TLS on port 5671
+ssl_options.cacertfile = /etc/rabbitmq/certs/ca_certificate.pem  # Path to the CA certificate to verify client certificates
+ssl_options.certfile = /etc/rabbitmq/certs/server_certificate.pem # Path to the server certificate for RabbitMQ
+ssl_options.keyfile = /etc/rabbitmq/certs/server_key.pem         # Path to the server private key for SSL
+ssl_options.verify = verify_peer                # Requires clients to present valid certificates (mutual authentication)
+ssl_options.fail_if_no_peer_cert = true         # Disconnects clients if they don't present a valid certificate
+
+# Enable HTTPS for the management interface
+management.listener.port = 15671                # Port for accessing RabbitMQ Management UI over HTTPS
+management.listener.ssl = true                  # Enable SSL for the management UI listener
+management.listener.ip = 0.0.0.0                # Bind to all available network interfaces to accept external connections
+
+# SSL options for HTTPS management listener
+management.listener.ssl_opts.cacertfile = /etc/rabbitmq/certs/ca_certificate.pem  # CA certificate for HTTPS verification
+management.listener.ssl_opts.certfile = /etc/rabbitmq/certs/server_certificate.pem # Server certificate for HTTPS
+management.listener.ssl_opts.keyfile = /etc/rabbitmq/certs/server_key.pem         # Private key for HTTPS
+management.listener.ssl_opts.verify = verify_none          # Allows clients to access without presenting a client certificate
+management.listener.ssl_opts.fail_if_no_peer_cert = false  # Does not require client certificates for HTTPS access
+
+</code></pre></div></div>
+
+<p>In this configuration:</p>
+<ul>
+  <li><strong>AMQP (5671)</strong>: The <code class="language-plaintext highlighter-rouge">verify_peer</code> and <code class="language-plaintext highlighter-rouge">fail_if_no_peer_cert</code> options enforce strict client certificate validation.</li>
+  <li><strong>Management UI (15671)</strong>: Allows HTTPS access without requiring client certificates.</li>
+</ul>
+
+<p>Save this file as <code class="language-plaintext highlighter-rouge">rabbitmq.conf</code>.</p>
+
+<p><strong>Step 3: Configure <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> for RabbitMQ</strong></p>
+
+<p>To set up RabbitMQ with the configurations and certificates, we need to update <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.8'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">rabbitmq</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">rabbitmq:3-management</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">rabbitmq</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5671:5671"</span>         <span class="c1"># RabbitMQ SSL port</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">15671:15671"</span>       <span class="c1"># RabbitMQ management plugin port</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_DEFAULT_USER</span><span class="pi">:</span> <span class="s">user</span>             <span class="c1"># Default username</span>
+      <span class="na">RABBITMQ_DEFAULT_PASS</span><span class="pi">:</span> <span class="s">password</span>         <span class="c1"># Default password</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">rabbitmq_data:/var/lib/rabbitmq</span>      <span class="c1"># Data persistence</span>
+      <span class="pi">-</span> <span class="s">./certs:/etc/rabbitmq/certs</span>          <span class="c1"># Mount the certs directory of local machine to the container directory</span>
+      <span class="pi">-</span> <span class="s">./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf</span>  <span class="c1"># Custom RabbitMQ configuration file. This file is used to enable SSL and configure the SSL certificates. rabbitmq.conf file is mounted to the container directory /etc/rabbitmq/rabbitmq.conf</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">rabbitmq-server"</span><span class="pi">]</span>            <span class="c1"># Start the RabbitMQ server. This command is used to start the RabbitMQ server with the custom configuration file.</span>
+
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="na">rabbitmq_data</span><span class="pi">:</span>
+
+<span class="c1">#rabbitmq_data is mounted to /var/lib/rabbitmq inside the container. RabbitMQ stores its data in /var/lib/rabbitmq by default, so mounting a persistent volume to this location ensures that data generated by RabbitMQ is saved in the rabbitmq_data volume.</span>
+
+</code></pre></div></div>
+
+<p><strong>Explanation of the Volume Mounts</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">rabbitmq_data</code>: Ensures RabbitMQ data (queues, exchanges, etc.) persist across container restarts.</li>
+  <li><code class="language-plaintext highlighter-rouge">./certs</code>: Mounts the local certificates folder to <code class="language-plaintext highlighter-rouge">/etc/rabbitmq/certs</code> inside the container, where RabbitMQ can access them.</li>
+  <li><code class="language-plaintext highlighter-rouge">./rabbitmq.conf</code>: Mounts the custom configuration file into <code class="language-plaintext highlighter-rouge">/etc/rabbitmq/rabbitmq.conf</code> inside the container.</li>
+</ul>
+
+<p>The folder structure as follows:</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rabbitmq-ssl
+│   docker-compose.yml
+│   rabbitmq.conf
+│   certs/
+│       ca_certificate.pem
+│       server_certificate.pem
+│       server_key.pem
+</code></pre></div></div>
+
+<p><strong>Step 4: Start RabbitMQ and Verify SSL Configuration</strong></p>
+
+<ol>
+  <li>
+    <p>Run the following command to start the RabbitMQ container with HTTPS and SSL enabled:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Verify that RabbitMQ is listening on the correct ports:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
+</code></pre></div>    </div>
+    <p>You should see ports 5671 (for AMQP over SSL) and 15671 (for HTTPS management) mapped.</p>
+  </li>
+</ol>
+
+<p><strong>Step 5: Access the RabbitMQ Management UI over HTTPS</strong></p>
+
+<p>Open your browser and navigate to <code class="language-plaintext highlighter-rouge">https://localhost:15671</code>. If you’re using a self-signed certificate, you’ll likely see a security warning. Proceed by accepting the certificate to access the Management UI.</p>
+
+<p><strong>Step 6: Configure AMQP Clients for SSL Connections</strong></p>
+
+<p>For applications or services that connect to RabbitMQ over AMQP, use the following settings:</p>
+<ul>
+  <li><strong>URL</strong>: <code class="language-plaintext highlighter-rouge">amqps://localhost:5671</code></li>
+  <li><strong>CA Certificate</strong>: <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code> (for client validation)</li>
+</ul>
+
+<p>Client applications should verify the RabbitMQ server certificate by using <code class="language-plaintext highlighter-rouge">ca_certificate.pem</code>. Depending on the client library, you may need to specify additional SSL options.</p>
+
+<p><strong>Troubleshooting Tips</strong></p>
+
+<ul>
+  <li><strong>Permissions</strong>: Ensure that the <code class="language-plaintext highlighter-rouge">.pem</code> files are readable by the RabbitMQ process inside the container.</li>
+  <li><strong>SSL/TLS Version Compatibility</strong>: Some clients may have specific SSL/TLS requirements. Ensure your configuration aligns with the client’s requirements.</li>
+</ul>
+
+<p><strong>Conclusion</strong></p>
+
+<p>Setting up RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI greatly enhances security, especially in production environments. With these configurations, RabbitMQ can securely handle both AMQP client connections and browser-based management over HTTPS.</p>
+
+<p>Following these steps, you’ll have a robust, secure RabbitMQ instance that protects your data in transit and allows safe administration.</p>
+
+<p><strong>Note for docker container:</strong></p>
+<ul>
+  <li>docker exec -it rabbitmq bash - access the container terminal, rabbitmq is the container name</li>
+  <li>docker exec -it rabbitmq ls -l /etc/rabbitmq/certs - list the certs in the container</li>
+  <li>You can access container terminal from docker desktop as follows:
+    <ul>
+      <li>Click on the container</li>
+      <li>Click on Termianl tab</li>
+    </ul>
+  </li>
+</ul>]]></content><author><name>Mahedee Hasan</name></author><category term="RabbitMQ" /><category term="Docker" /><category term="SSL" /><category term="rabbitmq" /><category term="docker" /><category term="ssl" /><summary type="html"><![CDATA[Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.]]></summary></entry><entry><title type="html">Utilizing Bulk Operations with Entity Framework and ASP.NET Core</title><link href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" rel="alternate" type="text/html" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" /><published>2024-03-02T00:00:00-05:00</published><updated>2024-03-02T00:00:00-05:00</updated><id>https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core</id><content type="html" xml:base="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/"><![CDATA[<p>A bulk operation refers to the execution of a single operation that involves multiple data entries or rows in a database, typically performed in a batch. Instead of processing each entry individually, bulk operations allow for the manipulation or retrieval of data in a more efficient manner.</p>
 
 <p>The benefits of bulk operations include:</p>
 
@@ -478,7 +696,7 @@
   <li>Test the API using the endpoint and perform the bulk operation for insert, update and delete.</li>
 </ul>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/EFBulkBatch">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET" /><published>2024-02-08T00:00:00-04:00</published><updated>2024-02-08T00:00:00-04:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/"><![CDATA[<p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. This article is designed to illustrate the practical aspects of managing optimistic concurrency in an ASP.NET Core application using raw SQL and ADO.NET.</p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/EFBulkBatch">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Raw SQL and ADO.NET" /><published>2024-02-08T00:00:00-05:00</published><updated>2024-02-08T00:00:00-05:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_raw_sql/"><![CDATA[<p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. This article is designed to illustrate the practical aspects of managing optimistic concurrency in an ASP.NET Core application using raw SQL and ADO.NET.</p>
 
 <p><strong>Tools and Technology Used</strong></p>
 
@@ -1063,7 +1281,7 @@
   <li>Delete the record using the Delete method in Swagger. Meanwhile, open another tab and update the record. Your record version will be changed. If you attempt to delete the record using the previous record version, it will throw an exception due to concurrency. However, if no one else has updated it and you are using the correct record version, you can delete the record without encountering any problem.</li>
 </ul>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively dealing with concurrency is crucial, especially in large business applications, and it plays a significant role in financial systems. This article is designed to illustrate the practical aspects of managing concurrency in an ASP.NET Core application using raw SQL and ADO.NET.]]></summary></entry><entry><title type="html">Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL</title><link href="https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/" rel="alternate" type="text/html" title="Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL" /><published>2024-01-15T00:00:00-04:00</published><updated>2024-01-15T00:00:00-04:00</updated><id>https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET</id><content type="html" xml:base="https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/"><![CDATA[<p><strong>Introduction</strong>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively dealing with concurrency is crucial, especially in large business applications, and it plays a significant role in financial systems. This article is designed to illustrate the practical aspects of managing concurrency in an ASP.NET Core application using raw SQL and ADO.NET.]]></summary></entry><entry><title type="html">Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL</title><link href="https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/" rel="alternate" type="text/html" title="Step-by-Step Guide to Integrating Audit Trail in ASP.NET Core Using ADO.NET and Raw SQL" /><published>2024-01-15T00:00:00-05:00</published><updated>2024-01-15T00:00:00-05:00</updated><id>https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET</id><content type="html" xml:base="https://mahedee.net//Step-by-Step-Guide-to-Integrating-Audit-Trail-in-ASPNET-Core-Using-ADONET/"><![CDATA[<p><strong>Introduction</strong>
 The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. An audit trail is a chronological record of changes or activities performed in a system, providing a detailed history of events. In the context of software applications, including ASP.NET, an audit trail captures and logs various actions such as data modifications, user interactions, and system activities. This article delves into a comprehensive guide on implementing Audit Trail functionality in an ASP.NET Core application using SQL Server with ADO.NET.</p>
 
 <p><strong>Why it is important?</strong>
@@ -2204,7 +2422,7 @@ It helps organizations maintain a record of user activity within their systems, 
 
 <p><img src="/assets/images/posts/2024/AuditEntry.png" alt="" />
 <img src="/assets/images/posts/2024/AuditEntryProperty.png" alt="" />
-<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><summary type="html"><![CDATA[The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. This article delves into a comprehensive guide on implementing Audit Trail functionality in an ASP.NET Core application using SQL Server with ADO.NET. Join me as I demonstrate the step-by-step process to bolster security measures and enhance transaction accountability within your application.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia" /><published>2023-12-17T00:00:00-04:00</published><updated>2023-12-17T00:00:00-04:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/"><![CDATA[<p>In the world of REST API, Hypermedia means adding links and important details directly into the API response. This helps clients use that information for more actions with the API.</p>
+<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><summary type="html"><![CDATA[The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. This article delves into a comprehensive guide on implementing Audit Trail functionality in an ASP.NET Core application using SQL Server with ADO.NET. Join me as I demonstrate the step-by-step process to bolster security measures and enhance transaction accountability within your application.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia" /><published>2023-12-17T00:00:00-05:00</published><updated>2023-12-17T00:00:00-05:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/"><![CDATA[<p>In the world of REST API, Hypermedia means adding links and important details directly into the API response. This helps clients use that information for more actions with the API.</p>
 
 <p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. In this article, I’ll show a simple way to manage concurrency in ASP.NET using hypermedia.</p>
 
@@ -2543,7 +2761,7 @@ It helps organizations maintain a record of user activity within their systems, 
   <li>Modify or delete the record by using either the provided URL or the specified version number within the URL. In the backend, the version number from the URL will be compared with the existing version number in the action method as outlined in the controller code. The action will only be executed if the version numbers from the URL and the existing record match.</li>
 </ul>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyHyperMedia">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Optimistic concurrency is a common method for handling such situations. In this article, I'll show a simple way to manage concurrency in ASP.NET using hypermedia.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using ETags and If-Match Header</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using ETags and If-Match Header" /><published>2023-11-11T00:00:00-04:00</published><updated>2023-11-11T00:00:00-04:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header/"><![CDATA[<p>In my earlier article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I talked about different ways to handle concurrency. As you know, optimistic concurrency is a common method for dealing with such situations. In this article, I’ll demonstrate a practical way to manage concurrency in ASP.NET using ETags and If-Match.</p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyHyperMedia">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Optimistic concurrency is a common method for handling such situations. In this article, I'll show a simple way to manage concurrency in ASP.NET using hypermedia.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using ETags and If-Match Header</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using ETags and If-Match Header" /><published>2023-11-11T00:00:00-05:00</published><updated>2023-11-11T00:00:00-05:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_etags_if_match_header/"><![CDATA[<p>In my earlier article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I talked about different ways to handle concurrency. As you know, optimistic concurrency is a common method for dealing with such situations. In this article, I’ll demonstrate a practical way to manage concurrency in ASP.NET using ETags and If-Match.</p>
 
 <p><strong>Tools and Technology Used</strong></p>
 
@@ -2931,7 +3149,7 @@ It helps organizations maintain a record of user activity within their systems, 
   </li>
 </ul>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyEtags">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Efficient concurrency management holds significant importance, especially in enterprise applications, with a heightened emphasis on financial systems. This article aims to elucidate the practical dimensions of concurrency management within an ASP.NET Core application, showcasing the effective utilization of ETags and the If-Match Header.]]></summary></entry><entry><title type="html">Enhancing ASP.NET Core Applications: Optimistic Concurrency Management with Database-Generated Tokens using Entity Framework</title><link href="https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token/" rel="alternate" type="text/html" title="Enhancing ASP.NET Core Applications: Optimistic Concurrency Management with Database-Generated Tokens using Entity Framework" /><published>2023-10-11T00:00:00-03:00</published><updated>2023-10-11T00:00:00-03:00</updated><id>https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token</id><content type="html" xml:base="https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token/"><![CDATA[<p>In a my <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">previous article</a>, I have discussed about verious forms of concurrency. As you’re already aware, optimistic concurrency stands out as the prevalent method for managing such scenarios. This article delves into the practical implementation of handling concurrency in ASP.NET using Entity Framework, specifically focusing on utilizing a optimistic concurrency using database-generated token.</p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyEtags">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Efficient concurrency management holds significant importance, especially in enterprise applications, with a heightened emphasis on financial systems. This article aims to elucidate the practical dimensions of concurrency management within an ASP.NET Core application, showcasing the effective utilization of ETags and the If-Match Header.]]></summary></entry><entry><title type="html">Enhancing ASP.NET Core Applications: Optimistic Concurrency Management with Database-Generated Tokens using Entity Framework</title><link href="https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token/" rel="alternate" type="text/html" title="Enhancing ASP.NET Core Applications: Optimistic Concurrency Management with Database-Generated Tokens using Entity Framework" /><published>2023-10-11T00:00:00-04:00</published><updated>2023-10-11T00:00:00-04:00</updated><id>https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token</id><content type="html" xml:base="https://mahedee.net//concurrency_management_in_aspnet_core_database_generated_token/"><![CDATA[<p>In a my <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">previous article</a>, I have discussed about verious forms of concurrency. As you’re already aware, optimistic concurrency stands out as the prevalent method for managing such scenarios. This article delves into the practical implementation of handling concurrency in ASP.NET using Entity Framework, specifically focusing on utilizing a optimistic concurrency using database-generated token.</p>
 
 <p><strong>Tools and Technology Used</strong></p>
 
@@ -3314,7 +3532,7 @@ It helps organizations maintain a record of user activity within their systems, 
     <span class="p">.</span><span class="nf">LogTo</span><span class="p">(</span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">,</span> <span class="n">LogLevel</span><span class="p">.</span><span class="n">Information</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyDBToken">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively overseeing concurrency is paramount, particularly in enterprise applications, exerting a substantial influence on financial systems. This article seeks to illustrate the pragmatic aspects of managing concurrency in an ASP.NET Core application by employing a database-generated token through Entity Framework.]]></summary></entry><entry><title type="html">Exploring Concurrency and Concurrency Management in ASP.NET Core Applications with Entity Framework</title><link href="https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework/" rel="alternate" type="text/html" title="Exploring Concurrency and Concurrency Management in ASP.NET Core Applications with Entity Framework" /><published>2023-09-07T00:00:00-03:00</published><updated>2023-09-07T00:00:00-03:00</updated><id>https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework</id><content type="html" xml:base="https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework/"><![CDATA[<p>Concurrency refers to the simultaneous execution of multiple tasks or processes within a system. In the context of software development, it often involves managing multiple operations concurrently to improve system efficiency and responsiveness.</p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyDBToken">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively overseeing concurrency is paramount, particularly in enterprise applications, exerting a substantial influence on financial systems. This article seeks to illustrate the pragmatic aspects of managing concurrency in an ASP.NET Core application by employing a database-generated token through Entity Framework.]]></summary></entry><entry><title type="html">Exploring Concurrency and Concurrency Management in ASP.NET Core Applications with Entity Framework</title><link href="https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework/" rel="alternate" type="text/html" title="Exploring Concurrency and Concurrency Management in ASP.NET Core Applications with Entity Framework" /><published>2023-09-07T00:00:00-04:00</published><updated>2023-09-07T00:00:00-04:00</updated><id>https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework</id><content type="html" xml:base="https://mahedee.net//concurrency_management_in_aspnet_core_applications_with_entity_framework/"><![CDATA[<p>Concurrency refers to the simultaneous execution of multiple tasks or processes within a system. In the context of software development, it often involves managing multiple operations concurrently to improve system efficiency and responsiveness.</p>
 
 <p>Handling concurrency in software applications is crucial to prevent conflicts and ensure data consistency when multiple users or processes attempt to access and modify shared data simultaneously. Several techniques are employed to manage concurrency effectively:</p>
 
@@ -3697,7 +3915,7 @@ It helps organizations maintain a record of user activity within their systems, 
 
 <p><img src="/assets/images/posts/2023/sqloutput.png" alt="" /></p>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyAppToken">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively managing concurrency is a critical concern, especially in enterprise applications, with a significant impact on financial systems. This article aims to demonstrate the practical aspects of handling concurrency in an ASP.NET Core application using both Entity Framework and SQL Server.]]></summary></entry><entry><title type="html">Unleashing Micro Frontends with React and ASP.NET Core: A Step-by-Step Implementation Approach</title><link href="https://mahedee.net//micro-frontend-using-react-and-aspnet-core/" rel="alternate" type="text/html" title="Unleashing Micro Frontends with React and ASP.NET Core: A Step-by-Step Implementation Approach" /><published>2023-08-30T00:00:00-03:00</published><updated>2023-08-30T00:00:00-03:00</updated><id>https://mahedee.net//micro-frontend-using-react-and-aspnet-core</id><content type="html" xml:base="https://mahedee.net//micro-frontend-using-react-and-aspnet-core/"><![CDATA[<p><strong>Introduction</strong><br />
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyAppToken">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Effectively managing concurrency is a critical concern, especially in enterprise applications, with a significant impact on financial systems. This article aims to demonstrate the practical aspects of handling concurrency in an ASP.NET Core application using both Entity Framework and SQL Server.]]></summary></entry><entry><title type="html">Unleashing Micro Frontends with React and ASP.NET Core: A Step-by-Step Implementation Approach</title><link href="https://mahedee.net//micro-frontend-using-react-and-aspnet-core/" rel="alternate" type="text/html" title="Unleashing Micro Frontends with React and ASP.NET Core: A Step-by-Step Implementation Approach" /><published>2023-08-30T00:00:00-04:00</published><updated>2023-08-30T00:00:00-04:00</updated><id>https://mahedee.net//micro-frontend-using-react-and-aspnet-core</id><content type="html" xml:base="https://mahedee.net//micro-frontend-using-react-and-aspnet-core/"><![CDATA[<p><strong>Introduction</strong><br />
 Micro frontends are an architectural pattern and approach for building modern web applications. Similar to microservices on the backend, micro frontends focus on breaking down the user interface (UI) into smaller, self-contained, and independently deployable parts.</p>
 
 <p>In traditional monolithic frontend architectures, the entire UI is developed as a single codebase, making it difficult to scale, maintain, and iterate on different parts of the application independently. Micro frontends aim to address these challenges by allowing teams to develop and deploy UI components or features as separate entities.</p>
@@ -5966,7 +6184,7 @@ height: 100vh; \*/</span>
 
 <p>It means. Micro front end works. Our master application is running on 3000 port and other 3 application is running on 3001, 3002 and 3003. Wow, we accomplished the journey of micro front end.</p>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/micro-frontend">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="React" /><category term="Microservices" /><category term="ASP.NET" /><category term="C#" /><category term="react" /><category term="csharp" /><category term="Microservice" /><category term="aspnet" /><category term="microfrontend" /><summary type="html"><![CDATA[Micro frontends are an architectural pattern and approach for building modern web applications. Similar to microservices on the backend, micro frontends focus on breaking down the user interface (UI) into smaller, self-contained, and independently deployable parts.]]></summary></entry><entry><title type="html">Simplified Sample Application: Building with Redux Toolkit, React.js, and ASP.NET Core</title><link href="https://mahedee.net//sample-application-redux-react-aspnet-core/" rel="alternate" type="text/html" title="Simplified Sample Application: Building with Redux Toolkit, React.js, and ASP.NET Core" /><published>2023-07-19T00:00:00-03:00</published><updated>2023-07-19T00:00:00-03:00</updated><id>https://mahedee.net//sample-application-redux-react-aspnet-core</id><content type="html" xml:base="https://mahedee.net//sample-application-redux-react-aspnet-core/"><![CDATA[<p><strong>Introduction</strong></p>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/micro-frontend">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="React" /><category term="Microservices" /><category term="ASP.NET" /><category term="C#" /><category term="react" /><category term="csharp" /><category term="Microservice" /><category term="aspnet" /><category term="microfrontend" /><summary type="html"><![CDATA[Micro frontends are an architectural pattern and approach for building modern web applications. Similar to microservices on the backend, micro frontends focus on breaking down the user interface (UI) into smaller, self-contained, and independently deployable parts.]]></summary></entry><entry><title type="html">Simplified Sample Application: Building with Redux Toolkit, React.js, and ASP.NET Core</title><link href="https://mahedee.net//sample-application-redux-react-aspnet-core/" rel="alternate" type="text/html" title="Simplified Sample Application: Building with Redux Toolkit, React.js, and ASP.NET Core" /><published>2023-07-19T00:00:00-04:00</published><updated>2023-07-19T00:00:00-04:00</updated><id>https://mahedee.net//sample-application-redux-react-aspnet-core</id><content type="html" xml:base="https://mahedee.net//sample-application-redux-react-aspnet-core/"><![CDATA[<p><strong>Introduction</strong></p>
 
 <p>Redux is a popular state management library for JavaScript applications. It is commonly used with front-end frameworks like React, Angular, and Vue, but can also be used with other frameworks or even vanilla JavaScript.
 At its core, Redux provides a predictable state container for managing the state of an application. It helps you manage the data that needs to be shared across different components in a more organized and efficient way. The main concept behind Redux is that the entire state of an application is stored in a single JavaScript object, known as the “store.”
@@ -7838,703 +8056,4 @@ The Store is the central entity that combines Actions and Reducers, responsible 
 
 <p><img src="/assets/images/posts/2023/rtk-output-01.png" alt="" /></p>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/react-redux-toolkit">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="React" /><category term="Redux" /><category term="ASP.NET" /><category term="C#" /><category term="react" /><category term="csharp" /><category term="redux" /><category term="aspnet" /><summary type="html"><![CDATA[Redux is a popular state management library for JavaScript applications. In this article I will show you how to build a front-end application using redux toolkit with react and asp.net core.]]></summary></entry><entry><title type="html">Implementing Audit Trail in an ASP.NET Core Application with Entity Framework Plus</title><link href="https://mahedee.net//audit-trail-implementation-in-aspnet-core-app/" rel="alternate" type="text/html" title="Implementing Audit Trail in an ASP.NET Core Application with Entity Framework Plus" /><published>2023-06-19T00:00:00-03:00</published><updated>2023-06-19T00:00:00-03:00</updated><id>https://mahedee.net//audit-trail-implementation-in-aspnet-core-app</id><content type="html" xml:base="https://mahedee.net//audit-trail-implementation-in-aspnet-core-app/"><![CDATA[<p><strong>Introduction</strong></p>
-
-<p>An audit trail is a chronological record of changes or activities performed in a system, providing a detailed history of events. In the context of software applications, including ASP.NET, an audit trail captures and logs various actions such as data modifications, user interactions, and system activities.</p>
-
-<p><strong>Why it is important?</strong>
-It helps organizations maintain a record of user activity within their systems, which can be used</p>
-
-<ul>
-  <li>To monitor user actions and detect suspicious activities</li>
-  <li>To track changes and identify the root cause of issues</li>
-  <li>To ensure compliance with regulatory requirements</li>
-  <li>Records changes to critical data elements, ensuring accuracy and consistency</li>
-  <li>Provides a detailed history of events for forensic analysis</li>
-  <li>Meets legal and regulatory requirements by maintaining a detailed audit trail</li>
-  <li>Offers historical data for reporting and analysis, supporting decision-making</li>
-  <li>Frud detection etc.</li>
-</ul>
-
-<p>In this article, we will discuss how you can implement an audit trail feature using Entity Framework plus</p>
-
-<p><strong>Tools and Technology Used</strong></p>
-
-<ul>
-  <li>ASP.net core Web API</li>
-  <li>Visual C#</li>
-  <li>Entity Framework Plus</li>
-  <li>Entity Framework</li>
-  <li>SQL Server</li>
-</ul>
-
-<p><strong>Step 1: Create a asp.net core web api project name AuditLog.API</strong></p>
-
-<p><strong>Step 2: Install the following nuget packages in the project.</strong></p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Z.EntityFramework.Extensions.EFCore</span>
-<span class="nf">Z.EntityFramework.Plus.EFCore</span>
-<span class="nf">Microsoft.EntityFrameworkCore</span>
-<span class="nf">Microsoft.EntityFrameworkCore.Design</span>
-<span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 3: Create three Model class name Customer, CustomAuditEntry, CustomAuditEntryProperty in Models folder.</strong></p>
-
-<ul>
-  <li>Customer class to store Customer Information</li>
-  <li>CustomAuditEntry class to store Audit Entry Information</li>
-  <li>CustomAuditEntryProperty class to store Audit Entry Property Information - means each properties new and old values</li>
-</ul>
-
-<p><strong>Customer.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">namespace</span> <span class="nn">AuditLog.API.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span><span class="p">?</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>CustomAuditEntry.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Z.EntityFramework.Plus</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Models</span>
-<span class="p">{</span>
-    <span class="c1">// CustomAuditEntry is a custom class that inherits from AuditEntry</span>
-    <span class="c1">// It is used to add additional properties to the AuditEntry class</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomAuditEntry</span> <span class="p">:</span> <span class="n">AuditEntry</span>
-    <span class="p">{</span>
-        <span class="c1">// ApplicationName is a custom property that will be added to the AuditEntry table for storing the application name</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">AppplicationName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>CustomAuditEntryProperty.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Z.EntityFramework.Plus</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomAuditEntryProperty</span> <span class="p">:</span> <span class="n">AuditEntryProperty</span>
-    <span class="p">{</span>
-        <span class="c1">// ApplicationName is a custom property that will be added to the AuditEntryProperty table</span>
-        <span class="c1">// for storing the application name</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">AppplicationName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 4: Create a Context class name AuditLogDBContext in Persistence folder.</strong></p>
-
-<p><strong>AuditLogDBContext.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Z.EntityFramework.Plus</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Persistence</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">AuditLogDBContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="c1">// AuditEntries and AuditEntryProperties are the tables that will be used to store the audit logs</span>
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">CustomAuditEntry</span><span class="p">&gt;</span> <span class="n">AuditEntries</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">CustomAuditEntryProperty</span><span class="p">&gt;</span> <span class="n">AuditEntryProperties</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="c1">// Customers is the table that will be used to store the customer data</span>
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">Customers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="c1">// AuditLogDBContext is the constructor that will be used to configure the audit log tables</span>
-        <span class="k">public</span> <span class="nf">AuditLogDBContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">AuditLogDBContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// AutoSavePreAction is a delegate that will be used to save the audit logs to the database</span>
-            <span class="c1">// It configures a pre-action to execute before the SaveChanges method is executed</span>
-            <span class="n">AuditManager</span><span class="p">.</span><span class="n">DefaultConfiguration</span><span class="p">.</span><span class="n">AutoSavePreAction</span> <span class="p">=</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">audit</span><span class="p">)</span> <span class="p">=&gt;</span>
-            <span class="p">{</span>
-                <span class="p">((</span><span class="n">AuditLogDBContext</span><span class="p">)</span><span class="n">context</span><span class="p">).</span><span class="n">AuditEntries</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">audit</span><span class="p">.</span><span class="n">Entries</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">CustomAuditEntry</span><span class="p">&gt;());</span>
-            <span class="p">};</span>
-        <span class="p">}</span>
-
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-
-<p><strong>Step 5: Add connection string in appsettings.json file</strong></p>
-
-<p><strong>appsettings.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=AuditLogEFPlusDB;User Id=sa;Password=myPassword;TrustServerCertificate=True;"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<p><strong>Step 6: Create two Interface ICustomerRepository and IReportingRepository in Repositories/Interfaces folder</strong></p>
-
-<p><strong>ICustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerRepository</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetCustomers</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">AddCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>IReportingRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IReportingRepositry</span>
-    <span class="p">{</span>
-        <span class="c1">// Get all the changes for a particular entity response using Dynamic type</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;&gt;</span> <span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="kt">string</span> <span class="n">EntityName</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 7: Create two Repository class name CustomerRepository and ReportingRepository in Repositories/Implementations folder</strong></p>
-
-<p><strong>CustomerRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Persistence</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Z.EntityFramework.Plus</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Repositories.Implementations</span>
-<span class="p">{</span>
-
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerRepository</span> <span class="p">:</span> <span class="n">ICustomerRepository</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">AuditLogDBContext</span> <span class="n">_context</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerRepository</span><span class="p">(</span><span class="n">AuditLogDBContext</span> <span class="n">context</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetCustomers</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">AddCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// Used for audit log</span>
-            <span class="kt">var</span> <span class="n">audit</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Z</span><span class="p">.</span><span class="n">EntityFramework</span><span class="p">.</span><span class="n">Plus</span><span class="p">.</span><span class="nf">Audit</span><span class="p">();</span>
-            <span class="n">audit</span><span class="p">.</span><span class="n">CreatedBy</span> <span class="p">=</span> <span class="s">"mahedee"</span><span class="p">;</span>
-
-            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="c1">// SaveChangesAsync(audit) will commit the changes to the database and save the audit logs</span>
-                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">(</span><span class="n">audit</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateException</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nf">CustomerExists</span><span class="p">(</span><span class="n">customer</span><span class="p">.</span><span class="n">Id</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                <span class="p">{</span>
-                    <span class="k">throw</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="n">customer</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">audit</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Z</span><span class="p">.</span><span class="n">EntityFramework</span><span class="p">.</span><span class="n">Plus</span><span class="p">.</span><span class="nf">Audit</span><span class="p">();</span>
-            <span class="n">audit</span><span class="p">.</span><span class="n">CreatedBy</span> <span class="p">=</span> <span class="s">"mahedee"</span><span class="p">;</span>
-            <span class="kt">var</span> <span class="n">customerToUpdate</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">customer</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">customerToUpdate</span><span class="p">).</span><span class="n">CurrentValues</span><span class="p">.</span><span class="nf">SetValues</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="c1">// SaveChangesAsync(audit) will commit the changes to the database and save the audit logs</span>
-                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">(</span><span class="n">audit</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(!</span><span class="nf">CustomerExists</span><span class="p">(</span><span class="n">customer</span><span class="p">.</span><span class="n">Id</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                <span class="p">{</span>
-                    <span class="k">throw</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="n">customer</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">audit</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Z</span><span class="p">.</span><span class="n">EntityFramework</span><span class="p">.</span><span class="n">Plus</span><span class="p">.</span><span class="nf">Audit</span><span class="p">();</span>
-            <span class="n">audit</span><span class="p">.</span><span class="n">CreatedBy</span> <span class="p">=</span> <span class="s">"mahedee"</span><span class="p">;</span>
-
-            <span class="kt">var</span> <span class="n">customer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">customer</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">(</span><span class="n">audit</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="n">customer</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">CustomerExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>ReportingRepository.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Persistence</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Repositories.Implementations</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ReportingRepository</span> <span class="p">:</span> <span class="n">IReportingRepositry</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">AuditLogDBContext</span> <span class="n">_context</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">ReportingRepository</span><span class="p">(</span><span class="n">AuditLogDBContext</span> <span class="n">context</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;&gt;</span> <span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="kt">string</span> <span class="n">EntityName</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">String</span> <span class="n">EntityTypeName</span> <span class="p">=</span> <span class="n">EntityName</span><span class="p">;</span>
-
-            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">AuditEntries</span>
-            <span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">a</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">EntityTypeName</span> <span class="p">==</span> <span class="n">EntityTypeName</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">AuditEntryProperties</span><span class="p">,</span>
-            <span class="n">entry</span> <span class="p">=&gt;</span> <span class="n">entry</span><span class="p">.</span><span class="n">AuditEntryID</span><span class="p">,</span>
-            <span class="n">property</span> <span class="p">=&gt;</span> <span class="n">property</span><span class="p">.</span><span class="n">AuditEntryID</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">property</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">new</span>
-                <span class="p">{</span>
-                    <span class="n">AuditEntryId</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">AuditEntryID</span><span class="p">,</span>
-                    <span class="n">EntityTypeName</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">EntityTypeName</span><span class="p">,</span>
-                    <span class="n">State</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">State</span><span class="p">,</span>
-                    <span class="n">StateName</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">StateName</span><span class="p">,</span>
-                    <span class="n">PropertyName</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">PropertyName</span><span class="p">,</span>
-                    <span class="n">OldValue</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">OldValue</span><span class="p">,</span>
-                    <span class="n">NewValue</span> <span class="p">=</span> <span class="n">property</span><span class="p">.</span><span class="n">NewValue</span><span class="p">,</span>
-                    <span class="n">CreatedBy</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">CreatedBy</span><span class="p">,</span>
-                    <span class="n">CreatedDate</span> <span class="p">=</span> <span class="n">entry</span><span class="p">.</span><span class="n">CreatedDate</span>
-                <span class="p">}</span>
-                                                                                       <span class="p">)</span>
-            <span class="p">.</span><span class="nf">OrderBy</span><span class="p">(</span><span class="n">result</span> <span class="p">=&gt;</span> <span class="n">result</span><span class="p">.</span><span class="n">CreatedDate</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">result</span> <span class="p">=&gt;</span> <span class="k">new</span>
-            <span class="p">{</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">AuditEntryId</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">EntityTypeName</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">State</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">StateName</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">PropertyName</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">OldValue</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">NewValue</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">CreatedBy</span><span class="p">,</span>
-                <span class="n">result</span><span class="p">.</span><span class="n">CreatedDate</span>
-            <span class="p">});</span>
-
-            <span class="k">return</span> <span class="k">await</span> <span class="n">result</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 8: Create two interfaces name ICustomerService and IReportingService in Services/Interfaces folder</strong></p>
-
-<p><strong>ICustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Services.Interfaces</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetCustomers</span><span class="p">();</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">AddCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">);</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>IReportingService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Services.Interfaces</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IReportingService</span>
-    <span class="p">{</span>
-        
-        <span class="c1">// Get all the changes for a particular entity response using Dynamic type</span>
-        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;&gt;</span> <span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="kt">string</span> <span class="n">EntityName</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 9: Create 2 service class name CustomerService and ReportingService in Services/Implementation folder</strong></p>
-
-<p><strong>CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Services.Interfaces</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Services.Implementations</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span> <span class="p">:</span> <span class="n">ICustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerRepository</span> <span class="n">_customerRepository</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ICustomerRepository</span> <span class="n">customerRepository</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerRepository</span> <span class="p">=</span> <span class="n">customerRepository</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetCustomers</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetCustomers</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">GetCustomer</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">AddCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">addedCustomer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">AddCustomer</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-            <span class="k">return</span> <span class="n">addedCustomer</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">updatedCustomer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-            <span class="k">return</span> <span class="n">updatedCustomer</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">deletedCustomer</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerRepository</span><span class="p">.</span><span class="nf">DeleteCustomer</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-            <span class="k">return</span> <span class="n">deletedCustomer</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>ReportingService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Services.Interfaces</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Services.Implementations</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ReportingService</span> <span class="p">:</span> <span class="n">IReportingService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IReportingRepositry</span> <span class="n">_reportingRepositry</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">ReportingService</span><span class="p">(</span><span class="n">IReportingRepositry</span> <span class="n">reportingRepositry</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_reportingRepositry</span> <span class="p">=</span> <span class="n">reportingRepositry</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">dynamic</span><span class="p">&gt;&gt;</span> <span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="kt">string</span> <span class="n">EntityName</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_reportingRepositry</span><span class="p">.</span><span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="n">EntityName</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 10: Configure Program class as follows.</strong></p>
-
-<p><strong>Program.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Persistence</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Implementations</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Repositories.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Services.Implementations</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Services.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Z.EntityFramework.Plus</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">AuditLogDBContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-    <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
-        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">))</span>
-<span class="p">);</span>
-
-
-<span class="c1">// For Audit Log</span>
-
-<span class="n">AuditManager</span><span class="p">.</span><span class="n">DefaultConfiguration</span>
-<span class="p">.</span><span class="n">AuditEntryFactory</span> <span class="p">=</span> <span class="n">args</span> <span class="p">=&gt;</span>
-   <span class="k">new</span> <span class="nf">CustomAuditEntry</span><span class="p">()</span> <span class="p">{</span> <span class="n">AppplicationName</span> <span class="p">=</span> <span class="s">"AuditLogApp"</span> <span class="p">};</span>
-
-<span class="n">AuditManager</span><span class="p">.</span><span class="n">DefaultConfiguration</span>
-            <span class="p">.</span><span class="n">AuditEntryPropertyFactory</span> <span class="p">=</span> <span class="n">args</span> <span class="p">=&gt;</span>
-                <span class="k">new</span> <span class="nf">CustomAuditEntryProperty</span><span class="p">()</span> <span class="p">{</span> <span class="n">AppplicationName</span> <span class="p">=</span> <span class="s">"AuditLogApp"</span> <span class="p">};</span>
-
-<span class="n">AuditManager</span><span class="p">.</span><span class="n">DefaultConfiguration</span><span class="p">.</span><span class="n">AutoSavePreAction</span> <span class="p">=</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">audit</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="p">((</span><span class="n">AuditLogDBContext</span><span class="p">)</span><span class="n">context</span><span class="p">).</span><span class="n">AuditEntries</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">audit</span><span class="p">.</span><span class="n">Entries</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">CustomAuditEntry</span><span class="p">&gt;());</span>
-<span class="p">};</span>
-
-
-<span class="kt">string</span> <span class="n">connectionString</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">);</span>
-<span class="c1">//builder.Services.AddTransient(_ =&gt; new DBConnector(connectionString));</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">ICustomerRepository</span><span class="p">,</span> <span class="n">CustomerRepository</span><span class="p">&gt;();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">ICustomerService</span><span class="p">,</span> <span class="n">CustomerService</span><span class="p">&gt;();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">IReportingRepositry</span><span class="p">,</span> <span class="n">ReportingRepository</span><span class="p">&gt;();</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddTransient</span><span class="p">&lt;</span><span class="n">IReportingService</span><span class="p">,</span> <span class="n">ReportingService</span><span class="p">&gt;();</span>
-
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-
-</code></pre></div></div>
-
-<p><strong>Step 11: Create two Controller class CustomersController and ReportingController in Controllers folder.</strong></p>
-
-<p><strong>CustomersController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">AuditLog.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">AuditLog.API.Services.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Controllers</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomersController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICustomerService</span> <span class="n">_customerService</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">CustomersController</span><span class="p">(</span><span class="n">ICustomerService</span> <span class="n">customerService</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_customerService</span> <span class="p">=</span> <span class="n">customerService</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/Customers</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">GetCustomers</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">GetCustomers</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/Customers/5</span>
-        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">GetCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">GetCustomer</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="c1">// PUT: api/Customers/5</span>
-        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">?&gt;</span> <span class="nf">PutCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">customer</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
-            <span class="p">{</span>
-               <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">UpdateCustomer</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(!</span><span class="nf">CustomerExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                <span class="p">{</span>
-                    <span class="k">throw</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="c1">// POST: api/Customers</span>
-        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;&gt;</span> <span class="nf">PostCustomer</span><span class="p">(</span><span class="n">Customer</span> <span class="n">customer</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">AddCustomer</span><span class="p">(</span><span class="n">customer</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="c1">// DELETE: api/Customers/5</span>
-        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="nf">DeleteCustomer</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">DeleteCustomer</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">CustomerExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">GetCustomer</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="p">==</span> <span class="k">null</span> <span class="p">?</span> <span class="k">false</span> <span class="p">:</span> <span class="k">true</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-
-<p><strong>ReportingController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">AuditLog.API.Services.Interfaces</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">AuditLog.API.Controllers</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ReportingController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IReportingService</span> <span class="n">_reportingService</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">ReportingController</span><span class="p">(</span><span class="n">IReportingService</span> <span class="n">reportingService</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_reportingService</span> <span class="p">=</span> <span class="n">reportingService</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/AuditTrailReport</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Index</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/AuditTrailReport/{EntityName}</span>
-        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetChangeLog/{EntityName}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">GetChangeLog</span><span class="p">(</span><span class="kt">string</span> <span class="n">EntityName</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">await</span> <span class="n">_reportingService</span><span class="p">.</span><span class="nf">GetChangeLogDynamic</span><span class="p">(</span><span class="n">EntityName</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-<p><strong>Step 12: Create migration and update database</strong></p>
-<ul>
-  <li>Open Package Manager Console (PMC).</li>
-  <li>Select the project name AuditLog.API</li>
-  <li>Run the following command in PMC</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Add-Migration</span> <span class="nf">InitialCreate</span>
-</code></pre></div></div>
-<p>This will create a new migration file named “InitialCreate” under the Migrations folder of your</p>
-
-<ul>
-  <li>Run the following command in PMC</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Update-Database</span>
-</code></pre></div></div>
-
-<ul>
-  <li>You will see three table name Customers, AuditEntry, AuditEntryProperty are created in the database</li>
-</ul>
-
-<p><strong>Step 13: Run the application and check the swagger.</strong></p>
-<ul>
-  <li>Now run application create, update and delete Customer entity using swagger</li>
-  <li>You will see audit trail logs in AuditEntry and AuditEntryProperty table.</li>
-  <li>You can also view a sample report using Reporting controller. In GetChangeLog end point use “Customer” as entity name.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2023/ef-audit-log.png" alt="" />
-<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogEFPlus">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Unlock the secrets of implementing a robust audit trail in your ASP.NET application with my detailed step-by-step guide. From configure to execution, discover how to seamlessly integrate an audit trail for comprehensive monitoring and enhanced data security.]]></summary></entry></feed>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/react-redux-toolkit">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="React" /><category term="Redux" /><category term="ASP.NET" /><category term="C#" /><category term="react" /><category term="csharp" /><category term="redux" /><category term="aspnet" /><summary type="html"><![CDATA[Redux is a popular state management library for JavaScript applications. In this article I will show you how to build a front-end application using redux toolkit with react and asp.net core.]]></summary></entry></feed>

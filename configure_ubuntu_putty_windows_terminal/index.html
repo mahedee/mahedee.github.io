@@ -1,0 +1,896 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal - Think Simple</title>
+<meta name="description" content="Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal">
+<meta property="og:url" content="https://mahedee.net//configure_ubuntu_putty_windows_terminal/">
+
+
+  <meta property="og:description" content="Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-04-10T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//configure_ubuntu_putty_windows_terminal/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow." />
+<meta property="og:description" content="Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow." />
+<link rel="canonical" href="https://mahedee.net//configure_ubuntu_putty_windows_terminal/" />
+<meta property="og:url" content="https://mahedee.net//configure_ubuntu_putty_windows_terminal/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-04-10T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-04-10T00:00:00-04:00","datePublished":"2024-04-10T00:00:00-04:00","description":"Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow.","headline":"Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//configure_ubuntu_putty_windows_terminal/"},"url":"https://mahedee.net//configure_ubuntu_putty_windows_terminal/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">New Brunswick, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal">
+    <meta itemprop="description" content="Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow.">
+    <meta itemprop="datePublished" content="April 10, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Windows Terminal is a powerful tool that can unify multiple command-line interfaces, including Ubuntu (via WSL) and PuTTY. This guide will help you integrate both into Windows Terminal for an efficient and streamlined workflow.</p>
+
+<p><strong>Step 1. Install Windows Terminal</strong></p>
+
+<p>If you haven’t already, install Windows Terminal from the Microsoft Store:</p>
+
+<ul>
+  <li>Open the Microsoft Store.</li>
+  <li>Search for Windows Terminal.</li>
+  <li>Click Install.</li>
+</ul>
+
+<p><strong>Step 2. Add Ubuntu to Windows Terminal</strong></p>
+
+<p><strong>Install WSL</strong>
+To use Ubuntu, you must enable and install the Windows Subsystem for Linux (WSL):</p>
+
+<ul>
+  <li>
+    <p>Open PowerShell as Administrator and run:</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="n">wsl</span><span class="w"> </span><span class="nt">--install</span><span class="w">
+</span></code></pre></div>    </div>
+
+    <p>This installs the latest version of WSL along with a default Linux distribution, usually Ubuntu.</p>
+  </li>
+  <li>If Ubuntu is not installed, you can manually install it from the Microsoft Store:
+    <ul>
+      <li>Open the Microsoft Store.</li>
+      <li>Search for <strong>Ubuntu</strong>.</li>
+      <li>Install the version you prefer (e.g., Ubuntu 20.04).
+ or,</li>
+      <li>
+        <p>Run the following command in PowerShell:</p>
+
+        <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">wsl</span><span class="w"> </span><span class="nt">--install</span><span class="w"> </span><span class="nt">-d</span><span class="w"> </span><span class="nx">Ubuntu</span><span class="w">
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Once installed, launch Ubuntu to set up your username and password.</li>
+  <li>
+    <p>To set up a user and password, run the following command in Ubuntu:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>adduser &lt;username&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Check Installed WSL Distributions</strong>
+Run the following command in PowerShell to verify Ubuntu is installed:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="n">wsl</span><span class="w"> </span><span class="nt">--list</span><span class="w"> </span><span class="nt">--verbose</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You’ll see a list of all installed WSL distributions.</p>
+
+<p><strong>Step 3: Add Ubuntu Profile to Windows Terminal</strong></p>
+
+<p>Ubuntu is usually added automatically. If not, add it manually:</p>
+
+<ul>
+  <li>Open <strong>Windows Terminal</strong>.</li>
+  <li>Click the <strong>down arrow</strong> in the top menu and select <strong>Settings</strong>.</li>
+  <li>Scroll down to <strong>JSON file</strong> or click “Open JSON file” to edit it directly.</li>
+  <li>
+    <p>Add the following JSON snippet for Ubuntu:</p>
+
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{2c4de342-38b7-51cf-b940-2309a097f518}"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ubuntu"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.Wsl"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms-appx:///ProfileIcons/{2c4de342-38b7-51cf-b940-2309a097f518}.png"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Save and close the JSON file.</p>
+  </li>
+  <li>Or, Click on the dropdown menu and select Settings.</li>
+  <li>Click on the Add a new profile button.</li>
+  <li>Click on the New empty profile button.</li>
+  <li>Add name as Ubuntu and set the commandline as wsl.exe -d Ubuntu.</li>
+  <li>Restart Windows Terminal, and Ubuntu will appear in the dropdown menu.</li>
+</ul>
+
+<p><strong>Step 4. Add PuTTY to Windows Terminal</strong></p>
+
+<p>PuTTY is a popular SSH client and can also be integrated into Windows Terminal.</p>
+
+<p><strong>Install PuTTY</strong></p>
+<ul>
+  <li>Download PuTTY from the official <a href="https://www.putty.org/">PuTTY website</a>.</li>
+  <li>Install PuTTY on your system.</li>
+</ul>
+
+<p><strong>Add a Profile for PuTTY</strong></p>
+<ul>
+  <li>Open Windows Terminal.</li>
+  <li>Go to <strong>Settings</strong> and open the <strong>JSON file</strong> for editing.</li>
+  <li>
+    <p>Add the following JSON snippet to configure PuTTY:</p>
+
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">PuTTY</span><span class="se">\\</span><span class="s2">putty.exe"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{82a5e4dc-8b1d-4635-804d-0f03a20aff5e}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">PuTTY</span><span class="se">\\</span><span class="s2">putty.ico"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PuTTY"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%USERPROFILE%"</span><span class="w">
+  </span><span class="p">}</span><span class="err">,</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>Or, Click on the dropdown menu and select Settings.</li>
+  <li>Click on the Add a new profile button.</li>
+  <li>Click on the New empty profile button.</li>
+  <li>Add name as PuTTY and set the commandline as C:\Program Files\PuTTY\putty.exe.</li>
+  <li>Save and restart Windows Terminal. PuTTY will now be available in the dropdown menu.</li>
+</ul>
+
+<p><strong>Customize Ubuntu and PuTTY Profiles</strong></p>
+
+<p><strong>Customization Options</strong>
+You can further customize each profile with options like fonts, color schemes, or starting directories:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"fontFace"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cascadia Code PL"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"colorScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Campbell"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"//wsl$/Ubuntu/home/&lt;your-username&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"backgroundImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:/path/to/your/background.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"backgroundImageOpacity"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Steps to Apply Customization</strong></p>
+<ul>
+  <li>Replace <code class="language-plaintext highlighter-rouge">&lt;your-username&gt;</code> with your Ubuntu username.</li>
+  <li>Update paths to match your setup.</li>
+  <li>Save and restart Windows Terminal.</li>
+</ul>
+
+<p><strong>Verify Profiles</strong></p>
+<ul>
+  <li>To verify your configuration:
+    <ul>
+      <li>Open Windows Terminal.</li>
+      <li>Click the dropdown menu and check if <strong>Ubuntu</strong> and <strong>PuTTY</strong> appear.</li>
+      <li>Launch each profile to ensure they work correctly.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Bonus: Enable SSH with Ubuntu</strong></p>
+
+<p>You can also use Ubuntu for SSH connections instead of PuTTY by installing OpenSSH:</p>
+
+<ul>
+  <li>
+    <p>Open Ubuntu and run:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>apt update
+ <span class="nb">sudo </span>apt <span class="nb">install </span>openssh-client
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Use SSH commands directly in your Ubuntu profile, such as:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ssh user@hostname
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Conclusion</strong></p>
+
+<p>By integrating <strong>Ubuntu</strong> and <strong>PuTTY</strong> into Windows Terminal, you can manage your development and administrative tasks more efficiently. The unified interface allows for seamless switching between environments, enhancing your productivity and workflow.</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#command" class="page__taxonomy-item" rel="tag">command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#powershell" class="page__taxonomy-item" rel="tag">powershell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#productivity" class="page__taxonomy-item" rel="tag">productivity</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#putty" class="page__taxonomy-item" rel="tag">putty</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#terminal" class="page__taxonomy-item" rel="tag">terminal</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ubuntu" class="page__taxonomy-item" rel="tag">ubuntu</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">windows</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#wsl" class="page__taxonomy-item" rel="tag">wsl</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#command" class="page__taxonomy-item" rel="tag">Command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#powershell" class="page__taxonomy-item" rel="tag">PowerShell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#productivity" class="page__taxonomy-item" rel="tag">Productivity</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#putty" class="page__taxonomy-item" rel="tag">PuTTY</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#terminal" class="page__taxonomy-item" rel="tag">Terminal</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#ubuntu" class="page__taxonomy-item" rel="tag">Ubuntu</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-04-10T00:00:00-04:00">April 10, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Step-by-Step+Guide%3A+Configuring+Ubuntu+and+PuTTY+in+Windows+Terminal%20https%3A%2F%2Fmahedee.net%2F%2Fconfigure_ubuntu_putty_windows_terminal%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fconfigure_ubuntu_putty_windows_terminal%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fconfigure_ubuntu_putty_windows_terminal%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" class="pagination--pager" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core
+">Previous</a>
+    
+    
+      <a href="/step_by_step_guide_to_running_jekyll_minimal_mistake_blog_on_windows/" class="pagination--pager" title="Step-by-Step Guide to Running Jekyll Minimal Mistake Blog on Windows
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" rel="permalink">Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  21 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you thr...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" rel="permalink">How to Configure SSL and HTTPS for RabbitMQ in Docker
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/step-by-step-guide-deploying-aspnet-core-application-with-aks-acr-sql/" rel="permalink">Step-by-Step Guide: Deploying an ASP.NET Core Application with Azure Kubernetes Services, Azure SQL Server, and Azure Container Registry
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  16 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/understanding-different-kinds-of-kubernetes-resources/" rel="permalink">Understanding Different Kinds of Kubernetes Resources
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn about the different types of Kubernetes resources, their purposes, and how they help manage and scale applications in a containerized environment. Perf...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

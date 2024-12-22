@@ -1,0 +1,824 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Leveraging the Observer Design Pattern : 10 Real-World Examples in Action - Think Simple</title>
+<meta name="description" content="Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Leveraging the Observer Design Pattern : 10 Real-World Examples in Action">
+<meta property="og:url" content="https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/">
+
+
+  <meta property="og:description" content="Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-11-01T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Leveraging the Observer Design Pattern : 10 Real-World Examples in Action | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Leveraging the Observer Design Pattern : 10 Real-World Examples in Action" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences." />
+<meta property="og:description" content="Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences." />
+<link rel="canonical" href="https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/" />
+<meta property="og:url" content="https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-11-01T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Leveraging the Observer Design Pattern : 10 Real-World Examples in Action" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-11-01T00:00:00-04:00","datePublished":"2024-11-01T00:00:00-04:00","description":"Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences.","headline":"Leveraging the Observer Design Pattern : 10 Real-World Examples in Action","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/"},"url":"https://mahedee.net//leveraging_the_observer_design_pattern_10_real_world_examples_in_action/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">New Brunswick, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Leveraging the Observer Design Pattern : 10 Real-World Examples in Action">
+    <meta itemprop="description" content="Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences.">
+    <meta itemprop="datePublished" content="November 01, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Leveraging the Observer Design Pattern : 10 Real-World Examples in Action
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The Observer Design Pattern is a behavioral design pattern that allows an object (the <strong>subject</strong>) to notify multiple dependent objects (the <strong>observers</strong>) about changes in its state without knowing who or what those observers are. This pattern is widely used in software systems that require real-time updates or notifications. In this article, we will explore 10 real-world applications where the Observer Pattern is used to enable real-time communication, updates, or notifications.</p>
+
+<p><strong>1. Social Media Notifications</strong></p>
+
+<p><strong>Description:</strong>
+Social media platforms, such as Facebook, Twitter, and Instagram, notify users of likes, comments, shares, and messages. These notifications keep users engaged and informed of activities on their posts and accounts they follow.</p>
+
+<p><strong>Observer:</strong>
+Users who follow posts, pages, or accounts and receive updates about activities on them.</p>
+
+<p><strong>Subject:</strong>
+Posts, accounts, or events that trigger notifications.</p>
+
+<p><strong>How It Works:</strong>
+When a user subscribes to a post or account, the system treats them as observers. When an activity (like, comment, share) occurs on the post, the platform (subject) notifies all the users observing it.</p>
+
+<p><strong>2. Chat Applications</strong></p>
+
+<p><strong>Description:</strong>
+Messaging platforms, like WhatsApp and Slack, send real-time notifications to users when they receive new messages or mentions. This allows users to stay up-to-date with conversations even when they aren’t actively looking at the app.</p>
+
+<p><strong>Observer:</strong>
+Members of a chat group or users in a direct message thread.</p>
+
+<p><strong>Subject:</strong>
+The chat group or message thread where new messages are posted.</p>
+
+<p><strong>How It Works:</strong>
+Users subscribe to chat groups or message threads. When a new message is posted, the system (subject) notifies all users observing that group or conversation.</p>
+
+<p><strong>3. Online Shopping and Stock Alerts</strong></p>
+
+<p><strong>Description:</strong>
+E-commerce platforms such as Amazon and eBay use the Observer Pattern to notify users about price changes, product restocks, or special promotions.</p>
+
+<p><strong>Observer:</strong>
+Customers who subscribe to updates for specific products.</p>
+
+<p><strong>Subject:</strong>
+The product or offer being tracked by the customer.</p>
+
+<p><strong>How It Works:</strong>
+Customers subscribe to specific products, and when any change occurs (e.g., price drop, availability), the platform (subject) notifies all users who have subscribed to that product.</p>
+
+<p><strong>4. Event-Driven Monitoring Systems</strong></p>
+
+<p><strong>Description:</strong>
+IT infrastructure monitoring tools, such as Nagios and Datadog, monitor various metrics (e.g., server uptime, CPU usage, or disk space) and alert system administrators when an issue arises.</p>
+
+<p><strong>Observer:</strong>
+System administrators or monitoring teams who need real-time alerts.</p>
+
+<p><strong>Subject:</strong>
+The monitored system or resource, such as a server or application.</p>
+
+<p><strong>How It Works:</strong>
+The system (subject) tracks key metrics (e.g., CPU usage). If the metric crosses a predefined threshold, the system triggers a notification to all observers (admins) who are subscribed to the metric.</p>
+
+<p><strong>5. News Feed Subscriptions</strong></p>
+
+<p><strong>Description:</strong>
+News platforms like Google News, BBC, and CNN allow users to follow specific topics, authors, or categories. When a new article is published under a subscribed category or by a followed author, users are notified immediately.</p>
+
+<p><strong>Observer:</strong>
+Users who subscribe to categories or authors.</p>
+
+<p><strong>Subject:</strong>
+Articles or content within a specific category or published by a specific author.</p>
+
+<p><strong>How It Works:</strong>
+When new content is published, the platform (subject) sends real-time updates to all users who are observing the particular topic or author.</p>
+
+<p><strong>6. Gaming Leaderboards</strong></p>
+
+<p><strong>Description:</strong>
+Online games, like Fortnite or PUBG, notify players of leaderboard changes, upcoming challenges, or rewards.</p>
+
+<p><strong>Observer:</strong>
+Players who track the game’s leaderboard or their in-game performance.</p>
+
+<p><strong>Subject:</strong>
+The game’s leaderboard or event system.</p>
+
+<p><strong>How It Works:</strong>
+Players subscribe to notifications about leaderboard updates. When their rank changes or when a new event is available, the game (subject) sends an update to the players observing the leaderboard.</p>
+
+<p><strong>7. IoT Systems</strong></p>
+
+<p><strong>Description:</strong>
+Smart home devices, such as thermostats (Nest), security cameras, and smart lights, notify users of changes or status updates in real time.</p>
+
+<p><strong>Observer:</strong>
+Homeowners or users accessing the smart home system via an app or device.</p>
+
+<p><strong>Subject:</strong>
+IoT devices, such as cameras, thermostats, or motion detectors.</p>
+
+<p><strong>How It Works:</strong>
+The IoT system (subject) monitors connected devices. When a change occurs (e.g., door opens, temperature rises), the system sends notifications to the users (observers) who are subscribed to those events.</p>
+
+<p><strong>8. Auction Platforms</strong></p>
+
+<p><strong>Description:</strong>
+Auction platforms, such as eBay, notify participants of new bids, bid price changes, or auction closing times.</p>
+
+<p><strong>Observer:</strong>
+Bidders participating in an auction.</p>
+
+<p><strong>Subject:</strong>
+The auction itself, including the item being sold.</p>
+
+<p><strong>How It Works:</strong>
+When users place bids on an item, they subscribe to updates. If a bid is placed or the auction is about to close, the platform (subject) notifies all active bidders.</p>
+
+<p><strong>9. Real-Time Traffic Updates</strong></p>
+
+<p><strong>Description:</strong>
+Navigation apps like Google Maps and Waze notify users about traffic conditions, road closures, or new incidents along their route.</p>
+
+<p><strong>Observer:</strong>
+Drivers using the navigation system.</p>
+
+<p><strong>Subject:</strong>
+The route being taken by the user and the traffic data related to it.</p>
+
+<p><strong>How It Works:</strong>
+When drivers enter a route, they subscribe to real-time updates. The navigation system (subject) continuously monitors traffic data, and when there’s a change (e.g., a crash or road closure), it sends an update to users along the route.</p>
+
+<p><strong>10. Stock Market and Cryptocurrency Tracking</strong></p>
+
+<p><strong>Description:</strong>
+Stock market applications such as Robinhood, E*TRADE, or cryptocurrency platforms like Coinbase notify users of price changes, market trends, or news affecting the stocks or cryptocurrencies they are following.</p>
+
+<p><strong>Observer:</strong>
+Investors or traders who are tracking specific financial assets.</p>
+
+<p><strong>Subject:</strong>
+The asset (e.g., a stock, cryptocurrency) being tracked.</p>
+
+<p><strong>How It Works:</strong>
+Users subscribe to specific stocks or cryptocurrencies. When the price or market trend changes, the system (subject) sends an update to all observers who have subscribed to the asset.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>The Observer Design Pattern is invaluable when building systems that require real-time updates or notifications. Whether it’s used for social media notifications, real-time chat alerts, or system monitoring, the Observer pattern ensures that interested parties are notified as soon as an update occurs, improving responsiveness and interactivity. Understanding its real-world applications can help in architecting software systems that are both efficient and scalable.</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#design-pattern" class="page__taxonomy-item" rel="tag">design-pattern</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#observer-pattern" class="page__taxonomy-item" rel="tag">observer-pattern</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#software-architecture" class="page__taxonomy-item" rel="tag">software-architecture</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#design-pattern" class="page__taxonomy-item" rel="tag">Design Pattern</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#software-architecture" class="page__taxonomy-item" rel="tag">Software Architecture</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-11-01T00:00:00-04:00">November 01, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Leveraging+the+Observer+Design+Pattern+%3A+10+Real-World+Examples+in+Action%20https%3A%2F%2Fmahedee.net%2F%2Fleveraging_the_observer_design_pattern_10_real_world_examples_in_action%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fleveraging_the_observer_design_pattern_10_real_world_examples_in_action%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fleveraging_the_observer_design_pattern_10_real_world_examples_in_action%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/observer_design_pattern_real_time_stock_market_notification_csharp/" class="pagination--pager" title="Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/observer_design_pattern_real_time_stock_market_notification_csharp/" rel="permalink">Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In this article, we’ll explore the Observer Design Pattern and its practical application in building a real-time stock market notification system using C#. Y...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" rel="permalink">Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  21 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you thr...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" rel="permalink">How to Configure SSL and HTTPS for RabbitMQ in Docker
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/step-by-step-guide-deploying-aspnet-core-application-with-aks-acr-sql/" rel="permalink">Step-by-Step Guide: Deploying an ASP.NET Core Application with Azure Kubernetes Services, Azure SQL Server, and Azure Container Registry
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  15 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

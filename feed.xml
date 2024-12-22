@@ -1,4 +1,297 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-12-06T17:12:04-05:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh</title><link href="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" rel="alternate" type="text/html" title="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh" /><published>2024-09-10T00:00:00-04:00</published><updated>2024-09-10T00:00:00-04:00</updated><id>https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh</id><content type="html" xml:base="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/"><![CDATA[<p>Windows Terminal is a versatile and powerful tool that allows you to work with multiple command-line environments in one place, including PowerShell, Command Prompt, WSL (Windows Subsystem for Linux), and now Git Bash. By customizing Windows Terminal with “Oh My Posh”, you can enhance your productivity with better themes, prompt customization, intellisence and more. This guide will walk you through configuring Windows Terminal, setting up Oh My Posh, integrating Git Bash, and switching between different terminal profiles.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-12-22T13:49:41-05:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#</title><link href="https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp/" rel="alternate" type="text/html" title="Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#" /><published>2024-10-11T00:00:00-04:00</published><updated>2024-10-11T00:00:00-04:00</updated><id>https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp</id><content type="html" xml:base="https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp/"><![CDATA[<p><strong>What is the Observer Design Pattern?</strong>
+The Observer Design Pattern is a behavioral design pattern that allows objects to be notified of changes to other objects’ states. It establishes a one-to-many dependency between objects, where the subject (the object being observed) maintains a list of observers (objects that are interested in its state) and notifies them of any changes.</p>
+
+<p><strong>Why use the Observer Design Pattern?</strong>
+The Observer pattern is useful when you need to notify multiple objects of changes to a single object’s state without tightly coupling them. It promotes loose coupling between objects, making it easier to maintain and extend the system. It is commonly used in event-driven systems, such as GUI frameworks, real-time monitoring systems, and notification systems.</p>
+
+<p><strong>Key components of the Observer Design Pattern:</strong></p>
+<ol>
+  <li><strong>Subject</strong>: The object being observed, which maintains a list of observers and notifies them of changes to its state.</li>
+  <li><strong>Observer</strong>: The object that is interested in the subject’s state and receives notifications when the subject’s state changes.</li>
+  <li><strong>Concrete Subject</strong>: A specific implementation of the subject that contains the state to be observed.</li>
+  <li><strong>Concrete Observer</strong>: A specific implementation of the observer that receives notifications from the subject.</li>
+  <li><strong>Attach / Registration</strong>: The process of adding an observer to the subject’s list of observers.</li>
+  <li><strong>Detach / Deregistration</strong>: The process of removing an observer from the subject’s list of observers.</li>
+  <li><strong>Notify</strong>: The process of notifying all observers of changes to the subject’s state.</li>
+</ol>
+
+<p><strong>UML Class Diagram of the Observer Design Pattern:</strong></p>
+
+<p><img src="/assets/images/posts/2024/observer-design-pattern.drawio.png" alt="" /></p>
+
+<p><strong>How to implement the Observer Design Pattern in C#?</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ObserverPattern</span>
+<span class="p">{</span>
+    <span class="c1">// IObserver interface is used to update all the observers</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IObserver</span>
+    <span class="p">{</span>
+        <span class="c1">// Update method is called when the subject changes</span>
+        <span class="k">void</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">string</span> <span class="n">state</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Interface for the subject</span>
+    <span class="c1">// It has methods to attach, detach and notify the observers</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">ISubject</span>
+    <span class="p">{</span>
+        <span class="k">void</span> <span class="nf">Attach</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">);</span>
+        <span class="k">void</span> <span class="nf">Detach</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">);</span>
+        <span class="k">void</span> <span class="nf">Notify</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Concreate Subject class</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ConcreateSubject</span> <span class="p">:</span> <span class="n">ISubject</span>
+    <span class="p">{</span>
+        <span class="c1">// List of observers attached to the subject</span>
+        <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IObserver</span><span class="p">&gt;</span> <span class="n">_observers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IObserver</span><span class="p">&gt;();</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">_subjectState</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">SubjectState</span>
+        <span class="p">{</span>
+            <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">_subjectState</span><span class="p">;</span>
+
+            <span class="c1">// When the state changes of subject, notify all the observers</span>
+            <span class="k">set</span>
+            <span class="p">{</span>
+                <span class="n">_subjectState</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+                <span class="c1">// Call Notify method to notify all the observers</span>
+                <span class="nf">Notify</span><span class="p">();</span> 
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Attach</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_observers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Detach</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_observers</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Notify all the observers</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Notify</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// Call Update method of all the observers attached to the subject</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">observer</span> <span class="k">in</span> <span class="n">_observers</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">observer</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">_subjectState</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Concrete Observer class</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ConcreateObserver</span> <span class="p">:</span> <span class="n">IObserver</span>
+    <span class="p">{</span>
+        <span class="c1">// Used to set the name of the observer</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">_observerName</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ConcreateObserver</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_observerName</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">string</span> <span class="n">state</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">_observerName</span><span class="p">}</span><span class="s"> received update: State changed to </span><span class="p">{</span><span class="n">state</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="k">internal</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create a subject</span>
+            <span class="n">ConcreateSubject</span> <span class="n">subject</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ConcreateSubject</span><span class="p">();</span>
+
+            <span class="c1">// Create observers</span>
+            <span class="n">IObserver</span> <span class="n">observer1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ConcreateObserver</span><span class="p">(</span><span class="s">"Observer-1"</span><span class="p">);</span>
+            <span class="n">IObserver</span> <span class="n">observer2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ConcreateObserver</span><span class="p">(</span><span class="s">"Observer-2"</span><span class="p">);</span>
+            <span class="n">IObserver</span> <span class="n">observer3</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ConcreateObserver</span><span class="p">(</span><span class="s">"Observer-3"</span><span class="p">);</span>
+
+            <span class="c1">// Attach the observers to the subject</span>
+            <span class="n">subject</span><span class="p">.</span><span class="nf">Attach</span><span class="p">(</span><span class="n">observer1</span><span class="p">);</span>
+            <span class="n">subject</span><span class="p">.</span><span class="nf">Attach</span><span class="p">(</span><span class="n">observer2</span><span class="p">);</span>
+            <span class="n">subject</span><span class="p">.</span><span class="nf">Attach</span><span class="p">(</span><span class="n">observer3</span><span class="p">);</span>
+
+            <span class="c1">// Change the state of the subject</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing state to State 1"</span><span class="p">);</span>
+            <span class="n">subject</span><span class="p">.</span><span class="n">SubjectState</span> <span class="p">=</span> <span class="s">"State-1"</span><span class="p">;</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing state to State 2"</span><span class="p">);</span>
+            <span class="n">subject</span><span class="p">.</span><span class="n">SubjectState</span> <span class="p">=</span> <span class="s">"State-2"</span><span class="p">;</span>
+
+            <span class="c1">// Detach observer 1</span>
+            <span class="n">subject</span><span class="p">.</span><span class="nf">Detach</span><span class="p">(</span><span class="n">observer1</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing state to State 3"</span><span class="p">);</span>
+            <span class="n">subject</span><span class="p">.</span><span class="n">SubjectState</span> <span class="p">=</span> <span class="s">"State-3"</span><span class="p">;</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Output</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Changing state to State 1
+Observer-1 received update: State changed to State-1
+Observer-2 received update: State changed to State-1
+Observer-3 received update: State changed to State-1
+Changing state to State 2
+Observer-1 received update: State changed to State-2
+Observer-2 received update: State changed to State-2
+Observer-3 received update: State changed to State-2
+Changing state to State 3
+Observer-2 received update: State changed to State-3
+Observer-3 received update: State changed to State-3
+</code></pre></div></div>
+
+<p><strong>Use Case: Real-Time Stock Market Notification System</strong>
+Imagine a stock market application where traders are notified every time the price of a stock changes. In this scenario, the stock price is the subject, and the traders are the observers. When the price of a stock changes, all the traders who are interested in that stock should be notified of the change. Let’s implement this use case using the Observer Design Pattern in C#.</p>
+
+<p><strong>UML Class Diagram of the Real-Time Stock Market Notification System:</strong></p>
+
+<p><img src="/assets/images/posts/2024/observer-design-pattern-stock-notification.drawio.png" alt="" /></p>
+
+<p><strong>Implementation of the Real-Time Stock Market Notification System in C#</strong></p>
+
+<p><strong>Step 1: Define the Observer Interface</strong>
+The observer interface provides a common contract for all observers to implement.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">interface</span> <span class="nc">IObserver</span>
+<span class="p">{</span>
+    <span class="k">void</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">string</span> <span class="n">symbol</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">price</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>Step 2: Define the Subject Interface</strong>
+The subject interface defines the methods to register, unregister, and notify observers. Here we define it as <code class="language-plaintext highlighter-rouge">IStock</code>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">interface</span> <span class="nc">IStock</span>
+<span class="p">{</span>
+    <span class="k">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">);</span>
+    <span class="k">void</span> <span class="nf">Unregister</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">);</span>
+    <span class="k">void</span> <span class="nf">Notify</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Implement the Stock Class</strong>
+The <code class="language-plaintext highlighter-rouge">Stock</code> class is a concrete subject that maintains the stock price and notifies the observers when the price changes.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Stock</span> <span class="p">:</span> <span class="n">IStock</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">string</span> <span class="n">_symbol</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">decimal</span> <span class="n">_price</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IObserver</span><span class="p">&gt;</span> <span class="n">_observers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IObserver</span><span class="p">&gt;();</span>
+
+    <span class="k">public</span> <span class="nf">Stock</span><span class="p">(</span><span class="kt">string</span> <span class="n">symbol</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">price</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_symbol</span> <span class="p">=</span> <span class="n">symbol</span><span class="p">;</span>
+        <span class="n">_price</span> <span class="p">=</span> <span class="n">price</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_observers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Unregister</span><span class="p">(</span><span class="n">IObserver</span> <span class="n">observer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_observers</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">observer</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// If the price changes, notify the observers (traders)</span>
+    <span class="c1">// Here we are calling the Notify method</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">UpdatePrice</span><span class="p">(</span><span class="kt">decimal</span> <span class="n">price</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_price</span> <span class="p">=</span> <span class="n">price</span><span class="p">;</span>
+        <span class="nf">Notify</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Notify</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">observer</span> <span class="k">in</span> <span class="n">_observers</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">observer</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">_symbol</span><span class="p">,</span> <span class="n">_price</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 4: Implement the Trader Class</strong>
+The <code class="language-plaintext highlighter-rouge">Trader</code> class is a concrete observer that receives notifications when the stock price changes.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">public</span> <span class="k">class</span> <span class="nc">Trader</span> <span class="p">:</span> <span class="n">IObserver</span>
+ <span class="p">{</span>
+     <span class="c1">// The observer's name</span>
+     <span class="k">private</span> <span class="kt">string</span> <span class="n">_name</span><span class="p">;</span>
+
+     <span class="k">public</span> <span class="nf">Trader</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+     <span class="p">{</span>
+         <span class="n">_name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="k">public</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">string</span> <span class="n">symbol</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">price</span><span class="p">)</span>
+     <span class="p">{</span>
+         <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Notified </span><span class="p">{</span><span class="n">_name</span><span class="p">}</span><span class="s"> of </span><span class="p">{</span><span class="n">symbol</span><span class="p">}</span><span class="s">'s price change to </span><span class="p">{</span><span class="n">price</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Implement the Main Program</strong>
+In the main program, we create a stock object and register traders as observers. When the stock price changes, the traders are notified.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+<span class="p">{</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Create a stock</span>
+        <span class="n">Stock</span> <span class="n">stock</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Stock</span><span class="p">(</span><span class="s">"MSFT"</span><span class="p">,</span> <span class="m">100.00m</span><span class="p">);</span>
+
+        <span class="c1">// Create some traders</span>
+        <span class="n">Trader</span> <span class="n">joe</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Trader</span><span class="p">(</span><span class="s">"Joe"</span><span class="p">);</span>
+        <span class="n">Trader</span> <span class="n">sally</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Trader</span><span class="p">(</span><span class="s">"Sally"</span><span class="p">);</span>
+
+        <span class="c1">// Register/subscribe the traders</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Registering Joe and Sally"</span><span class="p">);</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">Register</span><span class="p">(</span><span class="n">joe</span><span class="p">);</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">Register</span><span class="p">(</span><span class="n">sally</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing stock price to 105.00m"</span><span class="p">);</span>
+        <span class="c1">// Change the stock price</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">UpdatePrice</span><span class="p">(</span><span class="m">105.00m</span><span class="p">);</span>
+
+        <span class="c1">// Change the stock price</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing stock price to 110.00m"</span><span class="p">);</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">UpdatePrice</span><span class="p">(</span><span class="m">110.00m</span><span class="p">);</span>
+
+        <span class="c1">// Unregister/unsubscribe a trader</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Unregistering Joe"</span><span class="p">);</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">Unregister</span><span class="p">(</span><span class="n">joe</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Changing stock price to 115.00m"</span><span class="p">);</span>
+        <span class="c1">// Change the stock price</span>
+        <span class="n">stock</span><span class="p">.</span><span class="nf">UpdatePrice</span><span class="p">(</span><span class="m">115.00m</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Now, when you run the program, you should see the following output:</p>
+
+<p><strong>Output</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Registering Joe and Sally
+Changing stock price to 105.00m
+Notified Joe of MSFT's price change to 105.00
+Notified Sally of MSFT's price change to 105.00
+Changing stock price to 110.00m
+Notified Joe of MSFT's price change to 110.00
+Notified Sally of MSFT's price change to 110.00
+Unregistering Joe
+Changing stock price to 115.00m
+Notified Sally of MSFT's price change to 115.00
+</code></pre></div></div>
+
+<p>Happy coding!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ObserverPattern">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="Design Pattern" /><category term="Software Architecture" /><category term="csharp" /><category term="design-pattern" /><category term="software-architecture" /><category term="observer-pattern" /><summary type="html"><![CDATA[In this article, we'll explore the Observer Design Pattern and its practical application in building a real-time stock market notification system using C#. You'll learn how to implement this pattern to efficiently manage stock price updates and notify users in real-time. The article provides step-by-step instructions, code examples, and insights into how the Observer pattern can be used to build responsive and scalable notification systems.]]></summary></entry><entry><title type="html">Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh</title><link href="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" rel="alternate" type="text/html" title="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh" /><published>2024-09-10T00:00:00-04:00</published><updated>2024-09-10T00:00:00-04:00</updated><id>https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh</id><content type="html" xml:base="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/"><![CDATA[<p>Windows Terminal is a versatile and powerful tool that allows you to work with multiple command-line environments in one place, including PowerShell, Command Prompt, WSL (Windows Subsystem for Linux), and now Git Bash. By customizing Windows Terminal with “Oh My Posh”, you can enhance your productivity with better themes, prompt customization, intellisence and more. This guide will walk you through configuring Windows Terminal, setting up Oh My Posh, integrating Git Bash, and switching between different terminal profiles.</p>
 
 <p><strong>Step 1: Install Windows Terminal</strong></p>
 
@@ -4804,343 +5097,4 @@ It helps organizations maintain a record of user activity within their systems, 
 
 <p><img src="/assets/images/posts/2024/AuditEntry.png" alt="" />
 <img src="/assets/images/posts/2024/AuditEntryProperty.png" alt="" />
-<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><summary type="html"><![CDATA[The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. This article delves into a comprehensive guide on implementing Audit Trail functionality in an ASP.NET Core application using SQL Server with ADO.NET. Join me as I demonstrate the step-by-step process to bolster security measures and enhance transaction accountability within your application.]]></summary></entry><entry><title type="html">Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia</title><link href="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/" rel="alternate" type="text/html" title="Optimistic Concurrency Management in ASP.NET Core Application Using Hypermedia" /><published>2023-12-17T00:00:00-05:00</published><updated>2023-12-17T00:00:00-05:00</updated><id>https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media</id><content type="html" xml:base="https://mahedee.net//optimistic_concurrency_management_aspnet_core_using_hyper_media/"><![CDATA[<p>In the world of REST API, Hypermedia means adding links and important details directly into the API response. This helps clients use that information for more actions with the API.</p>
-
-<p>In a previous article <a href="https://mahedee.net/concurrency_management_in_aspnet_core_applications_with_entity_framework/">here</a>, I discussed various ways to deal with concurrency. Optimistic concurrency is a common method for handling such situations. In this article, I’ll show a simple way to manage concurrency in ASP.NET using hypermedia.</p>
-
-<p><strong>Tools and Technology Used</strong></p>
-
-<ul>
-  <li>ASP.net core Web API</li>
-  <li>Visual C#</li>
-  <li>Entity Framework</li>
-  <li>SQL Server</li>
-</ul>
-
-<p><strong>Step 1: Create a asp.net core web api project name ConcurrencyHandling.API</strong></p>
-
-<p><strong>Step 2: Install the following nuget packages in the project.</strong></p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Microsoft.EntityFrameworkCore</span>
-<span class="nf">Microsoft.EntityFrameworkCore.Design</span>
-<span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 3: Create a Model class name Employee in Models folder</strong></p>
-
-<ul>
-  <li>Employee class to store Employee Information</li>
-  <li>In the following class RowVersion property is used to track the updated version of the record.</li>
-</ul>
-
-<p><strong>Employee.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ConcurrencyHandling.API.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">EmployeeID</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Salary</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-        <span class="k">public</span> <span class="n">Guid</span> <span class="n">RowVersion</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 4: Create a Context class name ApplicationDbContext in Data folder.</strong></p>
-
-<p><strong>ApplicationDbContext.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ConcurrencyHandling.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">ConcurrencyHandling.API.Data</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-        <span class="p">}</span>
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;?</span> <span class="n">Employee</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 5: Add connection string in appsettings.json file</strong></p>
-
-<p><strong>appsettings.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-</span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=localhost;Database=ConcurrencyHyperMediaDB;User Id=sa;Password=MyPassword;TrustServerCertificate=True;"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong>Step 6: Configure Program class as follows.</strong></p>
-
-<p><strong>Program.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">ConcurrencyHandling.API.Data</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-<span class="c1">// Add services to the container.</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-    <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
-
-<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-<span class="c1">// Configure the HTTP request pipeline.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-<span class="p">{</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-
-
-</code></pre></div></div>
-
-<p><strong>Step 7: Create a Controller class EmployeesController in Controllers folder.</strong></p>
-
-<p><strong>EmployeesController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">ConcurrencyHandling.API.Data</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">ConcurrencyHandling.API.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">ConcurrencyHandling.API.Controllers</span>
-<span class="p">{</span>
-
-    <span class="c1">// Concurrency check using hypermedia</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeesController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_context</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">EmployeesController</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/Employees</span>
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetEmployee</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">Employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// GET: api/Employees/5</span>
-        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">Employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">new</span>
-            <span class="p">{</span>
-                <span class="n">id</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">,</span>
-                <span class="n">name</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
-                <span class="n">salary</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Salary</span><span class="p">,</span>
-                <span class="n">rowVersion</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">RowVersion</span><span class="p">,</span>
-                <span class="n">links</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
-                <span class="p">{</span>
-                    <span class="k">new</span> <span class="p">{</span> <span class="n">rel</span> <span class="p">=</span> <span class="s">"edit"</span><span class="p">,</span> <span class="n">href</span> <span class="p">=</span> <span class="s">$"/employees/</span><span class="p">{</span><span class="n">id</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="n">employee</span><span class="p">.</span><span class="n">RowVersion</span><span class="p">}</span><span class="s">"</span><span class="p">,</span> <span class="n">method</span> <span class="p">=</span><span class="s">"PUT"</span> <span class="p">},</span>
-                    <span class="k">new</span> <span class="p">{</span> <span class="n">rel</span> <span class="p">=</span> <span class="s">"delete"</span><span class="p">,</span> <span class="n">href</span> <span class="p">=</span> <span class="s">$"/employees/</span><span class="p">{</span><span class="n">id</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="n">employee</span><span class="p">.</span><span class="n">RowVersion</span><span class="p">}</span><span class="s">"</span><span class="p">,</span> <span class="n">method</span> <span class="p">=</span><span class="s">"DELETE"</span> <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">});</span>
-
-            <span class="c1">//employee;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// PUT: api/Employees/5</span>
-        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
-        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">version</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">employee</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="kt">var</span> <span class="n">existingEmployee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">existingEmployee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="kt">var</span> <span class="n">currentRowVersion</span> <span class="p">=</span> <span class="n">existingEmployee</span><span class="p">.</span><span class="n">RowVersion</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">currentRowVersion</span> <span class="p">!=</span> <span class="n">version</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Conflict</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">existingEmployee</span><span class="p">).</span><span class="n">CurrentValues</span><span class="p">.</span><span class="nf">SetValues</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
-            <span class="n">existingEmployee</span><span class="p">.</span><span class="n">RowVersion</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="nf">NewGuid</span><span class="p">();</span>
-            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">existingEmployee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
-
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">throw</span><span class="p">;</span>
-            <span class="p">}</span>
-
-            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="c1">// POST: api/Employees</span>
-        <span class="c1">// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754</span>
-        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">PostEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">Employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Problem</span><span class="p">(</span><span class="s">"Entity set 'ApplicationDbContext.Employee'  is null."</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="n">employee</span><span class="p">.</span><span class="n">RowVersion</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="nf">NewGuid</span><span class="p">();</span>
-            <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-
-            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetEmployee"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">EmployeeID</span> <span class="p">},</span> <span class="n">employee</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="c1">// DELETE: api/Employees/5</span>
-        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">version</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_context</span><span class="p">.</span><span class="n">Employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">RowVersion</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">!=</span> <span class="n">version</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="nf">Conflict</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">_context</span><span class="p">.</span><span class="n">Employee</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-
-            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 8: Create migration and update database</strong></p>
-<ul>
-  <li>Open Package Manager Console (PMC).</li>
-  <li>Select the project name ConcurrencyHandling.API</li>
-  <li>Run the following command in PMC</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Add-Migration</span> <span class="nf">InitialCreate</span>
-</code></pre></div></div>
-<p>This will create a new migration file named “InitialCreate” under the Migrations folder of your</p>
-
-<ul>
-  <li>Run the following command in PMC</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Update-Database</span>
-</code></pre></div></div>
-
-<p><strong>Step 9: Run the application and test concurrency</strong></p>
-
-<ul>
-  <li>Create a new record by PostEmployee action using swagger. Sample example for post data.</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"employeeID"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tahiya Hasan"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"salary"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<ul>
-  <li>Now, let’s retrieve the record using the GET method. You will get the following response.</li>
-</ul>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tahiya Hasan"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"salary"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"rowVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8568375c-cfa5-4ec2-a2ab-b06184f424ad"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/employees/1/8568375c-cfa5-4ec2-a2ab-b06184f424ad"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PUT"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"rel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delete"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/employees/1/8568375c-cfa5-4ec2-a2ab-b06184f424ad"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DELETE"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<ul>
-  <li>Modify or delete the record by using either the provided URL or the specified version number within the URL. In the backend, the version number from the URL will be compared with the existing version number in the action method as outlined in the controller code. The action will only be executed if the version numbers from the URL and the existing record match.</li>
-</ul>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ConcurrencyHyperMedia">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="Software Architecture" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><category term="softwarearchitecture" /><summary type="html"><![CDATA[Optimistic concurrency is a common method for handling such situations. In this article, I'll show a simple way to manage concurrency in ASP.NET using hypermedia.]]></summary></entry></feed>
+<strong><a href="https://github.com/mahedee/code-sample02/tree/master/AuditLogRawSQL">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><summary type="html"><![CDATA[The Audit Trail stands out as a critical feature in enterprise applications, primarily serving essential roles in security and fraud transaction detection. This article delves into a comprehensive guide on implementing Audit Trail functionality in an ASP.NET Core application using SQL Server with ADO.NET. Join me as I demonstrate the step-by-step process to bolster security measures and enhance transaction accountability within your application.]]></summary></entry></feed>

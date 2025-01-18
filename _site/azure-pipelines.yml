@@ -1,0 +1,39 @@
+# Jekyll site
+# Package your Jekyll site using the jekyll/builder Docker container image.
+# Add steps that build, test, save build artifacts, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(Build.BuildId)
+
+# Trigger on push to master
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+# Note: github_pat should be configured as an environment variable in devops
+#   -> create github pat here: https://github.com/settings/tokens
+#   -> Create environment variable in dev.azure.com under pipelines -> edit (right top) -> variables (right top triple dots) -> called github_pat -> click the lock
+variables:
+  gh_user: mahedee
+  gh_repo: my-blogs
+  gh_pass: $(github_pat)
+  gh_email: mahedee.hasan@gmail.com
+  gh_auth_header: $(echo -n "${gh_user}:$(github_pat)" | base64);
+
+steps:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azdevops&tabs=schema#checkout
+- checkout: none # we are not going to sync sources, we will manually clone
+  persistCredentials: false # We disallow setting the persisting, since we want to have a verified push which requires a PAT token
+
+# 1. Setup our local repository and branch that we can work on
+- script: git clone https://$(github_pat)@github.com/$(gh_user)/$(gh_repo).git .
+  workingDirectory: $(Build.StagingDirectory)
+  displayName: "[Git] Clone GitHub Pages Repository"
+
+- script: |
+    git config user.email $(gh_email)
+    git config user.name $(gh_user)
+  workingDirectory: $(Build.StagingDirectory)
+  displayName: '[Git] Configure User'

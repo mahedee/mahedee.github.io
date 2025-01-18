@@ -1,0 +1,952 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tips and tricks for docker - Think Simple</title>
+<meta name="description" content="Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Tips and tricks for docker">
+<meta property="og:url" content="https://mahedee.net//docker-tips-and-tricks/">
+
+
+  <meta property="og:description" content="Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-06T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//docker-tips-and-tricks/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Tips and tricks for docker | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Tips and tricks for docker" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday" />
+<meta property="og:description" content="Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday" />
+<link rel="canonical" href="https://mahedee.net//docker-tips-and-tricks/" />
+<meta property="og:url" content="https://mahedee.net//docker-tips-and-tricks/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-06T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Tips and tricks for docker" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2022-05-06T00:00:00-04:00","datePublished":"2022-05-06T00:00:00-04:00","description":"Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday","headline":"Tips and tricks for docker","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//docker-tips-and-tricks/"},"url":"https://mahedee.net//docker-tips-and-tricks/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tips and tricks for docker">
+    <meta itemprop="description" content="Some tips and tricks for docker may improve your work’s quality. Here, I have tried to include some commands, tricks and tips which we use everyday">
+    <meta itemprop="datePublished" content="May 06, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tips and tricks for docker
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="most-used-docker-commands-for-everyday">Most used docker commands for everyday</h2>
+
+<ul>
+  <li><strong>Docker help</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">-h</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To check docker version</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">--version</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Login to docker</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To see list of images</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">ls</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>List of Containers</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">container</span> <span class="nf">ls</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>See list of running containers</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">ps</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Restart a container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">restart</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">name</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To stop docker container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">stop</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Remove all docker images</strong>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nf">rmi</span> <span class="nf">$</span><span class="s">(docker images -q)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Stop all docker containers</strong></li>
+</ul>
+
+<pre><code class="language-cmd">docker stop $(docker ps -a -q)
+</code></pre>
+<p><strong>Remove all docker containers</strong></p>
+<pre><code class="language-cmd">docker rm $(docker ps -a -q)
+</code></pre>
+
+<p><strong>Deleting no longer needed containers (stopped)</strong></p>
+<pre><code class="language-cmd">docker container prune
+</code></pre>
+
+<p><strong>Deleting no longer needed images</strong></p>
+<pre><code class="language-cmd">docker image prune
+</code></pre>
+
+<p><strong>Delete all volumes, which are not used by any existing container</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker volume prune
+</code></pre></div></div>
+<p><strong>Same for unused networks</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network prune
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To run docker composer</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">up</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Build a docker image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Syntax:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="p">&lt;</span><span class="nf">any</span> <span class="nf">tag</span> <span class="nf">name</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nf">directory</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">docker</span> <span class="nf">file</span><span class="p">&gt;</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">build</span> <span class="nf">-t</span> <span class="nf">aspnetcore</span><span class="nv">/generator</span> <span class="nf">.</span>   
+<span class="nf">Explanation:</span> 
+<span class="nf">Here</span> <span class="nf">aspnetcore</span><span class="nv">/generator</span> <span class="nf">is</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="kr">and</span> <span class="nf">'.'</span> <span class="nf">means</span> <span class="nf">current</span> <span class="nf">directory</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To run a docker image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="nf">8000:80</span> <span class="nf">mcr.microsoft.com</span><span class="nv">/dotnet/core/samples:aspnetapp</span>
+</code></pre></div></div>
+
+<p>The sample asp.net core application will run on http://localhost:8000. Here, 8000 is host machine port and 80 is container port.</p>
+
+<ul>
+  <li><strong>SSH into container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="p">&lt;</span><span class="nf">container-id</span><span class="p">&gt;</span> <span class="nf">sh</span>
+<span class="p">&gt;&gt;</span><span class="nf">ls</span> <span class="s">(Type ls to see all files and directory)</span>
+<span class="p">&gt;&gt;</span><span class="nb">exit</span> <span class="s">(type exit to return from the container)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>View information about your container using command</strong>
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PS</span> <span class="nf">C:\Users\mahedee</span><span class="p">&gt;</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="nf">b73cb9467f5a</span> <span class="nf">sh</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">app</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">Controllers</span>  <span class="nf">Dockerfile</span>  <span class="nf">HRM.API.csproj</span>  <span class="nf">HRM.API.csproj.user</span>  <span class="nf">Program.cs</span>  <span class="nf">Properties</span>  <span class="nf">WeatherForecast.cs</span>  <span class="nf">appsettings.Development.json</span>  <span class="nf">appsettings.json</span>  <span class="nf">bin</span>  <span class="nf">obj</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">..</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">app</span>  <span class="nf">bin</span>  <span class="nf">boot</span>  <span class="nf">dev</span>  <span class="nf">etc</span>  <span class="nf">home</span>  <span class="nf">lib</span>  <span class="nf">lib64</span>  <span class="nf">media</span>  <span class="nf">mnt</span>  <span class="nf">opt</span>  <span class="nf">proc</span>  <span class="nf">remote_debugger</span>  <span class="nf">root</span>  <span class="nb">run</span>  <span class="nf">sbin</span>  <span class="nf">src</span>  <span class="nf">srv</span>  <span class="nf">sys</span>  <span class="nf">tmp</span>  <span class="nf">usr</span>  <span class="nf">var</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">src</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">HRM.API</span>  <span class="nf">HRM.API.sln</span>  <span class="nf">bin</span>  <span class="nf">docker-compose.dcproj</span>  <span class="nf">docker-compose.override.yml</span>  <span class="nf">docker-compose.yml</span>  <span class="nf">obj</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">bin</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">Debug</span>
+<span class="nf">#</span> <span class="nf">cd</span> <span class="nf">debug</span>
+<span class="nf">#</span> <span class="nf">ls</span>
+<span class="nf">HRM.API.deps.json</span>  <span class="nf">HRM.API.exe</span>  <span class="nf">HRM.API.runtimeconfig.json</span>  <span class="nf">Swashbuckle.AspNetCore.Swagger.dll</span>     <span class="nf">Swashbuckle.AspNetCore.SwaggerUI.dll</span>  <span class="nf">appsettings.json</span>
+<span class="nf">HRM.API.dll</span>        <span class="nf">HRM.API.pdb</span>  <span class="nf">Microsoft.OpenApi.dll</span>       <span class="nf">Swashbuckle.AspNetCore.SwaggerGen.dll</span>  <span class="nf">appsettings.Development.json</span>
+<span class="nf">#</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Run a command in a running container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">docker</span> <span class="nb">exec</span> <span class="p">[</span><span class="nf">OPTIONS</span><span class="p">]</span> <span class="nf">CONTAINER</span> <span class="nf">COMMAND</span> <span class="p">[</span><span class="nf">ARG...</span><span class="p">]</span>
+
+<span class="nf">Example</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="mf">34717</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"echo</span> <span class="nf">a</span> <span class="nf">&amp;&amp;</span> <span class="nf">echo</span> <span class="nf">b"</span>
+<span class="kr">or</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="nf">my_container</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"echo</span> <span class="nf">a</span> <span class="nf">&amp;&amp;</span> <span class="nf">echo</span> <span class="nf">b"</span>
+<span class="kr">or</span> 
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-ti</span> <span class="nf">my_container</span> <span class="nf">sh</span> <span class="nf">-c</span> <span class="nf">"dir"</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To run bash in a container</strong></li>
+</ul>
+
+<p>Syntax:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span> <span class="nf">bas</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">exec</span> <span class="nf">-it</span> <span class="nf">2f7</span> <span class="nf">bash</span>
+</code></pre></div></div>
+
+<p><strong>View information about your container user Visual Studio</strong></p>
+
+<ul>
+  <li>Use Ctrl+Q to activate Visual Studio Search Box, and type containers.</li>
+  <li>Or, Go to View &gt; Other Windows &gt; Containers.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/vs-container.PNG" alt="" /></p>
+
+<p>For more information see <a href="https://docs.microsoft.com/en-us/visualstudio/containers/view-and-diagnose-containers?view=vs-2022">Use the Containers window</a></p>
+
+<ul>
+  <li><strong>Mounting a folder name ‘api’ into the container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-v</span> <span class="nf">$</span><span class="p">{</span><span class="nf">PWD</span><span class="p">}</span><span class="nf">:C:\api</span> <span class="nf">mcr.microsoft.com</span><span class="nv">/dotnet/core/runtime:3.1</span>
+</code></pre></div></div>
+<p>Here ${PWD} means current directory of host machine map to the directory C:\api into the container</p>
+
+<ul>
+  <li><strong>To inspect network and other information of a container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">inspect</span> <span class="p">&lt;</span><span class="nf">container</span> <span class="nf">id</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Run a docker image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Syntax:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="p">&lt;</span><span class="nf">host</span> <span class="nf">port</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">image</span> <span class="nf">port</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nf">any</span> <span class="nf">tag</span> <span class="nf">name</span><span class="p">&gt;</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nb">run</span> <span class="nf">--rm</span> <span class="nf">-it</span> <span class="nf">-p</span> <span class="nf">8777:80</span> <span class="nf">test2</span>  
+<span class="nf">Explanation:</span> 
+<span class="nf">Here</span> <span class="nf">test2</span> <span class="nf">is</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span> <span class="nf">which</span> <span class="nf">already</span> <span class="nf">running</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Login to docker and push an image</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">login</span> 
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">push</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span>  
+<span class="nf">Explanation:</span> 
+<span class="nf">Here</span> <span class="nf">mahedee</span><span class="nv">/simpleapi</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">tag</span> <span class="nf">name</span> <span class="nf">of</span> <span class="nf">the</span> <span class="nf">image</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Setting the API Port with an Environment Variable inside a container</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">export</span> <span class="nf">ASPNETCORE_URLS=http:</span><span class="err">/</span><span class="nv">/+:80</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To see docker event in json format</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">events</span> <span class="nf">--format</span> <span class="nf">''</span>
+
+<span class="nf">Tips:</span>
+<span class="nf">Run</span> <span class="nf">this</span> <span class="nf">command</span> <span class="nf">in</span> <span class="nf">another</span> <span class="nf">windows</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>To detach docker compose file</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">up</span> <span class="nf">-d</span>
+</code></pre></div></div>
+<ul>
+  <li><strong>To see the log while running docker compose file</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">logs</span> <span class="nf">-f</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Stop and remove containers, networks, images, and volumes</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker-compose</span> <span class="nf">down</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Remove one or more images</strong></li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="p">&lt;</span><span class="nf">repository</span><span class="p">&gt;</span><span class="nf">:</span><span class="p">&lt;</span><span class="nf">tag</span><span class="p">&gt;</span>
+<span class="nf">Example:</span>
+<span class="nf">$</span> <span class="nf">docker</span> <span class="nf">image</span> <span class="nf">rm</span> <span class="nf">mahedee</span><span class="nv">/webapi:build</span>
+</code></pre></div></div>
+
+<!-- References
+https://docs.microsoft.com/en-us/visualstudio/containers/view-and-diagnose-containers?view=vs-2022 
+
+https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows
+
+
+-->
+
+<p>__</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#commands" class="page__taxonomy-item" rel="tag">commands</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">docker</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#commands" class="page__taxonomy-item" rel="tag">Commands</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#docker" class="page__taxonomy-item" rel="tag">Docker</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-05-06T00:00:00-04:00">May 06, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Tips+and+tricks+for+docker%20https%3A%2F%2Fmahedee.net%2F%2Fdocker-tips-and-tricks%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fdocker-tips-and-tricks%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fdocker-tips-and-tricks%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-connet-sql-server-from-docker-using-ssms/" class="pagination--pager" title="How to connect SQL Server from docker container using SSMS
+">Previous</a>
+    
+    
+      <a href="/how-to-create-ssh-fingerprint-for-azure-devops/" class="pagination--pager" title="How to create SSH fingerprint for Azure DevOps
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

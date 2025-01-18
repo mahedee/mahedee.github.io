@@ -1,0 +1,1014 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>A Mini SPA with ASP.NET MVC and AngularJS - Think Simple</title>
+<meta name="description" content="SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="A Mini SPA with ASP.NET MVC and AngularJS">
+<meta property="og:url" content="https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/">
+
+
+  <meta property="og:description" content="SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2014-09-01T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>A Mini SPA with ASP.NET MVC and AngularJS | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="A Mini SPA with ASP.NET MVC and AngularJS" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS." />
+<meta property="og:description" content="SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS." />
+<link rel="canonical" href="https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/" />
+<meta property="og:url" content="https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-09-01T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A Mini SPA with ASP.NET MVC and AngularJS" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2014-09-01T00:00:00-04:00","datePublished":"2014-09-01T00:00:00-04:00","description":"SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS.","headline":"A Mini SPA with ASP.NET MVC and AngularJS","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/"},"url":"https://mahedee.net//a-mini-spa-with-asp-net-mvc-and-angularjs/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="A Mini SPA with ASP.NET MVC and AngularJS">
+    <meta itemprop="description" content="SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS.">
+    <meta itemprop="datePublished" content="September 01, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">A Mini SPA with ASP.NET MVC and AngularJS
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>SPA stands for Single Page Application; I think you already have little idea on it. Here I will demonstrate a mini SPA with ASP.NET MVC and AngularJS. So, let’s start.</p>
+
+<p><strong>Step 1: Create a ASP.NET MVC application with empty template</strong></p>
+
+<ul>
+  <li>Open visual studio, Got to File-&gt;New-&gt;Project</li>
+  <li>Select Template -&gt; Visual C# -&gt; Web -&gt; ASP.NET MVC 4 Web application and click OK</li>
+  <li>Select Empty Template and Razor as view engine</li>
+</ul>
+
+<p><strong>Step 2: Install required packages</strong></p>
+
+<ul>
+  <li>Run the following command in Package Manager Console (Tools-&gt;Library Package Manager-&gt;Package Manager Console) to install required package.</li>
+  <li>Make sure your internet connection is enabled.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">jQuery</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">angularjs</span> <span class="nf">-Version</span> <span class="nf">1.0.7</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Newtonsoft.Json</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create View model</strong><br />
+In this application I will try to demonstrate two pages for Trainer and Training. For this purpose, create TrainerVM, TrainingVM, RegistrationVm view model in Model folder. JSONBuilder is a class in Model folder which make model as json serialized.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">TrainingVm</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">TrainingCode</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Trainer</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">TrainerVm</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Venue</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RegistrationVm</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Trainings</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Trainers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+ 
+ 
+<span class="k">public</span> <span class="k">class</span> <span class="nc">JSONBuilder</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">RegistrationVm</span> <span class="nf">BuildRegistrationVm</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">registrationVm</span> <span class="p">=</span> <span class="k">new</span> <span class="n">RegistrationVm</span>
+        <span class="p">{</span>
+            <span class="n">Trainings</span> <span class="p">=</span> <span class="nf">GetSerializedTraining</span><span class="p">(),</span>
+            <span class="n">Trainers</span> <span class="p">=</span> <span class="nf">GetSerializedTrainers</span><span class="p">()</span>
+        <span class="p">};</span>
+
+        <span class="k">return</span> <span class="n">registrationVm</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetSerializedTraining</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">trainings</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+            <span class="p">{</span>
+                <span class="k">new</span> <span class="n">TrainingVm</span> <span class="p">{</span><span class="n">TrainingCode</span> <span class="p">=</span> <span class="s">"TRA001"</span><span class="p">,</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"ASP.NET MVC 4"</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">=</span><span class="s">"Mahedee Hasan"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainingVm</span> <span class="p">{</span><span class="n">TrainingCode</span> <span class="p">=</span> <span class="s">"TRA002"</span><span class="p">,</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"ASP.NET Web Form"</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">=</span><span class="s">"Asrafuzzaman"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainingVm</span> <span class="p">{</span><span class="n">TrainingCode</span> <span class="p">=</span> <span class="s">"TRA003"</span><span class="p">,</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"AngularJs Fundamental"</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">=</span><span class="s">"Foysal Alam"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainingVm</span> <span class="p">{</span><span class="n">TrainingCode</span> <span class="p">=</span> <span class="s">"TRA004"</span><span class="p">,</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"ASP.NET MVC 5 with web API"</span><span class="p">,</span> <span class="n">Trainer</span><span class="p">=</span><span class="s">"Asfaquzzaman"</span><span class="p">},</span>
+            <span class="p">};</span>
+        <span class="kt">var</span> <span class="n">settings</span> <span class="p">=</span> <span class="k">new</span> <span class="n">JsonSerializerSettings</span> <span class="p">{</span> <span class="n">ContractResolver</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CamelCasePropertyNamesContractResolver</span><span class="p">()</span> <span class="p">};</span>
+        <span class="kt">var</span> <span class="n">serializeCourses</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">trainings</span><span class="p">,</span> <span class="n">Formatting</span><span class="p">.</span><span class="n">None</span><span class="p">,</span> <span class="n">settings</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">serializeCourses</span><span class="p">;</span>
+    <span class="p">}</span>
+
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetSerializedTrainers</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">trainers</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+            <span class="p">{</span>
+                <span class="k">new</span> <span class="n">TrainerVm</span> <span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Mahedee Hasan"</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="s">"mahedee.hasan@gmail.com"</span><span class="p">,</span> <span class="n">Venue</span><span class="p">=</span><span class="s">"Leadsoft Bangladesh Ltd"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainerVm</span> <span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Asrafuzzaman"</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="s">"asraf@gmail.com"</span><span class="p">,</span> <span class="n">Venue</span><span class="p">=</span><span class="s">"Leadsoft Bangladesh Ltd"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainerVm</span> <span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Foysal Alam"</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="s">"foysal@gmail.com"</span><span class="p">,</span> <span class="n">Venue</span><span class="p">=</span><span class="s">"Leadsoft Bangladesh Ltd"</span><span class="p">},</span>
+                <span class="k">new</span> <span class="n">TrainerVm</span> <span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Asfaquzzaman"</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="s">"asfaq@gmail.com"</span><span class="p">,</span> <span class="n">Venue</span><span class="p">=</span><span class="s">"Leadsoft Bangladesh Ltd"</span><span class="p">},</span>
+            <span class="p">};</span>
+        <span class="kt">var</span> <span class="n">settings</span> <span class="p">=</span> <span class="k">new</span> <span class="n">JsonSerializerSettings</span> <span class="p">{</span> <span class="n">ContractResolver</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CamelCasePropertyNamesContractResolver</span><span class="p">()</span> <span class="p">};</span>
+        <span class="kt">var</span> <span class="n">serializedInstructors</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">trainers</span><span class="p">,</span> <span class="n">Formatting</span><span class="p">.</span><span class="n">None</span><span class="p">,</span> <span class="n">settings</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">serializedInstructors</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 4: Create a RegistrationController in controller folder</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RegistrationController</span> <span class="p">:</span> <span class="n">Controller</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="n">JSONBuilder</span> <span class="n">jsonBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">JSONBuilder</span><span class="p">();</span>
+
+    <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">jsonBuilder</span><span class="p">.</span><span class="nf">BuildRegistrationVm</span><span class="p">());</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Create TrainingController and TrainerController</strong></p>
+<ul>
+  <li>Create TrainingsController.js and TrainersController.js in Scripts-&gt;Application-&gt;Controllers folder</li>
+</ul>
+
+<p><strong>TrainersController.js</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="nx">registrationModule</span><span class="p">.</span><span class="nf">controller</span><span class="p">(</span><span class="dl">"</span><span class="s2">TrainersController</span><span class="dl">"</span><span class="p">,</span> <span class="nf">function </span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">registrationData</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">trainers</span> <span class="o">=</span> <span class="nx">registrationData</span><span class="p">.</span><span class="nx">trainers</span><span class="p">;</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p><strong>TrainingsController.js</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="nx">registrationModule</span><span class="p">.</span><span class="nf">controller</span><span class="p">(</span><span class="dl">"</span><span class="s2">TrainingsController</span><span class="dl">"</span><span class="p">,</span> <span class="nf">function </span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">registrationData</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">trainings</span> <span class="o">=</span> <span class="nx">registrationData</span><span class="p">.</span><span class="nx">trainings</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>I will define registrationModule and registrationData in next steps.</p>
+
+<p><strong>Step 6: Create registrationModule</strong></p>
+<ul>
+  <li>Create registrationModule.js in Scripts-&gt;Application. This is the configuration file for angular routing in client side.</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">registrationModule</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nf">module</span><span class="p">(</span><span class="dl">"</span><span class="s2">registrationModule</span><span class="dl">"</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="p">.</span><span class="nf">config</span><span class="p">(</span><span class="nf">function </span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">,</span> <span class="nx">$locationProvider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$routeProvider</span><span class="p">.</span><span class="nf">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/Registration/Trainings</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+            <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/templates/Trainings.html</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">controller</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TrainingsController</span><span class="dl">'</span>
+        <span class="p">});</span>
+ 
+        <span class="nx">$routeProvider</span><span class="p">.</span><span class="nf">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/Registration/Trainers</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+            <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/templates/trainers.html</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">controller</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TrainersController</span><span class="dl">'</span>
+        <span class="p">});</span>
+ 
+        <span class="nx">$locationProvider</span><span class="p">.</span><span class="nf">html5Mode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+    <span class="p">});</span>
+
+</code></pre></div></div>
+
+<p>Here you might see that I map template and controller on corresponding routing. But I didn’t declare template yet. I will declare template in next steps.</p>
+
+<p><strong>Step 7: Create a layout page</strong></p>
+<ul>
+  <li>Create a layout page in Views-&gt; Shared -&gt;_Layout.cshtml and add reference of angularjs, jquery and registration module.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html</span> <span class="na">ng-app=</span><span class="s">"registrationModule"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"~/Scripts/angular.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"~/Scripts/jquery-2.1.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"~/Scripts/Application/registrationModule.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ 
+        <span class="nt">&lt;title&gt;</span>Training Registration<span class="nt">&lt;/title&gt;</span>
+        @RenderSection("JavascriptInHead", required:false)
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        @RenderBody()
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Step 8: Create Index view</strong></p>
+<ul>
+  <li>Right click on Index action of Registration controller and add a view. Modify the view as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">@model</span> <span class="n">MiniSPA</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">RegistrationVm</span>
+ 
+<span class="err">@</span><span class="p">{</span>
+    <span class="n">ViewBag</span><span class="p">.</span><span class="n">Title</span> <span class="p">=</span> <span class="s">"Training Regirstration"</span><span class="p">;</span>
+    <span class="n">Layout</span> <span class="p">=</span> <span class="s">"~/Views/Shared/_Layout.cshtml"</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="n">@section</span> <span class="n">JavascriptInHead</span>
+<span class="p">{</span>
+    <span class="p">&lt;</span><span class="n">script</span> <span class="n">src</span><span class="p">=</span><span class="s">"~/Scripts/Application/Controllers/TrainersController.js"</span><span class="p">&gt;&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">script</span> <span class="n">src</span><span class="p">=</span><span class="s">"~/Scripts/Application/Controllers/TrainingsController.js"</span><span class="p">&gt;&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">script</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
+        <span class="n">registrationModule</span><span class="p">.</span><span class="nf">factory</span><span class="p">(</span><span class="err">'</span><span class="n">registrationData</span><span class="err">'</span><span class="p">,</span> <span class="nf">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">trainings</span><span class="p">:</span> <span class="n">@Html</span><span class="p">.</span><span class="nf">Raw</span><span class="p">(</span><span class="n">Model</span><span class="p">.</span><span class="n">Trainings</span><span class="p">),</span>
+                <span class="n">trainers</span><span class="p">:</span> <span class="n">@Html</span><span class="p">.</span><span class="nf">Raw</span><span class="p">(</span><span class="n">Model</span><span class="p">.</span><span class="n">Trainers</span><span class="p">)</span>
+                <span class="p">};</span>
+        <span class="p">});</span>
+    <span class="p">&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+<span class="p">}</span>
+ 
+<span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">ul</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">li</span><span class="p">&gt;&lt;</span><span class="n">span</span><span class="p">&gt;</span><span class="n">Training</span> <span class="n">Registration</span><span class="p">&lt;/</span><span class="n">span</span><span class="p">&gt;&lt;/</span><span class="n">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="n">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">ul</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">li</span><span class="p">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="p">=</span><span class="s">"/Registration/Trainings"</span><span class="p">&gt;</span><span class="n">Trainings</span> <span class="n">Details</span><span class="p">&lt;/</span><span class="n">a</span><span class="p">&gt;&lt;/</span><span class="n">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">li</span><span class="p">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="p">=</span><span class="s">"/Registration/Trainers"</span><span class="p">&gt;</span><span class="n">Trainer</span> <span class="n">Details</span><span class="p">&lt;/</span><span class="n">a</span><span class="p">&gt;&lt;/</span><span class="n">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="n">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">div</span> <span class="n">ng</span><span class="p">-</span><span class="n">view</span><span class="p">&gt;&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 9: Create template</strong></p>
+<ul>
+  <li>Create training.html and trainer.html in templates folder as follows</li>
+</ul>
+
+<p><strong>Trainer.html</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span10"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;h2&gt;</span>Instructors<span class="nt">&lt;/h2&gt;</span>
+     <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span10"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"table table-condensed table-hover"</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;tr&gt;</span>
+                 <span class="nt">&lt;th&gt;</span>Trainer Name<span class="nt">&lt;/th&gt;</span>
+                 <span class="nt">&lt;th&gt;</span>Email<span class="nt">&lt;/th&gt;</span>
+                 <span class="nt">&lt;th&gt;</span>Venue<span class="nt">&lt;/th&gt;</span>
+             <span class="nt">&lt;/tr&gt;</span>
+             <span class="nt">&lt;tr</span> <span class="na">ng-repeat=</span><span class="s">"trainer in trainers"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+                 <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+                 <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+             <span class="nt">&lt;/tr&gt;</span>
+         <span class="nt">&lt;/table&gt;</span>
+     <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Training.html</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;h2&gt;</span>Training Details<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;table&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;th&gt;</span>Training Code<span class="nt">&lt;/th&gt;</span>
+                    <span class="nt">&lt;th&gt;</span>Training Title<span class="nt">&lt;/th&gt;</span>
+                    <span class="nt">&lt;th&gt;</span>Trainer Name<span class="nt">&lt;/th&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+                <span class="nt">&lt;tr</span> <span class="na">ng-repeat=</span><span class="s">"training in trainings"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+                    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/table&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 10: Modify RouteConfig.cs</strong></p>
+<ul>
+  <li>Modify the RouteConfig.cs as follows for routing Registration controller default and catching all other parameter.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">RouteConfig</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteCollection</span> <span class="n">routes</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">routes</span><span class="p">.</span><span class="nf">IgnoreRoute</span><span class="p">(</span><span class="s">"{resource}.axd/{*pathInfo}"</span><span class="p">);</span>
+
+        <span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">:</span> <span class="s">"Mini SPA"</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="s">"Registration/{*catchall}"</span><span class="p">,</span>
+        <span class="n">defaults</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Registration"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="n">UrlParameter</span><span class="p">.</span><span class="n">Optional</span> <span class="p">}</span>
+        <span class="p">);</span>
+
+
+        <span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">:</span> <span class="s">"Default"</span><span class="p">,</span>
+            <span class="n">url</span><span class="p">:</span> <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>
+            <span class="n">defaults</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Registration"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="n">UrlParameter</span><span class="p">.</span><span class="n">Optional</span> <span class="p">}</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This structure is not best. So it is not recommended for large application. For large application use service. Hope, I will publish a complete SPA soon. Thanks for your patient!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/MiniSPA">Source code</a></strong></p>
+
+<!-- Ref: http://localhost:8012/mahedee.net/a-mini-spa-with-asp-net-mvc-and-angularjs/ -->
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#angular" class="page__taxonomy-item" rel="tag">Angular</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#aspnetmvc" class="page__taxonomy-item" rel="tag">aspnetmvc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">javascript</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#angular" class="page__taxonomy-item" rel="tag">Angular</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-09-01T00:00:00-04:00">September 01, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=A+Mini+SPA+with+ASP.NET+MVC+and+AngularJS%20https%3A%2F%2Fmahedee.net%2F%2Fa-mini-spa-with-asp-net-mvc-and-angularjs%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fa-mini-spa-with-asp-net-mvc-and-angularjs%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fa-mini-spa-with-asp-net-mvc-and-angularjs%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/a-mini-spa-with-asp-net-mvc-and-angularjs-copy/" class="pagination--pager" title="A Mini SPA with ASP.NET MVC and AngularJS
+">Previous</a>
+    
+    
+      <a href="/a-simple-spa-with-angularjs-asp-net-mvc-web-api-and-ef/" class="pagination--pager" title="A Simple SPA with AngularJs, ASP.NET MVC, Web API And EF
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

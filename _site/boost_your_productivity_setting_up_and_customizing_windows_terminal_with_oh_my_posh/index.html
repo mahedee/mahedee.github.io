@@ -1,0 +1,1898 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh - Think Simple</title>
+<meta name="description" content="Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh">
+<meta property="og:url" content="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/">
+
+
+  <meta property="og:description" content="Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-09-10T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects." />
+<meta property="og:description" content="Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects." />
+<link rel="canonical" href="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" />
+<meta property="og:url" content="https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-09-10T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-09-10T00:00:00-04:00","datePublished":"2024-09-10T00:00:00-04:00","description":"Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects.","headline":"Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/"},"url":"https://mahedee.net//boost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh">
+    <meta itemprop="description" content="Discover how to enhance your productivity by setting up and customizing Windows Terminal with Git Bash and Oh My Posh. This comprehensive guide walks you through the installation, configuration, and optimization of your terminal environment, making it easier and more efficient to work on development projects.">
+    <meta itemprop="datePublished" content="September 10, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Boost Your Productivity - Setting Up and Customizing Windows Terminal with Git Bash and Oh My Posh
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  21 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Windows Terminal is a versatile and powerful tool that allows you to work with multiple command-line environments in one place, including PowerShell, Command Prompt, WSL (Windows Subsystem for Linux), and now Git Bash. By customizing Windows Terminal with “Oh My Posh”, you can enhance your productivity with better themes, prompt customization, intellisence and more. This guide will walk you through configuring Windows Terminal, setting up Oh My Posh, integrating Git Bash, and switching between different terminal profiles.</p>
+
+<p><strong>Step 1: Install Windows Terminal</strong></p>
+
+<p>Before we dive into customizations, make sure Windows Terminal is installed on your system.</p>
+
+<ul>
+  <li>Install Windows Terminal via the Microsoft Store:
+    <ul>
+      <li>Open the <strong>Microsoft Store</strong> on your Windows PC.</li>
+      <li>Search for <strong>Windows Terminal</strong> and click <strong>Install</strong>.</li>
+    </ul>
+
+    <p>Or, install it using the following PowerShell command:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> winget <span class="nb">install</span> <span class="nt">--id</span> Microsoft.WindowsTerminal <span class="nt">-e</span> <span class="nt">--source</span> winget
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Step 2: Install and Set Up Git Bash</strong></p>
+
+<p>Git Bash is a popular terminal for developers who want a Unix-like experience on Windows. It comes bundled with Git for Windows. To integrate Git Bash into Windows Terminal:</p>
+
+<ol>
+  <li><strong>Download Git for Windows</strong>:
+    <ul>
+      <li>Go to <a href="https://git-scm.com/download/win">Git for Windows</a> and download the installer.</li>
+      <li>Follow the installation instructions. Ensure that the option “Git Bash Here” is selected, so you can access Git Bash easily from your terminal.</li>
+      <li>You can also install Git for Windows using the following command:</li>
+    </ul>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> winget <span class="nb">install </span>Git.Git <span class="nt">-e</span> <span class="nt">--source</span> winget
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Add Git Bash to Windows Terminal</strong>:
+Once installed, you’ll need to add Git Bash as a profile in Windows Terminal.</p>
+
+    <ul>
+      <li>Open <strong>Windows Terminal</strong> and go to <strong>Settings</strong> (press <strong>Ctrl + ,</strong> or click on the drop-down menu and select <strong>Settings</strong>).</li>
+      <li>
+        <p>In the <strong>Settings</strong> window, click on <strong>Profiles</strong> and then click on the <strong>Open JSON file</strong> button.</p>
+      </li>
+      <li>
+        <p>In the <strong>profiles.json</strong> file, scroll down to the <code class="language-plaintext highlighter-rouge">"profiles"</code> section and add Git Bash as a new profile like this:</p>
+
+        <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{some-guid-here}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Git Bash"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"</span><span class="se">\"</span><span class="s2">C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">Git</span><span class="se">\\</span><span class="s2">bin</span><span class="se">\\</span><span class="s2">bash.exe</span><span class="se">\"</span><span class="s2"> --login -i"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms-appx:///ProfileIcons/git-bash.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%USERPROFILE%"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>        </div>
+      </li>
+      <li>Replace <code class="language-plaintext highlighter-rouge">{some-guid-here}</code> with a new GUID. You can generate a new GUID using a tool like <a href="https://www.guidgenerator.com/">GUID generator</a>.</li>
+      <li>Save the file and close the editor.</li>
+    </ul>
+
+    <p>or,</p>
+    <ul>
+      <li>You can also add it by clicking on the “+” button in the profiles section called “Add a new profile”</li>
+      <li>Click on New empty profile</li>
+      <li>Name the profile “Git Bash”</li>
+      <li>Add the commandline <code class="language-plaintext highlighter-rouge">"C:\\Program Files\\Git\\bin\\bash.exe" --login -i</code> or browse to the location of the <code class="language-plaintext highlighter-rouge">bash.exe</code> file.</li>
+      <li>Icon: You can find the Git Bash icon in the Git installation directory. For example, <code class="language-plaintext highlighter-rouge">C:\Program Files\Git\mingw64\share\git\git-for-windows.ico</code>.
+       - Starting Directory: <code class="language-plaintext highlighter-rouge">%USERPROFILE%</code>
+       - Save the profile.</li>
+    </ul>
+  </li>
+  <li><strong>Switch to Git Bash</strong>:
+    <ul>
+      <li>Once you’ve saved the profile, Git Bash will now be available in the Windows Terminal dropdown menu.</li>
+      <li>Simply select <strong>Git Bash</strong> from the profiles list, and you can start using it in the same terminal window.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Step 3: Install PowerShell Core (Optional)</strong></p>
+
+<p>While Git Bash is now available, you might want to also use <strong>PowerShell Core</strong> (the cross-platform version of PowerShell). To install PowerShell Core:</p>
+
+<ol>
+  <li>Download <strong>PowerShell Core</strong> from the <a href="https://github.com/PowerShell/PowerShell/releases">official GitHub repository</a>.</li>
+  <li>Follow the installation instructions for your system.</li>
+  <li>Add <strong>PowerShell Core</strong> to Windows Terminal:
+    <ul>
+      <li>In <strong>Windows Terminal Settings</strong>, add a new profile for PowerShell Core by specifying the path to <code class="language-plaintext highlighter-rouge">pwsh.exe</code>.</li>
+      <li>Save the settings.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Step 4: Install a Font with Powerline Symbols</strong>
+   To display special symbols properly, install a <strong>Powerline</strong> font like <strong>CaskaydiaCove</strong> or <strong>FiraCode</strong> from the <a href="https://www.nerdfonts.com/">Nerd Fonts website</a>.</p>
+<ul>
+  <li>Download the font and install it on your system.</li>
+  <li>In my case, I have used <strong>CaskaydiaCove Nerd Font</strong>.</li>
+  <li>Or, copy the font to the font directory: <code class="language-plaintext highlighter-rouge">C:\Windows\Fonts</code>.</li>
+  <li>Set the installed font in Windows Terminal under <strong>Settings</strong> &gt; <strong>Profiles</strong> &gt; <strong>PowerShell</strong> &gt; <strong>Appearance</strong> &gt; <strong>Font face</strong>.</li>
+</ul>
+
+<p><strong>Step 5: Install and Set Up Oh My Posh for PowerShell</strong></p>
+
+<p><strong>Oh My Posh</strong> is a prompt theme engine for PowerShell that can beautify your terminal with themes, segments, and additional functionality. To install it:</p>
+
+<ol>
+  <li><strong>Install Oh My Posh</strong>:
+    <ul>
+      <li>Go to https://ohmyposh.dev/docs/installation/windows and follow the instructions to set up Oh My Posh.
+  or,</li>
+      <li>Open a PowerShell prompt and run the following command:</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   winget <span class="nb">install </span>JanDeDobbeleer.OhMyPosh <span class="nt">-s</span> winget
+</code></pre></div></div>
+
+<ul>
+  <li>This installs a couple of things:
+    <ul>
+      <li>oh-my-posh.exe - Windows executable</li>
+      <li>themes - The latest Oh My Posh themes</li>
+      <li>You can find the themes in the directory <code class="language-plaintext highlighter-rouge">C:\Users\{your-username}\AppData\Local\Programs\oh-my-posh\themes</code>.</li>
+    </ul>
+  </li>
+  <li>Run following command to update oh-my-posh
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  winget upgrade JanDeDobbeleer.OhMyPosh <span class="nt">-s</span> winget
+</code></pre></div>    </div>
+  </li>
+  <li>Run the following command to check oh-my-posh installed or not
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oh-my-posh <span class="nt">--version</span>
+
+or
+oh-my-posh.exe
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<ol>
+  <li><strong>Configure Powershell Profile</strong>:
+    <ul>
+      <li>Open PowerShell and run the following command to edit your profile. If you don’t have a profile, a window will prompt you to create one. or you can create a profile in the directory <code class="language-plaintext highlighter-rouge">C:\Users\{your-username}\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code>.</li>
+    </ul>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> notepad <span class="nv">$PROFILE</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li>
+        <p>Add the following lines to the profile script to enable Oh My Posh:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oh-my-posh init pwsh | Invoke-Expression
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>For advanced feature, I have customized my profile script. You can copy and paste it into your profile script. Here is my profile script. https://gist.github.com/mahedee/f7468bd2c59fa463235e877a8d719f98</p>
+      </li>
+    </ul>
+
+    <p><strong>Microsoft.PowerShell_profile.ps1</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   using namespace System.Management.Automation
+   using namespace System.Management.Automation.Language
+      
+   <span class="k">if</span> <span class="o">(</span><span class="nv">$host</span>.Name <span class="nt">-eq</span> <span class="s1">'ConsoleHost'</span><span class="o">)</span>
+   <span class="o">{</span>
+       Import-Module PSReadLine
+   <span class="o">}</span>
+
+
+   Import-Module <span class="nt">-Name</span> Terminal-Icons
+
+   <span class="c"># oh-my-posh init pwsh --config C:\Users\mahedee\AppData\Local\Programs\oh-my-posh\themes\jandedobbeleer.omp.json | Invoke-Expression</span>
+   oh-my-posh init pwsh <span class="nt">--config</span> C:<span class="se">\U</span>sers<span class="se">\m</span>ahedee<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\P</span>rograms<span class="se">\o</span>h-my-posh<span class="se">\t</span>hemes<span class="se">\m</span>yposh-mahedee.omp.json | Invoke-Expression
+   <span class="c"># oh-my-posh init pwsh --config C:\Users\mahedee\AppData\Local\Programs\oh-my-posh\themes\myposh-hanselman.omp.json | Invoke-Expression</span>
+   <span class="c"># oh-my-posh init pwsh --config C:\Users\mahedee\AppData\Local\Programs\oh-my-posh\themes\cobalt2.omp.json | Invoke-Expression</span>
+
+   Register-ArgumentCompleter <span class="nt">-Native</span> <span class="nt">-CommandName</span> winget <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$wordToComplete</span>, <span class="nv">$commandAst</span>, <span class="nv">$cursorPosition</span><span class="o">)</span>
+           <span class="o">[</span>Console]::InputEncoding <span class="o">=</span> <span class="o">[</span>Console]::OutputEncoding <span class="o">=</span> <span class="nv">$OutputEncoding</span> <span class="o">=</span> <span class="o">[</span>System.Text.Utf8Encoding]::new<span class="o">()</span>
+           <span class="nv">$Local</span>:word <span class="o">=</span> <span class="nv">$wordToComplete</span>.Replace<span class="o">(</span><span class="s1">'"'</span>, <span class="s1">'""'</span><span class="o">)</span>
+           <span class="nv">$Local</span>:ast <span class="o">=</span> <span class="nv">$commandAst</span>.ToString<span class="o">()</span>.Replace<span class="o">(</span><span class="s1">'"'</span>, <span class="s1">'""'</span><span class="o">)</span>
+           winget <span class="nb">complete</span> <span class="nt">--word</span><span class="o">=</span><span class="s2">"</span><span class="nv">$Local</span><span class="s2">:word"</span> <span class="nt">--commandline</span> <span class="s2">"</span><span class="nv">$Local</span><span class="s2">:ast"</span> <span class="nt">--position</span> <span class="nv">$cursorPosition</span> | ForEach-Object <span class="o">{</span>
+               <span class="o">[</span>System.Management.Automation.CompletionResult]::new<span class="o">(</span><span class="nv">$_</span>, <span class="nv">$_</span>, <span class="s1">'ParameterValue'</span>, <span class="nv">$_</span><span class="o">)</span>
+           <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># PowerShell parameter completion shim for the dotnet CLI</span>
+   Register-ArgumentCompleter <span class="nt">-Native</span> <span class="nt">-CommandName</span> dotnet <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$commandName</span>, <span class="nv">$wordToComplete</span>, <span class="nv">$cursorPosition</span><span class="o">)</span>
+           dotnet <span class="nb">complete</span> <span class="nt">--position</span> <span class="nv">$cursorPosition</span> <span class="s2">"</span><span class="nv">$wordToComplete</span><span class="s2">"</span> | ForEach-Object <span class="o">{</span>
+               <span class="o">[</span>System.Management.Automation.CompletionResult]::new<span class="o">(</span><span class="nv">$_</span>, <span class="nv">$_</span>, <span class="s1">'ParameterValue'</span>, <span class="nv">$_</span><span class="o">)</span>
+           <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># ---</span>
+
+
+   <span class="c"># This is an example profile for PSReadLine.</span>
+   <span class="c">#</span>
+   <span class="c"># This is roughly what I use so there is some emphasis on emacs bindings,</span>
+   <span class="c"># but most of these bindings make sense in Windows mode as well.</span>
+
+   <span class="c"># Searching for commands with up/down arrow is really handy.  The</span>
+   <span class="c"># option "moves to end" is useful if you want the cursor at the end</span>
+   <span class="c"># of the line while cycling through history like it does w/o searching,</span>
+   <span class="c"># without that option, the cursor will remain at the position it was</span>
+   <span class="c"># when you used up arrow, which can be useful if you forget the exact</span>
+   <span class="c"># string you started the search on.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> UpArrow <span class="nt">-Function</span> HistorySearchBackward
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> DownArrow <span class="nt">-Function</span> HistorySearchForward
+
+   <span class="c"># This key handler shows the entire or filtered history using Out-GridView. The</span>
+   <span class="c"># typed text is used as the substring pattern for filtering. A selected command</span>
+   <span class="c"># is inserted to the command line without invoking. Multiple command selection</span>
+   <span class="c"># is supported, e.g. selected by Ctrl + Click.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> F7 <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> History <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s1">'Show command history'</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       <span class="nv">$pattern</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$pattern</span>, <span class="o">[</span>ref]<span class="nv">$null</span><span class="o">)</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$pattern</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="nv">$pattern</span> <span class="o">=</span> <span class="o">[</span>regex]::Escape<span class="o">(</span><span class="nv">$pattern</span><span class="o">)</span>
+       <span class="o">}</span>
+
+       <span class="nv">$history</span> <span class="o">=</span> <span class="o">[</span>System.Collections.ArrayList]@<span class="o">(</span>
+           <span class="nv">$last</span> <span class="o">=</span> <span class="s1">''</span>
+           <span class="nv">$lines</span> <span class="o">=</span> <span class="s1">''</span>
+           foreach <span class="o">(</span><span class="nv">$line</span> <span class="k">in</span> <span class="o">[</span>System.IO.File]::ReadLines<span class="o">((</span>Get-PSReadLineOption<span class="o">)</span>.HistorySavePath<span class="o">))</span>
+           <span class="o">{</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$line</span>.EndsWith<span class="o">(</span><span class="s1">'`'</span><span class="o">))</span>
+               <span class="o">{</span>
+                   <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$line</span>.Substring<span class="o">(</span>0, <span class="nv">$line</span>.Length - 1<span class="o">)</span>
+                   <span class="nv">$lines</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="nv">$lines</span><span class="o">)</span>
+                   <span class="o">{</span>
+                       <span class="s2">"</span><span class="nv">$lines</span><span class="sb">`</span>n<span class="nv">$line</span><span class="s2">"
+                   }
+                   else
+                   {
+                       </span><span class="nv">$line</span><span class="s2">
+                   }
+                   continue
+               }
+
+               if (</span><span class="nv">$lines</span><span class="s2">)
+               {
+                   </span><span class="nv">$line</span><span class="s2"> = "</span><span class="nv">$lines</span><span class="sb">`</span><span class="s2">n</span><span class="nv">$line</span><span class="s2">"</span>
+                   <span class="nv">$lines</span> <span class="o">=</span> <span class="s1">''</span>
+               <span class="o">}</span>
+
+               <span class="k">if</span> <span class="o">((</span><span class="nv">$line</span> <span class="nt">-cne</span> <span class="nv">$last</span><span class="o">)</span> <span class="nt">-and</span> <span class="o">(!</span><span class="nv">$pattern</span> <span class="nt">-or</span> <span class="o">(</span><span class="nv">$line</span> <span class="nt">-match</span> <span class="nv">$pattern</span><span class="o">)))</span>
+               <span class="o">{</span>
+                   <span class="nv">$last</span> <span class="o">=</span> <span class="nv">$line</span>
+                   <span class="nv">$line</span>
+               <span class="o">}</span>
+           <span class="o">}</span>
+       <span class="o">)</span>
+       <span class="nv">$history</span>.Reverse<span class="o">()</span>
+
+       <span class="nv">$command</span> <span class="o">=</span> <span class="nv">$history</span> | Out-GridView <span class="nt">-Title</span> History <span class="nt">-PassThru</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$command</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::RevertLine<span class="o">()</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">((</span><span class="nv">$command</span> <span class="nt">-join</span> <span class="s2">"</span><span class="sb">`</span>n<span class="s2">"))
+       }
+   }
+
+
+   # CaptureScreen is good for blog posts or email showing a transaction
+   # of what you did when asking for help or demonstrating a technique.
+   Set-PSReadLineKeyHandler -Chord 'Ctrl+d,Ctrl+c' -Function CaptureScreen
+
+   # The built-in word movement uses character delimiters, but token based word
+   # movement is also very useful - these are the bindings you'd use if you
+   # prefer the token based movements bound to the normal emacs word movement
+   # key bindings.
+   Set-PSReadLineKeyHandler -Key Alt+d -Function ShellKillWord
+   Set-PSReadLineKeyHandler -Key Alt+Backspace -Function ShellBackwardKillWord
+   Set-PSReadLineKeyHandler -Key Alt+b -Function ShellBackwardWord
+   Set-PSReadLineKeyHandler -Key Alt+f -Function ShellForwardWord
+   Set-PSReadLineKeyHandler -Key Alt+B -Function SelectShellBackwardWord
+   Set-PSReadLineKeyHandler -Key Alt+F -Function SelectShellForwardWord
+
+   #region Smart Insert/Delete
+
+   # The next four key handlers are designed to make entering matched quotes
+   # parens, and braces a nicer experience.  I'd like to include functions
+   # in the module that do this, but this implementation still isn't as smart
+   # as ReSharper, so I'm just providing it as a sample.
+
+   Set-PSReadLineKeyHandler -Key '"</span><span class="s1">',"'</span><span class="s2">" </span><span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> SmartInsertQuote <span class="sb">`</span><span class="s2">
+                           -LongDescription "</span>Insert paired quotes <span class="k">if </span>not already on a quote<span class="s2">" </span><span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$quote</span> <span class="o">=</span> <span class="nv">$key</span>.KeyChar
+
+       <span class="nv">$selectionStart</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$selectionLength</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetSelectionState<span class="o">([</span>ref]<span class="nv">$selectionStart</span>, <span class="o">[</span>ref]<span class="nv">$selectionLength</span><span class="o">)</span>
+
+       <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$line</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="c"># If text is selected, just quote it without any smarts</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$selectionStart</span> <span class="nt">-ne</span> <span class="nt">-1</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span><span class="nv">$selectionStart</span>, <span class="nv">$selectionLength</span>, <span class="nv">$quote</span> + <span class="nv">$line</span>.SubString<span class="o">(</span><span class="nv">$selectionStart</span>, <span class="nv">$selectionLength</span><span class="o">)</span> + <span class="nv">$quote</span><span class="o">)</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$selectionStart</span> + <span class="nv">$selectionLength</span> + 2<span class="o">)</span>
+           <span class="k">return</span>
+       <span class="o">}</span>
+
+       <span class="nv">$ast</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$tokens</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$parseErrors</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$ast</span>, <span class="o">[</span>ref]<span class="nv">$tokens</span>, <span class="o">[</span>ref]<span class="nv">$parseErrors</span>, <span class="o">[</span>ref]<span class="nv">$null</span><span class="o">)</span>
+
+       <span class="k">function </span>FindToken
+       <span class="o">{</span>
+           param<span class="o">(</span><span class="nv">$tokens</span>, <span class="nv">$cursor</span><span class="o">)</span>
+
+           foreach <span class="o">(</span><span class="nv">$token</span> <span class="k">in</span> <span class="nv">$tokens</span><span class="o">)</span>
+           <span class="o">{</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$cursor</span> <span class="nt">-lt</span> <span class="nv">$token</span>.Extent.StartOffset<span class="o">)</span> <span class="o">{</span> <span class="k">continue</span> <span class="o">}</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$cursor</span> <span class="nt">-lt</span> <span class="nv">$token</span>.Extent.EndOffset<span class="o">)</span> <span class="o">{</span>
+                   <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$token</span>
+                   <span class="nv">$token</span> <span class="o">=</span> <span class="nv">$token</span> <span class="nt">-as</span> <span class="o">[</span>StringExpandableToken]
+                   <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span><span class="o">)</span> <span class="o">{</span>
+                       <span class="nv">$nested</span> <span class="o">=</span> FindToken <span class="nv">$token</span>.NestedTokens <span class="nv">$cursor</span>
+                       <span class="k">if</span> <span class="o">(</span><span class="nv">$nested</span><span class="o">)</span> <span class="o">{</span> <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$nested</span> <span class="o">}</span>
+                   <span class="o">}</span>
+
+                   <span class="k">return</span> <span class="nv">$result</span>
+               <span class="o">}</span>
+           <span class="o">}</span>
+           <span class="k">return</span> <span class="nv">$null</span>
+       <span class="o">}</span>
+
+       <span class="nv">$token</span> <span class="o">=</span> FindToken <span class="nv">$tokens</span> <span class="nv">$cursor</span>
+
+       <span class="c"># If we're on or inside a **quoted** string token (so not generic), we need to be smarter</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span> <span class="nt">-is</span> <span class="o">[</span>StringToken] <span class="nt">-and</span> <span class="nv">$token</span>.Kind <span class="nt">-ne</span> <span class="o">[</span>TokenKind]::Generic<span class="o">)</span> <span class="o">{</span>
+           <span class="c"># If we're at the start of the string, assume we're inserting a new string</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span>.Extent.StartOffset <span class="nt">-eq</span> <span class="nv">$cursor</span><span class="o">)</span> <span class="o">{</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"</span><span class="nv">$quote$quote</span><span class="s2"> "</span><span class="o">)</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$cursor</span> + 1<span class="o">)</span>
+               <span class="k">return</span>
+           <span class="o">}</span>
+
+           <span class="c"># If we're at the end of the string, move over the closing quote if present.</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span>.Extent.EndOffset <span class="nt">-eq</span> <span class="o">(</span><span class="nv">$cursor</span> + 1<span class="o">)</span> <span class="nt">-and</span> <span class="nv">$line</span><span class="o">[</span><span class="nv">$cursor</span><span class="o">]</span> <span class="nt">-eq</span> <span class="nv">$quote</span><span class="o">)</span> <span class="o">{</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$cursor</span> + 1<span class="o">)</span>
+               <span class="k">return</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$null</span> <span class="nt">-eq</span> <span class="nv">$token</span> <span class="nt">-or</span>
+           <span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::RParen <span class="nt">-or</span> <span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::RCurly <span class="nt">-or</span> <span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::RBracket<span class="o">)</span> <span class="o">{</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$line</span><span class="o">[</span>0..<span class="nv">$cursor</span><span class="o">]</span>.Where<span class="o">{</span><span class="nv">$_</span> <span class="nt">-eq</span> <span class="nv">$quote</span><span class="o">}</span>.Count % 2 <span class="nt">-eq</span> 1<span class="o">)</span> <span class="o">{</span>
+               <span class="c"># Odd number of quotes before the cursor, insert a single quote</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="nv">$quote</span><span class="o">)</span>
+           <span class="o">}</span>
+           <span class="k">else</span> <span class="o">{</span>
+               <span class="c"># Insert matching quotes, move cursor to be in between the quotes</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"</span><span class="nv">$quote$quote</span><span class="s2">"</span><span class="o">)</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$cursor</span> + 1<span class="o">)</span>
+           <span class="o">}</span>
+           <span class="k">return</span>
+       <span class="o">}</span>
+
+       <span class="c"># If cursor is at the start of a token, enclose it in quotes.</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span>.Extent.StartOffset <span class="nt">-eq</span> <span class="nv">$cursor</span><span class="o">)</span> <span class="o">{</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::Generic <span class="nt">-or</span> <span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::Identifier <span class="nt">-or</span> 
+               <span class="nv">$token</span>.Kind <span class="nt">-eq</span> <span class="o">[</span>TokenKind]::Variable <span class="nt">-or</span> <span class="nv">$token</span>.TokenFlags.hasFlag<span class="o">([</span>TokenFlags]::Keyword<span class="o">))</span> <span class="o">{</span>
+               <span class="nv">$end</span> <span class="o">=</span> <span class="nv">$token</span>.Extent.EndOffset
+               <span class="nv">$len</span> <span class="o">=</span> <span class="nv">$end</span> - <span class="nv">$cursor</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span><span class="nv">$cursor</span>, <span class="nv">$len</span>, <span class="nv">$quote</span> + <span class="nv">$line</span>.SubString<span class="o">(</span><span class="nv">$cursor</span>, <span class="nv">$len</span><span class="o">)</span> + <span class="nv">$quote</span><span class="o">)</span>
+               <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$end</span> + 2<span class="o">)</span>
+               <span class="k">return</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+
+       <span class="c"># We failed to be smart, so just insert a single quote</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="nv">$quote</span><span class="o">)</span>
+   <span class="o">}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> <span class="s1">'('</span>,<span class="s1">'{'</span>,<span class="s1">'['</span> <span class="sb">`</span><span class="s2">
+                           -BriefDescription InsertPairedBraces </span><span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Insert matching braces"</span> <span class="sb">`</span><span class="s2">
+                           -ScriptBlock {
+       param(</span><span class="nv">$key</span><span class="s2">, </span><span class="nv">$arg</span><span class="s2">)
+
+       </span><span class="nv">$closeChar</span><span class="s2"> = switch (</span><span class="nv">$key</span><span class="s2">.KeyChar)
+       {
+           &lt;#case#&gt; '(' { [char]')'; break }
+           &lt;#case#&gt; '{' { [char]'}'; break }
+           &lt;#case#&gt; '[' { [char]']'; break }
+       }
+
+       </span><span class="nv">$selectionStart</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       </span><span class="nv">$selectionLength</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       [Microsoft.PowerShell.PSConsoleReadLine]::GetSelectionState([ref]</span><span class="nv">$selectionStart</span><span class="s2">, [ref]</span><span class="nv">$selectionLength</span><span class="s2">)
+
+       </span><span class="nv">$line</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       </span><span class="nv">$cursor</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]</span><span class="nv">$line</span><span class="s2">, [ref]</span><span class="nv">$cursor</span><span class="s2">)
+          
+       if (</span><span class="nv">$selectionStart</span><span class="s2"> -ne -1)
+       {
+         # Text is selected, wrap it in brackets
+         [Microsoft.PowerShell.PSConsoleReadLine]::Replace(</span><span class="nv">$selectionStart</span><span class="s2">, </span><span class="nv">$selectionLength</span><span class="s2">, </span><span class="nv">$key</span><span class="s2">.KeyChar + </span><span class="nv">$line</span><span class="s2">.SubString(</span><span class="nv">$selectionStart</span><span class="s2">, </span><span class="nv">$selectionLength</span><span class="s2">) + </span><span class="nv">$closeChar</span><span class="s2">)
+         [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition(</span><span class="nv">$selectionStart</span><span class="s2"> + </span><span class="nv">$selectionLength</span><span class="s2"> + 2)
+       } else {
+         # No text is selected, insert a pair
+         [Microsoft.PowerShell.PSConsoleReadLine]::Insert("</span><span class="si">$(</span><span class="nv">$key</span>.KeyChar<span class="si">)</span><span class="nv">$closeChar</span><span class="s2">")
+         [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition(</span><span class="nv">$cursor</span><span class="s2"> + 1)
+       }
+   }
+
+   Set-PSReadLineKeyHandler -Key ')',']','}' </span><span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> SmartCloseBraces <span class="sb">`</span><span class="s2">
+                           -LongDescription "</span>Insert closing brace or skip<span class="s2">" </span><span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$line</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$line</span><span class="o">[</span><span class="nv">$cursor</span><span class="o">]</span> <span class="nt">-eq</span> <span class="nv">$key</span>.KeyChar<span class="o">)</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$cursor</span> + 1<span class="o">)</span>
+       <span class="o">}</span>
+       <span class="k">else</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"</span><span class="si">$(</span><span class="nv">$key</span>.KeyChar<span class="si">)</span><span class="s2">"</span><span class="o">)</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Backspace <span class="sb">`</span><span class="s2">
+                           -BriefDescription SmartBackspace </span><span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Delete previous character or matching quotes/parens/braces"</span> <span class="sb">`</span><span class="s2">
+                           -ScriptBlock {
+       param(</span><span class="nv">$key</span><span class="s2">, </span><span class="nv">$arg</span><span class="s2">)
+
+       </span><span class="nv">$line</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       </span><span class="nv">$cursor</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+       [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]</span><span class="nv">$line</span><span class="s2">, [ref]</span><span class="nv">$cursor</span><span class="s2">)
+
+       if (</span><span class="nv">$cursor</span><span class="s2"> -gt 0)
+       {
+           </span><span class="nv">$toMatch</span><span class="s2"> = </span><span class="nv">$null</span><span class="s2">
+           if (</span><span class="nv">$cursor</span><span class="s2"> -lt </span><span class="nv">$line</span><span class="s2">.Length)
+           {
+               switch (</span><span class="nv">$line</span><span class="s2">[</span><span class="nv">$cursor</span><span class="s2">])
+               {
+                   &lt;#case#&gt; '"</span><span class="s1">' { $toMatch = '</span><span class="s2">"'; break }
+                   &lt;#case#&gt; "</span><span class="s1">'" { $toMatch = "'</span><span class="s2">"; break }
+                   &lt;#case#&gt; ')' { </span><span class="nv">$toMatch</span><span class="s2"> = '('; break }
+                   &lt;#case#&gt; ']' { </span><span class="nv">$toMatch</span><span class="s2"> = '['; break }
+                   &lt;#case#&gt; '}' { </span><span class="nv">$toMatch</span><span class="s2"> = '{'; break }
+               }
+           }
+
+           if (</span><span class="nv">$toMatch</span><span class="s2"> -ne </span><span class="nv">$null</span><span class="s2"> -and </span><span class="nv">$line</span><span class="s2">[</span><span class="nv">$cursor</span><span class="s2">-1] -eq </span><span class="nv">$toMatch</span><span class="s2">)
+           {
+               [Microsoft.PowerShell.PSConsoleReadLine]::Delete(</span><span class="nv">$cursor</span><span class="s2"> - 1, 2)
+           }
+           else
+           {
+               [Microsoft.PowerShell.PSConsoleReadLine]::BackwardDeleteChar(</span><span class="nv">$key</span><span class="s2">, </span><span class="nv">$arg</span><span class="s2">)
+           }
+       }
+   }
+
+   #endregion Smart Insert/Delete
+
+   # Sometimes you enter a command but realize you forgot to do something else first.
+   # This binding will let you save that command in the history so you can recall it,
+   # but it doesn't actually execute.  It also clears the line with RevertLine so the
+   # undo stack is reset - though redo will still reconstruct the command line.
+   Set-PSReadLineKeyHandler -Key Alt+w </span><span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> SaveInHistory <span class="sb">`</span><span class="s2">
+                           -LongDescription "</span>Save current line <span class="k">in </span><span class="nb">history </span>but <span class="k">do </span>not execute<span class="s2">" </span><span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$line</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::AddToHistory<span class="o">(</span><span class="nv">$line</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::RevertLine<span class="o">()</span>
+   <span class="o">}</span>
+
+   <span class="c"># Insert text from the clipboard as a here string</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Ctrl+V <span class="sb">`</span><span class="s2">
+                           -BriefDescription PasteAsHereString </span><span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Paste the clipboard text as a here string"</span> <span class="sb">`</span><span class="s2">
+                           -ScriptBlock {
+       param(</span><span class="nv">$key</span><span class="s2">, </span><span class="nv">$arg</span><span class="s2">)
+
+       Add-Type -Assembly PresentationCore
+       if ([System.Windows.Clipboard]::ContainsText())
+       {
+           # Get clipboard text - remove trailing spaces, convert </span><span class="se">\r\n</span><span class="s2"> to </span><span class="se">\n</span><span class="s2">, and remove the final </span><span class="se">\n</span><span class="s2">.
+           </span><span class="nv">$text</span><span class="s2"> = ([System.Windows.Clipboard]::GetText() -replace "</span><span class="se">\p</span><span class="o">{</span>Zs<span class="o">}</span><span class="k">*</span><span class="sb">`</span><span class="s2">r?</span><span class="sb">`</span>n<span class="s2">","</span><span class="sb">`</span><span class="s2">n"</span><span class="o">)</span>.TrimEnd<span class="o">()</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"@'</span><span class="sb">`</span>n<span class="nv">$text</span><span class="sb">`</span><span class="s2">n'@"</span><span class="o">)</span>
+       <span class="o">}</span>
+       <span class="k">else</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Ding<span class="o">()</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># Sometimes you want to get a property of invoke a member on what you've entered so far</span>
+   <span class="c"># but you need parens to do that.  This binding will help by putting parens around the current selection,</span>
+   <span class="c"># or if nothing is selected, the whole line.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> <span class="s1">'Alt+('</span> <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> ParenthesizeSelection <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Put parenthesis around the selection or entire line and move the cursor to after the closing parenthesis"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$selectionStart</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$selectionLength</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetSelectionState<span class="o">([</span>ref]<span class="nv">$selectionStart</span>, <span class="o">[</span>ref]<span class="nv">$selectionLength</span><span class="o">)</span>
+
+       <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$line</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$selectionStart</span> <span class="nt">-ne</span> <span class="nt">-1</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span><span class="nv">$selectionStart</span>, <span class="nv">$selectionLength</span>, <span class="s1">'('</span> + <span class="nv">$line</span>.SubString<span class="o">(</span><span class="nv">$selectionStart</span>, <span class="nv">$selectionLength</span><span class="o">)</span> + <span class="s1">')'</span><span class="o">)</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$selectionStart</span> + <span class="nv">$selectionLength</span> + 2<span class="o">)</span>
+       <span class="o">}</span>
+       <span class="k">else</span>
+       <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span>0, <span class="nv">$line</span>.Length, <span class="s1">'('</span> + <span class="nv">$line</span> + <span class="s1">')'</span><span class="o">)</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::EndOfLine<span class="o">()</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># Each time you press Alt+', this key handler will change the token</span>
+   <span class="c"># under or before the cursor.  It will cycle through single quotes, double quotes, or</span>
+   <span class="c"># no quotes each time it is invoked.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> <span class="s2">"Alt+'"</span> <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> ToggleQuoteArgument <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Toggle quotes on the argument under the cursor"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$ast</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$tokens</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$errors</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$ast</span>, <span class="o">[</span>ref]<span class="nv">$tokens</span>, <span class="o">[</span>ref]<span class="nv">$errors</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="nv">$tokenToChange</span> <span class="o">=</span> <span class="nv">$null</span>
+       foreach <span class="o">(</span><span class="nv">$token</span> <span class="k">in</span> <span class="nv">$tokens</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="nv">$extent</span> <span class="o">=</span> <span class="nv">$token</span>.Extent
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$extent</span>.StartOffset <span class="nt">-le</span> <span class="nv">$cursor</span> <span class="nt">-and</span> <span class="nv">$extent</span>.EndOffset <span class="nt">-ge</span> <span class="nv">$cursor</span><span class="o">)</span>
+           <span class="o">{</span>
+               <span class="nv">$tokenToChange</span> <span class="o">=</span> <span class="nv">$token</span>
+
+               <span class="c"># If the cursor is at the end (it's really 1 past the end) of the previous token,</span>
+               <span class="c"># we only want to change the previous token if there is no token under the cursor</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$extent</span>.EndOffset <span class="nt">-eq</span> <span class="nv">$cursor</span> <span class="nt">-and</span> <span class="nv">$foreach</span>.MoveNext<span class="o">())</span>
+               <span class="o">{</span>
+                   <span class="nv">$nextToken</span> <span class="o">=</span> <span class="nv">$foreach</span>.Current
+                   <span class="k">if</span> <span class="o">(</span><span class="nv">$nextToken</span>.Extent.StartOffset <span class="nt">-eq</span> <span class="nv">$cursor</span><span class="o">)</span>
+                   <span class="o">{</span>
+                       <span class="nv">$tokenToChange</span> <span class="o">=</span> <span class="nv">$nextToken</span>
+                   <span class="o">}</span>
+               <span class="o">}</span>
+               <span class="nb">break</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$tokenToChange</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="nv">$extent</span> <span class="o">=</span> <span class="nv">$tokenToChange</span>.Extent
+           <span class="nv">$tokenText</span> <span class="o">=</span> <span class="nv">$extent</span>.Text
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$tokenText</span><span class="o">[</span>0] <span class="nt">-eq</span> <span class="s1">'"'</span> <span class="nt">-and</span> <span class="nv">$tokenText</span><span class="o">[</span><span class="nt">-1</span><span class="o">]</span> <span class="nt">-eq</span> <span class="s1">'"'</span><span class="o">)</span>
+           <span class="o">{</span>
+               <span class="c"># Switch to no quotes</span>
+               <span class="nv">$replacement</span> <span class="o">=</span> <span class="nv">$tokenText</span>.Substring<span class="o">(</span>1, <span class="nv">$tokenText</span>.Length - 2<span class="o">)</span>
+           <span class="o">}</span>
+           elseif <span class="o">(</span><span class="nv">$tokenText</span><span class="o">[</span>0] <span class="nt">-eq</span> <span class="s2">"'"</span> <span class="nt">-and</span> <span class="nv">$tokenText</span><span class="o">[</span><span class="nt">-1</span><span class="o">]</span> <span class="nt">-eq</span> <span class="s2">"'"</span><span class="o">)</span>
+           <span class="o">{</span>
+               <span class="c"># Switch to double quotes</span>
+               <span class="nv">$replacement</span> <span class="o">=</span> <span class="s1">'"'</span> + <span class="nv">$tokenText</span>.Substring<span class="o">(</span>1, <span class="nv">$tokenText</span>.Length - 2<span class="o">)</span> + <span class="s1">'"'</span>
+           <span class="o">}</span>
+           <span class="k">else</span>
+           <span class="o">{</span>
+               <span class="c"># Add single quotes</span>
+               <span class="nv">$replacement</span> <span class="o">=</span> <span class="s2">"'"</span> + <span class="nv">$tokenText</span> + <span class="s2">"'"</span>
+           <span class="o">}</span>
+
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span>
+               <span class="nv">$extent</span>.StartOffset,
+               <span class="nv">$tokenText</span>.Length,
+               <span class="nv">$replacement</span><span class="o">)</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># This example will replace any aliases on the command line with the resolved commands.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> <span class="s2">"Alt+%"</span> <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> ExpandAliases <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Replace all aliases with the full command"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$ast</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$tokens</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$errors</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$ast</span>, <span class="o">[</span>ref]<span class="nv">$tokens</span>, <span class="o">[</span>ref]<span class="nv">$errors</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="nv">$startAdjustment</span> <span class="o">=</span> 0
+       foreach <span class="o">(</span><span class="nv">$token</span> <span class="k">in</span> <span class="nv">$tokens</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$token</span>.TokenFlags <span class="nt">-band</span> <span class="o">[</span>TokenFlags]::CommandName<span class="o">)</span>
+           <span class="o">{</span>
+               <span class="nv">$alias</span> <span class="o">=</span> <span class="nv">$ExecutionContext</span>.InvokeCommand.GetCommand<span class="o">(</span><span class="nv">$token</span>.Extent.Text, <span class="s1">'Alias'</span><span class="o">)</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$alias</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+               <span class="o">{</span>
+                   <span class="nv">$resolvedCommand</span> <span class="o">=</span> <span class="nv">$alias</span>.ResolvedCommandName
+                   <span class="k">if</span> <span class="o">(</span><span class="nv">$resolvedCommand</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+                   <span class="o">{</span>
+                       <span class="nv">$extent</span> <span class="o">=</span> <span class="nv">$token</span>.Extent
+                       <span class="nv">$length</span> <span class="o">=</span> <span class="nv">$extent</span>.EndOffset - <span class="nv">$extent</span>.StartOffset
+                       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span>
+                           <span class="nv">$extent</span>.StartOffset + <span class="nv">$startAdjustment</span>,
+                           <span class="nv">$length</span>,
+                           <span class="nv">$resolvedCommand</span><span class="o">)</span>
+
+                       <span class="c"># Our copy of the tokens won't have been updated, so we need to</span>
+                       <span class="c"># adjust by the difference in length</span>
+                       <span class="nv">$startAdjustment</span> +<span class="o">=</span> <span class="o">(</span><span class="nv">$resolvedCommand</span>.Length - <span class="nv">$length</span><span class="o">)</span>
+                   <span class="o">}</span>
+               <span class="o">}</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># F1 for help on the command line - naturally</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> F1 <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> CommandHelp <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Open the help window for the current command"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$ast</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$tokens</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$errors</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$ast</span>, <span class="o">[</span>ref]<span class="nv">$tokens</span>, <span class="o">[</span>ref]<span class="nv">$errors</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="nv">$commandAst</span> <span class="o">=</span> <span class="nv">$ast</span>.FindAll<span class="o">(</span> <span class="o">{</span>
+           <span class="nv">$node</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">[</span>0]
+           <span class="nv">$node</span> <span class="nt">-is</span> <span class="o">[</span>CommandAst] <span class="nt">-and</span>
+               <span class="nv">$node</span>.Extent.StartOffset <span class="nt">-le</span> <span class="nv">$cursor</span> <span class="nt">-and</span>
+               <span class="nv">$node</span>.Extent.EndOffset <span class="nt">-ge</span> <span class="nv">$cursor</span>
+           <span class="o">}</span>, <span class="nv">$true</span><span class="o">)</span> | Select-Object <span class="nt">-Last</span> 1
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$commandAst</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="nv">$commandName</span> <span class="o">=</span> <span class="nv">$commandAst</span>.GetCommandName<span class="o">()</span>
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$commandName</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+           <span class="o">{</span>
+               <span class="nv">$command</span> <span class="o">=</span> <span class="nv">$ExecutionContext</span>.InvokeCommand.GetCommand<span class="o">(</span><span class="nv">$commandName</span>, <span class="s1">'All'</span><span class="o">)</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$command</span> <span class="nt">-is</span> <span class="o">[</span>AliasInfo]<span class="o">)</span>
+               <span class="o">{</span>
+                   <span class="nv">$commandName</span> <span class="o">=</span> <span class="nv">$command</span>.ResolvedCommandName
+               <span class="o">}</span>
+
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$commandName</span> <span class="nt">-ne</span> <span class="nv">$null</span><span class="o">)</span>
+               <span class="o">{</span>
+                   Get-Help <span class="nv">$commandName</span> <span class="nt">-ShowWindow</span>
+               <span class="o">}</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+
+   <span class="c">#</span>
+   <span class="c"># Ctrl+Shift+j then type a key to mark the current directory.</span>
+   <span class="c"># Ctrj+j then the same key will change back to that directory without</span>
+   <span class="c"># needing to type cd and won't change the command line.</span>
+
+   <span class="c">#</span>
+   <span class="nv">$global</span>:PSReadLineMarks <span class="o">=</span> @<span class="o">{}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Ctrl+J <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> MarkDirectory <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Mark the current directory"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$key</span> <span class="o">=</span> <span class="o">[</span>Console]::ReadKey<span class="o">(</span><span class="nv">$true</span><span class="o">)</span>
+       <span class="nv">$global</span>:PSReadLineMarks[<span class="nv">$key</span>.KeyChar] <span class="o">=</span> <span class="nv">$pwd</span>
+   <span class="o">}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Ctrl+j <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> JumpDirectory <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Goto the marked directory"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$key</span> <span class="o">=</span> <span class="o">[</span>Console]::ReadKey<span class="o">()</span>
+       <span class="nv">$dir</span> <span class="o">=</span> <span class="nv">$global</span>:PSReadLineMarks[<span class="nv">$key</span>.KeyChar]
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$dir</span><span class="o">)</span>
+       <span class="o">{</span>
+           <span class="nb">cd</span> <span class="nv">$dir</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt<span class="o">()</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Alt+j <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> ShowDirectoryMarks <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Show the currently marked directories"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$global</span>:PSReadLineMarks.GetEnumerator<span class="o">()</span> | % <span class="o">{</span>
+           <span class="o">[</span>PSCustomObject]@<span class="o">{</span>Key <span class="o">=</span> <span class="nv">$_</span>.Key<span class="p">;</span> Dir <span class="o">=</span> <span class="nv">$_</span>.Value<span class="o">}</span> <span class="o">}</span> |
+           Format-Table <span class="nt">-AutoSize</span> | Out-Host
+
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt<span class="o">()</span>
+   <span class="o">}</span>
+
+   <span class="c"># Auto correct 'git cmt' to 'git commit'</span>
+   Set-PSReadLineOption <span class="nt">-CommandValidationHandler</span> <span class="o">{</span>
+       param<span class="o">([</span>CommandAst]<span class="nv">$CommandAst</span><span class="o">)</span>
+
+       switch <span class="o">(</span><span class="nv">$CommandAst</span>.GetCommandName<span class="o">())</span>
+       <span class="o">{</span>
+           <span class="s1">'git'</span> <span class="o">{</span>
+               <span class="nv">$gitCmd</span> <span class="o">=</span> <span class="nv">$CommandAst</span>.CommandElements[1].Extent
+               switch <span class="o">(</span><span class="nv">$gitCmd</span>.Text<span class="o">)</span>
+               <span class="o">{</span>
+                   <span class="s1">'cmt'</span> <span class="o">{</span>
+                       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Replace<span class="o">(</span>
+                           <span class="nv">$gitCmd</span>.StartOffset, <span class="nv">$gitCmd</span>.EndOffset - <span class="nv">$gitCmd</span>.StartOffset, <span class="s1">'commit'</span><span class="o">)</span>
+                   <span class="o">}</span>
+               <span class="o">}</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># `ForwardChar` accepts the entire suggestion text when the cursor is at the end of the line.</span>
+   <span class="c"># This custom binding makes `RightArrow` behave similarly - accepting the next word instead of the entire suggestion text.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> RightArrow <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> ForwardCharAndAcceptNextSuggestionWord <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Move cursor one character to the right in the current editing line and accept the next word in suggestion when it's at the end of current editing line"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+
+       <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$line</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$cursor</span> <span class="nt">-lt</span> <span class="nv">$line</span>.Length<span class="o">)</span> <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::ForwardChar<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+       <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="c"># Cycle through arguments on current line and select the text. This makes it easier to quickly change the argument if re-running a previously run command from the history</span>
+   <span class="c"># or if using a psreadline predictor. You can also use a digit argument to specify which argument you want to select, i.e. Alt+1, Alt+a selects the first argument</span>
+   <span class="c"># on the command line. </span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Alt+a <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> SelectCommandArguments <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Set current selection to next command argument in the command line. Use of digit argument selects argument by position"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       param<span class="o">(</span><span class="nv">$key</span>, <span class="nv">$arg</span><span class="o">)</span>
+        
+       <span class="nv">$ast</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$null</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState<span class="o">([</span>ref]<span class="nv">$ast</span>, <span class="o">[</span>ref]<span class="nv">$null</span>, <span class="o">[</span>ref]<span class="nv">$null</span>, <span class="o">[</span>ref]<span class="nv">$cursor</span><span class="o">)</span>
+        
+       <span class="nv">$asts</span> <span class="o">=</span> <span class="nv">$ast</span>.FindAll<span class="o">(</span> <span class="o">{</span>
+           <span class="nv">$args</span><span class="o">[</span>0] <span class="nt">-is</span> <span class="o">[</span>System.Management.Automation.Language.ExpressionAst] <span class="nt">-and</span>
+           <span class="nv">$args</span><span class="o">[</span>0].Parent <span class="nt">-is</span> <span class="o">[</span>System.Management.Automation.Language.CommandAst] <span class="nt">-and</span>
+           <span class="nv">$args</span><span class="o">[</span>0].Extent.StartOffset <span class="nt">-ne</span> <span class="nv">$args</span><span class="o">[</span>0].Parent.Extent.StartOffset
+         <span class="o">}</span>, <span class="nv">$true</span><span class="o">)</span>
+        
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$asts</span>.Count <span class="nt">-eq</span> 0<span class="o">)</span> <span class="o">{</span>
+           <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Ding<span class="o">()</span>
+           <span class="k">return</span>
+       <span class="o">}</span>
+          
+       <span class="nv">$nextAst</span> <span class="o">=</span> <span class="nv">$null</span>
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$null</span> <span class="nt">-ne</span> <span class="nv">$arg</span><span class="o">)</span> <span class="o">{</span>
+           <span class="nv">$nextAst</span> <span class="o">=</span> <span class="nv">$asts</span><span class="o">[</span><span class="nv">$arg</span> - 1]
+       <span class="o">}</span>
+       <span class="k">else</span> <span class="o">{</span>
+           foreach <span class="o">(</span><span class="nv">$ast</span> <span class="k">in</span> <span class="nv">$asts</span><span class="o">)</span> <span class="o">{</span>
+               <span class="k">if</span> <span class="o">(</span><span class="nv">$ast</span>.Extent.StartOffset <span class="nt">-ge</span> <span class="nv">$cursor</span><span class="o">)</span> <span class="o">{</span>
+                   <span class="nv">$nextAst</span> <span class="o">=</span> <span class="nv">$ast</span>
+                   <span class="nb">break</span>
+               <span class="o">}</span>
+           <span class="o">}</span> 
+              
+           <span class="k">if</span> <span class="o">(</span><span class="nv">$null</span> <span class="nt">-eq</span> <span class="nv">$nextAst</span><span class="o">)</span> <span class="o">{</span>
+               <span class="nv">$nextAst</span> <span class="o">=</span> <span class="nv">$asts</span><span class="o">[</span>0]
+           <span class="o">}</span>
+       <span class="o">}</span>
+
+       <span class="nv">$startOffsetAdjustment</span> <span class="o">=</span> 0
+       <span class="nv">$endOffsetAdjustment</span> <span class="o">=</span> 0
+
+       <span class="k">if</span> <span class="o">(</span><span class="nv">$nextAst</span> <span class="nt">-is</span> <span class="o">[</span>System.Management.Automation.Language.StringConstantExpressionAst] <span class="nt">-and</span>
+           <span class="nv">$nextAst</span>.StringConstantType <span class="nt">-ne</span> <span class="o">[</span>System.Management.Automation.Language.StringConstantType]::BareWord<span class="o">)</span> <span class="o">{</span>
+               <span class="nv">$startOffsetAdjustment</span> <span class="o">=</span> 1
+               <span class="nv">$endOffsetAdjustment</span> <span class="o">=</span> 2
+       <span class="o">}</span>
+        
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition<span class="o">(</span><span class="nv">$nextAst</span>.Extent.StartOffset + <span class="nv">$startOffsetAdjustment</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SetMark<span class="o">(</span><span class="nv">$null</span>, <span class="nv">$null</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::SelectForwardChar<span class="o">(</span><span class="nv">$null</span>, <span class="o">(</span><span class="nv">$nextAst</span>.Extent.EndOffset - <span class="nv">$nextAst</span>.Extent.StartOffset<span class="o">)</span> - <span class="nv">$endOffsetAdjustment</span><span class="o">)</span>
+   <span class="o">}</span>
+
+
+   Set-PSReadLineOption <span class="nt">-PredictionSource</span> History
+   Set-PSReadLineOption <span class="nt">-PredictionViewStyle</span> ListView
+   Set-PSReadLineOption <span class="nt">-EditMode</span> Windows
+
+
+   <span class="c"># This is an example of a macro that you might use to execute a command.</span>
+   <span class="c"># This will add the command to history.</span>
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Ctrl+Shift+b <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> BuildCurrentDirectory <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Build the current directory"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::RevertLine<span class="o">()</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"dotnet build"</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine<span class="o">()</span>
+   <span class="o">}</span>
+
+   Set-PSReadLineKeyHandler <span class="nt">-Key</span> Ctrl+Shift+t <span class="sb">`</span>
+                           <span class="nt">-BriefDescription</span> BuildCurrentDirectory <span class="sb">`</span>
+                           <span class="nt">-LongDescription</span> <span class="s2">"Build the current directory"</span> <span class="sb">`</span>
+                           <span class="nt">-ScriptBlock</span> <span class="o">{</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::RevertLine<span class="o">()</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::Insert<span class="o">(</span><span class="s2">"dotnet test"</span><span class="o">)</span>
+       <span class="o">[</span>Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine<span class="o">()</span>
+   <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<ul>
+  <li>You can follow this reference: https://ohmyposh.dev/docs/installation/prompt</li>
+</ul>
+
+<ol>
+  <li><strong>Configure Terminal Settings</strong>
+    <ul>
+      <li>Open Windows Terminal and go to <strong>Settings</strong>.</li>
+      <li>At the bottom, click on <strong>Open JSON file</strong>.</li>
+      <li>The <code class="language-plaintext highlighter-rouge">settings.json</code> file will open in your default text editor.</li>
+      <li>Add the following lines to the <code class="language-plaintext highlighter-rouge">settings.json</code> file to enable Oh My Posh:</li>
+      <li>Here is my settings.json file. You can copy and paste it into your settings.json file. https://gist.github.com/mahedee/44fa5b644aa06597456d8cac5c2f3dd2</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>settings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"$help"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://aka.ms/terminal-documentation"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://aka.ms/terminal-profiles-schema"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"actions"</span><span class="p">:</span><span class="w"> 
+        </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"copy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"singleLine"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.copy.644BA8F2"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+c"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newTab"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.newTab.5DEADB41"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+t"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"commandPalette"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.commandPalette.D3F0B923"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+shift+p"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"splitPane"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"split"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"splitMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"duplicate"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.splitPane.A6751878"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alt+shift+d"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paste"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.paste"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+v"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toggleAlwaysOnTop"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.toggleAlwaysOnTop"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alt+shift+f11"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"closePane"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.closePane"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+w"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"splitPane"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.splitPane.91AB55B1"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+shift+minus"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"toggleFocusMode"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.toggleFocusMode"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shift+f11"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unbound"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+d"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"find"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.find"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+shift+f"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> 
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openSettings"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"settingsUI"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User.openSettings.6CD791B"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"keys"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+shift+comma"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"copyFormatting"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"copyOnSelect"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"defaultProfile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"newTabMenu"</span><span class="p">:</span><span class="w"> 
+        </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"remainingProfiles"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"profiles"</span><span class="p">:</span><span class="w"> 
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"defaults"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nl">"list"</span><span class="p">:</span><span class="w"> 
+            </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%SystemRoot%</span><span class="se">\\</span><span class="s2">System32</span><span class="se">\\</span><span class="s2">WindowsPowerShell</span><span class="se">\\</span><span class="s2">v1.0</span><span class="se">\\</span><span class="s2">powershell.exe"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"font"</span><span class="p">:</span><span class="w"> 
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"face"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CaskaydiaCove Nerd Font"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows PowerShell"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%SystemRoot%</span><span class="se">\\</span><span class="s2">System32</span><span class="se">\\</span><span class="s2">cmd.exe"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{0caa0dad-35be-5f56-a8ff-afceeeaa6101}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Command Prompt"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{b453ae62-4e3d-5e58-b989-0a998ec441b8}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Azure Cloud Shell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.Azure"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{8d610568-1d18-58b9-abbd-c7eec0a40dd4}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer Command Prompt for VS 2022"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.VisualStudio"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{97f5749f-a899-50f2-a042-7cf1e52bf252}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer PowerShell for VS 2022"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.VisualStudio"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">Git</span><span class="se">\\</span><span class="s2">bin</span><span class="se">\\</span><span class="s2">bash.exe"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"font"</span><span class="p">:</span><span class="w"> 
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"face"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CaskaydiaCove Nerd Font"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{0b98aac8-d3d9-404f-a6a5-236565bb4610}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">Git</span><span class="se">\\</span><span class="s2">mingw64</span><span class="se">\\</span><span class="s2">share</span><span class="se">\\</span><span class="s2">git</span><span class="se">\\</span><span class="s2">git-for-windows.ico"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Git Bash"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%USERPROFILE%"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{16208362-94fc-5b1f-a491-5b2624d5ab56}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Visual Studio Debug Console"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VSDebugConsole"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{72b5d9e6-2c71-5e9a-bf26-e8f53ae4c661}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer Command Prompt for VS 2022 (2)"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.VisualStudio"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{62090c5f-ff51-5b36-8031-449b2b91dff2}"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Developer PowerShell for VS 2022 (2)"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.VisualStudio"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"schemes"</span><span class="p">:</span><span class="w"> 
+        </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"background"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#300A24"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"black"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#171421"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"blue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#0037DA"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightBlack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#767676"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightBlue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#08458F"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightCyan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#2C9FB3"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightGreen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#26A269"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightPurple"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#A347BA"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightRed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#C01C28"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightWhite"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#F2F2F2"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"brightYellow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#A2734C"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"cursorColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"cyan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#3A96DD"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"foreground"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"green"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#26A269"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ubuntu-ColorScheme"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"purple"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#881798"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"red"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#C21A23"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"selectionBackground"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#FFFFFF"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"white"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#CCCCCC"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"yellow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#A2734C"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"themes"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li>Run the following command to Install PowerShell Gallery Modules. This is used to install the Terminal-Icons module, which is required by Oh My Posh:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Install-Module <span class="nt">-Name</span> Terminal-Icons <span class="nt">-Repository</span> PSGallery
+</code></pre></div></div>
+
+<ol>
+  <li><strong>Configure Theme</strong>:
+    <ul>
+      <li>You can choose a theme from the <a href="https://ohmyposh.dev/docs/themes">Oh My Posh theme gallery</a>.</li>
+      <li>Generally themes are located in <code class="language-plaintext highlighter-rouge">C:\Users\{your-username}\AppData\Local\Programs\oh-my-posh\themes</code>.</li>
+      <li>
+        <p>You can initialize Oh My Posh with a specific theme by running the following command:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oh-my-posh init pwsh <span class="nt">--config</span> C:<span class="se">\U</span>sers<span class="se">\{</span>your-username<span class="o">}</span><span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\P</span>rograms<span class="se">\o</span>h-my-posh<span class="se">\t</span>hemes<span class="se">\j</span>andedobbeleer.omp.json | Invoke-Expression
+</code></pre></div>        </div>
+      </li>
+      <li>In my case, I have created a custom theme named <code class="language-plaintext highlighter-rouge">myposh-mahedee.omp.json</code></li>
+      <li>
+        <p>You can copy it from here:
+https://gist.github.com/mahedee/e93c0f1f145dcb6db804c73fa4ed859e</p>
+      </li>
+      <li>Create a file named <code class="language-plaintext highlighter-rouge">myposh-mahedee.omp.json</code> and copy it to the themes directory.</li>
+      <li>
+        <p>Now initialize Oh My Posh with this theme:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oh-my-posh init pwsh <span class="nt">--config</span> C:<span class="se">\U</span>sers<span class="se">\{</span>your-username<span class="o">}</span><span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\P</span>rograms<span class="se">\o</span>h-my-posh<span class="se">\t</span>hemes<span class="se">\m</span>yposh-mahedee.omp.json | Invoke-Expression
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>In my case and as per example below, you will see the theme is configured in the PowerShell profile script - Microsoft.PowerShell_profile.ps1 as follows:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> oh-my-posh init pwsh <span class="nt">--config</span> C:<span class="se">\U</span>sers<span class="se">\m</span>ahedee<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\P</span>rograms<span class="se">\o</span>h-my-posh<span class="se">\t</span>hemes<span class="se">\m</span>yposh-mahedee.omp.json | Invoke-Expression
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Step 6: Configure IntelliSense in PowerShell using PSReadLine</strong></p>
+<ul>
+  <li>Install the PSReadLine module by running the following command in PowerShell:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Install-Module <span class="nt">-Name</span> PSReadLine <span class="nt">-AllowClobber</span> <span class="nt">-Force</span>
+</code></pre></div>    </div>
+    <p>References: https://learn.microsoft.com/en-us/powershell/module/psreadline/about/about_psreadline?view=powershell-7.4</p>
+  </li>
+  <li>Enable Predictive IntelliSense by running the following command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Set-PSReadLineOption <span class="nt">-PredictionSource</span> History
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Step 7: Restart Windows Terminal</strong></p>
+<ul>
+  <li>After saving the profile, close and reopen Windows Terminal to see the changes.</li>
+  <li>Now you should see the Oh My Posh theme applied to your PowerShell prompt, making it visually appealing and informative.</li>
+  <li>Use the terminal as you normally would, and enjoy the enhanced experience provided by Oh My Posh.</li>
+  <li>You can see the theme is applied in the PowerShell prompt as shown below:</li>
+</ul>
+
+<p><img src="/assets/images/posts/2024/my-terminal.png" alt="Oh My Posh Theme" /></p>
+
+<p><strong>Efficient Command Usage and History</strong></p>
+
+<p>Windows Terminal makes it easy to work efficiently and navigate your history:</p>
+
+<ol>
+  <li>
+    <p><strong>Use the Up and Down Arrow Keys</strong>: To quickly scroll through the history of commands.</p>
+  </li>
+  <li>
+    <p><strong>Search Through History</strong>: Press <strong>Ctrl + R</strong> and start typing a command to search for it.</p>
+  </li>
+  <li>
+    <p><strong>Save Command History</strong>: By default, PowerShell saves the history. If you want to ensure your history is saved across sessions, add this to your <code class="language-plaintext highlighter-rouge">$PROFILE</code>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$historyPath</span> <span class="o">=</span> <span class="s2">"</span><span class="nv">$env</span><span class="s2">:USERPROFILE</span><span class="se">\D</span><span class="s2">ocuments</span><span class="se">\P</span><span class="s2">owerShell_history.txt"</span>
+<span class="k">if</span> <span class="o">(</span>Test-Path <span class="nv">$historyPath</span><span class="o">)</span> <span class="o">{</span>
+    Get-Content <span class="nv">$historyPath</span> | Add-History
+<span class="o">}</span>
+Register-EngineEvent PowerShell.Exiting <span class="nt">-Action</span> <span class="o">{</span> Get-History | Export-Csv <span class="nv">$historyPath</span> <span class="nt">-NoTypeInformation</span> <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Use Aliases for Common Commands</strong>:
+In PowerShell or Git Bash, create aliases for long commands to make them quicker to type:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Set-Alias gs git status
+Set-Alias gl git log
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>Additional Tips and Tricks</strong></p>
+
+<ol>
+  <li><strong>Split Panes</strong>: You can split your terminal into multiple panes.
+    <ul>
+      <li><strong>Ctrl + Shift + D</strong>: Split horizontally.</li>
+      <li><strong>Alt + Shift + D</strong>: Split vertically.</li>
+      <li><strong>Ctrl + Shift + W</strong>: Close a pane.</li>
+    </ul>
+  </li>
+  <li><strong>Quick Access to Profiles</strong>: You can easily switch between profiles in Windows Terminal via the dropdown menu or by using the keyboard shortcut.
+    <ul>
+      <li><strong>Ctrl + Tab</strong>: Cycle through profiles.</li>
+      <li><strong>Ctrl + Shift + Tab</strong>: Cycle through profiles in reverse order.</li>
+    </ul>
+  </li>
+  <li><strong>Use Profiles for Different Environments</strong>: Create multiple profiles for PowerShell, Git Bash, WSL, or other environments and switch seamlessly between them.</li>
+</ol>
+
+<p><strong>Conclusion</strong></p>
+
+<p>By following these steps, you’ve successfully set up a productive and efficient Windows Terminal environment. With <strong>Oh My Posh</strong>, you’ve made your PowerShell experience visually appealing and informative. You’ve also integrated <strong>Git Bash</strong> for a seamless Unix-like experience on Windows, making it easier to switch between different tools and environments. Similar way you can include Ubuntu, putty etc.</p>
+
+<p>Windows Terminal offers unmatched flexibility in managing your development tools, and with the addition of themes, custom profiles, and persistent command history, your workflow will be more efficient than ever before.</p>
+
+<p>Happy coding!</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#gitbash" class="page__taxonomy-item" rel="tag">gitbash</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#powershell" class="page__taxonomy-item" rel="tag">powershell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#productivity" class="page__taxonomy-item" rel="tag">productivity</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#terminal" class="page__taxonomy-item" rel="tag">terminal</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#git-bash" class="page__taxonomy-item" rel="tag">Git Bash</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#powershell" class="page__taxonomy-item" rel="tag">PowerShell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#productivity" class="page__taxonomy-item" rel="tag">Productivity</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#terminal" class="page__taxonomy-item" rel="tag">Terminal</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-09-10T00:00:00-04:00">September 10, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Boost+Your+Productivity+-+Setting+Up+and+Customizing+Windows+Terminal+with+Git+Bash+and+Oh+My+Posh%20https%3A%2F%2Fmahedee.net%2F%2Fboost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fboost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fboost_your_productivity_setting_up_and_customizing_windows_terminal_with_oh_my_posh%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-configure-ssl-and-https-for-rabbitmq-in-docker/" class="pagination--pager" title="How to Configure SSL and HTTPS for RabbitMQ in Docker
+">Previous</a>
+    
+    
+      <a href="/observer_design_pattern_real_time_stock_market_notification_csharp/" class="pagination--pager" title="Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -1,0 +1,858 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to host .net core NuGet Packages in GitHub Packages Registry - Think Simple</title>
+<meta name="description" content="GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="How to host .net core NuGet Packages in GitHub Packages Registry">
+<meta property="og:url" content="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/">
+
+
+  <meta property="og:description" content="GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-06-15T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to host .net core NuGet Packages in GitHub Packages Registry | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="How to host .net core NuGet Packages in GitHub Packages Registry" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry." />
+<meta property="og:description" content="GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry." />
+<link rel="canonical" href="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/" />
+<meta property="og:url" content="https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-06-15T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to host .net core NuGet Packages in GitHub Packages Registry" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2022-06-15T00:00:00-04:00","datePublished":"2022-06-15T00:00:00-04:00","description":"GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.","headline":"How to host .net core NuGet Packages in GitHub Packages Registry","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/"},"url":"https://mahedee.net//How-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to host .net core NuGet Packages in GitHub Packages Registry">
+    <meta itemprop="description" content="GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.">
+    <meta itemprop="datePublished" content="June 15, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to host .net core NuGet Packages in GitHub Packages Registry
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Introduction</strong></p>
+
+<p>GitHub packages registries is most popular now a days. It offers different packages registries for most used package managers, such as NuGet, npm, Docker etc. In this article, I will show you how to host a .net core NuGet Package in GitHub Packages Registry.</p>
+
+<p><strong>Tools and Technology uses</strong></p>
+<ul>
+  <li>Visual Studio 2022</li>
+  <li>.NET 6</li>
+  <li>Visual C#</li>
+  <li>GitHub</li>
+</ul>
+
+<p><strong>Implementation</strong></p>
+
+<p><strong>Step 1: Create a personal access token (PAT) from GitHub</strong></p>
+
+<ul>
+  <li>Login into you GitHub</li>
+  <li>Go to settings -&gt; Developer Settings -&gt; Personal Access Tokens</li>
+  <li>Click “Generate new token” button</li>
+  <li>Type Note for the token, expiration days</li>
+  <li>
+    <p>Select scope for the token – here I have selected repo, write:packages, delete:packages as shown below.</p>
+
+    <p><img src="/assets/images/posts/2022/package-01.PNG" alt="" /></p>
+  </li>
+  <li>Now click “Generate Toke” at the bottom of the panel</li>
+  <li>Copy the token and store the token for further use because you cannot find it later</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/package-02.PNG" alt="" /></p>
+
+<p><strong>Step – 2: Add Nuget Source in visual studio</strong></p>
+<ul>
+  <li>Type the following command to add source</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nb">add</span> <span class="nf">source</span> <span class="nf">https:</span><span class="err">/</span><span class="nv">/nuget.pkg.github.com/mahedee/index.json</span> <span class="nf">--name</span> <span class="nf">github-mahedee</span> <span class="nf">--username</span> <span class="nf">mahedee</span> <span class="nf">--password</span> <span class="p">&lt;</span><span class="nf">Your</span> <span class="nf">personal</span> <span class="nf">Access</span> <span class="nf">Token</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>You will see a source is added in C:\Users\mahedee\AppData\Roaming\NuGet\NuGet.Config file</p>
+  </li>
+  <li>Optional: You can also add source from visual studio Tools -&gt; Options -&gt; NuGet Package Manager -&gt; Package Sources</li>
+  <li>Restart visual studio to get new nuget package source</li>
+</ul>
+
+<p><strong>Step – 3: Create a class library to publish in GitHub Packages</strong></p>
+<ul>
+  <li>Create a class library name – ‘CryptoEngine”</li>
+  <li>Create a class CryptoGenerator as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">System.Security.Cryptography</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">CryptoEngine</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CryptoGenerator</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">GenerateSha256Hash</span><span class="p">(</span><span class="kt">string</span> <span class="n">plainText</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create a SHA256   </span>
+            <span class="k">using</span> <span class="p">(</span><span class="n">SHA256</span> <span class="n">sha256Hash</span> <span class="p">=</span> <span class="n">SHA256</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="c1">// ComputeHash - returns byte array  </span>
+                <span class="kt">byte</span><span class="p">[]</span> <span class="n">bytes</span> <span class="p">=</span> <span class="n">sha256Hash</span><span class="p">.</span><span class="nf">ComputeHash</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">plainText</span><span class="p">));</span>
+
+                <span class="c1">// Convert byte array to a string   </span>
+                <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">bytes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="n">builder</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"x2"</span><span class="p">));</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Click right button on class library project -&gt; Package -&gt; General</li>
+  <li>Mark “Produce a package file during build operations”</li>
+  <li>Type Package ID, Package Version, Authors, Company, Product, Description</li>
+  <li>Type repository URL – A github repository and save</li>
+  <li>Now you will see the csproj file as follows</li>
+</ul>
+
+<p><strong>CryptoEngine.csproj</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;TargetFramework&gt;</span>net6.0<span class="nt">&lt;/TargetFramework&gt;</span>
+    <span class="nt">&lt;ImplicitUsings&gt;</span>enable<span class="nt">&lt;/ImplicitUsings&gt;</span>
+    <span class="nt">&lt;Nullable&gt;</span>enable<span class="nt">&lt;/Nullable&gt;</span>
+    <span class="nt">&lt;GeneratePackageOnBuild&gt;</span>True<span class="nt">&lt;/GeneratePackageOnBuild&gt;</span>
+    <span class="nt">&lt;PackageId&gt;</span>Mahedee.CryptoEngine<span class="nt">&lt;/PackageId&gt;</span>
+    <span class="nt">&lt;Version&gt;</span>1.0.0<span class="nt">&lt;/Version&gt;</span>
+    <span class="nt">&lt;Authors&gt;</span>Mahedee hasan<span class="nt">&lt;/Authors&gt;</span>
+    <span class="nt">&lt;Company&gt;</span>Mahedee.NET<span class="nt">&lt;/Company&gt;</span>
+    <span class="nt">&lt;Product&gt;</span>CryptoEngine<span class="nt">&lt;/Product&gt;</span>
+    <span class="nt">&lt;Description&gt;</span>Chipper text generator<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;RepositoryUrl&gt;</span>https://github.com/mahedee/public-packages<span class="nt">&lt;/RepositoryUrl&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+
+<span class="nt">&lt;/Project&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Create a NuGet Package</strong></p>
+
+<ul>
+  <li>Click right button on project and select Pack</li>
+  <li>A NuGet package will be generated in bin/Debug folder – In this case the nuget package name is Mahedee.CryptoEngine.1.0.0.nupkg</li>
+  <li>Or, Go to the directory where .csproj file exists and right the following command to generate nuget package</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">pack</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Push NuGet package to GitHub Package Registry</strong></p>
+
+<ul>
+  <li>Go to the directory where package generated – bin/Debug in this case.</li>
+  <li>Type following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">dotnet</span> <span class="nf">nuget</span> <span class="nf">push</span> <span class="nf">.\Mahedee.CryptoEngine.1.0.0.nupkg</span> <span class="nf">--api-key</span> <span class="p">&lt;</span><span class="nf">your</span> <span class="nf">github</span> <span class="nf">access</span> <span class="nf">token</span><span class="p">&gt;</span> <span class="nf">--source</span> <span class="nf">github-mahedee</span>
+</code></pre></div></div>
+
+<p>Here github-mahedee is my nuget source name for visual studio. Already added in step – 2.</p>
+
+<ul>
+  <li>Now login to your Github account and go to Packages tab, you will see a package is uploaded. In this case package name is Mahedee.CryptoEngine</li>
+</ul>
+
+<p><strong>Step 6: Use already uploaded package in a project</strong></p>
+<ul>
+  <li>If Nuget package source is not added, add it using step – 2</li>
+  <li>Go to package manager console</li>
+  <li>Select Package Source as “github-mahedee” and type following command</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Mahedee.CryptoEngine</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Or right button on project -&gt; Manage Nuget Packages</li>
+  <li>Select Package source “github-mahedee”</li>
+  <li>Browse and install package Mahedee.CryptoEngine</li>
+</ul>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/dotnet-core-nuget-github">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#github" class="page__taxonomy-item" rel="tag">github</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#nuget" class="page__taxonomy-item" rel="tag">nuget</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#packages" class="page__taxonomy-item" rel="tag">packages</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#github" class="page__taxonomy-item" rel="tag">GitHub</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#nuget" class="page__taxonomy-item" rel="tag">NuGet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#packages" class="page__taxonomy-item" rel="tag">Packages</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-06-15T00:00:00-04:00">June 15, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+host+.net+core+NuGet+Packages+in+GitHub+Packages+Registry%20https%3A%2F%2Fmahedee.net%2F%2FHow-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2FHow-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2FHow-to-host-dot-net-core-NuGet-Packages-in-GitHub-Packages-Registry%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/" class="pagination--pager" title="Configure QoS in API Gateway using ocelot and Polly
+">Previous</a>
+    
+    
+      <a href="/Service-Discovery-using-Eureka-Ocelot-and-ASPnet-core/" class="pagination--pager" title="Service Discovery using Eureka, Ocelot and ASP.net core
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

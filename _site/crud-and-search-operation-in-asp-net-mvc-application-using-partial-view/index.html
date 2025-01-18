@@ -1,0 +1,1371 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CRUD And Search Operation In ASP.NET MVC Application Using Partial View - Think Simple</title>
+<meta name="description" content="Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="CRUD And Search Operation In ASP.NET MVC Application Using Partial View">
+<meta property="og:url" content="https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/">
+
+
+  <meta property="og:description" content="Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-04-15T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CRUD And Search Operation In ASP.NET MVC Application Using Partial View | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="CRUD And Search Operation In ASP.NET MVC Application Using Partial View" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way." />
+<meta property="og:description" content="Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way." />
+<link rel="canonical" href="https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/" />
+<meta property="og:url" content="https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-04-15T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CRUD And Search Operation In ASP.NET MVC Application Using Partial View" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2016-04-15T00:00:00-04:00","datePublished":"2016-04-15T00:00:00-04:00","description":"Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way.","headline":"CRUD And Search Operation In ASP.NET MVC Application Using Partial View","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/"},"url":"https://mahedee.net//crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CRUD And Search Operation In ASP.NET MVC Application Using Partial View">
+    <meta itemprop="description" content="Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way.">
+    <meta itemprop="datePublished" content="April 15, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">CRUD And Search Operation In ASP.NET MVC Application Using Partial View
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>What is Partial View in ASP.NET MVC?</strong></p>
+
+<ul>
+  <li>Partial view is a view which is rendered in another view</li>
+  <li>Partial view render portion of pages</li>
+  <li>Using partial view, you can reuse portion of page</li>
+  <li>Partial view is similar to a normal view with .cshtml</li>
+</ul>
+
+<p><strong>Project overview</strong></p>
+
+<p>Here I have created an application to keep basic employee information. View, add, update and delete option of an employee is in the application. I used partial view to show employee information in grid. Here I showed how do you run CRUD operation using partial view in most manageable way.
+Let’s come to the implementation of the project.</p>
+
+<p><strong>Tools and Technology used</strong>
+I used following tools and technology to develop the project –</p>
+
+<ul>
+  <li>Visual Studio 2013</li>
+  <li>Visual C#</li>
+  <li>ASP.NET MVC 5</li>
+  <li>Entity Framework 6</li>
+  <li>Razor view engine</li>
+  <li>JQuery</li>
+</ul>
+
+<p><strong>Step 1: Create a ASP.net MVC Project</strong></p>
+<ul>
+  <li>From Visual studio 2013, choose File-&gt;Project -&gt; ASP.NET Web application</li>
+  <li>Select MVC Template and click OK</li>
+</ul>
+
+<p><strong>Step 2: Change or Add Connection String</strong></p>
+<ul>
+  <li>Change or Add connection string in Web.config as follows</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"DefaultConnection"</span> <span class="na">connectionString=</span><span class="s">"Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\HRMDB.mdf;Initial Catalog=HRMDB;Integrated Security=True"</span> <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create model classes</strong></p>
+
+<p>Create three model classes Dept, Designation and Employee as follows.</p>
+
+<p><strong>Dept Class</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Dept</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Dept</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ActionDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Dept"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="k">public</span> <span class="k">virtual</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">ActionDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Designation Class</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Designation</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Designation</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ActionDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Designation"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="k">virtual</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">ActionDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Employee Class</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Employee</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ActionDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="n">Key</span><span class="p">,</span> <span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Employee Code"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">EmpCode</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Full Name"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FullName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Nick Name"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">NickName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Designation"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">DesignationId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">ForeignKey</span><span class="p">(</span><span class="s">"DesignationId"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">virtual</span> <span class="n">Designation</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Department"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">DeptId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="p">[</span><span class="nf">ForeignKey</span><span class="p">(</span><span class="s">"DeptId"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">virtual</span> <span class="n">Dept</span> <span class="n">Dept</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Phone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">ActionDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 4: Create a Context class</strong></p>
+<ul>
+  <li>Create HRMContext Class in Model folder.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.AspNet.Identity.EntityFramework</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Data.Entity</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM.Models</span>
+<span class="p">{</span>
+ 
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HRMContext</span> <span class="p">:</span> <span class="n">IdentityDbContext</span><span class="p">&lt;</span><span class="n">ApplicationUser</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">HRMContext</span><span class="p">()</span>
+            <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">,</span> <span class="n">throwIfV1Schema</span><span class="p">:</span> <span class="k">false</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+ 
+        <span class="k">public</span> <span class="k">static</span> <span class="n">HRMContext</span> <span class="nf">Create</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">HRMContext</span><span class="p">();</span>
+        <span class="p">}</span>
+ 
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Dept</span><span class="p">&gt;</span> <span class="n">Depts</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Designation</span><span class="p">&gt;</span> <span class="n">Designations</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Create Controller and Views</strong></p>
+<ul>
+  <li>Click Right button on Controller Folder-&gt;Add Controller.</li>
+  <li>Now choose MVC 5 Controller with views, using Entity Framework as scaffolding template.</li>
+  <li>Click Add.</li>
+  <li>Now select HRMContext as context, Employee as model and type controller name as EmployeeController.</li>
+</ul>
+
+<p><strong>Step 6: Modify the controller</strong></p>
+<ul>
+  <li>Modify EmployeeController as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Data.Entity</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Web.HRM.Models</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM.Controllers</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeController</span> <span class="p">:</span> <span class="n">Controller</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">HRMContext</span> <span class="n">db</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HRMContext</span><span class="p">();</span>
+ 
+        <span class="c1">// GET: /Employee/</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Index</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Include</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Dept</span><span class="p">).</span><span class="nf">Include</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Designation</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employees</span><span class="p">.</span><span class="nf">ToList</span><span class="p">());</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// GET: /Employee/Details/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Details</span><span class="p">(</span><span class="kt">int</span><span class="p">?</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">HttpStatusCodeResult</span><span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">BadRequest</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">Employee</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">HttpNotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// GET: /Employee/Create</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Depts</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">);</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Designations</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">);</span>
+ 
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Dept</span><span class="p">&gt;</span> <span class="n">lstDept</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Depts</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptList</span> <span class="p">=</span> <span class="n">lstDept</span><span class="p">;</span>
+ 
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Designation</span><span class="p">&gt;</span> <span class="n">lstDesignation</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Designations</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationList</span> <span class="p">=</span> <span class="n">lstDesignation</span><span class="p">;</span>
+ 
+            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// POST: /Employee/Create</span>
+        <span class="c1">// To protect from overposting attacks, please enable the specific properties you want to bind to, for </span>
+        <span class="c1">// more details see http://go.microsoft.com/fwlink/?LinkId=317598.</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">ValidateAntiForgeryToken</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">([</span><span class="nf">Bind</span><span class="p">(</span><span class="n">Include</span> <span class="p">=</span> <span class="s">"Id,EmpCode,FullName,NickName,DesignationId,DeptId,Phone,Email,Address"</span><span class="p">)]</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">employee</span><span class="p">.</span><span class="n">ActionDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">employee</span><span class="p">.</span><span class="n">Id</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+                    <span class="n">db</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">employee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+                <span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Create"</span><span class="p">);</span>
+            <span class="p">}</span>
+ 
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Depts</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DeptId</span><span class="p">);</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Designations</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DesignationId</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// GET: /Employee/Edit/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span><span class="p">?</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">HttpStatusCodeResult</span><span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">BadRequest</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">Employee</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">HttpNotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Depts</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DeptId</span><span class="p">);</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Designations</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DesignationId</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// POST: /Employee/Edit/5</span>
+        <span class="c1">// To protect from overposting attacks, please enable the specific properties you want to bind to, for </span>
+        <span class="c1">// more details see http://go.microsoft.com/fwlink/?LinkId=317598.</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">ValidateAntiForgeryToken</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Edit</span><span class="p">([</span><span class="nf">Bind</span><span class="p">(</span><span class="n">Include</span> <span class="p">=</span> <span class="s">"Id,EmpCode,FullName,NickName,DesignationId,DeptId,Phone,Email,Address,ActionDate"</span><span class="p">)]</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">db</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">employee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+                <span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+                <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Depts</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DeptId</span><span class="p">);</span>
+            <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">db</span><span class="p">.</span><span class="n">Designations</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">,</span> <span class="n">employee</span><span class="p">.</span><span class="n">DesignationId</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// GET: /Employee/Delete/5</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span><span class="p">?</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">HttpStatusCodeResult</span><span class="p">(</span><span class="n">HttpStatusCode</span><span class="p">.</span><span class="n">BadRequest</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">Employee</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">HttpNotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+ 
+            <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// POST: /Employee/Delete/5</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">,</span> <span class="nf">ActionName</span><span class="p">(</span><span class="s">"Delete"</span><span class="p">)]</span>
+        <span class="p">[</span><span class="n">ValidateAntiForgeryToken</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">DeleteConfirmed</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Employee</span> <span class="n">employee</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Create"</span><span class="p">);</span>
+            <span class="c1">//return RedirectToAction("Index");</span>
+        <span class="p">}</span>
+ 
+ 
+        <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">_LoadSearchEmployee</span><span class="p">(</span><span class="kt">string</span> <span class="n">desigId</span><span class="p">,</span> <span class="kt">string</span> <span class="n">deptId</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;();</span>
+            <span class="kt">int</span> <span class="n">_desigId</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">_deptId</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="n">Int32</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">desigId</span><span class="p">,</span> <span class="k">out</span> <span class="n">_desigId</span><span class="p">);</span>
+            <span class="n">Int32</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">deptId</span><span class="p">,</span> <span class="k">out</span> <span class="n">_deptId</span><span class="p">);</span>
+ 
+            <span class="n">employee</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">DeptId</span> <span class="p">==</span> <span class="n">_deptId</span> <span class="p">||</span> <span class="n">_deptId</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">&amp;&amp;</span>
+                <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">DesignationId</span> <span class="p">==</span> <span class="n">_desigId</span> <span class="p">||</span> <span class="n">_desigId</span> <span class="p">==</span> <span class="m">0</span><span class="p">)).</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="k">return</span> <span class="nf">PartialView</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Dispose</span><span class="p">(</span><span class="kt">bool</span> <span class="n">disposing</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">disposing</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">db</span><span class="p">.</span><span class="nf">Dispose</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">Dispose</span><span class="p">(</span><span class="n">disposing</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Create a partial view</strong></p>
+<ul>
+  <li>Create a partial view name _LoadSearchEmployee in Employee Controller.</li>
+  <li>Click right button on _LoadSearchEmployee action -&gt; Add View -&gt; Select “Create as a partial view” as follows.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2016/0106_06.png" alt="" /></p>
+
+<ul>
+  <li>Modify the partial view “_LoadSearchEmployee” in Views-&gt; Employee folder as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">@model</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Web</span><span class="p">.</span><span class="n">HRM</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Employee</span><span class="p">&gt;</span>
+ 
+    <span class="err">@</span><span class="p">{</span>
+        <span class="n">ViewBag</span><span class="p">.</span><span class="n">Title</span> <span class="p">=</span> <span class="s">"View1"</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="p">&lt;</span><span class="n">h2</span><span class="p">&gt;</span><span class="n">List</span> <span class="n">of</span> <span class="n">Employees</span><span class="p">&lt;/</span><span class="n">h2</span><span class="p">&gt;</span>
+ 
+    <span class="err">@</span><span class="p">*&lt;</span><span class="n">p</span><span class="p">&gt;</span>
+            <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Create New"</span><span class="p">,</span> <span class="s">"Create"</span><span class="p">)</span>
+        <span class="p">&lt;/</span><span class="n">p</span><span class="p">&gt;*</span><span class="err">@</span>
+    <span class="p">&lt;</span><span class="n">table</span> <span class="k">class</span><span class="err">="</span><span class="nc">table</span><span class="s">"&gt;
+</span>        <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">EmpCode</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">NickName</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Designation</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Dept</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Phone</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayNameFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span>
+            <span class="p">&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">th</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">th</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">th</span><span class="p">&gt;&lt;/</span><span class="n">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+        <span class="nf">@foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">item</span> <span class="k">in</span> <span class="n">Model</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">EmpCode</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">NickName</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+ 
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">Designation</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+ 
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;</span>
+                    <span class="n">@item</span><span class="p">.</span><span class="n">DesignationId</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">Dept</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;</span>
+                    <span class="n">@item</span><span class="p">.</span><span class="n">DeptId</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">Phone</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DisplayFor</span><span class="p">(</span><span class="n">modelItem</span> <span class="p">=&gt;</span> <span class="n">item</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;</span>
+                    <span class="n">@item</span><span class="p">.</span><span class="n">Address</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                <span class="p">&lt;</span><span class="n">td</span> <span class="n">hidden</span><span class="p">=</span><span class="s">"hidden"</span><span class="p">&gt;</span>
+                    <span class="n">@item</span><span class="p">.</span><span class="n">Id</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="p">=</span><span class="s">"button"</span> <span class="n">id</span><span class="p">=</span><span class="s">"editRow"</span> <span class="k">value</span><span class="p">=</span><span class="s">"Edit"</span> <span class="k">class</span><span class="err">="</span><span class="nc">btn</span> <span class="n">btn</span><span class="p">-</span><span class="n">link</span> <span class="n">editRow</span><span class="s">" /&gt;
+</span>                <span class="p">|</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Details"</span><span class="p">,</span> <span class="s">"Details"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">Id</span> <span class="p">})</span> <span class="p">|</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Delete"</span><span class="p">,</span> <span class="s">"Delete"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">Id</span> <span class="p">})</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+        <span class="p">}</span>
+ 
+    <span class="p">&lt;/</span><span class="n">table</span><span class="p">&gt;</span>
+ 
+    <span class="p">&lt;</span><span class="n">script</span> <span class="n">src</span><span class="p">=</span><span class="s">"~/Scripts/jquery-1.10.2.min.js"</span><span class="p">&gt;&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">script</span><span class="p">&gt;</span>
+        <span class="err">$</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+ 
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">EmpCode</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">FullName</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">NickName</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">Phone</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">Email</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+ 
+            <span class="err">$</span><span class="p">(</span><span class="err">'</span><span class="p">.</span><span class="n">editRow</span><span class="err">'</span><span class="p">).</span><span class="nf">click</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+ 
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">EmpCode</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">0</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">FullName</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">NickName</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+ 
+                <span class="kt">var</span> <span class="n">designationId</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">();</span>
+                <span class="kt">var</span> <span class="n">deptId</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">6</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">();</span>
+                <span class="c1">//alert(designationId);</span>
+                <span class="err">$</span><span class="p">(</span><span class="s">"#DesignationId"</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="n">designationId</span><span class="p">);</span>
+                <span class="err">$</span><span class="p">(</span><span class="s">"#DeptId"</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="n">deptId</span><span class="p">);</span>
+ 
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">Phone</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">Email</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">8</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+ 
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">Address</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">9</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">());</span>
+ 
+                <span class="kt">var</span> <span class="n">empId</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">closest</span><span class="p">(</span><span class="err">'</span><span class="n">tr</span><span class="err">'</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="err">'</span><span class="n">td</span><span class="p">:</span><span class="nf">eq</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="err">'</span><span class="p">).</span><span class="nf">text</span><span class="p">().</span><span class="nf">trim</span><span class="p">();</span>
+                <span class="c1">//alert(empId);</span>
+                <span class="err">$</span><span class="p">(</span><span class="s">"#Id"</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="n">empId</span><span class="p">);</span>
+                <span class="err">$</span><span class="p">(</span><span class="s">"#btnSave"</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="s">"Edit"</span><span class="p">);</span>
+ 
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 8: Create a View</strong></p>
+<ul>
+  <li>Right click on Create action -&gt; Add View name Create as follows.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2016/0106_07.png" alt="" /></p>
+
+<ul>
+  <li>Modify the “Create” View and javascript bottom of the view in View-&gt;Employee folder as follows.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">@model</span> <span class="n">Web</span><span class="p">.</span><span class="n">HRM</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Employee</span>
+ 
+<span class="err">@</span><span class="p">{</span>
+    <span class="n">ViewBag</span><span class="p">.</span><span class="n">Title</span> <span class="p">=</span> <span class="s">"Create"</span><span class="p">;</span>
+ 
+    <span class="kt">var</span> <span class="n">lstDept</span> <span class="p">=</span> <span class="n">ViewBag</span><span class="p">.</span><span class="n">DeptList</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">lstDesignation</span> <span class="p">=</span> <span class="n">ViewBag</span><span class="p">.</span><span class="n">DesignationList</span><span class="p">;</span>
+ 
+<span class="p">}</span>
+ 
+<span class="err">@</span><span class="p">*&lt;</span><span class="n">h2</span><span class="p">&gt;</span><span class="n">Create</span><span class="p">&lt;/</span><span class="n">h2</span><span class="p">&gt;*</span><span class="err">@</span>
+ 
+ 
+<span class="nf">@using</span> <span class="p">(</span><span class="n">Html</span><span class="p">.</span><span class="nf">BeginForm</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">@Html</span><span class="p">.</span><span class="nf">AntiForgeryToken</span><span class="p">()</span>
+ 
+ 
+    <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="n">horizontal</span><span class="s">"&gt;
+</span>        <span class="p">&lt;</span><span class="n">h4</span><span class="p">&gt;</span><span class="n">Employee</span> <span class="n">Information</span><span class="p">&lt;/</span><span class="n">h4</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="n">hr</span> <span class="p">/&gt;</span>
+        <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationSummary</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+ 
+        <span class="err">@</span><span class="p">*</span><span class="n">@Html</span><span class="p">.</span><span class="nf">HiddenFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Id</span><span class="p">)*</span><span class="err">@</span>
+        <span class="p">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="p">=</span><span class="s">"hidden"</span> <span class="k">value</span><span class="p">=</span><span class="s">"0"</span> <span class="n">id</span><span class="p">=</span><span class="s">"Id"</span> <span class="n">name</span><span class="p">=</span><span class="s">"Id"</span> <span class="p">/&gt;</span>
+ 
+        <span class="p">&lt;</span><span class="n">table</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">EmpCode</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">EmpCode</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">EmpCode</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">FullName</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">NickName</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">NickName</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">NickName</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">DesignationId</span><span class="p">,</span> <span class="s">"Designation"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"DesignationId"</span><span class="p">,</span> <span class="s">"---Select Dept---"</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">DesignationId</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">DeptId</span><span class="p">,</span> <span class="s">"Dept"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"DeptId"</span><span class="p">,</span> <span class="s">"---Select Dept---"</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">DeptId</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Phone</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Phone</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Phone</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+ 
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Address</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Address</span><span class="p">)</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Address</span><span class="p">)</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="p">=</span><span class="s">"submit"</span> <span class="k">value</span><span class="p">=</span><span class="s">"Save"</span> <span class="n">id</span><span class="p">=</span><span class="s">"btnSave"</span> <span class="k">class</span><span class="err">="</span><span class="nc">btn</span> <span class="n">btn</span><span class="p">-</span><span class="n">primary</span><span class="s">" /&gt; ||
+</span>                    <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Clear"</span><span class="p">,</span> <span class="s">"Create"</span><span class="p">,</span> <span class="s">"Employee"</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"btn btn-primary"</span> <span class="p">})</span>
+                    <span class="err">@</span><span class="p">*</span><span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Back to List"</span><span class="p">,</span> <span class="s">"Index"</span><span class="p">)*</span><span class="err">@</span>
+ 
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">table</span><span class="p">&gt;</span>
+ 
+        <span class="p">&lt;</span><span class="n">hr</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">table</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"Dept: "</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 150px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})</span> <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"DeptSearch"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">lstDept</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">),</span> <span class="s">"---Select Dept---"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 200px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"form-control"</span> <span class="p">})</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span><span class="n">@Html</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"Designation: "</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+ 
+                    <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"DesigSearch"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">lstDesignation</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">),</span> <span class="s">"---Select Designation---"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@style</span> <span class="p">=</span> <span class="s">"width : 200px"</span><span class="p">,</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"form-control"</span> <span class="p">})</span>
+                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="p">=</span><span class="s">"button"</span> <span class="k">value</span><span class="p">=</span><span class="s">"Search"</span> <span class="k">class</span><span class="err">="</span><span class="nc">btn</span> <span class="n">btn</span><span class="p">-</span><span class="n">primary</span><span class="s">" id="</span><span class="n">getData</span><span class="s">" /&gt;
+</span>                <span class="p">&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">table</span><span class="p">&gt;</span>
+ 
+    <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+<span class="p">}</span>
+ 
+<span class="err">@</span><span class="p">*&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Back to List"</span><span class="p">,</span> <span class="s">"Index"</span><span class="p">)</span>
+    <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;*</span><span class="err">@</span>
+ 
+<span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;&lt;</span><span class="n">br</span> <span class="p">/&gt;&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+ 
+<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">"saveDiv"</span><span class="p">&gt;</span>
+    <span class="err">@</span><span class="p">{</span> <span class="n">Html</span><span class="p">.</span><span class="nf">RenderAction</span><span class="p">(</span><span class="s">"_LoadSearchEmployee"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">desigId</span> <span class="p">=</span> <span class="s">""</span><span class="p">,</span> <span class="n">deptId</span> <span class="p">=</span> <span class="s">""</span> <span class="p">});</span> <span class="p">}</span>
+<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">div</span> <span class="n">id</span><span class="p">=</span><span class="s">"partial"</span><span class="p">&gt;</span>
+ 
+<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+ 
+ 
+<span class="n">@section</span> <span class="n">Scripts</span> <span class="p">{</span>
+    <span class="n">@Scripts</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/bundles/jqueryval"</span><span class="p">)</span>
+ 
+ 
+    <span class="p">&lt;</span><span class="n">script</span><span class="p">&gt;</span>
+        <span class="err">$</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+ 
+            <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">getData</span><span class="err">'</span><span class="p">).</span><span class="nf">click</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="c1">//alert('Clicked');</span>
+                <span class="kt">var</span> <span class="n">deptId</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">DeptSearch</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">();</span>
+                <span class="kt">var</span> <span class="n">desigId</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">DesigSearch</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">();</span>
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="n">saveDiv</span><span class="err">'</span><span class="p">).</span><span class="nf">hide</span><span class="p">();</span>
+ 
+                <span class="kt">var</span> <span class="n">url</span> <span class="p">=</span> <span class="s">"@Html.Raw(Url.Action("</span><span class="n">_LoadSearchEmployee</span><span class="s">", "</span><span class="n">Employee</span><span class="s">", new { desigId = "</span><span class="p">-</span><span class="n">parameter</span><span class="s">", deptId = "</span><span class="n">sempar</span><span class="s">" }))"</span><span class="p">;</span>
+                <span class="n">url</span> <span class="p">=</span> <span class="n">url</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s">"-parameter"</span><span class="p">,</span> <span class="n">desigId</span><span class="p">);</span>
+                <span class="n">url</span> <span class="p">=</span> <span class="n">url</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s">"sempar"</span><span class="p">,</span> <span class="n">deptId</span><span class="p">);</span>
+                <span class="err">$</span><span class="p">(</span><span class="err">'#</span><span class="k">partial</span><span class="err">'</span><span class="p">).</span><span class="nf">load</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+            <span class="p">});</span>
+ 
+        <span class="p">});</span>
+ 
+    <span class="p">&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 9: Modify the RouteConfig</strong></p>
+<ul>
+  <li>Modify route configuration in App_Start in RouteConfig.cs is as follows. Main reason to modify this class to run the create page by default.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Web.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Routing</span><span class="p">;</span>
+ 
+<span class="k">namespace</span> <span class="nn">Web.HRM</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">RouteConfig</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteCollection</span> <span class="n">routes</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">routes</span><span class="p">.</span><span class="nf">IgnoreRoute</span><span class="p">(</span><span class="s">"{resource}.axd/{*pathInfo}"</span><span class="p">);</span>
+ 
+            <span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+                <span class="n">name</span><span class="p">:</span> <span class="s">"Default"</span><span class="p">,</span>
+                <span class="n">url</span><span class="p">:</span> <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>
+                <span class="n">defaults</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Employee"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Create"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="n">UrlParameter</span><span class="p">.</span><span class="n">Optional</span> <span class="p">}</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Now run the application, you will see the following output. You can add, view, update and delete employee information in a same page. Thanks for your patience.</p>
+
+<p><img src="/assets/images/posts/2016/0106_08.png" alt="" /></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetmvc" class="page__taxonomy-item" rel="tag">aspnetmvc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-04-15T00:00:00-04:00">April 15, 2016</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CRUD+And+Search+Operation+In+ASP.NET+MVC+Application+Using+Partial+View%20https%3A%2F%2Fmahedee.net%2F%2Fcrud-and-search-operation-in-asp-net-mvc-application-using-partial-view%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fcrud-and-search-operation-in-asp-net-mvc-application-using-partial-view%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fcrud-and-search-operation-in-asp-net-mvc-application-using-partial-view%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/" class="pagination--pager" title="Cascading Dropdown List In ASP.Net MVC A Sample Demonstration
+">Previous</a>
+    
+    
+      <a href="/building-a-simple-application-using-asp-net-core-1-0/" class="pagination--pager" title="Building A Simple Application Using ASP.NET Core 1.0
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

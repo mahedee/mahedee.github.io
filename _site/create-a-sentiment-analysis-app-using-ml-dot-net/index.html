@@ -1,0 +1,805 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Create a sentiment analysis app using ML.NET - Think Simple</title>
+<meta name="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Create a sentiment analysis app using ML.NET">
+<meta property="og:url" content="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/">
+
+
+  <meta property="og:description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-12-05T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Create a sentiment analysis app using ML.NET | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Create a sentiment analysis app using ML.NET" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#." />
+<meta property="og:description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#." />
+<link rel="canonical" href="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/" />
+<meta property="og:url" content="https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-05T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Create a sentiment analysis app using ML.NET" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2020-12-05T00:00:00-05:00","datePublished":"2020-12-05T00:00:00-05:00","description":"ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.","headline":"Create a sentiment analysis app using ML.NET","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/"},"url":"https://mahedee.net//create-a-sentiment-analysis-app-using-ml-dot-net/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Create a sentiment analysis app using ML.NET">
+    <meta itemprop="description" content="ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#.">
+    <meta itemprop="datePublished" content="December 05, 2020">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Create a sentiment analysis app using ML.NET
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- ## Create a sentiment analysis app using ML.NET -->
+
+<p><strong>Application overview</strong><br />
+ML.NET is a free, open source and cross platform machine learning framework. It is easily integrated with .NET development environment. ML.NET allows you to train, build, and ship custom machine learning models using C# and some other languages. Here a simple sentiment analysis application will be created using ML.NET and C#. Let’s start.</p>
+
+<p><strong>Tools and Technology used</strong> 
+The following tools and technologies has been used for this application</p>
+<ul>
+  <li>Visual Studio 2019</li>
+  <li>Visual C#</li>
+</ul>
+
+<p><strong>Step 1: Create a console application</strong></p>
+<ul>
+  <li>Create a new project using visual studio 2019</li>
+  <li>Choose the C# Console App (.NET Core) project template</li>
+  <li>Change the project and solution name as “SentimentAnalysis”</li>
+  <li>Click create button to create the project.</li>
+</ul>
+
+<p><strong>Step 2: Enable the ML.NET Model Builder preview feature</strong>
+Press right button on the project file -&gt; Add -&gt; Machine learning
+You will see the following pop up message. Enable it.</p>
+
+<p>Would you like to enable the ML.NET Model Builder preview feature so you can add Machine Learning to your .NET projects? <a href="">Enable</a></p>
+
+<p><strong>Step 3: Select model builder scenario</strong></p>
+<ul>
+  <li>Press right button on the project -&gt; Add -&gt; Machine Learning</li>
+  <li>Select Text classification</li>
+  <li>Keep the Local Environment and click on data (to move data step)</li>
+</ul>
+
+<!-- Draft -->
+
+<p><strong>Step 4: Download and add data</strong></p>
+<ul>
+  <li>Download the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment%20labelled%20sentences.zip">Sentiment Labelled Sentences datasets</a> from the <a href="https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences">UCI Machine Learning Repository</a></li>
+  <li>Unzip the file and keep the “yelp_labelled.txt” file to Data folder</li>
+  <li>The first column of this file represents the comments and the second column represent the sentiment of the text (0 for negative and 1 for positive)</li>
+</ul>
+
+<p><strong>Add data</strong></p>
+<ul>
+  <li>In this form, select File as the input data source type</li>
+  <li>Browse file yelp_labelled.txt. Once you are selected, you will see the preview of the data.</li>
+  <li>Select “col1” for Column to predict (Label) as the image below</li>
+  <li>Now click Train button to move to the train step</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0001.png" alt="" /></p>
+
+<p><strong>Step 5: Train your model</strong></p>
+<ul>
+  <li>Time to train set automatically based on data. But you can manually set it.</li>
+  <li>Click start training button. You will see the following point the screen.</li>
+</ul>
+
+<p>Best accuracy - Percentage of accuracy of the current model <br />
+Best model - This shows you which algorithm performed the best during Model Builder’s exploration.<br />
+Training time - Total times taken to run training
+Models explored (total) - This shows you the total number of models explored by Model Builder in the given amount of time.</p>
+
+<p>Source : Microsoft docs</p>
+
+<ul>
+  <li>Now click Evaluate to move to the evaluate step</li>
+</ul>
+
+<p><strong>Step 6: Evaluate your model</strong></p>
+<ul>
+  <li>Type a sentence in Try your model section.</li>
+  <li>I Typed “This is a fantastic place” and it shows positive is 98% and negative 2%</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0002.png" alt="" /></p>
+
+<p><strong>Step 7: Add project in to the solution</strong></p>
+<ul>
+  <li>Click Add Project Button</li>
+  <li>Model builder will add machine learning model and the project for training</li>
+  <li>ModelBuilder.cs in the console application is used to build/train the model</li>
+  <li>Program.cs in the console application is used to test run the model</li>
+  <li>ModelInput.cs and ModelOutput.cs in Model library is the input and output class for the model training.</li>
+  <li>ConsumeModel.cs in Model library contains the method for model consumption</li>
+  <li>Solution structure will be like as follows</li>
+</ul>
+
+<p><img src="..\assets\images\posts\0003.png" alt="" /></p>
+
+<p><strong>Step 8: Consume your model</strong></p>
+<ul>
+  <li>Set SentimentAnalysisML.ConsoleApp as startup project</li>
+  <li>Modify a bit of Program.cs in SentimentAnalysisML.ConsoleApp as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create single instance of sample data from first line of dataset for model input</span>
+            <span class="n">ModelInput</span> <span class="n">sampleData</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ModelInput</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">Col0</span> <span class="p">=</span> <span class="s">@"The food of Hotel Sonargaon was awesome"</span><span class="p">,</span>
+            <span class="p">};</span>
+
+            <span class="c1">// Make a single prediction on the sample data and print results</span>
+            <span class="kt">var</span> <span class="n">predictionResult</span> <span class="p">=</span> <span class="n">ConsumeModel</span><span class="p">.</span><span class="nf">Predict</span><span class="p">(</span><span class="n">sampleData</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Using model to make single prediction -- Comparing actual Col1 with predicted Col1 from sample data...\n\n"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Col0: </span><span class="p">{</span><span class="n">sampleData</span><span class="p">.</span><span class="n">Col0</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"\n\nPredicted Col1 value </span><span class="p">{</span><span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span><span class="p">}</span><span class="s"> \nPredicted Col1 scores: [</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="s">","</span><span class="p">,</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Score</span><span class="p">)}</span><span class="s">]\n"</span><span class="p">);</span>
+
+            <span class="kt">string</span> <span class="n">sentiment</span> <span class="p">=</span> <span class="n">predictionResult</span><span class="p">.</span><span class="n">Prediction</span> <span class="p">==</span> <span class="s">"1"</span> <span class="p">?</span> <span class="s">"Positive"</span> <span class="p">:</span> <span class="s">"Negative"</span><span class="p">;</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Sentiment: </span><span class="p">{</span><span class="n">sentiment</span><span class="p">}</span><span class="s"> \n"</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=============== End of process, hit any key to finish ==============="</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+</code></pre></div></div>
+
+<p><strong>Step 9: Build and run the application</strong>
+Now build and run the application. You will see the sentiment output of the sentence “The food of Hotel Sonargaon was awesome”.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/SentimentAnalysis">Source Code</a></strong></p>
+
+<!-- **References**  
+1. https://dotnet.microsoft.com/learn/ml-dotnet/get-started-tutorial/create -->
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ai" class="page__taxonomy-item" rel="tag">ai</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#machinelearning" class="page__taxonomy-item" rel="tag">machinelearning</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ai" class="page__taxonomy-item" rel="tag">AI</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#machine-learning" class="page__taxonomy-item" rel="tag">Machine Learning</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-12-05T00:00:00-05:00">December 05, 2020</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Create+a+sentiment+analysis+app+using+ML.NET%20https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fcreate-a-sentiment-analysis-app-using-ml-dot-net%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/authentication-and-authorization-in-asp.net-mvc/" class="pagination--pager" title="Authentication and authorization using ASP.NET MVC
+">Previous</a>
+    
+    
+      <a href="/authentication-and-authorization-using-asp.net-core-web-api-and-jwt-part01/" class="pagination--pager" title="Authentication and authorization using asp.net core web api and JWT (Part 01)
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

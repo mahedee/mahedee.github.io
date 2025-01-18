@@ -1,0 +1,1072 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Cascading Dropdown List In ASP.Net MVC A Sample Demonstration - Think Simple</title>
+<meta name="description" content="Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category).">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Cascading Dropdown List In ASP.Net MVC A Sample Demonstration">
+<meta property="og:url" content="https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/">
+
+
+  <meta property="og:description" content="Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category).">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-12-05T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Cascading Dropdown List In ASP.Net MVC A Sample Demonstration | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Cascading Dropdown List In ASP.Net MVC A Sample Demonstration" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category)." />
+<meta property="og:description" content="Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category)." />
+<link rel="canonical" href="https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/" />
+<meta property="og:url" content="https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-12-05T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Cascading Dropdown List In ASP.Net MVC A Sample Demonstration" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2015-12-05T00:00:00-05:00","datePublished":"2015-12-05T00:00:00-05:00","description":"Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category).","headline":"Cascading Dropdown List In ASP.Net MVC A Sample Demonstration","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/"},"url":"https://mahedee.net//cascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Cascading Dropdown List In ASP.Net MVC A Sample Demonstration">
+    <meta itemprop="description" content="Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category).">
+    <meta itemprop="datePublished" content="December 05, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Cascading Dropdown List In ASP.Net MVC A Sample Demonstration
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Last couple of weeks I found a good number of requests from my trainees and some .NET developers. They request me for sample code or a demonstration of cascading dropdown list in ASP.NET MVC. That’s why, I am writing this article. Cascading dropdown list is actually a parent child dropdown list. In this article I showed two dropdown lists one is category dropdown list and other is product dropdown list. Product dropdown list will be populated on the basis of category (selected category).</p>
+
+<p><strong>Let’s implement cascading dropdown list in ASP.NET MVC</strong></p>
+
+<p><strong>Tools and Technology used</strong><br />
+I used following tools and technology to develop the project –</p>
+
+<ol>
+  <li>Visual Studio 2013</li>
+  <li>Visual C#</li>
+  <li>ASP.NET MVC 5</li>
+  <li>Entity Framework 6</li>
+  <li>JQuery Ajax</li>
+</ol>
+
+<p><strong>Step 1: Create a ASP.NET MVC Project</strong></p>
+<ul>
+  <li>Open visual studio and then go</li>
+  <li>File -&gt; Project -&gt; ASP.NET Web Application</li>
+  <li>Create an ASP.NET MVC project</li>
+</ul>
+
+<p><strong>Step 2: Install Json.NET</strong></p>
+<ul>
+  <li>Click right button on Project -&gt; NuGet Packages</li>
+  <li>Search Json.NET</li>
+  <li>Select and install Json.NET</li>
+</ul>
+
+<p>Keep note that in this moment, your internet connection must on.</p>
+
+<p><strong>Step 3: Create a local database</strong></p>
+<ul>
+  <li>Click right button on App_Data folder -&gt; Select Add -&gt; SQL Server Database.</li>
+  <li>Type Item name as InventoryDB. You can choose any type you want. You will see Inventory.mdf file is created in App_Data folder</li>
+</ul>
+
+<p><strong>Step 4: Modify connection string.</strong>
+Modify connection string as below because you are using localdb.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;connectionStrings&gt;</span>
+  <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">"DefaultConnection"</span> <span class="na">connectionString=</span><span class="s">"Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\InventoryDB.mdf;Initial Catalog=InventoryDB;Integrated Security=True"</span> <span class="na">providerName=</span><span class="s">"System.Data.SqlClient"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/connectionStrings&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Create a model for the application.</strong></p>
+
+<p>Create a model class name Category in model folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Category</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Create a model class name Product in model folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">CategoryId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+    <span class="p">[</span><span class="nf">ForeignKey</span><span class="p">(</span><span class="s">"CategoryId"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Category</span> <span class="n">Category</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Create a model name Item in model folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Item</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+    <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Category"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">CategoryId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="nf">ForeignKey</span><span class="p">(</span><span class="s">"CategoryId"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="n">Category</span> <span class="n">Category</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+ 
+    <span class="p">[</span><span class="nf">Display</span><span class="p">(</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Products"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ProductId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="nf">ForeignKey</span><span class="p">(</span><span class="s">"ProductId"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="n">Product</span> <span class="n">Product</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Create Context Class</strong><br />
+Create a context class in model folder name InventoryDBContext as follows</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">InventoryDBContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">InventoryDBContext</span><span class="p">()</span>
+        <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)</span>
+    <span class="p">{</span>
+ 
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Category</span><span class="p">&gt;</span> <span class="n">Categories</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Item</span><span class="p">&gt;</span> <span class="n">Items</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 7: Enable Migration</strong></p>
+
+<ul>
+  <li>Go to Tools-&gt; NuGet Package Manager -&gt; Package Manger Console</li>
+  <li>Type the following command in package manager console to enable migration
+    <div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Enable-Migrations</span> <span class="nf">-ContextTypeName</span> <span class="nf">InventoryDBContext</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>After pressing enter you will see a class name Configuration is created in Migrations folder with some codes.
+Now add seed data in Seed method of Configuration class in Migrations folder as follows.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">internal</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Configuration</span> <span class="p">:</span> <span class="n">DbMigrationsConfiguration</span><span class="p">&lt;</span><span class="n">Web</span><span class="p">.</span><span class="n">Mahedee</span><span class="p">.</span><span class="n">net</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">InventoryDBContext</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">Configuration</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">AutomaticMigrationsEnabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Seed</span><span class="p">(</span><span class="n">Web</span><span class="p">.</span><span class="n">Mahedee</span><span class="p">.</span><span class="n">net</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">InventoryDBContext</span> <span class="n">context</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">context</span><span class="p">.</span><span class="n">Categories</span><span class="p">.</span><span class="nf">AddOrUpdate</span><span class="p">(</span>
+            <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+            <span class="k">new</span> <span class="n">Category</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"Electronics"</span><span class="p">,</span>
+                <span class="n">Products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="p">{</span> 
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Mobile"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Laptop"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Television"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Camera"</span><span class="p">}</span>
+                <span class="p">}</span>
+ 
+            <span class="p">},</span>
+ 
+            <span class="k">new</span> <span class="n">Category</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"Men ware"</span><span class="p">,</span>
+                <span class="n">Products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> 
+                <span class="p">{</span> 
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Footware"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Clothings"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Watches"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Hand bag"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Sun Glass"</span><span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+ 
+            <span class="k">new</span> <span class="n">Category</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"Baby &amp; Kids"</span><span class="p">,</span>
+                <span class="n">Products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> 
+                <span class="p">{</span> 
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Baby footware"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Kids clothigs"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Baby care"</span><span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+ 
+             <span class="k">new</span> <span class="n">Category</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"Books"</span><span class="p">,</span>
+                <span class="n">Products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> 
+                <span class="p">{</span> 
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"Introduction to C#"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"ASP.NET MVC Begineer to Professional"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"ASP.NET Web API Security"</span><span class="p">},</span>
+                    <span class="k">new</span> <span class="n">Product</span><span class="p">{</span><span class="n">Name</span> <span class="p">=</span> <span class="s">"SPA with ASP.NET MVC"</span><span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+ 
+            <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 8: Add Migration and Update database</strong></p>
+
+<p>In package manager console write the following command to add a migration.</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">add-migration</span> <span class="nf">firstmigration</span>
+</code></pre></div></div>
+
+<p>A file will be created in Migrations folder something like below.
+File Name: 201512041037292_firstmigration</p>
+
+<p>Update the file, in AddForeignKey section and set false for cascadeDelete as follows.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">firstmigration</span> <span class="p">:</span> <span class="n">DbMigration</span>
+ <span class="p">{</span>
+     <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Up</span><span class="p">()</span>
+     <span class="p">{</span>
+         <span class="nf">DropForeignKey</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="s">"dbo.Items"</span><span class="p">);</span>
+         <span class="nf">DropForeignKey</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="s">"dbo.Items"</span><span class="p">);</span>
+         <span class="nf">DropIndex</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"Item_Id"</span> <span class="p">});</span>
+         <span class="nf">DropIndex</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"Item_Id"</span> <span class="p">});</span>
+         <span class="nf">CreateIndex</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"CategoryId"</span><span class="p">);</span>
+         <span class="nf">CreateIndex</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"ProductId"</span><span class="p">);</span>
+ 
+         <span class="nf">AddForeignKey</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"CategoryId"</span><span class="p">,</span> <span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="n">cascadeDelete</span><span class="p">:</span> <span class="k">false</span><span class="p">);</span>
+         <span class="nf">AddForeignKey</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"ProductId"</span><span class="p">,</span> <span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="n">cascadeDelete</span><span class="p">:</span> <span class="k">false</span><span class="p">);</span>
+ 
+         <span class="nf">DropColumn</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">);</span>
+         <span class="nf">DropColumn</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">);</span>
+     <span class="p">}</span>
+      
+     <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Down</span><span class="p">()</span>
+     <span class="p">{</span>
+         <span class="nf">AddColumn</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">Int</span><span class="p">());</span>
+         <span class="nf">AddColumn</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">Int</span><span class="p">());</span>
+         <span class="nf">DropForeignKey</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"ProductId"</span><span class="p">,</span> <span class="s">"dbo.Products"</span><span class="p">);</span>
+         <span class="nf">DropForeignKey</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"CategoryId"</span><span class="p">,</span> <span class="s">"dbo.Categories"</span><span class="p">);</span>
+         <span class="nf">DropIndex</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"ProductId"</span> <span class="p">});</span>
+         <span class="nf">DropIndex</span><span class="p">(</span><span class="s">"dbo.Items"</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"CategoryId"</span> <span class="p">});</span>
+         <span class="nf">CreateIndex</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">);</span>
+         <span class="nf">CreateIndex</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">);</span>
+         <span class="nf">AddForeignKey</span><span class="p">(</span><span class="s">"dbo.Products"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">);</span>
+         <span class="nf">AddForeignKey</span><span class="p">(</span><span class="s">"dbo.Categories"</span><span class="p">,</span> <span class="s">"Item_Id"</span><span class="p">,</span> <span class="s">"dbo.Items"</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Write the following command in package manager console to update database.</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">update-database</span> <span class="nf">–Verbose</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Add Items Controller</strong></p>
+
+<ul>
+  <li>Right click on Controllers folder -&gt; Add -&gt; Controller</li>
+  <li>Select MVC 5 Controller with views using Entity Framework and the click Add</li>
+  <li>Select Item as Model class and InventoryDBContext as context class and click Add button.</li>
+  <li>ItemsController and Views will be created automatically.</li>
+</ul>
+
+<p><strong>Step 10: Update Items controller</strong></p>
+
+<p>Modify the following action of Items controller</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">Create</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">Category</span><span class="p">&gt;</span> <span class="n">lstCategory</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Categories</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+    <span class="n">lstCategory</span><span class="p">.</span><span class="nf">Insert</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="n">Category</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"--Select Category--"</span> <span class="p">});</span>
+ 
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">lstProduct</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;();</span>
+    <span class="n">ViewBag</span><span class="p">.</span><span class="n">CategoryId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">lstCategory</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">);</span>
+    <span class="n">ViewBag</span><span class="p">.</span><span class="n">ProductId</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SelectList</span><span class="p">(</span><span class="n">lstProduct</span><span class="p">,</span> <span class="s">"Id"</span><span class="p">,</span> <span class="s">"Name"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Add the following action in the Items controller</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">JsonResult</span> <span class="nf">GetProductsByCategoryId</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">products</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">products</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">CategoryId</span> <span class="p">==</span> <span class="n">id</span><span class="p">).</span><span class="nf">ToList</span><span class="p">();</span>
+ 
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">products</span><span class="p">.</span><span class="nf">Insert</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="k">new</span> <span class="n">Product</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"--Select a category first--"</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="p">(</span><span class="k">from</span> <span class="n">r</span> <span class="k">in</span> <span class="n">products</span>
+                  <span class="k">select</span> <span class="k">new</span>
+                  <span class="p">{</span>
+                      <span class="n">id</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+                      <span class="n">name</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span>
+                  <span class="p">}).</span><span class="nf">ToList</span><span class="p">();</span>
+ 
+    <span class="k">return</span> <span class="nf">Json</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">JsonRequestBehavior</span><span class="p">.</span><span class="n">AllowGet</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 5: Modify the Create View of Items folder</strong><br />
+Modify the Create View as follows.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">@model</span> <span class="n">Web</span><span class="p">.</span><span class="n">Mahedee</span><span class="p">.</span><span class="n">net</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">Item</span>
+ 
+<span class="err">@</span><span class="p">{</span>
+    <span class="n">ViewBag</span><span class="p">.</span><span class="n">Title</span> <span class="p">=</span> <span class="s">"Create"</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="p">&lt;</span><span class="n">script</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/javascript"</span> <span class="n">src</span><span class="p">=</span><span class="s">"http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"</span><span class="p">&gt;&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">script</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
+    <span class="err">$</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="s">"#CategoryId"</span><span class="p">).</span><span class="nf">val</span><span class="p">()</span> <span class="p">==</span> <span class="sc">'0'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">productDefaultValue</span> <span class="p">=</span> <span class="s">"&lt;option value='0'&gt;--Select a category first--&lt;/option&gt;"</span><span class="p">;</span>
+            <span class="err">$</span><span class="p">(</span><span class="s">"#ProductId"</span><span class="p">).</span><span class="nf">html</span><span class="p">(</span><span class="n">productDefaultValue</span><span class="p">).</span><span class="nf">show</span><span class="p">();</span>
+        <span class="p">}</span>
+ 
+        <span class="err">$</span><span class="p">(</span><span class="s">"#CategoryId"</span><span class="p">).</span><span class="nf">change</span><span class="p">(</span><span class="nf">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">selectedItemValue</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nf">val</span><span class="p">();</span>
+ 
+            <span class="kt">var</span> <span class="n">ddlProducts</span> <span class="p">=</span> <span class="err">$</span><span class="p">(</span><span class="s">"#ProductId"</span><span class="p">);</span>
+            <span class="err">$</span><span class="p">.</span><span class="nf">ajax</span><span class="p">({</span>
+                <span class="n">cache</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span>
+                <span class="n">type</span><span class="p">:</span> <span class="s">"GET"</span><span class="p">,</span>
+                <span class="n">url</span><span class="p">:</span> <span class="err">'</span><span class="n">@Url</span><span class="p">.</span><span class="nf">Action</span><span class="p">(</span><span class="s">"GetProductsByCategoryId"</span><span class="p">,</span> <span class="s">"Items"</span><span class="p">)</span><span class="err">'</span><span class="p">,</span>
+                <span class="n">data</span><span class="p">:</span> <span class="p">{</span> <span class="s">"id"</span><span class="p">:</span> <span class="n">selectedItemValue</span> <span class="p">},</span>
+                <span class="n">success</span><span class="p">:</span> <span class="nf">function</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">ddlProducts</span><span class="p">.</span><span class="nf">html</span><span class="p">(</span><span class="err">''</span><span class="p">);</span>
+                    <span class="err">$</span><span class="p">.</span><span class="nf">each</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">function</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">ddlProducts</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="err">$</span><span class="p">(</span><span class="err">'</span><span class="p">&lt;</span><span class="n">option</span><span class="p">&gt;&lt;/</span><span class="n">option</span><span class="p">&gt;</span><span class="err">'</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="n">option</span><span class="p">.</span><span class="n">id</span><span class="p">).</span><span class="nf">html</span><span class="p">(</span><span class="n">option</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
+                    <span class="p">});</span>
+                <span class="p">},</span>
+                <span class="n">error</span><span class="p">:</span> <span class="nf">function</span> <span class="p">(</span><span class="n">xhr</span><span class="p">,</span> <span class="n">ajaxOptions</span><span class="p">,</span> <span class="n">thrownError</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nf">alert</span><span class="p">(</span><span class="err">'</span><span class="n">Found</span> <span class="n">error</span> <span class="n">to</span> <span class="n">load</span> <span class="n">product</span><span class="p">!!.</span><span class="err">'</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">&lt;/</span><span class="n">script</span><span class="p">&gt;</span>
+ 
+<span class="p">&lt;</span><span class="n">h2</span><span class="p">&gt;</span><span class="n">Create</span><span class="p">&lt;/</span><span class="n">h2</span><span class="p">&gt;</span>
+ 
+ 
+<span class="nf">@using</span> <span class="p">(</span><span class="n">Html</span><span class="p">.</span><span class="nf">BeginForm</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">@Html</span><span class="p">.</span><span class="nf">AntiForgeryToken</span><span class="p">()</span>
+ 
+    <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="n">horizontal</span><span class="s">"&gt;
+</span>        <span class="p">&lt;</span><span class="n">h4</span><span class="p">&gt;</span><span class="n">Item</span><span class="p">&lt;/</span><span class="n">h4</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="n">hr</span> <span class="p">/&gt;</span>
+        <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationSummary</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"text-danger"</span> <span class="p">})</span>
+        <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="k">group</span><span class="s">"&gt;
+</span>            <span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">CategoryId</span><span class="p">,</span> <span class="s">"Category"</span><span class="p">,</span> <span class="n">htmlAttributes</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})</span>
+            <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">col</span><span class="p">-</span><span class="n">md</span><span class="p">-</span><span class="m">10</span><span class="s">"&gt;
+</span>                <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"CategoryId"</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">htmlAttributes</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"form-control"</span> <span class="p">})</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">CategoryId</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"text-danger"</span> <span class="p">})</span>
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+ 
+        <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="k">group</span><span class="s">"&gt;
+</span>            <span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">ProductId</span><span class="p">,</span> <span class="s">"Product"</span><span class="p">,</span> <span class="n">htmlAttributes</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})</span>
+            <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">col</span><span class="p">-</span><span class="n">md</span><span class="p">-</span><span class="m">10</span><span class="s">"&gt;
+</span>                <span class="n">@Html</span><span class="p">.</span><span class="nf">DropDownList</span><span class="p">(</span><span class="s">"ProductId"</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="n">htmlAttributes</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"form-control"</span> <span class="p">})</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">ProductId</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"text-danger"</span> <span class="p">})</span>
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+ 
+        <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="k">group</span><span class="s">"&gt;
+</span>            <span class="n">@Html</span><span class="p">.</span><span class="nf">LabelFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">htmlAttributes</span><span class="p">:</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"control-label col-md-2"</span> <span class="p">})</span>
+            <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">col</span><span class="p">-</span><span class="n">md</span><span class="p">-</span><span class="m">10</span><span class="s">"&gt;
+</span>                <span class="n">@Html</span><span class="p">.</span><span class="nf">EditorFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">htmlAttributes</span> <span class="p">=</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"form-control"</span> <span class="p">}</span> <span class="p">})</span>
+                <span class="n">@Html</span><span class="p">.</span><span class="nf">ValidationMessageFor</span><span class="p">(</span><span class="n">model</span> <span class="p">=&gt;</span> <span class="n">model</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">@class</span> <span class="p">=</span> <span class="s">"text-danger"</span> <span class="p">})</span>
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+ 
+        <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">form</span><span class="p">-</span><span class="k">group</span><span class="s">"&gt;
+</span>            <span class="p">&lt;</span><span class="n">div</span> <span class="k">class</span><span class="err">="</span><span class="nc">col</span><span class="p">-</span><span class="n">md</span><span class="p">-</span><span class="n">offset</span><span class="p">-</span><span class="m">2</span> <span class="n">col</span><span class="p">-</span><span class="n">md</span><span class="p">-</span><span class="m">10</span><span class="s">"&gt;
+</span>                <span class="p">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="p">=</span><span class="s">"submit"</span> <span class="k">value</span><span class="p">=</span><span class="s">"Create"</span> <span class="k">class</span><span class="err">="</span><span class="nc">btn</span> <span class="n">btn</span><span class="p">-</span><span class="k">default</span><span class="s">" /&gt;
+</span>            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+<span class="p">}</span>
+ 
+<span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="n">@Html</span><span class="p">.</span><span class="nf">ActionLink</span><span class="p">(</span><span class="s">"Back to List"</span><span class="p">,</span> <span class="s">"Index"</span><span class="p">)</span>
+<span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+ 
+<span class="n">@section</span> <span class="n">Scripts</span> <span class="p">{</span>
+    <span class="n">@Scripts</span><span class="p">.</span><span class="nf">Render</span><span class="p">(</span><span class="s">"~/bundles/jqueryval"</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Now run the application and type the following URL .
+http://localhost:61767/Items/Create</p>
+
+<p>You will see the following output. Now select category from category dropdown lsit, you will see product dropdown list is populating on corresponding category.</p>
+
+<p><img src="/assets/images/posts/2015/cascade-output.jpg" alt="" /></p>
+
+<p>Means, it’s working…!! Cheers!!!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/CascadingDropdownList">Source Code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetmvc" class="page__taxonomy-item" rel="tag">aspnetmvc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-mvc" class="page__taxonomy-item" rel="tag">ASP.NET MVC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-12-05T00:00:00-05:00">December 05, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Cascading+Dropdown+List+In+ASP.Net+MVC+A+Sample+Demonstration%20https%3A%2F%2Fmahedee.net%2F%2Fcascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fcascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fcascading-dropdown-list-in-asp-net-mvc-a-sample-demonstration%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/asp-net-application-performance-tuning-and-scalability-improvement-part-1/" class="pagination--pager" title="ASP.NET Application Performance Tuning And Scalability Improvement (Part – 1)
+">Previous</a>
+    
+    
+      <a href="/crud-and-search-operation-in-asp-net-mvc-application-using-partial-view/" class="pagination--pager" title="CRUD And Search Operation In ASP.NET MVC Application Using Partial View
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -1,0 +1,1666 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Configure Load Balancer using Eureka and ocelot with asp.net core and docker - Think Simple</title>
+<meta name="description" content="A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Configure Load Balancer using Eureka and ocelot with asp.net core and docker">
+<meta property="og:url" content="https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/">
+
+
+  <meta property="og:description" content="A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-01-07T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Configure Load Balancer using Eureka and ocelot with asp.net core and docker | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Configure Load Balancer using Eureka and ocelot with asp.net core and docker" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway." />
+<meta property="og:description" content="A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway." />
+<link rel="canonical" href="https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" />
+<meta property="og:url" content="https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-01-07T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Configure Load Balancer using Eureka and ocelot with asp.net core and docker" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2023-01-07T00:00:00-05:00","datePublished":"2023-01-07T00:00:00-05:00","description":"A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway.","headline":"Configure Load Balancer using Eureka and ocelot with asp.net core and docker","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/"},"url":"https://mahedee.net//Configure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Configure Load Balancer using Eureka and ocelot with asp.net core and docker">
+    <meta itemprop="description" content="A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server. Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances. In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway.">
+    <meta itemprop="datePublished" content="January 07, 2023">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Configure Load Balancer using Eureka and ocelot with asp.net core and docker
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  9 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Introduction</strong></p>
+
+<p>A load balancer is a component that distributes incoming network traffic across multiple servers to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single server.</p>
+
+<p>Eureka is a service discovery tool provided by Netflix OSS, it can be used to solve load balancing by registering all instances of a service with Eureka and having the load balancer forward traffic to those instances. The Eureka server maintains a registry of all available instances of a service, and clients of the service query the registry to obtain a list of available service instances. The load balancer can then use this information to distribute incoming requests to the available service instances.</p>
+
+<p>In this article, I will show you how to configure load balancer using Eureka and ocelot in API gateway.</p>
+
+<p><img src="/assets/images/posts/2023/sdd-01.PNG" alt="" /></p>
+
+<p>Fig – Load balancing architecture (Collected from internet)</p>
+
+<p>Here, I am skipping service discovery. If you want to know more about service discovery, please read the article - <a href="https://mahedee.net/Service-Discovery-using-Eureka-Ocelot-and-ASPnet-core/">Service Discovery with Ocelot and ASP.net core</a></p>
+
+<p><strong>Implementation</strong></p>
+
+<p>Let’s configure Load Balancer using Eureka, Ocelot</p>
+
+<p><strong>Tools and Technologies Used</strong></p>
+
+<ul>
+  <li>Visual Studio 2022</li>
+  <li>.NET 6.0</li>
+  <li>ASP.NET Core Web API</li>
+  <li>Visual C#</li>
+  <li>Eureka</li>
+  <li>Ocelot</li>
+  <li>Docker</li>
+</ul>
+
+<p><strong>Step 1: Create solution and projects</strong></p>
+
+<ul>
+  <li>Create a solution name SDDemoDocker.sln</li>
+  <li>Add four Web Api Projects name BFF.Web, LocationA.API, LocationB.API, LocationC.API</li>
+  <li>Here BFF.Web is an api gateway</li>
+</ul>
+
+<p><strong>Step 2: Install nuget packages</strong></p>
+
+<ul>
+  <li>Install following nuget packages in BFF.Web project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">MMLib.SwaggerForOcelot</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Provider.Eureka</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Provider.Kubernetes</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Ocelot.Provider.Polly</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.Eureka</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in LocationA.API project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.ClientCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.Eureka</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.VisualStudio.Azure.Containers.Tools.Targets</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in LocationB.API project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.ClientCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.Eureka</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.VisualStudio.Azure.Containers.Tools.Targets</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Install following nuget packages in LocationC.API project</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.ClientCore</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Steeltoe.Discovery.Eureka</span>
+<span class="nf">PM</span><span class="p">&gt;</span> <span class="nf">Install-Package</span> <span class="nf">Microsoft.VisualStudio.Azure.Containers.Tools.Targets</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Organize LocationA.API projects</strong></p>
+
+<ul>
+  <li>Register Eureka and modify program.cs as follows.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Eureka</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="c1">// Add or register service discovery to your application</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddServiceDiscovery</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="nf">UseEureka</span><span class="p">());</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">//app.UseHttpsRedirection();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a controller name DistrictController in Controllers folder and modify get method as follows.</li>
+</ul>
+
+<p><strong>DistrictController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="c1">// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860</span>
+
+<span class="k">namespace</span> <span class="nn">LocationA.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DistrictController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="c1">// GET: api/&lt;DistrictController&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"Serivce:LocationA.API-&gt;"</span><span class="p">,</span> <span class="s">"Dhaka"</span><span class="p">,</span> <span class="s">"Chittagong"</span><span class="p">,</span> <span class="s">"Chandpur"</span><span class="p">,</span> <span class="s">"Barisal"</span><span class="p">,</span> <span class="s">"Noakhali"</span> <span class="p">};</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Modify appsettings.json to connect to the service registry</strong></p>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+
+
+
+  </span><span class="nl">"Spring"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.LOCATIONAPI"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"Eureka"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Client"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ServiceUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://eureka-server:8761/eureka/"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ValidateCertificates"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ShouldRegisterWithEureka"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    
+    </span><span class="err">//</span><span class="w"> </span><span class="err">No</span><span class="w"> </span><span class="err">docke</span><span class="w"> </span><span class="err">instance</span><span class="w"> </span><span class="err">added</span><span class="w">
+    </span><span class="nl">"Instance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9001</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"NonSecurePort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"HostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locationa.api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"InstanceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LocationA.API,Port:80"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"StatusPageUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/swagger/index.html"</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"HealthCheckUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/values/healthcheck"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add docker file in the project</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+<span class="k">EXPOSE</span><span class="s"> 443</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+<span class="k">COPY</span><span class="s"> ["LocationA.API/LocationA.API.csproj", "Location.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"LocationA.API/LocationA.API.csproj"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/LocationA.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"LocationA.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"LocationA.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "LocationA.API.dll"]</span>
+</code></pre></div></div>
+
+<p><strong>Step 4: Organize LocationB.API project</strong></p>
+
+<ul>
+  <li>Register Eureka and modify program.cs as follows.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Eureka</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="c1">// Add or register service discovery to your application</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddServiceDiscovery</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="nf">UseEureka</span><span class="p">());</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">//app.UseHttpsRedirection();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a controller name DistrictController in Controllers folder and modify get method as follows.</li>
+</ul>
+
+<p><strong>DistrictController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">LocationB.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DistrictController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="c1">// GET: api/&lt;DistrictController&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="s">"Serivce:LocationB.API-&gt;"</span><span class="p">,</span> <span class="s">"Kumilla"</span><span class="p">,</span> <span class="s">"Bogura"</span><span class="p">,</span> <span class="s">"Natore"</span><span class="p">,</span> <span class="s">"Kurigram"</span><span class="p">,</span> <span class="s">"Natore"</span> <span class="p">};</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify appsettings.json to connect to the service registry.</li>
+</ul>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+
+
+
+  </span><span class="nl">"Spring"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.LOCATIONAPI"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"Eureka"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Client"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ServiceUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://eureka-server:8761/eureka/"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ValidateCertificates"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ShouldRegisterWithEureka"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="err">//</span><span class="w"> </span><span class="err">No</span><span class="w"> </span><span class="err">docke</span><span class="w"> </span><span class="err">instance</span><span class="w"> </span><span class="err">added</span><span class="w">
+    </span><span class="nl">"Instance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9001</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"NonSecurePort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"HostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locationb.api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"InstanceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LocationB.API,Port:80"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"StatusPageUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/swagger/index.html"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add Dockerfile in the project</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+<span class="k">COPY</span><span class="s"> ["LocationB.API/LocationB.API.csproj", "LocationB.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"LocationB.API/LocationB.API.csproj"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/LocationB.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"LocationB.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"LocationB.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "LocationB.API.dll"]</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Organize LocationC.API</strong></p>
+
+<ul>
+  <li>Register Eureka and modify program.cs as follows.</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Eureka</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="c1">// Add or register service discovery to your application</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddServiceDiscovery</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="nf">UseEureka</span><span class="p">());</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">//app.UseHttpsRedirection();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Create a controller name DistrictController in Controllers folder and modify get method as follows.</li>
+</ul>
+
+<p><strong>DistrictController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">LocationC.API.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DistrictController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="c1">// GET: api/&lt;DistrictController&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"GetAll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">Get</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span><span class="s">"Serivce:LocationC.API-&gt;"</span><span class="p">,</span><span class="s">"Kustia"</span><span class="p">,</span> <span class="s">"Norail"</span><span class="p">,</span> <span class="s">"Kurigram"</span><span class="p">,</span> <span class="s">"Netrokona"</span><span class="p">};</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify appsettings.json to connect to the service registry.</li>
+</ul>
+
+<p><strong>appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
+
+
+
+  </span><span class="nl">"Spring"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.LOCATIONAPI"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"Eureka"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Client"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ServiceUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://eureka-server:8761/eureka/"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ValidateCertificates"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ShouldRegisterWithEureka"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="err">//</span><span class="w"> </span><span class="err">No</span><span class="w"> </span><span class="err">docke</span><span class="w"> </span><span class="err">instance</span><span class="w"> </span><span class="err">added</span><span class="w">
+    </span><span class="nl">"Instance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9001</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"NonSecurePort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"HostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locationc.api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"InstanceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LocationC.API,Port:80"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"StatusPageUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/swagger/index.html"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add Dockerfile in the project</li>
+</ul>
+
+<p><strong>Dockerfile</strong></p>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/aspnet:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">base</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">EXPOSE</span><span class="s"> 80</span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/dotnet/sdk:6.0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">build</span>
+<span class="k">WORKDIR</span><span class="s"> /src</span>
+<span class="k">COPY</span><span class="s"> ["LocationC.API/LocationC.API.csproj", "LocationC.API/"]</span>
+<span class="k">RUN </span>dotnet restore <span class="s2">"LocationC.API/LocationC.API.csproj"</span>
+<span class="k">COPY</span><span class="s"> . .</span>
+<span class="k">WORKDIR</span><span class="s"> "/src/LocationC.API"</span>
+<span class="k">RUN </span>dotnet build <span class="s2">"LocationC.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/build
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">build</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">publish</span>
+<span class="k">RUN </span>dotnet publish <span class="s2">"LocationC.API.csproj"</span> <span class="nt">-c</span> Release <span class="nt">-o</span> /app/publish
+
+<span class="k">FROM</span><span class="w"> </span><span class="s">base</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">final</span>
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+<span class="k">COPY</span><span class="s"> --from=publish /app/publish .</span>
+<span class="k">ENTRYPOINT</span><span class="s"> ["dotnet", "LocationC.API.dll"]</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Organize BFF.Web</strong></p>
+
+<p>In this stage, we are going to configure a gateway to communicate with other services using ocelot.</p>
+
+<ul>
+  <li>Create two folder name - Routes.dev and Routes.Prod  in root directory and add the following files ocelot.global.json, ocelot.location.api.json, ocelot.SwaggerEndPoints.json in Routes.dev and Routes.Prod folder.</li>
+</ul>
+
+<p>*Now modify the json files as follows.</p>
+
+<p><strong>ocelot.location.api.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UseServiceDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ServiceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.LOCATIONAPI"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/location/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELETE"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+      </span><span class="err">/*</span><span class="w">
+        </span><span class="err">LeastConnection</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">tracks</span><span class="w"> </span><span class="err">which</span><span class="w"> </span><span class="err">services</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">dealing</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">sends</span><span class="w"> </span><span class="err">new</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">least</span><span class="w"> </span><span class="err">existing</span><span class="w"> </span><span class="err">requests.</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">algorythm</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">distributed</span><span class="w"> </span><span class="err">across</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cluster</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">Ocelot’s.</span><span class="w">
+        </span><span class="err">RoundRobin</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">loops</span><span class="w"> </span><span class="err">through</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">services</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">sends</span><span class="w"> </span><span class="err">requests.</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">algorythm</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">distributed</span><span class="w"> </span><span class="err">across</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cluster</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">Ocelot’s.</span><span class="w">
+        </span><span class="err">NoLoadBalancer</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">takes</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">first</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">config</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">discovery.</span><span class="w">
+        </span><span class="err">CookieStickySessions</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">uses</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cookie</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">stick</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">specific</span><span class="w"> </span><span class="err">server</span><span class="w">
+      </span><span class="err">*/</span><span class="w">
+
+      </span><span class="nl">"LoadBalancerOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RoundRobin"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>ocelot.product.api.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Routes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"DownstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"SwaggerKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"product"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UseServiceDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ServiceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.PRODUCTAPI"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamPathTemplate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/product/{everything}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"UpstreamHttpMethod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELETE"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+
+
+      </span><span class="err">/*</span><span class="w">
+        </span><span class="err">LeastConnection</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">tracks</span><span class="w"> </span><span class="err">which</span><span class="w"> </span><span class="err">services</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">dealing</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">sends</span><span class="w"> </span><span class="err">new</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">least</span><span class="w"> </span><span class="err">existing</span><span class="w"> </span><span class="err">requests.</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">algorythm</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">distributed</span><span class="w"> </span><span class="err">across</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cluster</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">Ocelot’s.</span><span class="w">
+        </span><span class="err">RoundRobin</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">loops</span><span class="w"> </span><span class="err">through</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">services</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">sends</span><span class="w"> </span><span class="err">requests.</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">algorythm</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">distributed</span><span class="w"> </span><span class="err">across</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cluster</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">Ocelot’s.</span><span class="w">
+        </span><span class="err">NoLoadBalancer</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">takes</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">first</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">config</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">service</span><span class="w"> </span><span class="err">discovery.</span><span class="w">
+        </span><span class="err">CookieStickySessions</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">uses</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">cookie</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">stick</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">requests</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">specific</span><span class="w"> </span><span class="err">server</span><span class="w">
+      </span><span class="err">*/</span><span class="w">
+
+      </span><span class="nl">"LoadBalancerOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeastConnection"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>ocelot.global.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"GlobalConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"RequestIdKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OcRequestId"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"DownstreamScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"UseServiceDiscovery"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ServiceDiscoveryProvider"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bff.web"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="err">//Type</span><span class="w"> </span><span class="err">can</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">Consul</span><span class="p">,</span><span class="w"> </span><span class="err">Eureka</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Eureka"</span><span class="w"> 
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>ocelot.SwaggerEndPoints.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"SwaggerEndPoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bff.web"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BFF.Web"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://bff.web:80/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"TransformByOcelotConfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location.API"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://bff.web:80/location/swagger/v1/swagger.json"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add AlterUpstream class in Config folder</li>
+</ul>
+
+<p><strong>AlterUpstream.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json.Linq</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">BFF.Web.Config</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AlterUpstream</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">AlterUpstreamSwaggerJson</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">,</span> <span class="kt">string</span> <span class="n">swaggerJson</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">swagger</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">swaggerJson</span><span class="p">);</span>
+            <span class="c1">// ... alter upstream json</span>
+            <span class="k">return</span> <span class="n">swagger</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="n">Formatting</span><span class="p">.</span><span class="n">Indented</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Modify Program.cs file as follows</li>
+</ul>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">BFF.Web.Config</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">MMLib.SwaggerForOcelot.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.Middleware</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.Provider.Eureka</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Ocelot.Provider.Polly</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Client</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Steeltoe.Discovery.Eureka</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+
+<span class="kt">var</span> <span class="n">routes</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="cp">#if DEBUG
+</span><span class="n">routes</span> <span class="p">=</span> <span class="s">"Routes.dev"</span><span class="p">;</span>
+<span class="cp">#else
+</span><span class="n">routes</span> <span class="p">=</span> <span class="s">"Routes.prod"</span><span class="p">;</span>
+<span class="cp">#endif
+</span><span class="p">;</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">AddOcelotWithSwaggerSupport</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">Folder</span> <span class="p">=</span> <span class="n">routes</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// Configure ocelot</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOcelot</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">).</span><span class="nf">AddEureka</span><span class="p">().</span><span class="nf">AddPolly</span><span class="p">();</span>
+
+<span class="c1">//builder.Services.AddOcelot(builder.Configuration).AddPolly();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerForOcelot</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">);</span>
+
+<span class="c1">// Add or register service discovery to your application</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddServiceDiscovery</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="nf">UseEureka</span><span class="p">());</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Host</span><span class="p">.</span><span class="nf">ConfigureAppConfiguration</span><span class="p">((</span><span class="n">hostingContext</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">config</span><span class="p">.</span><span class="nf">SetBasePath</span><span class="p">(</span><span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">())</span>
+    <span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="s">"appsettings.json"</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span> <span class="n">reloadOnChange</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="s">$"appsettings.local.json"</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span> <span class="n">reloadOnChange</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddJsonFile</span><span class="p">(</span><span class="s">$"appsettings.</span><span class="p">{</span><span class="n">hostingContext</span><span class="p">.</span><span class="n">HostingEnvironment</span><span class="p">.</span><span class="n">EnvironmentName</span><span class="p">}</span><span class="s">.json"</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddOcelot</span><span class="p">(</span><span class="n">routes</span><span class="p">,</span> <span class="n">builder</span><span class="p">.</span><span class="n">Environment</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddEnvironmentVariables</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="c1">//app.UseSwaggerUI();</span>
+<span class="p">}</span>
+
+
+
+<span class="c1">//app.UseHttpsRedirection();</span>
+
+<span class="c1">//app.UseOcelot();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerForOcelotUI</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">PathToSwaggerGenerator</span> <span class="p">=</span> <span class="s">"/swagger/docs"</span><span class="p">;</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">ReConfigureUpstreamSwaggerJson</span> <span class="p">=</span> <span class="n">AlterUpstream</span><span class="p">.</span><span class="n">AlterUpstreamSwaggerJson</span><span class="p">;</span>
+
+<span class="p">}).</span><span class="nf">UseOcelot</span><span class="p">().</span><span class="nf">Wait</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Now modify appsettings.json for BFF.Web</li>
+</ul>
+
+<p><strong>Appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.Hosting.Lifetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+
+  </span><span class="nl">"Spring"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SERVICE.BFF.Web"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"Eureka"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Client"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ServiceUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://eureka-server:8761/eureka/"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ValidateCertificates"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ShouldRegisterWithEureka"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="nl">"Instance"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"NonSecurePort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"HostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bff.web"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"InstanceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BFF.Web"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"StatusPageUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/swagger/index.html"</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"HealthCheckUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/values/healthcheck"</span><span class="w">
+      </span><span class="err">//</span><span class="nl">"StatusPageUrlPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/values/status"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><strong>Step 7: Configure docker-compose</strong></p>
+
+<ul>
+  <li>Add docker-compose file in the project and modify as follows</li>
+</ul>
+
+<p><strong>docker-compose.yml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.4'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+
+  <span class="na">eureka-server</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">eureka-server</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">steeltoeoss/eurekaserver:latest</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">eureka-server</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">backend_network</span>
+    <span class="c1">#ports:</span>
+    <span class="c1"># - "8761:8761"</span>
+
+  <span class="na">locationa.api</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">locationa.api</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${DOCKER_REGISTRY-}locationaapi</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">locationa.api</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">Locationa.API/Dockerfile</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">backend_network</span>
+
+  <span class="na">locationb.api</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">locationb.api</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${DOCKER_REGISTRY-}locationbapi</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">locationb.api</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">LocationB.API/Dockerfile</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">backend_network</span>
+
+  <span class="na">locationc.api</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">locationc.api</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${DOCKER_REGISTRY-}locationcapi</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">locationc.api</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">LocationC.API/Dockerfile</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">backend_network</span>
+
+
+  <span class="na">bff.web</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">bff.web</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${DOCKER_REGISTRY-}bffweb</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">hostname</span><span class="pi">:</span> <span class="s">bff.web</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">BFF.Web/Dockerfile</span>
+    <span class="na">networks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">backend_network</span>
+
+
+<span class="na">networks</span><span class="pi">:</span>
+    <span class="na">backend_network</span><span class="pi">:</span>
+
+</code></pre></div></div>
+
+<p><strong>docker-compose.override.yml</strong></p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.4'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">eureka-server</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">EUREKA_SERVER_ENABLE_SELF_PRESERVATION=false</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">8761:8761</span>
+
+
+
+  <span class="na">locationa.api</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_ENVIRONMENT=Development</span>
+      <span class="c1">#- ASPNETCORE_URLS=https://+:443;http://+:80</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_URLS=http://+:80</span>
+      <span class="pi">-</span> <span class="s">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9001:80"</span>
+      <span class="c1">#- "4001:443"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">eureka-server</span>
+
+  <span class="na">locationb.api</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_ENVIRONMENT=Development</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_URLS=http://+:80</span>
+      <span class="pi">-</span> <span class="s">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9002:80"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">eureka-server</span>
+
+
+  <span class="na">locationc.api</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_ENVIRONMENT=Development</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_URLS=http://+:80</span>
+      <span class="pi">-</span> <span class="s">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9003:80"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">eureka-server</span>
+
+  <span class="na">bff.web</span><span class="pi">:</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_ENVIRONMENT=Development</span>
+      <span class="pi">-</span> <span class="s">ASPNETCORE_URLS=http://+:80</span>
+      <span class="pi">-</span> <span class="s">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">8001:80"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro</span>
+      <span class="pi">-</span> <span class="s">${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">eureka-server</span>
+      <span class="pi">-</span> <span class="s">locationa.api</span>
+      <span class="pi">-</span> <span class="s">locationb.api</span>
+      <span class="pi">-</span> <span class="s">locationc.api</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>Now open your browser and visit http://localhost:8761/ to see Eureka server</li>
+</ul>
+
+<p><strong>Step 8: Now run the applications</strong></p>
+
+<ul>
+  <li>Set docker-compose as start up project</li>
+  <li>Now run the application</li>
+  <li>Now browse location service using BFF. You will get different data from different service as round robin basis</li>
+  <li>You will see Eureka server as follows.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2023/sd-03.PNG" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/sd-docker-demo">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#eureka" class="page__taxonomy-item" rel="tag">eureka</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#lb" class="page__taxonomy-item" rel="tag">lb</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#microservices" class="page__taxonomy-item" rel="tag">microservices</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#softwarearchitecture" class="page__taxonomy-item" rel="tag">softwarearchitecture</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#eureka" class="page__taxonomy-item" rel="tag">Eureka</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#load-balancer" class="page__taxonomy-item" rel="tag">Load Balancer</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#microservices" class="page__taxonomy-item" rel="tag">Microservices</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#software-architecture" class="page__taxonomy-item" rel="tag">Software Architecture</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-01-07T00:00:00-05:00">January 07, 2023</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Configure+Load+Balancer+using+Eureka+and+ocelot+with+asp.net+core+and+docker%20https%3A%2F%2Fmahedee.net%2F%2FConfigure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2FConfigure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2FConfigure-Load-Balancer-using-Eureka-and-ocelot-with-aspnet-core%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Application-of-Event-Sourcing-using-aspnet-core-DDD-EF-EventStoreDB-and-SQL-Server/" class="pagination--pager" title="Application of Event Sourcing using asp.net core, DDD, EF, EventStoreDB and SQL Server
+">Previous</a>
+    
+    
+      <a href="/introduction-to-the-yield-statement/" class="pagination--pager" title="Introduction to the Yield Statement
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

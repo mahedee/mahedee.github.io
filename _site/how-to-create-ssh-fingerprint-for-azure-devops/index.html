@@ -1,0 +1,816 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to create SSH fingerprint for Azure DevOps - Think Simple</title>
+<meta name="description" content="Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="How to create SSH fingerprint for Azure DevOps">
+<meta property="og:url" content="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/">
+
+
+  <meta property="og:description" content="Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-10T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to create SSH fingerprint for Azure DevOps | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="How to create SSH fingerprint for Azure DevOps" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository" />
+<meta property="og:description" content="Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository" />
+<link rel="canonical" href="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/" />
+<meta property="og:url" content="https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-10T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to create SSH fingerprint for Azure DevOps" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2022-05-10T00:00:00-04:00","datePublished":"2022-05-10T00:00:00-04:00","description":"Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository","headline":"How to create SSH fingerprint for Azure DevOps","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/"},"url":"https://mahedee.net//how-to-create-ssh-fingerprint-for-azure-devops/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to create SSH fingerprint for Azure DevOps">
+    <meta itemprop="description" content="Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository">
+    <meta itemprop="datePublished" content="May 10, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to create SSH fingerprint for Azure DevOps
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Azure DevOps is a cloud-based platform provided by Microsoft that offers a set of development tools and services for software development teams. It provides a comprehensive set of features to plan, develop, test, and deliver applications efficiently. Azure DevOps integrates with popular development tools and provides a seamless end-to-end experience for managing the entire software development lifecycle.</p>
+
+<p>The core components of Azure DevOps include:</p>
+
+<ol>
+  <li>
+    <p>Azure Boards: This component provides agile project management capabilities, including work item tracking, backlog management, sprint planning, and reporting. It allows teams to plan, track, and discuss work across the entire development process.</p>
+  </li>
+  <li>
+    <p>Azure Repos: Azure Repos is a version control system that supports both Git and Team Foundation Version Control (TFVC). It provides reliable and scalable repository management for source code, enabling collaboration, branching, merging, and pull request workflows.</p>
+  </li>
+  <li>
+    <p>Azure Pipelines: Azure Pipelines is a powerful continuous integration and continuous delivery (CI/CD) platform. It allows teams to automate build, test, and deployment processes for applications across different platforms and environments. It supports a wide range of languages, platforms, and deployment targets.</p>
+  </li>
+  <li>
+    <p>Azure Test Plans: This component provides comprehensive testing tools for manual and exploratory testing. It enables teams to plan, track, and manage test cases and provides rich reporting capabilities to measure test coverage and identify issues.</p>
+  </li>
+  <li>
+    <p>Azure Artifacts: Azure Artifacts is a package management system that allows teams to create, host, and share NuGet, npm, and Maven packages within the organization. It provides a centralized location to manage and distribute dependencies and artifacts across the development pipeline.</p>
+  </li>
+</ol>
+
+<p>On the other hand, SSH, which stands for Secure Shell, is a network protocol that provides a secure and encrypted way to access and manage remote systems over an unsecured network. It is commonly used for remote administration of servers, secure file transfers, and secure tunneling of network services.</p>
+
+<p>Here are some key aspects of SSH:</p>
+
+<ol>
+  <li>
+    <p>Secure Communication: SSH provides a secure channel over an insecure network by encrypting all the data exchanged between the client and the server. This ensures that sensitive information, such as login credentials and data transfers, is protected from eavesdropping and tampering.</p>
+  </li>
+  <li>
+    <p>Authentication: SSH uses various methods for user authentication, including password-based authentication and public-key authentication. Public-key authentication is generally considered more secure and involves generating a key pair consisting of a private key (kept on the client) and a public key (uploaded to the server).</p>
+  </li>
+  <li>
+    <p>Port Forwarding and Tunneling: SSH allows for port forwarding, also known as SSH tunneling, which enables the secure forwarding of network connections from a local computer to a remote server or vice versa. This feature is useful for accessing services on remote machines or bypassing firewall restrictions.</p>
+  </li>
+  <li>
+    <p>Remote Shell Access: SSH provides a secure command-line interface (CLI) or shell access to remote systems. This allows system administrators and users to execute commands, manage files, and perform administrative tasks on remote servers as if they were directly interacting with the local machine.</p>
+  </li>
+  <li>
+    <p>Secure File Transfer: SSH includes the Secure File Transfer Protocol (SFTP) and Secure Copy (SCP) utilities, which allow secure file transfers between the client and the server. These utilities provide encryption and integrity checks to ensure the confidentiality and integrity of transferred files.</p>
+  </li>
+</ol>
+
+<p>Creating an SSH fingerprint and connecting to Azure DevOps or GitHub may appear straightforward at first, but occasionally, we encounter challenging issues. In this step-by-step guide, I will demonstrate the process of generating an SSH fingerprint for Azure DevOps and cloning a repository.</p>
+
+<p><strong>Step 1:Create SSH Keys</strong></p>
+
+<ul>
+  <li>Create a folder if not exists - name .ssh in the following directory.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\mahedee
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Go to run and type: <code class="language-plaintext highlighter-rouge">%userprofile%\.ssh</code></p>
+  </li>
+  <li>
+    <p>Run the powershell command in the following directory.</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\mahedee\.ssh
+</code></pre></div></div>
+
+<ul>
+  <li>Run the follwing command on powershell.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ssh-keygen</span> <span class="nf">-C</span> <span class="nf">"test-git-dev-azure.com"</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/posts/2022/ssh-01.PNG" alt="" /></p>
+
+<p><strong>Step 2: Add the public key to Azure DevOps</strong></p>
+
+<ul>
+  <li>Now go to the Azure DevOps web portal. Go to the avatar on the upper right corner. Select SSH public keys.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/ssh-02.PNG" alt="" /></p>
+
+<ul>
+  <li>Select + New Key button on the upper right corner.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/ssh-03.PNG" alt="" /></p>
+
+<ul>
+  <li>Copy the key from <code class="language-plaintext highlighter-rouge">C:\Users\mahedee\.ssh\id_rsa.pub</code> . The content of the id_rsa.pub file that you have already generated and pest the content on Public Key Data text box as belows.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2022/ssh-04.PNG" alt="" /></p>
+
+<ul>
+  <li>Now click add button.</li>
+</ul>
+
+<p><strong>Step 3: Clone your repository</strong></p>
+
+<ul>
+  <li>Now run powershell command and clone a repository using SSH as bellows.</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">git@ssh.dev.azure.com:v3</span><span class="nv">/yourorganization/yourrepository</span>
+</code></pre></div></div>
+
+<p><strong>Troubleshooting</strong></p>
+
+<p><strong>Problem</strong></p>
+
+<p>After configuring SSH, I got the following error while tried to clone repository.</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git</span> <span class="nf">clone</span> <span class="nf">git@ssh.dev.azure.com:v3</span><span class="nv">/yourorganization/yourrepository</span>
+</code></pre></div></div>
+
+<p>I was getting the following message:</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">git@ssh.dev.azure.com's</span> <span class="nf">password:</span>
+</code></pre></div></div>
+
+<p>I have tried all using all sorts of password but failed.</p>
+
+<p><strong>Solution</strong></p>
+
+<ol>
+  <li>OpenSSH Authentication Agent was disabled on my PC. I started the service.</li>
+</ol>
+
+<p><img src="/assets/images/posts/2022/ssh-05.PNG" alt="" /></p>
+
+<ol>
+  <li>SSH.exe was not added on environment varaible. I have added it on environment variable.</li>
+</ol>
+
+<p><img src="/assets/images/posts/2022/ssh-06.PNG" alt="" /></p>
+
+<p>Then I tried to clone the repository and It was working fine.</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#command" class="page__taxonomy-item" rel="tag">command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sourcecontrol" class="page__taxonomy-item" rel="tag">sourcecontrol</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#command" class="page__taxonomy-item" rel="tag">Command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#source-control" class="page__taxonomy-item" rel="tag">Source Control</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-05-10T00:00:00-04:00">May 10, 2022</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+create+SSH+fingerprint+for+Azure+DevOps%20https%3A%2F%2Fmahedee.net%2F%2Fhow-to-create-ssh-fingerprint-for-azure-devops%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-create-ssh-fingerprint-for-azure-devops%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fhow-to-create-ssh-fingerprint-for-azure-devops%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/docker-tips-and-tricks/" class="pagination--pager" title="Tips and tricks for docker
+">Previous</a>
+    
+    
+      <a href="/Configure-QoS-in-API-Gateway-using-ocelot-and-Polly/" class="pagination--pager" title="Configure QoS in API Gateway using ocelot and Polly
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

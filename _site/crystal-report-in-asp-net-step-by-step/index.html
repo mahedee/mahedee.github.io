@@ -1,0 +1,1129 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Crystal Report With ASP.Net Step By Step - Think Simple</title>
+<meta name="description" content="For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Crystal Report With ASP.Net Step By Step">
+<meta property="og:url" content="https://mahedee.net//crystal-report-in-asp-net-step-by-step/">
+
+
+  <meta property="og:description" content="For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-05-01T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//crystal-report-in-asp-net-step-by-step/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Crystal Report With ASP.Net Step By Step | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Crystal Report With ASP.Net Step By Step" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net." />
+<meta property="og:description" content="For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net." />
+<link rel="canonical" href="https://mahedee.net//crystal-report-in-asp-net-step-by-step/" />
+<meta property="og:url" content="https://mahedee.net//crystal-report-in-asp-net-step-by-step/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-01T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Crystal Report With ASP.Net Step By Step" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2019-05-01T00:00:00-04:00","datePublished":"2019-05-01T00:00:00-04:00","description":"For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net.","headline":"Crystal Report With ASP.Net Step By Step","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//crystal-report-in-asp-net-step-by-step/"},"url":"https://mahedee.net//crystal-report-in-asp-net-step-by-step/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (9th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Crystal Report With ASP.Net Step By Step">
+    <meta itemprop="description" content="For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net.">
+    <meta itemprop="datePublished" content="May 01, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Crystal Report With ASP.Net Step By Step
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>For business or other managerial purpose, it is very important to prepare reports. We use SAP crystal reports in asp.net often for reporting purpose. Before going to the details, I hope you already know how to prepare a crystal report (something.rpt file). Here I used SAP crystal report; data is retrieved by a stored procedure which required two parameters. I used SAP Crystal Report 13.0.5 with visual studio 2012. A stored procedure is responsible to provide data to crystal report. So, let’s implement crystal report in asp.net.</p>
+
+<p><strong>Step 1: Create a report file</strong></p>
+
+<p>Create a report file (rpt_get_employee_info_dept_id_team_id.rpt). Write a stored procedure (rsp_get_employee_info_by_dept_id_team_id) to retrieve data. Set the stored procedure as crystal report data source. Design crystal reports.</p>
+
+<p><strong>Step 2: Add Assemblies</strong></p>
+
+<p>Add the following references to your web site. Version of the assembly is most important. I used assembly version: 13.0.2000.0</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">CrystalDecisions.CrystalReports.Engine;</span>
+<span class="nf">CrystalDecisions.Shared;</span>
+<span class="nf">CrystalDecisions.Web</span>
+</code></pre></div></div>
+<p><strong>Step 3: Create a report base class</strong></p>
+
+<p>This is a custom class, responsible to generate crystal report document. Some global variable is used in this class for configuration purpose. Server name, database name, user id, password is hard coded here for easily understand but I recommend, it should come from web configuration file.</p>
+
+<p><strong>ReportBase.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CrystalDecisions.CrystalReports.Engine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CrystalDecisions.Shared</span><span class="p">;</span>
+
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// The base class to generate report document</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ReportBase</span>
+<span class="p">{</span>
+
+    <span class="kt">string</span> <span class="n">ServerName</span> <span class="p">=</span> <span class="s">"MAHEDEE-PC"</span><span class="p">;</span>    <span class="c1">//Database server name to which report connected</span>
+    <span class="kt">string</span> <span class="n">DataBaseName</span> <span class="p">=</span> <span class="s">"TestDB"</span><span class="p">;</span>      <span class="c1">//Database name to which report connected</span>
+    <span class="kt">string</span> <span class="n">UserID</span> <span class="p">=</span> <span class="s">"sa"</span><span class="p">;</span>                <span class="c1">//Database user name to which report connected</span>
+    <span class="kt">string</span> <span class="n">Password</span> <span class="p">=</span> <span class="s">"sa"</span><span class="p">;</span>              <span class="c1">//Database user password to which report connected</span>
+
+    <span class="n">ReportDocument</span> <span class="n">crReportDocument</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ReportDocument</span><span class="p">();</span>   <span class="c1">//Crystal report document object</span>
+
+    
+
+    <span class="k">public</span> <span class="nf">ReportBase</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">///Base method to generate report document. </span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="ReportName"&gt;Report name&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="ParamArraylist"&gt;Parameter ArrayList&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="ReportFolder"&gt;Report folder name&lt;/param&gt;</span>
+    <span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+    
+    <span class="k">public</span> <span class="n">ReportDocument</span> <span class="nf">PFSubReportConnectionMainParameter</span><span class="p">(</span><span class="kt">string</span> <span class="n">ReportName</span><span class="p">,</span> <span class="n">ArrayList</span> <span class="n">ParamArraylist</span><span class="p">,</span> <span class="kt">string</span> <span class="n">ReportFolder</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ObjArrayA</span><span class="p">,</span> <span class="n">ObjArrayB</span><span class="p">,</span> <span class="n">Paraindex</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">Paravalue</span><span class="p">;</span>
+        <span class="n">ObjArrayB</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+        <span class="kt">string</span> <span class="n">path</span> <span class="p">=</span> <span class="n">ReportFolder</span> <span class="p">+</span> <span class="s">@"\"</span> <span class="p">+</span> <span class="n">@ReportName</span><span class="p">;</span> <span class="c1">//Full path of report</span>
+        
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="n">crReportDocument</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">path</span><span class="p">);</span> <span class="c1">//Load crystal Report</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+        <span class="p">{</span>
+
+            <span class="kt">string</span> <span class="n">msg</span> <span class="p">=</span> <span class="s">"The report file "</span> <span class="p">+</span> <span class="n">path</span> <span class="p">+</span>
+                        <span class="s">" can not be loaded, ensure that the report exists or the path is correct."</span> <span class="p">+</span>
+                        <span class="s">"\nException:\n"</span> <span class="p">+</span> <span class="n">ex</span><span class="p">.</span><span class="n">Message</span> <span class="p">+</span>
+                        <span class="s">"\nSource:"</span> <span class="p">+</span> <span class="n">ex</span><span class="p">.</span><span class="n">Source</span> <span class="p">+</span>
+                        <span class="s">"\nStacktrace:"</span> <span class="p">+</span> <span class="n">ex</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">;</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+        <span class="p">}</span>
+
+       <span class="c1">//Ensure login to the database server</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="nf">Logon</span><span class="p">(</span><span class="n">crReportDocument</span><span class="p">,</span> <span class="n">ServerName</span><span class="p">,</span> <span class="n">DataBaseName</span><span class="p">,</span> <span class="n">UserID</span><span class="p">,</span> <span class="n">Password</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="kt">string</span> <span class="n">msg</span> <span class="p">=</span> <span class="s">"Can not login to Report Server "</span> <span class="p">+</span>
+                        <span class="s">"\nDatabase Server: "</span> <span class="p">+</span> <span class="n">ServerName</span> <span class="p">+</span>
+                        <span class="s">"\nDatabase:\n"</span> <span class="p">+</span> <span class="n">DataBaseName</span> <span class="p">+</span>
+                        <span class="s">"\nDBUser:"</span> <span class="p">+</span> <span class="n">UserID</span> <span class="p">+</span>
+                        <span class="s">"\nDBPassword:"</span> <span class="p">+</span> <span class="n">Password</span><span class="p">;</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nf">Logon</span><span class="p">(</span><span class="n">crReportDocument</span><span class="p">,</span> <span class="n">ServerName</span><span class="p">,</span> <span class="n">DataBaseName</span><span class="p">,</span> <span class="n">UserID</span><span class="p">,</span> <span class="n">Password</span><span class="p">);</span>
+        
+        <span class="c1">//To Check Parameter Feild Array have the Same Amount of Parameter Feild in the Report</span>
+        <span class="kt">int</span> <span class="n">ParamArrayCount</span><span class="p">,</span> <span class="n">ParameterFieldCount</span><span class="p">;</span>
+        <span class="c1">//Getting Value from the Array</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">ParamArraylist</span><span class="p">.</span><span class="n">Count</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ParamArrayCount</span> <span class="p">=</span> <span class="p">(</span><span class="n">ParamArraylist</span><span class="p">.</span><span class="n">Count</span> <span class="p">/</span> <span class="m">2</span><span class="p">);</span>
+
+            <span class="c1">//Getting Value From the Report (Parameter and Formula Feild)</span>
+            <span class="n">ParameterFieldCount</span> <span class="p">=</span> <span class="n">crReportDocument</span><span class="p">.</span><span class="n">DataDefinition</span><span class="p">.</span><span class="n">ParameterFields</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+
+            <span class="c1">//Parameter on The Report and Array List Parameter Amount is not the same</span>
+            <span class="n">ParamArrayCount</span> <span class="p">=</span> <span class="n">ParameterFieldCount</span><span class="p">;</span>
+
+        
+            <span class="k">for</span> <span class="p">(</span><span class="n">ObjArrayA</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">ObjArrayA</span> <span class="p">&lt;</span> <span class="p">((</span><span class="n">ParamArraylist</span><span class="p">.</span><span class="n">Count</span> <span class="p">/</span> <span class="m">2</span><span class="p">));</span> <span class="n">ObjArrayA</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">Paraindex</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">ParamArraylist</span><span class="p">[</span><span class="n">ObjArrayB</span><span class="p">];</span> <span class="c1">//Parameter index</span>
+                <span class="n">Paravalue</span> <span class="p">=</span> <span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">ParamArraylist</span><span class="p">[</span><span class="n">ObjArrayB</span> <span class="p">+</span> <span class="m">1</span><span class="p">];</span> <span class="c1">//Paramter Value</span>
+                <span class="nf">PassParameter</span><span class="p">(</span><span class="n">Paraindex</span><span class="p">,</span> <span class="n">Paravalue</span><span class="p">);</span>
+                <span class="n">ObjArrayB</span> <span class="p">=</span> <span class="n">ObjArrayB</span> <span class="p">+</span> <span class="m">2</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        
+        <span class="k">return</span> <span class="n">crReportDocument</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Set parameter value in crystal report on corresponding index</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="ParameterIndex"&gt;&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="ParameterValue"&gt;&lt;/param&gt;</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">PassParameter</span><span class="p">(</span><span class="kt">int</span> <span class="n">ParameterIndex</span><span class="p">,</span> <span class="kt">string</span> <span class="n">ParameterValue</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//        '</span>
+        <span class="c1">//        ' Declare the parameter related objects.</span>
+        <span class="c1">//        '</span>
+        <span class="n">ParameterDiscreteValue</span> <span class="n">crParameterDiscreteValue</span><span class="p">;</span>
+        <span class="n">ParameterFieldDefinitions</span> <span class="n">crParameterFieldDefinitions</span><span class="p">;</span>
+        <span class="n">ParameterFieldDefinition</span> <span class="n">crParameterFieldLocation</span><span class="p">;</span>
+        <span class="n">ParameterValues</span> <span class="n">crParameterValues</span><span class="p">;</span>
+
+
+        <span class="n">crParameterFieldDefinitions</span> <span class="p">=</span> <span class="n">crReportDocument</span><span class="p">.</span><span class="n">DataDefinition</span><span class="p">.</span><span class="n">ParameterFields</span><span class="p">;</span>
+        <span class="n">crParameterFieldLocation</span> <span class="p">=</span> <span class="p">(</span><span class="n">ParameterFieldDefinition</span><span class="p">)</span><span class="n">crParameterFieldDefinitions</span><span class="p">[</span><span class="n">ParameterIndex</span><span class="p">];</span>
+        <span class="n">crParameterValues</span> <span class="p">=</span> <span class="n">crParameterFieldLocation</span><span class="p">.</span><span class="n">CurrentValues</span><span class="p">;</span>
+        <span class="n">crParameterDiscreteValue</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">ParameterDiscreteValue</span><span class="p">();</span>
+        <span class="n">crParameterDiscreteValue</span><span class="p">.</span><span class="n">Value</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Convert</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="n">ParameterValue</span><span class="p">);</span>
+        <span class="n">crParameterValues</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">crParameterDiscreteValue</span><span class="p">);</span>
+        <span class="n">crParameterFieldLocation</span><span class="p">.</span><span class="nf">ApplyCurrentValues</span><span class="p">(</span><span class="n">crParameterValues</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">//Check whether crytal report can login to the server</span>
+    <span class="k">private</span> <span class="kt">bool</span> <span class="nf">Logon</span><span class="p">(</span><span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">ReportDocument</span> <span class="n">cr</span><span class="p">,</span> <span class="kt">string</span> <span class="n">server</span><span class="p">,</span> <span class="kt">string</span> <span class="n">database</span><span class="p">,</span> <span class="kt">string</span> <span class="n">user_id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">password</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Declare and instantiate a new connection info object.</span>
+        <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="n">ConnectionInfo</span> <span class="n">ci</span><span class="p">;</span>
+        <span class="n">ci</span> <span class="p">=</span> <span class="k">new</span> <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">ConnectionInfo</span><span class="p">();</span>
+
+        <span class="n">ci</span><span class="p">.</span><span class="n">ServerName</span> <span class="p">=</span> <span class="n">server</span><span class="p">;</span>
+        <span class="n">ci</span><span class="p">.</span><span class="n">DatabaseName</span> <span class="p">=</span> <span class="n">database</span><span class="p">;</span>
+        <span class="n">ci</span><span class="p">.</span><span class="n">UserID</span> <span class="p">=</span> <span class="n">user_id</span><span class="p">;</span>
+        <span class="n">ci</span><span class="p">.</span><span class="n">Password</span> <span class="p">=</span> <span class="n">password</span><span class="p">;</span><span class="c1">//password;</span>
+        <span class="c1">//  ci.IntegratedSecurity = false;</span>
+
+        <span class="c1">// If the ApplyLogon function fails then return a false for this function.</span>
+        <span class="c1">// We are applying logon information to the main report at this stage.</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="nf">ApplyLogon</span><span class="p">(</span><span class="n">cr</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Declare a subreport object.</span>
+        <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">SubreportObject</span> <span class="n">subobj</span><span class="p">;</span>
+
+        <span class="c1">// Loop through all the report objects and locate subreports.</span>
+        <span class="c1">// If a subreport is found then apply logon information to</span>
+        <span class="c1">// the subreport.</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">ReportObject</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">cr</span><span class="p">.</span><span class="n">ReportDefinition</span><span class="p">.</span><span class="n">ReportObjects</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">Kind</span> <span class="p">==</span> <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="n">ReportObjectKind</span><span class="p">.</span><span class="n">SubreportObject</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">subobj</span> <span class="p">=</span> <span class="p">(</span><span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">SubreportObject</span><span class="p">)</span><span class="n">obj</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">ApplyLogon</span><span class="p">(</span><span class="n">cr</span><span class="p">.</span><span class="nf">OpenSubreport</span><span class="p">(</span><span class="n">subobj</span><span class="p">.</span><span class="n">SubreportName</span><span class="p">),</span> <span class="n">ci</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Return True if the code runs to this stage.</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">///This method is called by the "Logon" method. It loops through the report tables and applies the connection information to each table.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="c1">/// &lt;param name="cr"&gt;&lt;/param&gt;</span>
+    <span class="c1">/// &lt;param name="ci"&gt;&lt;/param&gt;</span>
+    <span class="c1">/// &lt;returns&gt;&lt;/returns&gt;</span>
+    <span class="k">private</span> <span class="kt">bool</span> <span class="nf">ApplyLogon</span><span class="p">(</span><span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">ReportDocument</span> <span class="n">cr</span><span class="p">,</span> <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="n">ConnectionInfo</span> <span class="n">ci</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// This function is called by the "Logon" function</span>
+        <span class="c1">// It loops through the report tables and applies</span>
+        <span class="c1">// the connection information to each table.</span>
+
+        <span class="c1">// Declare the TableLogOnInfo object and a table object for use later.</span>
+        <span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="n">TableLogOnInfo</span> <span class="n">li</span><span class="p">;</span>
+        <span class="c1">// For each table apply connection info.</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">CrystalDecisions</span><span class="p">.</span><span class="n">CrystalReports</span><span class="p">.</span><span class="n">Engine</span><span class="p">.</span><span class="n">Table</span> <span class="n">tbl</span> <span class="k">in</span> <span class="n">cr</span><span class="p">.</span><span class="n">Database</span><span class="p">.</span><span class="n">Tables</span><span class="p">)</span>
+        <span class="p">{</span>
+
+            <span class="n">li</span> <span class="p">=</span> <span class="n">tbl</span><span class="p">.</span><span class="n">LogOnInfo</span><span class="p">;</span>
+            <span class="n">li</span><span class="p">.</span><span class="n">ConnectionInfo</span><span class="p">.</span><span class="n">ServerName</span> <span class="p">=</span> <span class="n">ci</span><span class="p">.</span><span class="n">ServerName</span><span class="p">;</span>
+            <span class="n">li</span><span class="p">.</span><span class="n">ConnectionInfo</span><span class="p">.</span><span class="n">DatabaseName</span> <span class="p">=</span> <span class="n">ci</span><span class="p">.</span><span class="n">DatabaseName</span><span class="p">;</span>
+            <span class="n">li</span><span class="p">.</span><span class="n">ConnectionInfo</span><span class="p">.</span><span class="n">UserID</span> <span class="p">=</span> <span class="n">ci</span><span class="p">.</span><span class="n">UserID</span><span class="p">;</span>
+            <span class="n">li</span><span class="p">.</span><span class="n">ConnectionInfo</span><span class="p">.</span><span class="n">Password</span> <span class="p">=</span> <span class="n">ci</span><span class="p">.</span><span class="n">Password</span><span class="p">;</span>
+            <span class="n">tbl</span><span class="p">.</span><span class="nf">ApplyLogOnInfo</span><span class="p">(</span><span class="n">li</span><span class="p">);</span>
+            <span class="n">tbl</span><span class="p">.</span><span class="n">Location</span> <span class="p">=</span> <span class="n">ci</span><span class="p">.</span><span class="n">DatabaseName</span> <span class="p">+</span> <span class="s">".dbo."</span> <span class="p">+</span> <span class="n">tbl</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span>
+
+            <span class="c1">// Verify that the logon was successful.</span>
+            <span class="c1">// If TestConnectivity returns false, correct table locations.</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">tbl</span><span class="p">.</span><span class="nf">TestConnectivity</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+<p>In this class some methods are used for different purposes.</p>
+
+<ul>
+  <li>public ReportDocument PFSubReportConnectionMainParameter(string ReportName, ArrayList ParamArraylist, string ReportFolder)  - This is the base method to generate report document</li>
+  <li>public void PassParameter(int ParameterIndex, string ParameterValue) - Set parameter value in crystal report on corresponding index</li>
+  <li>private bool Logon(CrystalDecisions.CrystalReports.Engine.ReportDocument cr, string server, string database, string user_id, string password) – Cystal report login check to the server</li>
+  <li>private bool ApplyLogon(CrystalDecisions.CrystalReports.Engine.ReportDocument cr, CrystalDecisions.Shared.ConnectionInfo ci) – Supporting method of “Logon” to login check.</li>
+</ul>
+
+<p><strong>Step 4: Create Report Viewer pages</strong></p>
+
+<p>In this project, I have created a report viewer page – ViewReport.aspx. Here some steps need to follow.</p>
+
+<ul>
+  <li>Register Assembly – Register assembly CrystalDecisions.Web to the page directive</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;%</span><span class="err">@</span> <span class="n">Register</span> <span class="n">Assembly</span><span class="p">=</span><span class="s">"CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"</span> <span class="n">Namespace</span><span class="p">=</span><span class="s">"CrystalDecisions.Web"</span> <span class="n">TagPrefix</span><span class="p">=</span><span class="s">"CR"</span> <span class="p">%&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add crystal report viewer – Add crystal report viewer to view report.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">CR</span><span class="p">:</span><span class="n">CrystalReportViewer</span> <span class="n">ID</span><span class="p">=</span><span class="s">"CrystalReportViewer1"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">AutoDataBind</span><span class="p">=</span><span class="s">"True"</span> <span class="n">HasPrintButton</span><span class="p">=</span><span class="s">"True"</span><span class="n">HasRefreshButton</span><span class="p">=</span><span class="s">"True"</span> <span class="n">ReuseParameterValuesOnRefresh</span><span class="p">=</span><span class="s">"True"</span> <span class="n">Height</span><span class="p">=</span><span class="s">"50px"</span> <span class="n">Width</span><span class="p">=</span><span class="s">"350px"</span><span class="n">OnReportRefresh</span><span class="p">=</span><span class="s">"CrystalReportViewer1_ReportRefresh"</span> <span class="n">PrintMode</span><span class="p">=</span><span class="s">"ActiveX"</span> <span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Manually config CSS file - Sometimes crystal report shows blank page due to some technical problem so add the following css link in between head tag</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span> <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+</code></pre></div></div>
+<p>A button (btnViewReport) is used to display report</p>
+
+<p><strong>Source file of ViewReport.aspx</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;%</span><span class="err">@</span> <span class="n">Page</span> <span class="n">Language</span><span class="p">=</span><span class="s">"C#"</span> <span class="n">AutoEventWireup</span><span class="p">=</span><span class="s">"true"</span> <span class="n">CodeFile</span><span class="p">=</span><span class="s">"ViewReport.aspx.cs"</span> <span class="n">Inherits</span><span class="p">=</span><span class="s">"ViewReport"</span> <span class="p">%&gt;</span>
+
+<span class="p">&lt;%</span><span class="err">@</span> <span class="n">Register</span> <span class="n">Assembly</span><span class="p">=</span><span class="s">"CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"</span>
+    <span class="n">Namespace</span><span class="p">=</span><span class="s">"CrystalDecisions.Web"</span> <span class="n">TagPrefix</span><span class="p">=</span><span class="s">"CR"</span> <span class="p">%&gt;</span>
+
+<span class="p">&lt;!</span><span class="n">DOCTYPE</span> <span class="n">html</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="n">html</span> <span class="n">xmlns</span><span class="p">=</span><span class="s">"http://www.w3.org/1999/xhtml"</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">head</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">title</span><span class="p">&gt;&lt;/</span><span class="n">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="p">=</span><span class="s">"/aspnet_client/System_Web/4_0_30319/CrystalReportWebFormViewer3/css/default.css"</span>
+        <span class="n">rel</span><span class="p">=</span><span class="s">"stylesheet"</span> <span class="n">type</span><span class="p">=</span><span class="s">"text/css"</span> <span class="p">/&gt;</span>
+
+<span class="p">&lt;/</span><span class="n">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="n">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="n">form</span> <span class="n">id</span><span class="p">=</span><span class="s">"form1"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="n">div</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">table</span><span class="p">&gt;</span>
+
+                <span class="p">&lt;</span><span class="n">tr</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="n">td</span><span class="p">&gt;</span>
+                        <span class="p">&lt;</span><span class="n">asp</span><span class="p">:</span><span class="n">Button</span> <span class="n">ID</span><span class="p">=</span><span class="s">"btnViewReport"</span> <span class="n">Text</span><span class="p">=</span><span class="s">"View Report"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">OnClick</span><span class="p">=</span><span class="s">"btnViewReport_Click"</span> <span class="p">/&gt;&lt;/</span><span class="n">td</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="n">tr</span><span class="p">&gt;</span>
+
+            <span class="p">&lt;/</span><span class="n">table</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="n">br</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="n">div</span> <span class="n">style</span><span class="p">=</span><span class="s">"height: 500px; width: 500px;"</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="n">CR</span><span class="p">:</span><span class="n">CrystalReportViewer</span> <span class="n">ID</span><span class="p">=</span><span class="s">"CrystalReportViewer1"</span> <span class="n">runat</span><span class="p">=</span><span class="s">"server"</span> <span class="n">AutoDataBind</span><span class="p">=</span><span class="s">"True"</span> <span class="n">HasPrintButton</span><span class="p">=</span><span class="s">"True"</span> <span class="n">HasRefreshButton</span><span class="p">=</span><span class="s">"True"</span> <span class="n">ReuseParameterValuesOnRefresh</span><span class="p">=</span><span class="s">"True"</span> <span class="n">Height</span><span class="p">=</span><span class="s">"50px"</span> <span class="n">Width</span><span class="p">=</span><span class="s">"350px"</span> <span class="n">OnReportRefresh</span><span class="p">=</span><span class="s">"CrystalReportViewer1_ReportRefresh"</span> <span class="n">PrintMode</span><span class="p">=</span><span class="s">"ActiveX"</span> <span class="p">/&gt;</span>
+
+
+            <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+
+        <span class="p">&lt;/</span><span class="n">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="n">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">html</span><span class="p">&gt;</span>
+
+</code></pre></div></div>
+<p><strong>Code behind of ViewReport.aspx</strong></p>
+
+<p>Some methods are used in code behind file for different purpose.</p>
+
+<ul>
+  <li>protected void btnViewReport_Click(object sender, EventArgs e) – Click event handler of btnViewReport button. In this method two parameters of crystal report are used as hardcoded. In real application, it should come as input control dynamically.</li>
+  <li>private void GetReportDocument() – Responsible to generate report document using ReportBase class.</li>
+  <li>private void ViewCystalReport() - Set generated report document as Crystal Report viewer report source and display report in report viewer.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CrystalDecisions.CrystalReports.Engine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CrystalDecisions.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Drawing</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.UI</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.UI.WebControls</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ViewReport</span> <span class="p">:</span> <span class="n">System</span><span class="p">.</span><span class="n">Web</span><span class="p">.</span><span class="n">UI</span><span class="p">.</span><span class="n">Page</span>
+<span class="p">{</span>
+    
+    <span class="n">ArrayList</span> <span class="n">ParameterArrayList</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ArrayList</span><span class="p">();</span> <span class="c1">//Report parameter list</span>
+    <span class="n">ReportDocument</span> <span class="n">ObjReportClientDocument</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ReportDocument</span><span class="p">();</span> <span class="c1">//Report document</span>
+
+    <span class="k">protected</span> <span class="k">void</span> <span class="nf">Page_Load</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">void</span> <span class="nf">btnViewReport_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="cm">/*The report with two parameters. */</span>
+        <span class="n">ParameterArrayList</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>
+        <span class="n">ParameterArrayList</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"1"</span><span class="p">);</span> <span class="c1">//Parameter 1 with input 1. This is actually dept id according to report parameter</span>
+        <span class="n">ParameterArrayList</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">);</span> 
+        <span class="n">ParameterArrayList</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"1"</span><span class="p">);</span> <span class="c1">//Parameter 2 with input 1. This is actually team id according to report parameter</span>
+
+        <span class="nf">GetReportDocument</span><span class="p">();</span> <span class="c1">//Generate Report document</span>
+        <span class="nf">ViewCystalReport</span><span class="p">();</span>  <span class="c1">//View report document in crystal report viewer</span>
+
+    <span class="p">}</span>
+
+
+
+    <span class="cm">/*Generate report document*/</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">GetReportDocument</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">ReportBase</span> <span class="n">objReportBase</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ReportBase</span><span class="p">();</span>
+        <span class="kt">string</span> <span class="n">sRptFolder</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">sRptName</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+
+        <span class="n">sRptName</span> <span class="p">=</span> <span class="s">"rpt_get_employee_info_dept_id_team_id.rpt"</span><span class="p">;</span> <span class="c1">//Report name</span>
+        <span class="n">sRptFolder</span> <span class="p">=</span> <span class="n">Server</span><span class="p">.</span><span class="nf">MapPath</span><span class="p">(</span><span class="s">"~/Reports"</span><span class="p">);</span>  <span class="c1">//Report folder name</span>
+
+
+        <span class="n">ObjReportClientDocument</span> <span class="p">=</span> <span class="n">objReportBase</span><span class="p">.</span><span class="nf">PFSubReportConnectionMainParameter</span><span class="p">(</span><span class="n">sRptName</span><span class="p">,</span> <span class="n">ParameterArrayList</span><span class="p">,</span> <span class="n">sRptFolder</span><span class="p">);</span>
+        
+
+        <span class="c1">//This section is for manipulating font and font size. This an optional section </span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="n">Section</span> <span class="n">oSection</span> <span class="k">in</span> <span class="n">ObjReportClientDocument</span><span class="p">.</span><span class="n">ReportDefinition</span><span class="p">.</span><span class="n">Sections</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="n">ReportObject</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">oSection</span><span class="p">.</span><span class="n">ReportObjects</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">FieldObject</span> <span class="n">field</span><span class="p">;</span>
+                <span class="n">field</span> <span class="p">=</span> <span class="n">ObjReportClientDocument</span><span class="p">.</span><span class="n">ReportDefinition</span><span class="p">.</span><span class="n">ReportObjects</span><span class="p">[</span><span class="n">obj</span><span class="p">.</span><span class="n">Name</span><span class="p">]</span> <span class="k">as</span> <span class="n">FieldObject</span><span class="p">;</span>
+
+
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">field</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">Font</span> <span class="n">oFon1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Font</span><span class="p">(</span><span class="s">"Arial Narrow"</span><span class="p">,</span> <span class="n">field</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">-</span> <span class="m">1F</span><span class="p">);</span>
+                    <span class="n">Font</span> <span class="n">oFon2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Font</span><span class="p">(</span><span class="s">"Arial"</span><span class="p">,</span> <span class="n">field</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">-</span> <span class="m">1F</span><span class="p">);</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="n">oFon1</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">field</span><span class="p">.</span><span class="nf">ApplyFont</span><span class="p">(</span><span class="n">oFon1</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">oFon2</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">field</span><span class="p">.</span><span class="nf">ApplyFont</span><span class="p">(</span><span class="n">oFon2</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">void</span> <span class="nf">CrystalReportViewer1_ReportRefresh</span><span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">ViewerEventArgs</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//OnInit(e);</span>
+        <span class="c1">//ViewCystalReport();</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// To view crystal report</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">ViewCystalReport</span><span class="p">()</span>
+    <span class="p">{</span>
+
+        <span class="c1">//Set generated report document as Crystal Report viewer report source</span>
+        <span class="n">CrystalReportViewer1</span><span class="p">.</span><span class="n">ReportSource</span> <span class="p">=</span> <span class="n">ObjReportClientDocument</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<p><img src="/assets/images/posts/2019/Cr-empdept-team-wise.jpg" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample/tree/master/CrystalReportASPNet">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#crystalreport" class="page__taxonomy-item" rel="tag">crystalreport</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#crystal-report" class="page__taxonomy-item" rel="tag">Crystal Report</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-05-01T00:00:00-04:00">May 01, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Crystal+Report+With+ASP.Net+Step+By+Step%20https%3A%2F%2Fmahedee.net%2F%2Fcrystal-report-in-asp-net-step-by-step%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fcrystal-report-in-asp-net-step-by-step%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fcrystal-report-in-asp-net-step-by-step%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/iterator-design-pattern/" class="pagination--pager" title="Iterator design pattern with C#
+">Previous</a>
+    
+    
+      <a href="/decorator-design-pattern/" class="pagination--pager" title="Decorator Design Pattern using C#
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

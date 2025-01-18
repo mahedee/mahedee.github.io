@@ -1,4 +1,557 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2024-12-22T17:26:05-05:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases</title><link href="https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="alternate" type="text/html" title="Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases</id><content type="html" xml:base="https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases/"><![CDATA[<p>In modern application development, delivering timely and accurate notifications is crucial to ensuring a seamless user experience. However, the mechanisms used to handle notifications can vary significantly depending on the application’s needs. Two commonly used approaches are the <strong>Observer Design Pattern</strong> for real-time notifications and <strong>databases</strong> for persistent notifications. This article delves into the differences between these methods, their practical use cases, and guidance on when to use each.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2025-01-18T11:05:06-05:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#</title><link href="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="alternate" type="text/html" title="Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#" /><published>2025-01-05T00:00:00-05:00</published><updated>2025-01-05T00:00:00-05:00</updated><id>https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp</id><content type="html" xml:base="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/"><![CDATA[<p>Managing the complexity of modern software systems can be a daunting task, especially when interacting with multiple interconnected subsystems. One practical approach to handle this challenge is the Facade Design Pattern, which provides a simplified interface to access complex subsystems. In this article, we’ll explore how the Facade Design Pattern can streamline the processing of orders in an e-commerce platform, using C# for implementation.</p>
+
+<p><strong>What is the Facade Design Pattern?</strong>
+The Facade Design Pattern is a structural pattern that simplifies the interaction between a client and multiple subsystems by providing a unified interface. It hides the complexities of the subsystems and offers a cleaner, more maintainable way for the client to access their functionality.</p>
+
+<p><strong>Key components of the Facade Design Pattern</strong></p>
+
+<ul>
+  <li><strong>Facade</strong>: The interface that provides a simplified access to the subsystems.</li>
+  <li><strong>Subsystem</strong>: The individual components or classes that make up the complex system.</li>
+  <li><strong>Client</strong>: The code that interacts with the Facade to access the subsystems’ functionality.</li>
+</ul>
+
+<p><strong>Problem Statement: E-Commerce Order Processing</strong>
+In an e-commerce platform, order processing involves multiple systems:</p>
+
+<ul>
+  <li>Inventory Management: To check stock availability.</li>
+  <li>Payment Gateway: To process payments securely.</li>
+  <li>Shipping System: To schedule deliveries.</li>
+  <li>Notification Service: To send order confirmation emails.</li>
+</ul>
+
+<p>Directly managing these subsystems can lead to:</p>
+
+<ul>
+  <li>Complex Code: Multiple layers of logic and interdependencies.</li>
+  <li>Error-Prone Processes: Increased chances of bugs.</li>
+  <li>Reduced Maintainability: Difficult to adapt to future changes.</li>
+</ul>
+
+<p><strong>Solution: Using the Facade Design Pattern</strong></p>
+
+<p>By introducing a Facade, we encapsulate the complexity of these subsystems into a single interface, allowing the client to interact with them seamlessly.</p>
+
+<p><strong>Key Components of the Solution</strong></p>
+
+<ul>
+  <li>Subsystems:
+    <ul>
+      <li>Handle individual responsibilities (e.g., Inventory, Payment, Shipping, Notification).</li>
+    </ul>
+  </li>
+  <li>Facade:
+    <ul>
+      <li>Acts as the unified interface for the client.</li>
+    </ul>
+  </li>
+  <li>Client:
+    <ul>
+      <li>Interacts only with the Facade for simplified order processing.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>UML Class Diagram of the Facade Design Pattern:</strong></p>
+
+<p><img src="/assets/images/posts/2025/facade-ecommerce.drawio.png" alt="" /></p>
+
+<p><strong>Implementation in C#</strong></p>
+
+<p>Let’s implement the Facade Design Pattern for e-commerce order processing in C#.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceFacade</span>
+<span class="p">{</span>
+
+    <span class="c1">// Define subsystems</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">InventorySystem</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">bool</span> <span class="nf">CheckStock</span><span class="p">(</span><span class="kt">string</span> <span class="n">item</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Checking stock for </span><span class="p">{</span><span class="n">item</span><span class="p">}</span><span class="s">..."</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span> <span class="c1">// Assume stock is available</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">UpdateInventory</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Updating inventory..."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">PaymentGateway</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">bool</span> <span class="nf">ProcessPayment</span><span class="p">(</span><span class="kt">string</span> <span class="n">cardDetails</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">amount</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Processing payment of $</span><span class="p">{</span><span class="n">amount</span><span class="p">}</span><span class="s"> using </span><span class="p">{</span><span class="n">cardDetails</span><span class="p">}</span><span class="s">..."</span><span class="p">);</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span> <span class="c1">// Assume payment is successful</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ShippingSystem</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ScheduleDelivery</span><span class="p">(</span><span class="kt">string</span> <span class="n">item</span><span class="p">,</span> <span class="kt">string</span> <span class="n">address</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Scheduling delivery of </span><span class="p">{</span><span class="n">item</span><span class="p">}</span><span class="s"> to </span><span class="p">{</span><span class="n">address</span><span class="p">}</span><span class="s">..."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">NotificationService</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">SendOrderConfirmation</span><span class="p">(</span><span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Sending order confirmation email to </span><span class="p">{</span><span class="n">email</span><span class="p">}</span><span class="s">..."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Define Facade</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">OrderProcessingFacade</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">InventorySystem</span> <span class="n">_inventorySystem</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">PaymentGateway</span> <span class="n">_paymentGateway</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ShippingSystem</span> <span class="n">_shippingSystem</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">NotificationService</span> <span class="n">_notificationService</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">OrderProcessingFacade</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">_inventorySystem</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">InventorySystem</span><span class="p">();</span>
+            <span class="n">_paymentGateway</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PaymentGateway</span><span class="p">();</span>
+            <span class="n">_shippingSystem</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ShippingSystem</span><span class="p">();</span>
+            <span class="n">_notificationService</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">NotificationService</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">PlaceOrder</span><span class="p">(</span><span class="kt">string</span> <span class="n">item</span><span class="p">,</span> <span class="kt">string</span> <span class="n">cardDetails</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">amount</span><span class="p">,</span> <span class="kt">string</span> <span class="n">address</span><span class="p">,</span> <span class="kt">string</span> <span class="n">email</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Starting order processing..."</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(!</span><span class="n">_inventorySystem</span><span class="p">.</span><span class="nf">CheckStock</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Item is out of stock."</span><span class="p">);</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_inventorySystem</span><span class="p">.</span><span class="nf">UpdateInventory</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(!</span><span class="n">_paymentGateway</span><span class="p">.</span><span class="nf">ProcessPayment</span><span class="p">(</span><span class="n">cardDetails</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Payment failed."</span><span class="p">);</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">_shippingSystem</span><span class="p">.</span><span class="nf">ScheduleDelivery</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+            <span class="n">_notificationService</span><span class="p">.</span><span class="nf">SendOrderConfirmation</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Order processed successfully!"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// Client</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">orderFacade</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">OrderProcessingFacade</span><span class="p">();</span>
+
+            <span class="c1">// Order details</span>
+            <span class="kt">string</span> <span class="n">item</span> <span class="p">=</span> <span class="s">"Laptop"</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">cardDetails</span> <span class="p">=</span> <span class="s">"1234-5678-9876-5432"</span><span class="p">;</span>
+            <span class="kt">decimal</span> <span class="n">amount</span> <span class="p">=</span> <span class="m">1200.00m</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">address</span> <span class="p">=</span> <span class="s">"123 Main St, Toronto, ON"</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="s">"customer@example.com"</span><span class="p">;</span>
+
+            <span class="c1">// Place the order</span>
+            <span class="n">orderFacade</span><span class="p">.</span><span class="nf">PlaceOrder</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">cardDetails</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">email</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Output</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Starting order processing...
+Checking stock for Laptop...
+Updating inventory...
+Processing payment of $1200.00 using 1234-5678-9876-5432...
+Scheduling delivery of Laptop to 123 Main St, Toronto, ON...
+Sending order confirmation email to customer@example.com...
+Order processed successfully!
+</code></pre></div></div>
+
+<p><strong>How it Works:</strong></p>
+<ul>
+  <li>Subsystems handle specific operations like checking stocks, processing payments, scheduling deliveries, and sending notifications.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">OrderProcessingFacade</code> encapsulates the interactions with these subsystems, providing a single entry point for order processing using the <code class="language-plaintext highlighter-rouge">PlaceOrder</code> method.</li>
+  <li>The client interacts with the <code class="language-plaintext highlighter-rouge">OrderProcessingFacade</code> to place an order, simplifying the complex workflow into a single method call.</li>
+</ul>
+
+<p><strong>Benefits of the Facade Design Pattern</strong></p>
+<ul>
+  <li>Simplified Client Interaction: The client only needs to call one method.</li>
+  <li>Encapsulation of Complexity: Subsystems are hidden from the client.</li>
+  <li>Improved Maintainability: Changes to subsystems are isolated from the client.</li>
+  <li>Code Reusability: The Facade can be reused across different parts of the application.</li>
+</ul>
+
+<p><strong>Conclusion</strong>
+The Facade Design Pattern is an essential tool for developers to manage complex systems in a scalable and maintainable way. In our e-commerce example, it transformed a complicated order-processing workflow into a straightforward client interaction. By applying this pattern, you can make your applications more user-friendly and robust, whether you’re working on e-commerce platforms, multimedia systems, or any other domain.</p>
+
+<p>Happy coding!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/ECommerceFacade">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="Design Pattern" /><category term="Software Architecture" /><category term="csharp" /><category term="design-pattern" /><category term="software-architecture" /><category term="facade-pattern" /><summary type="html"><![CDATA[Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a step-by-step C# implementation to streamline order workflows and enhance maintainability.]]></summary></entry><entry><title type="html">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern</title><link href="https://mahedee.net//facade_design_pattern_real_world_use_cases/" rel="alternate" type="text/html" title="Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern" /><published>2025-01-04T00:00:00-05:00</published><updated>2025-01-04T00:00:00-05:00</updated><id>https://mahedee.net//facade_design_pattern_real_world_use_cases</id><content type="html" xml:base="https://mahedee.net//facade_design_pattern_real_world_use_cases/"><![CDATA[<p>In software development, complexity is often a necessary evil. Large systems typically consist of multiple components that interact with one another in intricate ways. The Facade Design Pattern offers a simple yet powerful solution to manage this complexity by providing a unified interface to a set of subsystems. This article explores the essence of the Facade Pattern and its application in 10 real-world scenarios.</p>
+
+<p><strong>What is the Facade Design Pattern?</strong>
+The Facade Design Pattern is a structural design pattern that simplifies interactions with complex systems. It introduces a single class, called the Facade, which provides a streamlined interface to underlying subsystems. This pattern promotes ease of use, enhances maintainability, and decouples high-level modules from low-level implementation details.</p>
+
+<p><strong>Key Components of the Facade Pattern</strong></p>
+<ul>
+  <li><strong>Facade:</strong> The central interface that interacts with the client and coordinates with subsystems.</li>
+  <li><strong>Subsystems:</strong> The complex internal modules that perform specific functionalities.</li>
+  <li><strong>Client:</strong> The external entity that uses the facade to interact with the system.</li>
+</ul>
+
+<p><strong>How the Facade Pattern Works</strong></p>
+<ul>
+  <li>The client sends a request to the facade.</li>
+  <li>The facade coordinates with relevant subsystems to fulfill the request.</li>
+  <li>The subsystems execute their specific tasks, abstracted from the client.
+This process simplifies interactions and allows the client to focus on the primary functionalities without being burdened by the system’s complexities.</li>
+</ul>
+
+<p><strong>Real-World Use Cases of the Facade Pattern</strong></p>
+<ol>
+  <li><strong>Home Automation System</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> A home automation system consists of various components such as lighting, security, and temperature control. Managing these subsystems individually can be cumbersome.</p>
+
+<p><strong>Solution:</strong> A facade class encapsulates the interactions with each subsystem, providing a unified interface for controlling the entire home environment.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade:  HomeAutomationFacade</li>
+  <li>Subsystems: LightingSystem, SecuritySystem, TemperatureControlSystem</li>
+  <li>Client: HomeOwner</li>
+</ul>
+
+<p><strong>How It Works:</strong> The HomeAutomationFacade class exposes methods like turnOnLights(), enableSecurity(), and setTemperature() to the client. These methods internally coordinate with the respective subsystems to perform the desired actions.</p>
+
+<p><strong>Benefits:</strong> Simplified control of multiple home automation components, reduced complexity for the homeowner, and improved system maintainability.</p>
+
+<ol>
+  <li><strong>Payment Gateway Integration</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Integrating multiple payment gateways with different APIs and protocols can be challenging for e-commerce platforms.</p>
+
+<p><strong>Solution:</strong> A facade class abstracts the complexities of payment gateway integration, providing a unified interface for processing payments.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: PaymentGatewayFacade</li>
+  <li>Subsystems: PayPalGateway, StripeGateway, AuthorizeNetGateway</li>
+  <li>Client: E-commerce Platform</li>
+</ul>
+
+<p><strong>How It Works:</strong> The PaymentGatewayFacade class exposes methods like processPayment() and refundPayment() to the client. These methods internally interact with the specific payment gateway subsystems based on the payment method chosen by the customer.</p>
+
+<p><strong>Benefits:</strong> Seamless integration of multiple payment gateways, reduced development effort, and improved scalability for e-commerce platforms.</p>
+
+<ol>
+  <li><strong>E-commerce Checkout System</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Managing the complexities of checkout processes, including payment, shipping, and order management, can be overwhelming for e-commerce applications.</p>
+
+<p><strong>Solution:</strong> A facade class simplifies the checkout process by coordinating interactions with payment, shipping, and order subsystems.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: Checkout Manager</li>
+  <li>Subsystems: Payment Gateway, Inventory, Shipping</li>
+  <li>Client: E-commerce Customer</li>
+</ul>
+
+<p><strong>How It Works:</strong> During checkout, the facade manages inventory verification, payment processing, and shipping arrangements, abstracting these tasks from the user.</p>
+
+<p><strong>Benefits:</strong> Streamlined checkout process, improved user experience, and enhanced maintainability of e-commerce applications.</p>
+
+<ol>
+  <li><strong>Operating System Interface</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Interacting with low-level operating system functionalities can be complex and platform-dependent.</p>
+
+<p><strong>Solution:</strong> A facade class provides a high-level interface to common operating system operations, shielding the client from underlying complexities.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: OSInterface</li>
+  <li>Subsystems: Filesystem, Network, Process Management</li>
+  <li>Client: Application Developer</li>
+</ul>
+
+<p><strong>How It Works:</strong> The OSInterface facade exposes methods like readFile(), writeFile(), and createProcess() to the client, which internally interact with the respective subsystems.</p>
+
+<p><strong>Benefits:</strong> Platform-independent access to operating system functionalities, simplified development of system-level applications, and improved code portability.</p>
+
+<ol>
+  <li><strong>Travel Booking System</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Coordinating bookings across multiple travel services, including flights, hotels, and car rentals, requires handling diverse APIs and data formats.</p>
+
+<p><strong>Solution:</strong> A facade class abstracts the complexities of travel booking, providing a unified interface for managing reservations.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: TravelBookingFacade</li>
+  <li>Subsystems: FlightBooking, HotelBooking, CarRental</li>
+  <li>Client: Traveler</li>
+</ul>
+
+<p><strong>How It Works:</strong> The user selects a travel package through the Facade. The Facade communicates with each subsystem to finalize reservations and generate a single booking confirmation.</p>
+
+<p><strong>Benefits:</strong> Simplified travel booking process, reduced complexity for travelers, and improved scalability for travel</p>
+
+<ol>
+  <li><strong>Social Media Integration</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Integrating social media platforms for sharing content and user authentication involves managing multiple APIs and authorization mechanisms.</p>
+
+<p><strong>Solution:</strong> A facade class abstracts the intricacies of social media integration, providing a unified interface for interacting with various platforms.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: SocialMediaFacade</li>
+  <li>Subsystems: Facebook, Twitter, Instagram</li>
+  <li>Client: Application User</li>
+</ul>
+
+<p><strong>How It Works:</strong> The SocialMediaFacade class exposes methods like sharePost(), authenticateUser(), and fetchProfile() to the client, which internally interacts with the respective social media subsystems.</p>
+
+<p><strong>Benefits:</strong> Simplified social media integration, enhanced user engagement, and improved cross-platform compatibility for applications.</p>
+
+<ol>
+  <li><strong>Customer Relationship Management (CRM) System</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Managing customer interactions, sales pipelines, and marketing campaigns across multiple channels can be complex for CRM applications.</p>
+
+<p><strong>Solution:</strong> A facade class simplifies CRM operations by providing a unified interface for customer data management and communication.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: CRMFacade</li>
+  <li>Subsystems: CustomerDatabase, SalesPipeline, MarketingCampaign</li>
+  <li>Client: CRM User</li>
+</ul>
+
+<p><strong>How It Works:</strong> The CRMFacade class exposes methods like addCustomer(), createOpportunity(), and launchCampaign() to the client, which internally interacts with the CRM subsystems.</p>
+
+<p><strong>Benefits:</strong> Streamlined customer management, improved sales efficiency, and enhanced marketing automation for CRM applications.</p>
+
+<ol>
+  <li><strong>Healthcare Management System</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Healthcare systems involve managing patient records, appointment scheduling, and medical billing, which can be complex and time-consuming.</p>
+
+<p><strong>Solution:</strong> A facade class simplifies healthcare operations by providing a unified interface for managing patient data and medical processes.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: HealthcareFacade</li>
+  <li>Subsystems: PatientRecords, AppointmentScheduling, MedicalBilling</li>
+  <li>Client: Healthcare Provider</li>
+</ul>
+
+<p><strong>How It Works:</strong> Doctors and staff interact with the Facade to fetch patient histories, book appointments, and generate bills, reducing complexity. For example, the HealthcareFacade class exposes methods like getPatientRecord(), scheduleAppointment(), and generateBill() to the client.</p>
+
+<ol>
+  <li><strong>Banking Transaction Systems</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Banking systems need to coordinate account verification, balance checking, transaction execution, and notifications.</p>
+
+<p><strong>Solution:</strong> A facade class simplifies banking transactions by providing a unified interface for managing account operations.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: BankingFacade</li>
+  <li>Subsystems: AccountVerificationSystem, BalanceChecker, TransactionProcessor, NotificationSystem</li>
+  <li>Client: Bank Customer</li>
+</ul>
+
+<p><strong>How It Works:</strong> The Facade ensures smooth execution of transactions by validating accounts, ensuring sufficient balance, completing the transaction, and notifying users. For example, the BankingFacade class exposes methods like verifyAccount(), checkBalance(), and processTransaction() to the client, which internally interacts with the respective banking subsystems.</p>
+
+<p><strong>Benefits:</strong> Streamlined banking operations, improved transaction security, and enhanced user experience for bank customers.</p>
+
+<ol>
+  <li><strong>Enterprise Resource Planning (ERP) Systems</strong></li>
+</ol>
+
+<p><strong>Problem:</strong> Managing supply chain, HR, finance, and production through separate modules can be overwhelming.</p>
+
+<p><strong>Solution:</strong> A Facade offers a unified interface for employees to interact with the ERP system’s diverse modules.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li>Facade: ERPSystemFacade</li>
+  <li>Subsystems: SupplyChainManagement, HRManagement, FinancialManagement, ProductionManagement</li>
+  <li>Client: ERP User</li>
+</ul>
+
+<p><strong>How It Works:</strong> The Facade simplifies ERP operations by providing a single interface for accessing supply chain data, managing HR processes, tracking financial transactions, and monitoring production schedules.</p>
+
+<p><strong>Benefits:</strong> Enhanced productivity, improved data visibility, and streamlined business processes for organizations.</p>
+
+<p><strong>Conclusion</strong>
+The Facade design pattern simplifies complex systems by providing a unified interface to interact with multiple subsystems. The Facade pattern is a structural design pattern that simplifies complex systems by providing a unified interface to interact with multiple subsystems. The Facade pattern is a structural design pattern that simplifies complex systems by providing a unified interface to interact with multiple subsystems.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Design Pattern" /><category term="Software Architecture" /><category term="design-pattern" /><category term="software-architecture" /><category term="facade-pattern" /><summary type="html"><![CDATA[Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operations and enhances maintainability.]]></summary></entry><entry><title type="html">Simplifying Complex Systems with the Facade Design Pattern in C#</title><link href="https://mahedee.net//simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="alternate" type="text/html" title="Simplifying Complex Systems with the Facade Design Pattern in C#" /><published>2025-01-03T00:00:00-05:00</published><updated>2025-01-03T00:00:00-05:00</updated><id>https://mahedee.net//simplifying_complex_systems_with_the_facade_design_pattern_in_csharp</id><content type="html" xml:base="https://mahedee.net//simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/"><![CDATA[<p><strong>What is the Facade Design Pattern?</strong>
+Facade pronounce as fuh-sahd (/fəˈsɑːd/) is a structural design pattern that provides a simplified interface to a complex system of classes, libraries, or APIs. It acts as a unified interface that hides the complexities of the underlying system and provides a more straightforward way to interact with it.</p>
+
+<p><strong>Why use the Facade Design Pattern?</strong></p>
+<ul>
+  <li>Simplifies complex systems by providing a more intuitive interface.</li>
+  <li>Decouples client code from implementation details.</li>
+  <li>Makes code easier to understand, maintain, and extend.</li>
+  <li>Promotes code reusability, modularity, and flexibility by encapsulating complex logic behind a simple interface.</li>
+</ul>
+
+<p><strong>Key components of the Facade Design Pattern:</strong></p>
+<ul>
+  <li><strong>Facade:</strong> The facade is a class that provides a simplified interface to the complex system. It delegates client requests to the appropriate subsystems.</li>
+  <li><strong>Subsystem:</strong> These are the classes or components that make up the complex system. The facade delegates requests to these subsystems to perform specific tasks.</li>
+  <li><strong>Client:</strong> The client is the code that interacts with the facade to access the system’s functionality. The client doesn’t need to know the details of the subsystems.</li>
+</ul>
+
+<p><strong>UML Class Diagram of the Facade Design Pattern:</strong></p>
+
+<p><img src="/assets/images/posts/2025/facade-design-pattern.drawio.png" alt="" /></p>
+
+<p><strong>How to implement the Observer Facade Pattern in C#?</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">FacadePattern</span>
+<span class="p">{</span>
+    <span class="c1">// Subsystem 1</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">SubsystemA</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">OperationA</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"SubsystemA: OperationA executed."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Subsystem 2</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">SubsystemB</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">OperationB</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"SubsystemB: OperationB executed."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Subsystem 3</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">SubsystemC</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">OperationC</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"SubsystemC: OperationC executed."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Subsystem 4</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">SubsystemD</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">OperationD</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"SubsystemD: OperationD executed."</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Facade</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Facade</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">SubsystemA</span> <span class="n">_subsystemA</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">SubsystemB</span> <span class="n">_subsystemB</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">SubsystemC</span> <span class="n">_subsystemC</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">SubsystemD</span> <span class="n">_subsystemD</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">Facade</span><span class="p">(</span><span class="n">SubsystemA</span> <span class="n">subsystemA</span><span class="p">,</span> <span class="n">SubsystemB</span> <span class="n">subsystemB</span><span class="p">,</span> 
+            <span class="n">SubsystemC</span> <span class="n">subsystemC</span><span class="p">,</span> <span class="n">SubsystemD</span> <span class="n">subsystemD</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_subsystemA</span> <span class="p">=</span> <span class="n">subsystemA</span><span class="p">;</span>
+            <span class="n">_subsystemB</span> <span class="p">=</span> <span class="n">subsystemB</span><span class="p">;</span>
+            <span class="n">_subsystemC</span> <span class="p">=</span> <span class="n">subsystemC</span><span class="p">;</span>
+            <span class="n">_subsystemD</span> <span class="p">=</span> <span class="n">subsystemD</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">PerformOperation1</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Operation 1\n"</span> <span class="p">+</span>
+                              <span class="s">"-----------"</span><span class="p">);</span>
+            <span class="n">_subsystemA</span><span class="p">.</span><span class="nf">OperationA</span><span class="p">();</span>
+            <span class="n">_subsystemB</span><span class="p">.</span><span class="nf">OperationB</span><span class="p">();</span>
+            <span class="n">_subsystemC</span><span class="p">.</span><span class="nf">OperationC</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">PerformOperation2</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Operation 2\n"</span> <span class="p">+</span>
+                              <span class="s">"-----------"</span><span class="p">);</span>
+            <span class="n">_subsystemA</span><span class="p">.</span><span class="nf">OperationA</span><span class="p">();</span>
+            <span class="n">_subsystemD</span><span class="p">.</span><span class="nf">OperationD</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// Client</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Create subsystems</span>
+            <span class="kt">var</span> <span class="n">subsystemA</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SubsystemA</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">subsystemB</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SubsystemB</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">subsystemC</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SubsystemC</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">subsystemD</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SubsystemD</span><span class="p">();</span>
+
+            <span class="c1">// Create facade</span>
+            <span class="kt">var</span> <span class="n">facade</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Facade</span><span class="p">(</span><span class="n">subsystemA</span><span class="p">,</span> <span class="n">subsystemB</span><span class="p">,</span> <span class="n">subsystemC</span><span class="p">,</span> <span class="n">subsystemD</span><span class="p">);</span>
+
+            <span class="c1">// Use facade to perform operations</span>
+            <span class="n">facade</span><span class="p">.</span><span class="nf">PerformOperation1</span><span class="p">();</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+            <span class="n">facade</span><span class="p">.</span><span class="nf">PerformOperation2</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Output</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Operation 1
+-----------
+SubsystemA: OperationA executed.
+SubsystemB: OperationB executed.
+SubsystemC: OperationC executed.
+
+Operation 2
+-----------
+SubsystemA: OperationA executed.
+SubsystemD: OperationD executed.
+
+</code></pre></div></div>
+
+<p><strong>Conclusion</strong>
+At the end of this article, you should have a good understanding of the Facade Design Pattern and how to implement it in C#. By using the Facade pattern, you can simplify complex systems, improve code readability, and make your codebase more maintainable and extensible. In the next article, I will discuss with some real-world examples of the Facade pattern.</p>
+
+<p>Happy coding!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/FacadePattern">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="Design Pattern" /><category term="Software Architecture" /><category term="csharp" /><category term="design-pattern" /><category term="software-architecture" /><category term="facade-pattern" /><summary type="html"><![CDATA[Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates its implementation with a real-world example. Whether you're new to design patterns or looking to streamline your code, this guide will help you understand how to apply the Facade pattern to create cleaner and more manageable code.]]></summary></entry><entry><title type="html">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases</title><link href="https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="alternate" type="text/html" title="Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases" /><published>2024-12-02T00:00:00-05:00</published><updated>2024-12-02T00:00:00-05:00</updated><id>https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases</id><content type="html" xml:base="https://mahedee.net//real_time_vs_persistent_notifications_observer_pattern_or_databases/"><![CDATA[<p>In modern application development, delivering timely and accurate notifications is crucial to ensuring a seamless user experience. However, the mechanisms used to handle notifications can vary significantly depending on the application’s needs. Two commonly used approaches are the <strong>Observer Design Pattern</strong> for real-time notifications and <strong>databases</strong> for persistent notifications. This article delves into the differences between these methods, their practical use cases, and guidance on when to use each.</p>
 
 <p><strong>Understanding the Basics</strong></p>
 
@@ -313,7 +866,7 @@ The asset (e.g., a stock, cryptocurrency) being tracked.</p>
 <p><strong>How It Works:</strong>
 Users subscribe to specific stocks or cryptocurrencies. When the price or market trend changes, the system (subject) sends an update to all observers who have subscribed to the asset.</p>
 
-<h3 id="conclusion">Conclusion</h3>
+<p><strong>Conclusion</strong></p>
 
 <p>The Observer Design Pattern is invaluable when building systems that require real-time updates or notifications. Whether it’s used for social media notifications, real-time chat alerts, or system monitoring, the Observer pattern ensures that interested parties are notified as soon as an update occurs, improving responsiveness and interactivity. Understanding its real-world applications can help in architecting software systems that are both efficient and scalable.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Design Pattern" /><category term="Software Architecture" /><category term="design-pattern" /><category term="software-architecture" /><category term="observer-pattern" /><summary type="html"><![CDATA[Discover how the Observer design pattern transforms real-world applications with real-time updates and notifications. In this article, we explore 10 practical examples, from stock market alerts to weather updates, showcasing how subjects and observers work together seamlessly to deliver dynamic user experiences.]]></summary></entry><entry><title type="html">Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#</title><link href="https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp/" rel="alternate" type="text/html" title="Observer Design Pattern: Create a Real-Time Stock Market Notification System in C#" /><published>2024-10-11T00:00:00-04:00</published><updated>2024-10-11T00:00:00-04:00</updated><id>https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp</id><content type="html" xml:base="https://mahedee.net//observer_design_pattern_real_time_stock_market_notification_csharp/"><![CDATA[<p><strong>What is the Observer Design Pattern?</strong>
 The Observer Design Pattern is a behavioral design pattern that allows objects to be notified of changes to other objects’ states. It establishes a one-to-many dependency between objects, where the subject (the object being observed) maintains a list of observers (objects that are interested in its state) and notifies them of any changes.</p>
@@ -2882,810 +3435,4 @@ A <strong>PersistentVolume (PV)</strong> represents physical storage in the clus
 </code></pre></div></div>
 
 <p><strong>Conclusion</strong>
-Kubernetes resources provide powerful abstractions to deploy, manage, and scale applications in a cloud-native way. By understanding these resource types and their purposes, you can design robust, scalable, and secure architectures tailored to your application’s needs. Whether you’re deploying a stateless microservice or managing a complex stateful database, Kubernetes has the tools to make it easier.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Kubernetes" /><category term="Docker" /><category term="Microservices" /><category term="DevOps" /><category term="Azure" /><category term="kubernetes" /><category term="docker" /><category term="azure" /><category term="devops" /><category term="microservices" /><summary type="html"><![CDATA[Learn about the different types of Kubernetes resources, their purposes, and how they help manage and scale applications in a containerized environment. Perfect for beginners and experts alike!]]></summary></entry><entry><title type="html">Step-by-Step Guide to Running Jekyll Minimal Mistake Blog on Windows</title><link href="https://mahedee.net//step_by_step_guide_to_running_jekyll_minimal_mistake_blog_on_windows/" rel="alternate" type="text/html" title="Step-by-Step Guide to Running Jekyll Minimal Mistake Blog on Windows" /><published>2024-05-01T00:00:00-04:00</published><updated>2024-05-01T00:00:00-04:00</updated><id>https://mahedee.net//step_by_step_guide_to_running_jekyll_minimal_mistake_blog_on_windows</id><content type="html" xml:base="https://mahedee.net//step_by_step_guide_to_running_jekyll_minimal_mistake_blog_on_windows/"><![CDATA[<p>Jekyll is a fantastic tool for building static websites, and the Minimal Mistakes theme offers a professional, clean design for blogs. This guide will walk you through the steps to build, run, and deploy your Jekyll blog on Windows and host it on GitHub Pages.</p>
-
-<p><strong>Step 1: Install Ruby and Development Kit</strong></p>
-
-<ul>
-  <li>Download and install Ruby+Devkit from <a href="https://rubyinstaller.org/">RubyInstaller</a>. During installation, ensure you select the option to add Ruby executables to your PATH.</li>
-  <li>
-    <p>Configure Ruby and the Development Kit:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ridk <span class="nb">install</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Verify the installation:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ruby <span class="nt">--version</span>
- gem <span class="nt">--version</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Step 2: Install Jekyll and Bundler</strong></p>
-
-<ul>
-  <li>
-    <p>Install Bundler, the Ruby dependency manager:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> gem <span class="nb">install </span>bundler
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Install Jekyll:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> gem <span class="nb">install </span>jekyll
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Confirm the installation:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> jekyll <span class="nt">--version</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Step 3: Create Your Blog with Minimal Mistakes Theme</strong></p>
-
-<ul>
-  <li>
-    <p>Clone the Minimal Mistakes starter repository:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git clone https://github.com/mmistakes/minimal-mistakes.git my-blog
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Navigate to your blog directory:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">cd </span>my-blog
-</code></pre></div>    </div>
-  </li>
-  <li>Install project dependencies:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> bundle <span class="nb">install</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Serve the blog locally to preview it:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> bundle <span class="nb">exec </span>jekyll serve
-</code></pre></div>    </div>
-  </li>
-  <li>Open your browser and visit:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> http://localhost:4000
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Step 4: Customize Your Blog</strong></p>
-
-<ul>
-  <li>
-    <p><strong>Update Configuration:</strong><br />
- Edit <code class="language-plaintext highlighter-rouge">_config.yml</code> to personalize your blog’s title, description, author, and other settings.</p>
-  </li>
-  <li>
-    <p><strong>Add Posts:</strong><br />
- Add new blog posts in the <code class="language-plaintext highlighter-rouge">_posts</code> folder. Use the format:</p>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> YYYY-MM-DD-post-title.md
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p>*<strong>Customize Pages:</strong><br />
-   Create new pages (e.g., <code class="language-plaintext highlighter-rouge">about.md</code>) and link them in <code class="language-plaintext highlighter-rouge">_config.yml</code>.</p>
-
-<p><strong>Step 5: Deploy Your Blog to GitHub Pages</strong></p>
-
-<ol>
-  <li>Initialize a Git repository in your project directory:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
-git add <span class="nb">.</span>
-git commit <span class="nt">-m</span> <span class="s2">"Initial commit"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Create a new repository on GitHub and link it to your local project:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin &lt;repository-url&gt;
-git branch <span class="nt">-M</span> main
-git push <span class="nt">-u</span> origin main
-</code></pre></div>    </div>
-  </li>
-  <li>Enable GitHub Pages:
-    <ul>
-      <li>Go to your GitHub repository’s <strong>Settings</strong>.</li>
-      <li>Under <strong>Pages</strong>, set the branch to <code class="language-plaintext highlighter-rouge">main</code> and the folder to <code class="language-plaintext highlighter-rouge">/ (root)</code>.</li>
-      <li>Save your changes.</li>
-    </ul>
-  </li>
-  <li>Your blog will be live at:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://&lt;username&gt;.github.io/&lt;repository-name&gt;/
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<p><strong>Build and deploy release for production</strong></p>
-<ul>
-  <li>Go to the root direcotry of the project. Ex. My-blog</li>
-  <li>Open terminal and run command <code class="language-plaintext highlighter-rouge">jekyll build site.url</code></li>
-  <li>Go to the site directory. Ex. My-blog/site</li>
-  <li>Copy the content of the site directory</li>
-  <li>Go to the root directory of the repository on GitHub. Ex. mahedee.github.io</li>
-  <li>Paste the content to the root directory</li>
-  <li>Commit and push the changes to the repository on GitHub both my-blog and mahedee.github.io</li>
-  <li>Now browse the site using: https://mahedee.github.io/</li>
-</ul>
-
-<p><strong>Troubleshooting</strong></p>
-<ul>
-  <li>
-    <p>Changing the Site URL for Production</p>
-
-    <ul>
-      <li>You don’t need to manually change links when switching between development and production. Instead, set the “url” parameter in <code class="language-plaintext highlighter-rouge">_config.yml</code>.</li>
-      <li>This approach has two benefits:
-        <ul>
-          <li>When running <code class="language-plaintext highlighter-rouge">jekyll serve</code>, the <code class="language-plaintext highlighter-rouge">site.url</code> is set to <code class="language-plaintext highlighter-rouge">http://localhost:4000</code>.</li>
-          <li>When running <code class="language-plaintext highlighter-rouge">jekyll build</code>, the <code class="language-plaintext highlighter-rouge">site.url</code> is replaced with the domain name specified in <code class="language-plaintext highlighter-rouge">_config.yml</code>.</li>
-        </ul>
-      </li>
-      <li>After building, deploy the contents of the <code class="language-plaintext highlighter-rouge">_site</code> directory to the root of your server where your domain points.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><strong>Conclusion</strong></p>
-
-<p>Deploying a Jekyll blog with the Minimal Mistakes theme on Windows is straightforward. With Ruby, Jekyll, and GitHub Pages, you can easily create, customize, and host a beautiful static website. Follow this guide to get your blog up and running today!</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Blog" /><category term="Configuration" /><category term="Jekyll" /><category term="Windows" /><category term="Ruby" /><category term="jekyll" /><category term="configuration" /><category term="windows" /><category term="ruby" /><category term="blog" /><summary type="html"><![CDATA[Discover how to effortlessly build, run, and deploy a Jekyll blog using the Minimal Mistakes theme on Windows. This step-by-step guide walks you through setting up Ruby, installing dependencies, customizing your site, and deploying it to GitHub Pages]]></summary></entry><entry><title type="html">Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal</title><link href="https://mahedee.net//configure_ubuntu_putty_windows_terminal/" rel="alternate" type="text/html" title="Step-by-Step Guide: Configuring Ubuntu and PuTTY in Windows Terminal" /><published>2024-04-10T00:00:00-04:00</published><updated>2024-04-10T00:00:00-04:00</updated><id>https://mahedee.net//configure_ubuntu_putty_windows_terminal</id><content type="html" xml:base="https://mahedee.net//configure_ubuntu_putty_windows_terminal/"><![CDATA[<p>Windows Terminal is a powerful tool that can unify multiple command-line interfaces, including Ubuntu (via WSL) and PuTTY. This guide will help you integrate both into Windows Terminal for an efficient and streamlined workflow.</p>
-
-<p><strong>Step 1. Install Windows Terminal</strong></p>
-
-<p>If you haven’t already, install Windows Terminal from the Microsoft Store:</p>
-
-<ul>
-  <li>Open the Microsoft Store.</li>
-  <li>Search for Windows Terminal.</li>
-  <li>Click Install.</li>
-</ul>
-
-<p><strong>Step 2. Add Ubuntu to Windows Terminal</strong></p>
-
-<p><strong>Install WSL</strong>
-To use Ubuntu, you must enable and install the Windows Subsystem for Linux (WSL):</p>
-
-<ul>
-  <li>
-    <p>Open PowerShell as Administrator and run:</p>
-
-    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="n">wsl</span><span class="w"> </span><span class="nt">--install</span><span class="w">
-</span></code></pre></div>    </div>
-
-    <p>This installs the latest version of WSL along with a default Linux distribution, usually Ubuntu.</p>
-  </li>
-  <li>If Ubuntu is not installed, you can manually install it from the Microsoft Store:
-    <ul>
-      <li>Open the Microsoft Store.</li>
-      <li>Search for <strong>Ubuntu</strong>.</li>
-      <li>Install the version you prefer (e.g., Ubuntu 20.04).
- or,</li>
-      <li>
-        <p>Run the following command in PowerShell:</p>
-
-        <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">wsl</span><span class="w"> </span><span class="nt">--install</span><span class="w"> </span><span class="nt">-d</span><span class="w"> </span><span class="nx">Ubuntu</span><span class="w">
-</span></code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-  <li>Once installed, launch Ubuntu to set up your username and password.</li>
-  <li>
-    <p>To set up a user and password, run the following command in Ubuntu:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>adduser &lt;username&gt;
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Check Installed WSL Distributions</strong>
-Run the following command in PowerShell to verify Ubuntu is installed:</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="n">wsl</span><span class="w"> </span><span class="nt">--list</span><span class="w"> </span><span class="nt">--verbose</span><span class="w">
-</span></code></pre></div></div>
-
-<p>You’ll see a list of all installed WSL distributions.</p>
-
-<p><strong>Step 3: Add Ubuntu Profile to Windows Terminal</strong></p>
-
-<p>Ubuntu is usually added automatically. If not, add it manually:</p>
-
-<ul>
-  <li>Open <strong>Windows Terminal</strong>.</li>
-  <li>Click the <strong>down arrow</strong> in the top menu and select <strong>Settings</strong>.</li>
-  <li>Scroll down to <strong>JSON file</strong> or click “Open JSON file” to edit it directly.</li>
-  <li>
-    <p>Add the following JSON snippet for Ubuntu:</p>
-
-    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
-     </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{2c4de342-38b7-51cf-b940-2309a097f518}"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ubuntu"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Windows.Terminal.Wsl"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ms-appx:///ProfileIcons/{2c4de342-38b7-51cf-b940-2309a097f518}.png"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
- </span><span class="p">}</span><span class="w">
-</span></code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Save and close the JSON file.</p>
-  </li>
-  <li>Or, Click on the dropdown menu and select Settings.</li>
-  <li>Click on the Add a new profile button.</li>
-  <li>Click on the New empty profile button.</li>
-  <li>Add name as Ubuntu and set the commandline as wsl.exe -d Ubuntu.</li>
-  <li>Restart Windows Terminal, and Ubuntu will appear in the dropdown menu.</li>
-</ul>
-
-<p><strong>Step 4. Add PuTTY to Windows Terminal</strong></p>
-
-<p>PuTTY is a popular SSH client and can also be integrated into Windows Terminal.</p>
-
-<p><strong>Install PuTTY</strong></p>
-<ul>
-  <li>Download PuTTY from the official <a href="https://www.putty.org/">PuTTY website</a>.</li>
-  <li>Install PuTTY on your system.</li>
-</ul>
-
-<p><strong>Add a Profile for PuTTY</strong></p>
-<ul>
-  <li>Open Windows Terminal.</li>
-  <li>Go to <strong>Settings</strong> and open the <strong>JSON file</strong> for editing.</li>
-  <li>
-    <p>Add the following JSON snippet to configure PuTTY:</p>
-
-    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">PuTTY</span><span class="se">\\</span><span class="s2">putty.exe"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{82a5e4dc-8b1d-4635-804d-0f03a20aff5e}"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">PuTTY</span><span class="se">\\</span><span class="s2">putty.ico"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PuTTY"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%USERPROFILE%"</span><span class="w">
-  </span><span class="p">}</span><span class="err">,</span><span class="w">
-</span></code></pre></div>    </div>
-  </li>
-  <li>Or, Click on the dropdown menu and select Settings.</li>
-  <li>Click on the Add a new profile button.</li>
-  <li>Click on the New empty profile button.</li>
-  <li>Add name as PuTTY and set the commandline as C:\Program Files\PuTTY\putty.exe.</li>
-  <li>Save and restart Windows Terminal. PuTTY will now be available in the dropdown menu.</li>
-</ul>
-
-<p><strong>Customize Ubuntu and PuTTY Profiles</strong></p>
-
-<p><strong>Customization Options</strong>
-You can further customize each profile with options like fonts, color schemes, or starting directories:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"fontFace"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cascadia Code PL"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"colorScheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Campbell"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"startingDirectory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"//wsl$/Ubuntu/home/&lt;your-username&gt;"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"backgroundImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:/path/to/your/background.png"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"backgroundImageOpacity"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p><strong>Steps to Apply Customization</strong></p>
-<ul>
-  <li>Replace <code class="language-plaintext highlighter-rouge">&lt;your-username&gt;</code> with your Ubuntu username.</li>
-  <li>Update paths to match your setup.</li>
-  <li>Save and restart Windows Terminal.</li>
-</ul>
-
-<p><strong>Verify Profiles</strong></p>
-<ul>
-  <li>To verify your configuration:
-    <ul>
-      <li>Open Windows Terminal.</li>
-      <li>Click the dropdown menu and check if <strong>Ubuntu</strong> and <strong>PuTTY</strong> appear.</li>
-      <li>Launch each profile to ensure they work correctly.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><strong>Bonus: Enable SSH with Ubuntu</strong></p>
-
-<p>You can also use Ubuntu for SSH connections instead of PuTTY by installing OpenSSH:</p>
-
-<ul>
-  <li>
-    <p>Open Ubuntu and run:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>apt update
- <span class="nb">sudo </span>apt <span class="nb">install </span>openssh-client
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Use SSH commands directly in your Ubuntu profile, such as:</p>
-
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ssh user@hostname
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Conclusion</strong></p>
-
-<p>By integrating <strong>Ubuntu</strong> and <strong>PuTTY</strong> into Windows Terminal, you can manage your development and administrative tasks more efficiently. The unified interface allows for seamless switching between environments, enhancing your productivity and workflow.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Windows" /><category term="Terminal" /><category term="Ubuntu" /><category term="PuTTY" /><category term="Productivity" /><category term="PowerShell" /><category term="Command" /><category term="windows" /><category term="terminal" /><category term="ubuntu" /><category term="putty" /><category term="productivity" /><category term="powershell" /><category term="wsl" /><category term="command" /><summary type="html"><![CDATA[Discover how to integrate Ubuntu (via WSL) and PuTTY into Windows Terminal for a seamless command-line experience. This step-by-step guide walks you through the installation, configuration, and customization process, helping you boost productivity and streamline your workflow.]]></summary></entry><entry><title type="html">Utilizing Bulk Operations with Entity Framework and ASP.NET Core</title><link href="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/" rel="alternate" type="text/html" title="Utilizing Bulk Operations with Entity Framework and ASP.NET Core" /><published>2024-03-02T00:00:00-05:00</published><updated>2024-03-02T00:00:00-05:00</updated><id>https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core</id><content type="html" xml:base="https://mahedee.net//utilizing_bulk_operations_with_entity_framework_and_aspnet_core/"><![CDATA[<p>A bulk operation refers to the execution of a single operation that involves multiple data entries or rows in a database, typically performed in a batch. Instead of processing each entry individually, bulk operations allow for the manipulation or retrieval of data in a more efficient manner.</p>
-
-<p>The benefits of bulk operations include:</p>
-
-<ol>
-  <li>
-    <p>Improved Performance: By processing multiple data entries in a single operation, bulk operations can significantly reduce the overhead associated with multiple individual operations, resulting in improved performance and reduced latency.</p>
-  </li>
-  <li>
-    <p>Reduced Resource Usage: Bulk operations require fewer resources compared to performing the same task iteratively on each data entry. This can lead to better utilization of system resources and improved scalability.</p>
-  </li>
-  <li>
-    <p>Enhanced Throughput: With the ability to handle large volumes of data more efficiently, bulk operations can increase the throughput of data processing tasks, allowing applications to handle higher workloads without sacrificing performance.</p>
-  </li>
-  <li>
-    <p>Minimized Database Overhead: Bulk operations can help minimize the overhead on the database server by reducing the number of transactions and communication overhead associated with processing individual data entries.</p>
-  </li>
-  <li>
-    <p>Simplified Code Logic: By consolidating multiple operations into a single bulk operation, developers can write simpler and more concise code, leading to easier maintenance and reduced complexity in application logic.</p>
-  </li>
-</ol>
-
-<p>To perform bulk operations in an ASP.NET Core application, we can leverage the capabilities of Entity Framework Core and the EFCore.BulkExtensions library. This article will explore the practical implementation of bulk operations using these tools, providing insights into how to optimize database operations and enhance application performance.</p>
-
-<p><strong>EFCore BulkExtensions</strong></p>
-
-<p>EFCore.BulkExtensions is a popular library that extends the functionality of Entity Framework Core by providing support for bulk operations such as bulk insert, update, delete, and merge. This library offers a convenient and efficient way to perform bulk operations on database entities, allowing developers to streamline data processing tasks and improve application performance.</p>
-
-<p>In this article, we will focus on the following bulk operations using EFCore.BulkExtensions and Entity Framework Core.</p>
-
-<p><strong>Tools and Technology Used</strong></p>
-
-<ul>
-  <li>ASP.net core Web API</li>
-  <li>Visual C#</li>
-  <li>Entity Framework</li>
-  <li>EFCore.BulkExtensions</li>
-  <li>SQL Server</li>
-</ul>
-
-<p><strong>Step 1: Create a asp.net core web api project name EFBulkBatch</strong></p>
-
-<p><strong>Step 2: Install the following nuget packages in the project.</strong></p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">EFCore.BulkExtensions</span>
-<span class="nf">Microsoft.AspNetCore.OpenApi</span>
-<span class="nf">Microsoft.EntityFrameworkCore</span>
-<span class="nf">Microsoft.EntityFrameworkCore.SqlServer</span>
-<span class="nf">Microsoft.EntityFrameworkCore.Tools</span>
-</code></pre></div></div>
-
-<p><strong>Step 3: Create two Model class name Customer and Employee in Models folder</strong></p>
-
-<ul>
-  <li>Customer class will be used to perform bulk operation using Entity Framework.</li>
-  <li>Employee class will be used to perform bulk operation using EFCore.BulkExtensions.</li>
-</ul>
-
-<p><strong>Customer.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Customer</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Phone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Employee.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Models</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;}</span>
-        <span class="k">public</span> <span class="kt">string</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 4: Create Db Context class name ApplicationDbContext in Db folder.</strong></p>
-
-<p><strong>ApplicationDbContext.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Db</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-        <span class="p">{</span>
-            
-        <span class="p">}</span>
-        
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">Customers</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-
-</code></pre></div></div>
-
-<p><strong>Step 5: Create CustomerService class in Manager folder to perform bulk operation using Entity Framework.</strong></p>
-
-<p><strong>Manager/CustomerService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_context</span><span class="p">;</span>
-        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
-        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nf">CustomerService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">)</span> 
-        <span class="p">{</span>
-            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
-        <span class="p">}</span>
-
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkCustomerAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-            <span class="p">{</span>
-                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
-                <span class="p">{</span>
-                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
-                <span class="p">});</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Use AddRange to add multiple entities</span>
-            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkCustomerAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-            <span class="p">{</span>
-                <span class="n">customers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Customer</span>
-                <span class="p">{</span>
-                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
-                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Customer </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Email</span> <span class="p">=</span> <span class="s">$"Update Email </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">$"Update Phone </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
-                <span class="p">});</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Use UpdateRange to update multiple entities</span>
-            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">UpdateRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
- 
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkCustomerAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Customer</span><span class="p">&gt;</span> <span class="n">customers</span> <span class="p">=</span> <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-
-            <span class="c1">// Use RemoveRange to delete multiple entities</span>
-            <span class="n">_context</span><span class="p">.</span><span class="n">Customers</span><span class="p">.</span><span class="nf">RemoveRange</span><span class="p">(</span><span class="n">customers</span><span class="p">);</span>
-            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>Step 6: Create EmployeeService class in Manager folder to perform bulk operation using EFCore.BulkExtensions.</strong></p>
-
-<p><strong>Manager/EmployeeService.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">EFCore.BulkExtensions</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Managers</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeService</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_dbContext</span><span class="p">;</span>
-        <span class="k">private</span> <span class="n">DateTime</span> <span class="n">_startTime</span><span class="p">;</span>
-        <span class="k">private</span> <span class="n">TimeSpan</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">EmployeeService</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">dbContext</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_dbContext</span> <span class="p">=</span> <span class="n">dbContext</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-
-            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-            <span class="p">{</span>
-                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
-                <span class="p">{</span>
-                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
-                <span class="p">});</span>
-            <span class="p">}</span>
-
-         
-            <span class="c1">// Use BulkInsertAsync to add multiple entities</span>
-            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkInsertAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
-            <span class="p">{</span>
-                <span class="n">employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">Employee</span>
-                <span class="p">{</span>
-                    <span class="n">Id</span> <span class="p">=</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span>
-                    <span class="n">Name</span> <span class="p">=</span> <span class="s">$"Update Employee </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">$"Update Designation </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span><span class="p">,</span>
-                    <span class="n">Department</span> <span class="p">=</span> <span class="s">$"Update Department </span><span class="p">{</span><span class="n">i</span><span class="p">}</span><span class="s">"</span>
-                <span class="p">});</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Use BulkUpdateAsync to update multiple entities</span>
-            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkUpdateAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">TimeSpan</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="c1">// C# 9.0 feature: Target-typed new expressions</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span> <span class="p">=</span> <span class="n">_dbContext</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
-            <span class="n">_startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-
-            <span class="c1">// Use BulkDeleteAsync to delete multiple entities</span>
-            <span class="k">await</span> <span class="n">_dbContext</span><span class="p">.</span><span class="nf">BulkDeleteAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
-            <span class="n">_elapsedTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">-</span> <span class="n">_startTime</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">_elapsedTime</span><span class="p">;</span>
-        <span class="p">}</span>
-
-
-    <span class="p">}</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><strong>Step 7: Add connection string in appsettings.json file</strong></p>
-
-<p><strong>appsettings.json</strong></p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=.;Database=EFBulkBatchDB; User Id = sa; Password = YourPassword; TrustServerCertificate=True;"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div></div>
-
-<p><strong>Step 8: Configure Program class as follows.</strong></p>
-
-<p><strong>Program.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Db</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">Program</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
-
-            <span class="c1">// Add services to the container.</span>
-
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
-
-            <span class="c1">// Register the DbContext with the DI container</span>
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
-                           <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
-
-            <span class="c1">// Register the Services with the DI container</span>
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">EmployeeService</span><span class="p">&gt;();</span>
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">CustomerService</span><span class="p">&gt;();</span>
-
-
-            <span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
-            <span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
-
-            <span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
-
-            <span class="c1">// Configure the HTTP request pipeline.</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
-            <span class="p">{</span>
-                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
-                <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
-            <span class="p">}</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
-
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
-
-            <span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>Step 9: Create two Controller classes name CustomerController and EmployeeController in Controllers folder.</strong></p>
-
-<p><strong>Controllers/CustomerController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CustomerController</span> <span class="p">:</span> <span class="n">Controller</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">CustomerService</span> <span class="n">_customerService</span><span class="p">;</span>
-        <span class="k">public</span> <span class="nf">CustomerController</span><span class="p">(</span><span class="n">CustomerService</span> <span class="n">customerService</span><span class="p">)</span> 
-        <span class="p">{</span>
-            <span class="n">_customerService</span> <span class="p">=</span> <span class="n">customerService</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">AddBulkCustomerAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span> 
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">UpdateBulkCustomerAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_customerService</span><span class="p">.</span><span class="nf">DeleteBulkCustomerAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>Controllers/EmployeeController.cs</strong></p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EFBulkBatch.Managers</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">EFBulkBatch.Models</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">EFBulkBatch.Controllers</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeeController</span> <span class="p">:</span> <span class="n">Controller</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">EmployeeService</span> <span class="n">_employeeService</span><span class="p">;</span>
-
-        <span class="k">public</span> <span class="nf">EmployeeController</span><span class="p">(</span><span class="n">EmployeeService</span> <span class="n">employeeService</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_employeeService</span> <span class="p">=</span> <span class="n">employeeService</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
-        <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">Index</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="nf">View</span><span class="p">();</span>
-        <span class="p">}</span>
-
-
-        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"AddBulkData"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">AddBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">AddBulkDataAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"UpdateBulkData"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateBulkDataAysnc</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">UpdateBulkDataAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"DeleteBulkData"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteBulkDataAsync</span><span class="p">()</span>
-        <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">elapsedTime</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_employeeService</span><span class="p">.</span><span class="nf">DeleteBulkDataAsync</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">elapsedTime</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>Step 10: Run migration command to create database and tables.</strong></p>
-
-<ul>
-  <li>Go to tools &gt; NuGet Package Manager &gt; Package Manager Console</li>
-  <li>Select EFBulkBatch from Default project dropdown</li>
-  <li>Run the following command in Package Manager Console window</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Add-Migration</span> <span class="nf">InitialCreate</span>
-<span class="nf">Update-Database</span>
-</code></pre></div></div>
-
-<p><strong>Step 11: Run the application and test the API using Postman or Swagger UI.</strong></p>
-
-<ul>
-  <li>Run the application</li>
-  <li>Open Postman or Swagger UI</li>
-  <li>Test the API using the endpoint and perform the bulk operation for insert, update and delete.</li>
-</ul>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/EFBulkBatch">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET" /><category term="ASP.NET Core" /><category term="C#" /><category term="Web API" /><category term="EF" /><category term="csharp" /><category term="aspnet" /><category term="aspnetcore" /><category term="webapi" /><category term="ef" /><summary type="html"><![CDATA[Bulk operations often serve as pivotal performance enhancers within applications. This article delves into the effective utilization of bulk operations using Entity Framework Core and EFCore.BlukExtensions, offering practical insights and guidance for implementation.]]></summary></entry></feed>
+Kubernetes resources provide powerful abstractions to deploy, manage, and scale applications in a cloud-native way. By understanding these resource types and their purposes, you can design robust, scalable, and secure architectures tailored to your application’s needs. Whether you’re deploying a stateless microservice or managing a complex stateful database, Kubernetes has the tools to make it easier.</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Kubernetes" /><category term="Docker" /><category term="Microservices" /><category term="DevOps" /><category term="Azure" /><category term="kubernetes" /><category term="docker" /><category term="azure" /><category term="devops" /><category term="microservices" /><summary type="html"><![CDATA[Learn about the different types of Kubernetes resources, their purposes, and how they help manage and scale applications in a containerized environment. Perfect for beginners and experts alike!]]></summary></entry></feed>

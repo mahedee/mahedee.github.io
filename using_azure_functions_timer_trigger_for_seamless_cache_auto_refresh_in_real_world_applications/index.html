@@ -1,0 +1,1044 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications - Think Simple</title>
+<meta name="description" content="In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications">
+<meta property="og:url" content="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/">
+
+
+  <meta property="og:description" content="In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-06-10T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net//"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications | Think Simple</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure" />
+<meta property="og:description" content="In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure" />
+<link rel="canonical" href="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/" />
+<meta property="og:url" content="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-06-10T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2024-06-10T00:00:00-04:00","datePublished":"2024-06-10T00:00:00-04:00","description":"In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure","headline":"Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/"},"url":"https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications">
+    <meta itemprop="description" content="In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure">
+    <meta itemprop="datePublished" content="June 10, 2024">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  11 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>What is Azure Functions?</strong>
+Azure Functions is a serverless compute service that allows you to run event-driven code without provisioning or managing servers. You can use Azure Functions to run code in response to events such as HTTP requests, timer triggers, blob storage, queue messages, and more. Azure Functions is a great way to build serverless applications that scale automatically and only pay for the resources you use. Azure Functions supports multiple programming languages including C#, JavaScript, Python, and PowerShell. It is called serverless because you don’t have to worry about the underlying infrastructure. Azure Functions takes care of scaling, monitoring, and managing the infrastructure for you. You can focus on writing code and building applications without worrying about the infrastructure.</p>
+
+<p><strong>Different Types of Functions</strong></p>
+
+<ul>
+  <li>Timer Trigger: It is a function that runs on a schedule. You can specify the schedule using a cron expression. The function will run at the specified time.</li>
+  <li>HTTP Trigger: It is a function that runs when an HTTP request is received. You can specify the HTTP method (GET, POST, PUT, DELETE) and the route. The function will run when an HTTP request is received at the specified route.</li>
+  <li>Blob Trigger: It is a function that runs when a blob is added or updated in a storage account. You can specify the storage account and the container. The function will run when a blob is added or updated in the specified container.</li>
+  <li>Queue Trigger: It is a function that runs when a message is added to a queue in a storage account. You can specify the storage account and the queue. The function will run when a message is added to the specified queue.</li>
+  <li>Event Grid Trigger: It is a function that runs when an event is published to an event grid topic. You can specify the event grid topic. The function will run when an event is published to the specified topic.</li>
+  <li>Event Hub Trigger: It is a function that runs when an event is received from an event hub. You can specify the event hub. The function will run when an event is received from the specified event hub.</li>
+  <li>RabbitMQ Trigger: It is a function that runs when a message is received from a RabbitMQ queue. You can specify the RabbitMQ queue. The function will run when a message is received from the specified queue.</li>
+  <li>Service Bus Queue Trigger: It is a function that runs when a message is added to a queue in a service bus namespace. You can specify the service bus namespace and the queue. The function will run when a message is added to the specified queue.</li>
+  <li>Service Bus Topic Trigger: It is a function that runs when a message is added to a topic in a service bus namespace. You can specify the service bus namespace and the topic. The function will run when a message is added to the specified topic.</li>
+  <li>Durable Functions: It is a function that runs a workflow. You can specify the workflow using code or an orchestration. The function will run the workflow.</li>
+  <li>Cosmos DB Trigger: It is a function that runs when a document is added or updated in a Cosmos DB database. You can specify the Cosmos DB database and the collection. The function will run when a document is added or updated in the specified collection.</li>
+  <li>SignalR Service Trigger: It is a function that runs when a message is received from a SignalR service. You can specify the SignalR service. The function will run when a message is received from the specified service.</li>
+</ul>
+
+<p><strong>Some real-world examples of Azure Functions are:</strong></p>
+<ul>
+  <li>A function that runs on a schedule to update exchange rates in a cache</li>
+  <li>A function that sends an email when a new record is added to a database</li>
+  <li>A function that runs when a message is added to a queue</li>
+  <li>A function that runs when an event is published to an event grid topic</li>
+  <li>A function that runs when a document is added or updated in a Cosmos DB database</li>
+  <li>A function that runs when a message is received from a RabbitMQ queue</li>
+  <li>A function that processes images uploaded to a blob storage account</li>
+</ul>
+
+<p><strong>What is Redis?</strong>
+Redis is an in-memory data store that can be used as a database, message broker, or cache in your applications. Redis is a key-value store that stores data in memory for fast access. Redis is a popular choice for caching because it is fast, scalable, and reliable. Redis supports multiple data structures including strings, lists, sets, sorted sets, and hashes.</p>
+
+<p><strong>Some real-world examples of Redis are:</strong></p>
+<ul>
+  <li>A cache for storing frequently accessed data i.e. user sessions, product catalog, etc.</li>
+  <li>A database for storing data that needs to be accessed quickly i.e. user profiles, product details, etc.</li>
+  <li>A leader board for storing scores and rankings i.e. game scores, user rankings, etc.</li>
+</ul>
+
+<p><strong>Implementation</strong></p>
+
+<p><strong>Step 1: Create a azure timer function</strong></p>
+<ul>
+  <li>Open Visual Studio</li>
+  <li>Select File -&gt; New -&gt; Project</li>
+  <li>Select “Azure Functions” template</li>
+  <li>Enter the project name, i.e, “CacheRefreshAzureFunction”, specify the Location and Solution name, i.e, “CacheRefreshFunction”, and click Next</li>
+  <li>Select Functions worker as .NET Framework Isolated v4. I will discuss the different Functions later.</li>
+  <li>Select Function as Timer Trigger</li>
+  <li>Uncheck the “Use Azureite for runtime storage account” and “Enable container support” checkbox. I will discuss about these later.</li>
+  <li>Keep the default Schedule value as “0 */5 * * * *” which means the function will run every 5 minutes. You can change the value later.</li>
+  <li>Click Create</li>
+</ul>
+
+<p><strong>Note: Different Types of Functions workers</strong></p>
+<ul>
+  <li>.NET Framework Isolated v4: This is the default option. It is a .NET 5 based worker. It is a new worker and it is recommended to use this worker for new projects. The isolated worker is a new worker that runs in a separate process from the runtime. This means that the worker can run on a different version of .NET than the runtime. This allows you to use the latest version of .NET with your functions.</li>
+  <li>.NET Framework v1: This is the old worker. It is based on .NET Core 3.1. It is recommended to use this worker for old projects.</li>
+</ul>
+
+<p><strong>Step 2: Run Redis in Docker</strong>
+Let’s run Redis in a Docker container to run azure function locally. Assume you have Docker installed on your machine.</p>
+
+<ul>
+  <li>Run docker desktop on your machine</li>
+  <li>Open a powershell terminal</li>
+  <li>Run the following command to run the Redis container</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 6379:6379 --name redis-cache redis
+</code></pre></div></div>
+
+<ul>
+  <li>Run the following command to check if the Redis container is</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
+</code></pre></div></div>
+<ul>
+  <li>Run the following command to connect to the Redis container</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it redis-cache redis-cli 
+</code></pre></div></div>
+<ul>
+  <li>Run the following command to set a key-value pair in Redis</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set key value
+example: set name "John Doe"
+</code></pre></div></div>
+
+<ul>
+  <li>Run the following command to get the value of a key in Redis</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get key
+
+example: get name
+</code></pre></div></div>
+<ul>
+  <li>Run the following command to exit the Redis CLI</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exit
+</code></pre></div></div>
+
+<p><strong>Step 3: Set redis connection string in windows environment variable</strong>
+Let’s set the Redis connection string in the Windows environment variable to use it in the Azure Function App. I will use environment variable to get the Redis connection string in the Azure Function App.</p>
+
+<ul>
+  <li>Open the PowerShell</li>
+  <li>Run the following command to set the Redis connection string in the Windows environment variable</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">setx</span> <span class="nf">RedisConnectionString</span> <span class="nf">"localhost:6379"</span> 
+</code></pre></div></div>
+<ul>
+  <li>
+    <p>setx command is used to set the value of an environment variable. Since, Redis is running on localhost and the default port is 6379, I have set the value as “localhost:6379”.</p>
+  </li>
+  <li>
+    <p>Run the following command in Powershell Terminal to get the Redis connection string from the Windows environment variable</p>
+  </li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">echo</span> <span class="nf">$env:RedisConnectionString</span>
+</code></pre></div></div>
+<ul>
+  <li>Or, run the following command in command prompt to get the Redis connection string from the Windows environment variable</li>
+</ul>
+
+<pre><code class="language-cmd">echo %RedisConnectionString%
+</code></pre>
+
+<p><strong>Step 4: Install Nuget Packages in CacheRefreshAzureFunction Project</strong>
+Install the following Nuget packages in the CacheRefreshAzureFunction project</p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">StackExchange.Redis</span>
+<span class="nf">Install-Package</span> <span class="nf">Newtonsoft.Json</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Modify the Azure Function App in Local Machine</strong></p>
+<ul>
+  <li>Click on the Solution file -&gt; CacheRefreshFunction.sln to open the solution in Visual Studio</li>
+  <li>Rename the Function1.cs file to CacheRefreshTimerTriggerFunction.cs</li>
+  <li>Open the CacheRefreshTimerTriggerFunction.cs file</li>
+  <li>Modify the CacheRefreshTimerTriggerFunction class as follows</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Azure.Functions.Worker</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Logging</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">StackExchange.Redis</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">CacheRefreshAzureFunction</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">CacheRefreshTimerTriggerFunction</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ILogger</span> <span class="n">_logger</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
+
+        <span class="k">public</span> <span class="nf">CacheRefreshTimerTriggerFunction</span><span class="p">(</span><span class="n">ILoggerFactory</span> <span class="n">loggerFactory</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_logger</span> <span class="p">=</span> <span class="n">loggerFactory</span><span class="p">.</span><span class="n">CreateLogger</span><span class="p">&lt;</span><span class="n">CacheRefreshTimerTriggerFunction</span><span class="p">&gt;();</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Function</span><span class="p">(</span><span class="s">"CacheRefreshTimerTriggerFunction"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">RunAsync</span><span class="p">([</span><span class="nf">TimerTrigger</span><span class="p">(</span><span class="s">"*/5 * * * * *"</span><span class="p">)]</span> <span class="n">ScheduleTimerInfo</span> <span class="n">timerInfo</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"Cache refresh function executed at: </span><span class="p">{</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Fetch fresh data from API (e.g., Exchange Rates API)</span>
+                <span class="kt">string</span> <span class="n">apiUrl</span> <span class="p">=</span> <span class="s">"https://api.exchangerate-api.com/v4/latest/USD"</span><span class="p">;</span>
+                <span class="kt">string</span> <span class="n">responseData</span> <span class="p">=</span> <span class="k">await</span> <span class="n">httpClient</span><span class="p">.</span><span class="nf">GetStringAsync</span><span class="p">(</span><span class="n">apiUrl</span><span class="p">);</span>
+
+                <span class="c1">// Connect to Redis Cache</span>
+                <span class="c1">// ConnectionMultiplexer object is used to connect to the Redis server</span>
+                <span class="c1">// IDatabase object is used to interact with the Redis database</span>
+                <span class="kt">string</span> <span class="n">cacheConnectionString</span> <span class="p">=</span> <span class="n">Environment</span><span class="p">.</span><span class="nf">GetEnvironmentVariable</span><span class="p">(</span><span class="s">"RedisConnectionString"</span><span class="p">)?.</span><span class="nf">Trim</span><span class="p">();</span>
+  
+
+                <span class="n">ConnectionMultiplexer</span> <span class="n">redis</span> <span class="p">=</span> <span class="n">ConnectionMultiplexer</span><span class="p">.</span><span class="nf">Connect</span><span class="p">(</span><span class="n">cacheConnectionString</span><span class="p">);</span>
+                <span class="n">IDatabase</span> <span class="n">cache</span> <span class="p">=</span> <span class="n">redis</span><span class="p">.</span><span class="nf">GetDatabase</span><span class="p">();</span>
+
+                <span class="c1">// Store data in Redis Cache (Cache expiration: 5 minutes)</span>
+                <span class="c1">// Cache expiration means that the stored data will be automatically removed from the cache after 5 minutes.</span>
+                <span class="c1">// This helps ensure that the cache does not hold stale data and is refreshed periodically.</span>
+                <span class="n">cache</span><span class="p">.</span><span class="nf">StringSet</span><span class="p">(</span><span class="s">"ExchangeRates"</span><span class="p">,</span> <span class="n">responseData</span><span class="p">,</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromMinutes</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+
+                <span class="c1">// Retrieve data from cache</span>
+                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">"Exchange rates updated successfully in Redis Cache."</span><span class="p">);</span>
+
+                <span class="c1">// Retrieve data from cache</span>
+                <span class="kt">string</span> <span class="n">cachedData</span> <span class="p">=</span> <span class="n">cache</span><span class="p">.</span><span class="nf">StringGet</span><span class="p">(</span><span class="s">"ExchangeRates"</span><span class="p">);</span>
+
+
+                <span class="c1">// Show the cached data in the log</span>
+
+                <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">cachedData</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="c1">// Parse the JSON response</span>
+                    <span class="kt">var</span> <span class="n">exchangeRates</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">cachedData</span><span class="p">);</span>
+
+                    <span class="c1">// Extract specific rates</span>
+                    <span class="kt">var</span> <span class="n">usdToBdt</span> <span class="p">=</span> <span class="n">exchangeRates</span><span class="p">[</span><span class="s">"rates"</span><span class="p">][</span><span class="s">"BDT"</span><span class="p">].</span><span class="n">Value</span><span class="p">&lt;</span><span class="kt">decimal</span><span class="p">&gt;();</span>
+                    <span class="kt">var</span> <span class="n">usdToCad</span> <span class="p">=</span> <span class="n">exchangeRates</span><span class="p">[</span><span class="s">"rates"</span><span class="p">][</span><span class="s">"CAD"</span><span class="p">].</span><span class="n">Value</span><span class="p">&lt;</span><span class="kt">decimal</span><span class="p">&gt;();</span>
+
+                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">"Current exchange rate:"</span><span class="p">);</span>
+                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"USD to BDT: </span><span class="p">{</span><span class="n">usdToBdt</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"USD to CAD: </span><span class="p">{</span><span class="n">usdToCad</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="s">"Cache is empty! Data retrieval failed."</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogError</span><span class="p">(</span><span class="s">$"Error updating and retrieving cache: </span><span class="p">{</span><span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">timerInfo</span><span class="p">.</span><span class="n">IsPastDue</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="s">"The function is running later than scheduled."</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="n">timerInfo</span><span class="p">.</span><span class="n">Last</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+            <span class="n">timerInfo</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">timerInfo</span><span class="p">.</span><span class="n">Last</span><span class="p">.</span><span class="nf">AddSeconds</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ScheduleTimerInfo</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Last</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Next</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">AddSeconds</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
+
+        <span class="c1">// This property is used to determine if the timer is past due</span>
+        <span class="c1">// It defines a method that returns true if the current time is greater than the Next property</span>
+        <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsPastDue</span> <span class="p">=&gt;</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">&gt;</span> <span class="n">Next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Here, I have created a CacheRefreshTimerTriggerFunction class that contains a RunAsync method. The RunAsync method is decorated with the Function attribute and takes a ScheduleTimerInfo parameter. The RunAsync method is responsible for refreshing the cache at regular intervals. The method fetches fresh data from an API (e.g., Exchange Rates API), stores the data in a Redis cache, and retrieves the data from the cache. The method logs the exchange rates in the console.</p>
+  </li>
+  <li>
+    <p>[TimerTrigger(“*/5 * * * * *”)] attribute is used to specify the schedule of the function. In this case, the function will run every 5 seconds. */5 * * * * * is a cron expression.</p>
+  </li>
+  <li>
+    <p>You can use https://crontab.cronhub.io/ to generate the cron expression.</p>
+  </li>
+  <li>
+    <p>To know more about cron expression, read my article on <a href="https://mahedee.net/understanding_cron_expression_a_complete_guide/">Cron Expression</a></p>
+  </li>
+  <li>
+    <p>Now run the project and you will see the logs in the console as follows</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2025-02-23T01:42:52.477Z] Exchange rates updated successfully in Redis Cache.
+[2025-02-23T01:42:52.503Z] Current exchange rate:
+[2025-02-23T01:42:52.503Z] USD to CAD: 1.42
+[2025-02-23T01:42:52.503Z] USD to BDT: 121.53
+</code></pre></div></div>
+
+<p><strong>Step 6: Create Redis Cache in Azure</strong></p>
+<ul>
+  <li>Log in to the Azure Portal (https://portal.azure.com/)</li>
+  <li>Click on Create a resource group and enter the resource group name, i.e., “myresourcegroup”, Location i.e., “West US” and click on Review + Create</li>
+  <li>Search “Azure Cache for Redis” and click on Create</li>
+  <li>Select Azure Cache for Redis</li>
+  <li>Select the Subscription, Resource Group i.e. myresourcegroup, DNS name i.e. exrateredis, Location i.e. West US, Cache type i.e. Standard, Pricing tier i.e. Basic C0 and click on Review + Create</li>
+  <li>Click on Create</li>
+  <li>Wait for the deployment to complete. It may take a few minutes.</li>
+</ul>
+
+<p><strong>Step 7: Deploy the Azure Function App to Azure</strong></p>
+<ul>
+  <li>Right-click on the project in Visual Studio and select Publish</li>
+  <li>In the next screen, select Target as Azure and click on Next</li>
+  <li>Select Your Azure Subscription and click on Create New</li>
+  <li>Type the App Name, Subscription, Resource Group, Hosting Plan and click on Create as shown below</li>
+  <li>Here, I have created an Application Insights which is used to monitor the Azure Function App. I will use it later to see the logs as output.</li>
+  <li>Select Function Name and click on Next</li>
+  <li>Select Publish and click on Finish</li>
+  <li>Click on Publish button to deploy the Azure Function App to Azure</li>
+  <li>Wait for the deployment to complete</li>
+  <li>Click on the Browse button to open the Azure Function App in the browser</li>
+</ul>
+
+<p><img src="/assets/images/posts/2024/az-func-deployment.png" alt="" /></p>
+
+<p><strong>Step 8: Add Redis Connection String in Environment Variable in Azure Function App</strong></p>
+<ul>
+  <li>Click on “Azure Cache for Redis” in the Azure Portal</li>
+  <li>Click on recent cache name i.e. exrateredis</li>
+  <li>Click Settings -&gt; Authentication</li>
+  <li>Click on Access keys tab</li>
+  <li>Uncheck “Disable Access Keys Authentication” checkbox and click on Save</li>
+  <li>Copy the Primary connection string which is used to connect to the Redis Cache</li>
+  <li>Click on the Azure Function App i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
+  <li>Click on Settings -&gt; Environment variables</li>
+  <li>Select App Settings and click on Add button</li>
+  <li>Enter the Name as “RedisConnectionString” and Value as the copied Primary connection string and click on Apply as shown below</li>
+</ul>
+
+<p><img src="/assets/images/posts/2024/az-env-variable.png" alt="" /></p>
+
+<p><strong>Step 9: Set Firewall Rule in Azure Cache for Redis</strong></p>
+<ul>
+  <li>Click on your deployed Azure Function i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
+  <li>Click on Properties tab of overview section, you will find the Outbound IP Addresses</li>
+  <li>Now, sort the Outbound IP Addresses and copy the first IP Address and last IP Address</li>
+  <li>Click on Redis Cache i.e. exrateredis in the Azure Portal</li>
+  <li>Click on Settings -&gt; Firewall</li>
+  <li>Click on Add button</li>
+  <li>Enter the Name as “AzureFunctionApp” and Start IP as the copied first IP Address and End IP as the copied last IP Address.</li>
+  <li>Save the changes to apply the firewall rule.</li>
+  <li>Click on Settings -&gt; Private Endpoint and click on Enable Public Network Access and click on Save as below</li>
+</ul>
+
+<p><img src="/assets/images/posts/2024/az-func-enable-public-net.png" alt="" /></p>
+
+<p><strong>Step 10: Test the Azure Function App in Azure</strong></p>
+<ul>
+  <li>Click on the Azure Function App i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
+  <li>Click on Functions -&gt; CacheRefreshTimerTriggerFunction</li>
+  <li>Click on Logs to see the logs</li>
+  <li>You will see the logs as follows. You are actually seeing the logs in Application Insights.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2024/az-func-output.png" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/aks-hrm/CacheRefreshFunction">Souce Code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#azure-functions" class="page__taxonomy-item" rel="tag">azure-functions</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#azure" class="page__taxonomy-item" rel="tag">azure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#cache-management" class="page__taxonomy-item" rel="tag">cache-management</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#redis" class="page__taxonomy-item" rel="tag">redis</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#azure-functions" class="page__taxonomy-item" rel="tag">Azure Functions</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#azure" class="page__taxonomy-item" rel="tag">Azure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#cache-management" class="page__taxonomy-item" rel="tag">Cache Management</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#redis" class="page__taxonomy-item" rel="tag">Redis</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-06-10T00:00:00-04:00">June 10, 2024</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Using+Azure+Functions+Timer+Trigger+for+Seamless+Cache+Auto-Refresh+in+Real-World+Applications%20https%3A%2F%2Fmahedee.net%2F%2Fusing_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2F%2Fusing_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2F%2Fusing_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/understanding-different-kinds-of-kubernetes-resources/" class="pagination--pager" title="Understanding Different Kinds of Kubernetes Resources
+">Previous</a>
+    
+    
+      <a href="/step-by-step-guide-deploying-aspnet-core-application-with-aks-acr-sql/" class="pagination--pager" title="Step-by-Step Guide: Deploying an ASP.NET Core Application with Azure Kubernetes Services, Azure SQL Server, and Azure Container Registry
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying_complex_systems_with_the_facade_design_pattern_in_csharp/" rel="permalink">Simplifying Complex Systems with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to simplify complex systems with the Facade Design Pattern in C#. This article explores the key concepts behind the Facade pattern and demonstrates...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/real_time_vs_persistent_notifications_observer_pattern_or_databases/" rel="permalink">Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1641495303280571";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

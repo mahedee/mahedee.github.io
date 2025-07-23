@@ -1,4 +1,1297 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2025-07-12T19:50:20-04:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#</title><link href="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="alternate" type="text/html" title="Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#" /><published>2025-03-05T00:00:00-05:00</published><updated>2025-03-05T00:00:00-05:00</updated><id>https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp</id><content type="html" xml:base="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/"><![CDATA[<p>Managing the complexity of modern software systems can be a daunting task, especially when interacting with multiple interconnected subsystems. One practical approach to handle this challenge is the Facade Design Pattern, which provides a simplified interface to access complex subsystems. In this article, we’ll explore how the Facade Design Pattern can streamline the processing of orders in an e-commerce platform, using C# for implementation.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://mahedee.net//feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net//" rel="alternate" type="text/html" /><updated>2025-07-23T17:31:07-04:00</updated><id>https://mahedee.net//feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals</title><link href="https://mahedee.net//Binary_Tree_Traversal_Algorithms_using_java/" rel="alternate" type="text/html" title="Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals" /><published>2025-07-05T00:00:00-04:00</published><updated>2025-07-05T00:00:00-04:00</updated><id>https://mahedee.net//Binary_Tree_Traversal_Algorithms_using_java</id><content type="html" xml:base="https://mahedee.net//Binary_Tree_Traversal_Algorithms_using_java/"><![CDATA[<!-- Article banner image (optional) -->
+<!-- ![Binary Tree Traversal Banner](./images/binary-tree-traversal-banner.png) -->
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Binary tree traversal algorithms are <strong>fundamental techniques</strong> in computer science that allow us to systematically visit every node in a binary tree exactly once. These algorithms form the backbone of many tree-based operations and are essential for understanding more complex data structures and algorithms.</p>
+
+<p>🌳 <strong>What makes tree traversal special?</strong><br />
+ Unlike linear data structures (arrays, linked lists), trees have multiple paths to reach different nodes, making the <strong>order of visitation</strong> crucial for different applications.</p>
+
+<p>In this comprehensive guide, we’ll explore:</p>
+<ul>
+  <li>✅ <strong>Four major traversal algorithms</strong> with step-by-step explanations</li>
+  <li>🔧 <strong>Complete Java implementations</strong> ready to use</li>
+  <li>📊 <strong>Performance analysis</strong> and complexity comparisons</li>
+  <li>🎯 <strong>Real-world applications</strong> and use cases</li>
+  <li>💡 <strong>Best practices</strong> and optimization techniques</li>
+</ul>
+
+<hr />
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ol>
+  <li><a href="#what-is-tree-traversal">What is Tree Traversal?</a></li>
+  <li><a href="#types-of-tree-traversal">Types of Tree Traversal</a></li>
+  <li><a href="#depth-first-traversals">Depth-First Traversals</a>
+    <ul>
+      <li><a href="#preorder-traversal">Preorder Traversal</a></li>
+      <li><a href="#inorder-traversal">Inorder Traversal</a></li>
+      <li><a href="#postorder-traversal">Postorder Traversal</a></li>
+    </ul>
+  </li>
+  <li><a href="#breadth-first-traversal">Breadth-First Traversal</a></li>
+  <li><a href="#complete-implementation">Complete Implementation</a></li>
+  <li><a href="#performance-analysis">Performance Analysis</a></li>
+  <li><a href="#practical-applications">Practical Applications</a></li>
+  <li><a href="#comparison-guide">Comparison Guide</a></li>
+  <li><a href="#advanced-techniques">Advanced Techniques</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+
+<hr />
+
+<h2 id="what-is-tree-traversal">What is Tree Traversal?</h2>
+
+<p>Tree traversal is the process of <strong>visiting each node</strong> in a tree data structure exactly once in a systematic way. Think of it as taking a tour through a family tree or organizational chart - you want to visit everyone, but the order matters depending on your purpose.</p>
+
+<h3 id="key-characteristics">Key Characteristics:</h3>
+<ul>
+  <li><strong>📍 Systematic</strong>: Follows a consistent, predictable pattern</li>
+  <li><strong>✅ Complete</strong>: Visits every node exactly once</li>
+  <li><strong>🔄 Ordered</strong>: The sequence of visits matters for different applications</li>
+  <li><strong>⚡ Efficient</strong>: Optimized for specific use cases</li>
+</ul>
+
+<h3 id="why-traversal-order-matters">Why Traversal Order Matters:</h3>
+
+<p align="center">
+    <img src="../diagrams/images/org-diagram.png" alt="Organizational Chart" />
+</p>
+
+<p>Different traversal orders serve different purposes:
+• Top-down: CEO → Managers → Employees (authority flow)
+• Bottom-up: Employees → Managers → CEO (reporting flow)
+• Left-to-right: Process departments in sequence</p>
+
+<hr />
+
+<h2 id="types-of-tree-traversal">Types of Tree Traversal</h2>
+
+<p>Tree traversal algorithms can be broadly categorized into <strong>two main types</strong>:</p>
+
+<h3 id="-1-depth-first-traversal-dfs">🔽 <strong>1. Depth-First Traversal (DFS)</strong></h3>
+<p>Explores as far as possible along each branch before backtracking.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Type</strong></th>
+      <th><strong>Order</strong></th>
+      <th><strong>Best For</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Preorder</strong></td>
+      <td>Root → Left → Right</td>
+      <td>Tree copying, prefix expressions</td>
+    </tr>
+    <tr>
+      <td><strong>Inorder</strong></td>
+      <td>Left → Root → Right</td>
+      <td>BST sorted output, expression trees</td>
+    </tr>
+    <tr>
+      <td><strong>Postorder</strong></td>
+      <td>Left → Right → Root</td>
+      <td>Tree deletion, postfix expressions</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="-2-breadth-first-traversal-bfs">🔄 <strong>2. Breadth-First Traversal (BFS)</strong></h3>
+<p>Explores all nodes at the current depth before moving to the next level.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Type</strong></th>
+      <th><strong>Order</strong></th>
+      <th><strong>Best For</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Level Order</strong></td>
+      <td>Level by level, left to right</td>
+      <td>Tree printing, shortest path, BFS</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="depth-first-traversals">Depth-First Traversals</h2>
+
+<p>Depth-first traversals use a <strong>recursive approach</strong> (or stack-based iterative approach) and differ in the order they visit the current node relative to its children.</p>
+
+<h3 id="example-tree-for-all-demonstrations">Example Tree for All Demonstrations:</h3>
+<p align="center">
+    <img src="../diagrams/images/tree-for-demo2.png" alt="Tree Diagram" />
+</p>
+
+<hr />
+
+<h2 id="preorder-traversal">Preorder Traversal</h2>
+<p>Preorder traversal is a type of depth-first traversal where the current node is processed first, then the left subtree, followed by the right subtree.</p>
+
+<h3 id="order-root--left-subtree--right-subtree"><strong>Order</strong>: Root → Left Subtree → Right Subtree</h3>
+
+<p><strong>Think of it as</strong>: “Visit me first, then explore my left side, then my right side”</p>
+
+<h3 id="-algorithm">🔧 Algorithm:</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preorder</span><span class="o">(</span><span class="n">node</span><span class="o">):</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="n">is</span> <span class="n">not</span> <span class="kc">null</span><span class="o">:</span>
+        <span class="n">visit</span><span class="o">(</span><span class="n">node</span><span class="o">)</span>           <span class="c1">// ✅ Process current node FIRST</span>
+        <span class="n">preorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span>   <span class="c1">// 🔄 Traverse left subtree</span>
+        <span class="n">preorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span>  <span class="c1">// 🔄 Traverse right subtree</span>
+</code></pre></div></div>
+
+<h3 id="preorder-result-a--b--d--g--e--c--f"><strong>Preorder Result</strong>: A → B → D → G → E → C → F</h3>
+
+<h3 id="use-cases--applications"><strong>Use Cases &amp; Applications:</strong></h3>
+
+<h4 id="1-tree-copying--cloning">1. <strong>Tree Copying &amp; Cloning</strong></h4>
+<p><strong>Purpose</strong>: Creating an exact duplicate of a tree structure<br />
+<strong>Why Preorder</strong>: Parent nodes must be created before their children to maintain proper structure<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input Tree</strong>: Company hierarchy with CEO → Managers → Employees</li>
+  <li><strong>Process</strong>: Clone CEO first, then managers under CEO, then employees under each manager</li>
+  <li><strong>Output</strong>: Identical organizational structure in a backup system</li>
+</ul>
+
+<h4 id="2-prefix-expression-evaluation">2. <strong>Prefix Expression Evaluation</strong></h4>
+<p><strong>Purpose</strong>: Processing mathematical expressions in prefix notation (Polish notation)<br />
+<strong>Why Preorder</strong>: Operators appear before operands, matching preorder’s root-first approach<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: <code class="language-plaintext highlighter-rouge">+ * 3 4 5</code> (meaning: (3 × 4) + 5)</li>
+  <li><strong>Process</strong>: Process ‘+’ operator first, then evaluate ‘* 3 4’, then add ‘5’</li>
+  <li><strong>Output</strong>: Result = 17</li>
+</ul>
+
+<h4 id="3-directory--file-system-traversal">3. <strong>Directory &amp; File System Traversal</strong></h4>
+<p><strong>Purpose</strong>: Listing folder hierarchies with directories appearing before their contents<br />
+<strong>Why Preorder</strong>: Folders must be displayed before showing what’s inside them<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Project folder structure</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>📁 src/
+  📁 main/
+    📁 java/
+      📄 Main.java
+      📄 Utils.java
+  📁 test/
+    📄 TestMain.java
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Hierarchical directory listing where folders appear before their files</li>
+</ul>
+
+<h4 id="4-tree-serialization--storage">4. <strong>Tree Serialization &amp; Storage</strong></h4>
+<p><strong>Purpose</strong>: Converting tree structure to a linear format for storage or transmission<br />
+<strong>Why Preorder</strong>: Root-first order ensures proper reconstruction sequence<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input Tree</strong>: Binary tree with nodes [A, B, C, D, E]</li>
+  <li><strong>Process</strong>: Serialize in preorder sequence with null markers</li>
+  <li><strong>Output</strong>: <code class="language-plaintext highlighter-rouge">"A,B,D,null,null,E,null,null,C,null,null"</code></li>
+</ul>
+
+<h4 id="5-htmlxml-document-processing">5. <strong>HTML/XML Document Processing</strong></h4>
+<p><strong>Purpose</strong>: Processing nested document structures where parent elements contain children<br />
+<strong>Why Preorder</strong>: Parent tags must be opened before processing child elements<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: HTML structure <code class="language-plaintext highlighter-rouge">&lt;div&gt;&lt;p&gt;Text&lt;/p&gt;&lt;span&gt;More&lt;/span&gt;&lt;/div&gt;</code></li>
+  <li><strong>Process</strong>: Process <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> first, then <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code>, then <code class="language-plaintext highlighter-rouge">&lt;span&gt;</code></li>
+  <li><strong>Output</strong>: Properly rendered HTML with correct nesting</li>
+</ul>
+
+<h4 id="6-game-scene-graph-rendering">6. <strong>Game Scene Graph Rendering</strong></h4>
+<p><strong>Purpose</strong>: Rendering 3D scenes where parent transformations affect children<br />
+<strong>Why Preorder</strong>: Parent transformations must be applied before children inherit them<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Character → Body → Arm → Hand hierarchy</li>
+  <li><strong>Process</strong>: Apply character position first, then body rotation, then arm movement</li>
+  <li><strong>Output</strong>: Correctly transformed 3D model where hand moves with arm and body</li>
+</ul>
+
+<h4 id="7-organizational-chart-generation">7. <strong>Organizational Chart Generation</strong></h4>
+<p><strong>Purpose</strong>: Creating visual representations of company or project hierarchies<br />
+<strong>Why Preorder</strong>: Management levels must be established before showing subordinates<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Employee database with reporting relationships</li>
+  <li><strong>Process</strong>: Display CEO first, then VPs, then managers, then individual contributors</li>
+  <li><strong>Output</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CEO: John Smith
+  VP Engineering: Jane Doe
+    Senior Developer: Bob Wilson
+    Junior Developer: Alice Brown
+  VP Marketing: Mike Johnson
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="8-dependency-analysis--build-systems">8. <strong>Dependency Analysis &amp; Build Systems</strong></h4>
+<p><strong>Purpose</strong>: Identifying what components depend on others in software projects<br />
+<strong>Why Preorder</strong>: Dependencies must be identified before they can be resolved<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Module dependency tree where App → Database → Logger → FileSystem</li>
+  <li><strong>Process</strong>: Map dependencies starting from root application</li>
+  <li><strong>Output</strong>: Dependency list showing what needs to be built first: [FileSystem, Logger, Database, App]</li>
+</ul>
+
+<h3 id="️-complexity">⏱️ <strong>Complexity:</strong></h3>
+<ul>
+  <li><strong>Time</strong>: O(n) - visits each node once</li>
+  <li><strong>Space</strong>: O(h) - where h is tree height (recursion stack)</li>
+</ul>
+
+<hr />
+
+<h2 id="inorder-traversal">Inorder Traversal</h2>
+
+<p>Inorder traversal is a type of depth-first traversal where the left subtree is processed first, then the current node, followed by the right subtree.</p>
+
+<h3 id="order-left-subtree--root--right-subtree"><strong>Order</strong>: Left Subtree → Root → Right Subtree</h3>
+
+<p><strong>Think of it as</strong>: “Explore my left side first, then visit me, then my right side”</p>
+
+<h3 id="algorithm">Algorithm:</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inorder</span><span class="o">(</span><span class="n">node</span><span class="o">):</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="n">is</span> <span class="n">not</span> <span class="kc">null</span><span class="o">:</span>
+        <span class="n">inorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span>    <span class="c1">// 🔄 Traverse left subtree FIRST</span>
+        <span class="n">visit</span><span class="o">(</span><span class="n">node</span><span class="o">)</span>           <span class="c1">// ✅ Process current node</span>
+        <span class="n">inorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span>   <span class="c1">// 🔄 Traverse right subtree</span>
+</code></pre></div></div>
+
+<h3 id="inorder-result-g--d--b--e--a--c--f"><strong>Inorder Result</strong>: G → D → B → E → A → C → F</h3>
+
+<h3 id="use-cases--applications-1"><strong>Use Cases &amp; Applications:</strong></h3>
+
+<h4 id="1-binary-search-tree-bst-data-retrieval">1. <strong>Binary Search Tree (BST) Data Retrieval</strong></h4>
+<p><strong>Purpose</strong>: Extracting data from BSTs in sorted order without additional sorting<br />
+<strong>Why Inorder</strong>: BST property ensures left &lt; root &lt; right, making inorder naturally sorted<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input BST</strong>: Employee database with salary nodes [50K, 30K, 70K, 25K, 35K, 60K, 80K]</li>
+  <li><strong>Process</strong>: Traverse left subtree, visit root, traverse right subtree</li>
+  <li><strong>Output</strong>: Sorted salary list [25K, 30K, 35K, 50K, 60K, 70K, 80K]</li>
+</ul>
+
+<h4 id="2-mathematical-expression-trees--infix-conversion">2. <strong>Mathematical Expression Trees &amp; Infix Conversion</strong></h4>
+<p><strong>Purpose</strong>: Converting expression trees to human-readable infix notation<br />
+<strong>Why Inorder</strong>: Matches natural mathematical notation where operators appear between operands<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Expression tree representing ((3 + 5) * 2)</li>
+  <li><strong>Process</strong>: Traverse left operand, visit operator, traverse right operand</li>
+  <li><strong>Output</strong>: “((3 + 5) * 2)” - properly parenthesized infix expression</li>
+</ul>
+
+<h4 id="3-threaded-binary-tree-construction">3. <strong>Threaded Binary Tree Construction</strong></h4>
+<p><strong>Purpose</strong>: Creating threading pointers for efficient traversal without recursion or stack<br />
+<strong>Why Inorder</strong>: Threading follows inorder sequence to connect nodes<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Regular binary tree with nodes [A, B, C, D, E]</li>
+  <li><strong>Process</strong>: Connect each node’s right pointer to its inorder successor when right child is null</li>
+  <li><strong>Output</strong>: Threaded tree allowing O(1) space traversal</li>
+</ul>
+
+<h4 id="4-binary-search-tree-validation">4. <strong>Binary Search Tree Validation</strong></h4>
+<p><strong>Purpose</strong>: Verifying if a binary tree satisfies BST properties<br />
+<strong>Why Inorder</strong>: BST must produce strictly ascending sequence in inorder traversal<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input Tree 1</strong>: [10, 5, 15, 3, 7, 12, 18] → Inorder: [3, 5, 7, 10, 12, 15, 18] ✅ Valid BST</li>
+  <li><strong>Input Tree 2</strong>: [10, 5, 15, 3, 7, 12, 6] → Inorder: [3, 5, 7, 10, 6, 12, 15] ❌ Invalid (6 &lt; 10)</li>
+  <li><strong>Output</strong>: Boolean validation result based on sequence ordering</li>
+</ul>
+
+<h4 id="5-range-query-processing">5. <strong>Range Query Processing</strong></h4>
+<p><strong>Purpose</strong>: Finding all values within a specific range in sorted trees<br />
+<strong>Why Inorder</strong>: Natural sorted order allows efficient range processing<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Customer age BST with range query [25, 35]</li>
+  <li><strong>Process</strong>: Traverse inorder, collect nodes where 25 ≤ age ≤ 35</li>
+  <li><strong>Output</strong>: All customers aged 25-35 in sorted order: [26, 28, 31, 34, 35]</li>
+</ul>
+
+<h4 id="6-database-index-scanning">6. <strong>Database Index Scanning</strong></h4>
+<p><strong>Purpose</strong>: Efficient sequential access to database records in sorted order<br />
+<strong>Why Inorder</strong>: Database B-tree indexes use inorder for range scans<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Product database with price index</li>
+  <li><strong>Process</strong>: Inorder scan from $10 to $50 price range</li>
+  <li><strong>Output</strong>: All products in price order: [$12 Widget, $25 Gadget, $45 Tool]</li>
+</ul>
+
+<h4 id="7-median--statistical-operations">7. <strong>Median &amp; Statistical Operations</strong></h4>
+<p><strong>Purpose</strong>: Finding median, percentiles, and order statistics in BSTs<br />
+<strong>Why Inorder</strong>: Sorted sequence makes statistical calculations straightforward<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Test scores BST [85, 72, 93, 68, 78, 90, 96]</li>
+  <li><strong>Process</strong>: Inorder traversal gives sorted scores</li>
+  <li><strong>Output</strong>: Median = 85 (middle element), 75th percentile = 93</li>
+</ul>
+
+<h4 id="8-tree-serialization-for-reconstruction">8. <strong>Tree Serialization for Reconstruction</strong></h4>
+<p><strong>Purpose</strong>: Saving BST structure in a way that preserves sorting properties<br />
+<strong>Why Inorder</strong>: Combined with preorder/postorder enables efficient BST reconstruction<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: BST with nodes [50, 30, 70, 20, 40, 60, 80]</li>
+  <li><strong>Process</strong>: Store inorder sequence for sorted data, preorder for structure</li>
+  <li><strong>Output</strong>: Inorder: [20,30,40,50,60,70,80] + Preorder: [50,30,20,40,70,60,80]</li>
+</ul>
+
+<h4 id="9-sorted-data-processing">9. <strong>Sorted Data Processing</strong></h4>
+<p><strong>Purpose</strong>: Processing data that needs to maintain sorted order during operations<br />
+<strong>Why Inorder</strong>: Eliminates need for separate sorting step<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Stock price BST updated throughout trading day</li>
+  <li><strong>Process</strong>: Generate end-of-day report using inorder traversal</li>
+  <li><strong>Output</strong>: Price movement report in ascending order: [AAPL:$150, GOOGL:$175, MSFT:$200]</li>
+</ul>
+
+<h4 id="10-successorpredecessor-finding">10. <strong>Successor/Predecessor Finding</strong></h4>
+<p><strong>Purpose</strong>: Locating next/previous elements in sorted order<br />
+<strong>Why Inorder</strong>: Natural sequence makes finding adjacent elements efficient<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Dictionary BST, find word after “program”</li>
+  <li><strong>Process</strong>: Use inorder sequence to identify next word</li>
+  <li><strong>Output</strong>: Successor of “program” is “programming”</li>
+</ul>
+
+<h3 id="-special-property">⭐ <strong>Special Property:</strong></h3>
+<p>For <strong>Binary Search Trees</strong>, inorder traversal <strong>always produces elements in sorted (ascending) order</strong>.</p>
+
+<h3 id="️-complexity-1">⏱️ <strong>Complexity:</strong></h3>
+<ul>
+  <li><strong>Time</strong>: O(n)</li>
+  <li><strong>Space</strong>: O(h)</li>
+</ul>
+
+<hr />
+
+<h2 id="postorder-traversal">Postorder Traversal</h2>
+
+<p>Postorder traversal is a type of depth-first traversal where the left subtree is processed first, then the right subtree, followed by the current node (root).</p>
+
+<h3 id="order-left-subtree--right-subtree--root"><strong>Order</strong>: Left Subtree → Right Subtree → Root</h3>
+
+<p><strong>Think of it as</strong>: “Handle my children first, then deal with me”</p>
+
+<h3 id="-algorithm-1">🔧 Algorithm:</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">postorder</span><span class="o">(</span><span class="n">node</span><span class="o">):</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="n">is</span> <span class="n">not</span> <span class="kc">null</span><span class="o">:</span>
+        <span class="n">postorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span>   <span class="c1">// 🔄 Traverse left subtree FIRST</span>
+        <span class="n">postorder</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span>  <span class="c1">// 🔄 Traverse right subtree SECOND</span>
+        <span class="n">visit</span><span class="o">(</span><span class="n">node</span><span class="o">)</span>            <span class="c1">// ✅ Process current node LAST</span>
+</code></pre></div></div>
+
+<h3 id="postorder-result-g--d--e--b--f--c--a"><strong>Postorder Result</strong>: G → D → E → B → F → C → A</h3>
+
+<h3 id="use-cases--applications-2"><strong>Use Cases &amp; Applications:</strong></h3>
+
+<h4 id="1-tree-deletion--memory-cleanup">1. <strong>Tree Deletion &amp; Memory Cleanup</strong></h4>
+<p><strong>Purpose</strong>: Safely deleting tree nodes by removing children before parents<br />
+<strong>Why Postorder</strong>: Children must be deleted before parent to avoid memory leaks and dangling pointers. Dangling pointers mean references to nodes that have already been deleted, which can lead to errors or crashes if accessed later.<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input Tree</strong>: File system tree with folders and files</li>
+  <li><strong>Process</strong>: Delete all files first, then empty folders, finally root folder</li>
+  <li><strong>Output</strong>: Clean memory deallocation: Files → Subfolders → Main folder → Root</li>
+</ul>
+
+<h4 id="2-postfix-expression-evaluation-reverse-polish-notation">2. <strong>Postfix Expression Evaluation (Reverse Polish Notation)</strong></h4>
+<p><strong>Purpose</strong>: Evaluating mathematical expressions in postfix notation<br />
+<strong>Why Postorder</strong>: Operands must be processed before operators, matching postfix structure<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Expression tree for “3 4 + 2 *” (meaning: (3 + 4) × 2)</li>
+  <li><strong>Process</strong>: Calculate 3, then 4, then +, then 2, finally *</li>
+  <li><strong>Output</strong>: Result = 14 (first 3+4=7, then 7×2=14)</li>
+</ul>
+
+<h4 id="3-directory-size-calculation">3. <strong>Directory Size Calculation</strong></h4>
+<p><strong>Purpose</strong>: Computing folder sizes by calculating subfolder sizes first<br />
+<strong>Why Postorder</strong>: Must know children sizes before calculating parent size<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Project folder with subfolders</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>📄 file1.txt (2KB) 
+📄 file2.java (5KB)
+📁 src/ = 7KB (calculated after files)
+📁 project/ = 7KB (calculated after src/)
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Total project size: 7KB</li>
+</ul>
+
+<h4 id="4-dependency-resolution--build-systems">4. <strong>Dependency Resolution &amp; Build Systems</strong></h4>
+<p><strong>Purpose</strong>: Processing dependencies before the components that depend on them<br />
+<strong>Why Postorder</strong>: Dependencies must be built/resolved before their dependents<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Software modules: App depends on Database, Database depends on Logger</li>
+  <li><strong>Process</strong>: Build Logger first, then Database, finally App</li>
+  <li><strong>Output</strong>: Build order: [Logger, Database, App]</li>
+</ul>
+
+<h4 id="5-garbage-collection--resource-cleanup">5. <strong>Garbage Collection &amp; Resource Cleanup</strong></h4>
+<p><strong>Purpose</strong>: Cleaning up system resources in proper order<br />
+<strong>Why Postorder</strong>: Child resources must be freed before parent resources<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Process tree with parent and child processes</li>
+  <li><strong>Process</strong>: Terminate child processes first, then parent processes</li>
+  <li><strong>Output</strong>: Clean shutdown without orphaned processes</li>
+</ul>
+
+<h4 id="6-bottom-up-tree-calculations">6. <strong>Bottom-up Tree Calculations</strong></h4>
+<p><strong>Purpose</strong>: Computing values that depend on children’s computed values<br />
+<strong>Why Postorder</strong>: Parent calculations need children’s results<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Employee hierarchy with salary calculations</li>
+  <li><strong>Process</strong>: Calculate team budgets bottom-up</li>
+  <li><strong>Output</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Employee A: $50K
+Employee B: $60K  
+Manager: $110K (team total)
+Director: $170K (includes manager + own salary)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="7-game-object-destruction">7. <strong>Game Object Destruction</strong></h4>
+<p><strong>Purpose</strong>: Destroying game objects and their components in correct order<br />
+<strong>Why Postorder</strong>: Child objects must be destroyed before parent containers<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Character with weapons, armor, and inventory items</li>
+  <li><strong>Process</strong>: Destroy items first, then equipment, finally character</li>
+  <li><strong>Output</strong>: Clean game object removal without references to destroyed objects</li>
+</ul>
+
+<h4 id="8-abstract-syntax-tree-ast-code-generation">8. <strong>Abstract Syntax Tree (AST) Code Generation</strong></h4>
+<p><strong>Purpose</strong>: Generating assembly or machine code from expression trees<br />
+<strong>Why Postorder</strong>: Operands must be loaded before operations can be performed<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Expression tree for “a + b * c”</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LOAD b
+LOAD c  
+MULTIPLY
+LOAD a
+ADD
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Stack-based code where operands are processed before operators</li>
+</ul>
+
+<h4 id="9-tree-validation--structure-checking">9. <strong>Tree Validation &amp; Structure Checking</strong></h4>
+<p><strong>Purpose</strong>: Validating tree properties by checking children first<br />
+<strong>Why Postorder</strong>: Parent validity often depends on children being valid<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Binary tree to check if it’s a complete binary tree</li>
+  <li><strong>Process</strong>: Validate leaf nodes first, then internal nodes, finally root</li>
+  <li><strong>Output</strong>: Boolean result after checking all subtrees</li>
+</ul>
+
+<h4 id="10-tree-transformation--reconstruction">10. <strong>Tree Transformation &amp; Reconstruction</strong></h4>
+<p><strong>Purpose</strong>: Converting tree structures while preserving relationships<br />
+<strong>Why Postorder</strong>: Children must be transformed before parent transformation can occur<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Parse tree to be converted to different format</li>
+  <li><strong>Process</strong>: Transform leaf nodes first, then internal nodes, finally root</li>
+  <li><strong>Output</strong>: Transformed tree maintaining structural integrity</li>
+</ul>
+
+<h4 id="11-ui-component-disposal">11. <strong>UI Component Disposal</strong></h4>
+<p><strong>Purpose</strong>: Properly disposing user interface components and their resources<br />
+<strong>Why Postorder</strong>: Child UI elements must be disposed before parent containers<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Window with buttons, text fields, and panels</li>
+  <li><strong>Process</strong>: Dispose buttons and text fields first, then panels, finally window</li>
+  <li><strong>Output</strong>: Clean UI shutdown without memory leaks</li>
+</ul>
+
+<h4 id="12-database-transaction-rollback">12. <strong>Database Transaction Rollback</strong></h4>
+<p><strong>Purpose</strong>: Rolling back nested transactions in reverse order<br />
+<strong>Why Postorder</strong>: Inner transactions must be rolled back before outer transactions<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Nested transaction tree with savepoints</li>
+  <li><strong>Process</strong>: Rollback deepest savepoints first, then parent transactions</li>
+  <li><strong>Output</strong>: Database restored to consistent state before transaction began</li>
+</ul>
+
+<h3 id="️-complexity-2">⏱️ <strong>Complexity:</strong></h3>
+<ul>
+  <li><strong>Time</strong>: O(n)</li>
+  <li><strong>Space</strong>: O(h)</li>
+</ul>
+
+<hr />
+
+<h2 id="breadth-first-traversal">Breadth-First Traversal</h2>
+<p>Breadth-first traversal (BFS) explores all nodes at the present depth level before moving on to nodes at the next depth level. It uses a queue to keep track of nodes to visit.</p>
+
+<h3 id="level-order-traversal">Level Order Traversal</h3>
+<p>Level order traversal is a type of breadth-first traversal where nodes are visited level by level, starting from the root and moving left to right.</p>
+
+<h3 id="order-level-by-level-left-to-right"><strong>Order</strong>: Level by level, left to right</h3>
+
+<p><strong>Think of it as</strong>: “Visit everyone at my level, then go to the next level”</p>
+
+<h3 id="-algorithm-2">🔧 Algorithm:</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">levelOrder</span><span class="o">(</span><span class="n">root</span><span class="o">):</span>
+    <span class="k">if</span> <span class="n">root</span> <span class="n">is</span> <span class="kc">null</span><span class="o">:</span>
+        <span class="k">return</span>
+    
+    <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Queue</span><span class="o">()</span>
+    <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">root</span><span class="o">)</span>
+    
+    <span class="k">while</span> <span class="n">queue</span> <span class="n">is</span> <span class="n">not</span> <span class="nl">empty:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">dequeue</span><span class="o">()</span>
+        <span class="n">visit</span><span class="o">(</span><span class="n">node</span><span class="o">)</span>                     <span class="c1">// ✅ Process current node</span>
+        
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="n">is</span> <span class="n">not</span> <span class="kc">null</span><span class="o">:</span>       <span class="c1">// 📥 Add left child to queue</span>
+            <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">)</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="n">is</span> <span class="n">not</span> <span class="kc">null</span><span class="o">:</span>      <span class="c1">// 📥 Add right child to queue</span>
+            <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">)</span>
+</code></pre></div></div>
+
+<h3 id="level-order-result-a--b--c--d--e--f--g"><strong>Level Order Result</strong>: A → B → C → D → E → F → G</h3>
+
+<h3 id="use-cases--applications-3"><strong>Use Cases &amp; Applications:</strong></h3>
+
+<h4 id="1-tree-printing--visualization">1. <strong>Tree Printing &amp; Visualization</strong></h4>
+<p><strong>Purpose</strong>: Displaying tree structure level by level for easy understanding<br />
+<strong>Why Level Order</strong>: Natural visual representation matches how humans perceive hierarchies<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Company organization tree</li>
+  <li><strong>Process</strong>: Print CEO first, then VPs, then managers, then employees</li>
+  <li><strong>Output</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 0: [CEO]
+Level 1: [VP Sales, VP Engineering]  
+Level 2: [Sales Manager, Dev Manager, QA Manager]
+Level 3: [Sales Rep 1, Sales Rep 2, Developer 1, Developer 2, Tester 1]
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="2-shortest-path--minimum-depth-finding">2. <strong>Shortest Path &amp; Minimum Depth Finding</strong></h4>
+<p><strong>Purpose</strong>: Finding shortest distance or minimum steps to reach a target<br />
+<strong>Why Level Order</strong>: BFS guarantees finding shortest path first<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Family tree, find shortest relationship between two people</li>
+  <li><strong>Process</strong>: Explore immediate family first, then extended family</li>
+  <li><strong>Output</strong>: “Alice and Bob are cousins (3 steps apart)” vs “Alice and Charlie are siblings (2 steps apart)”</li>
+</ul>
+
+<h4 id="3-tree-width--level-analysis">3. <strong>Tree Width &amp; Level Analysis</strong></h4>
+<p><strong>Purpose</strong>: Finding maximum width and analyzing tree structure per level<br />
+<strong>Why Level Order</strong>: Processes entire levels at once for width calculation<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Website navigation menu tree</li>
+  <li><strong>Process</strong>: Count items at each menu level</li>
+  <li><strong>Output</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 1: 3 main categories (Home, Products, About)
+Level 2: 8 subcategories (max width = 8)
+Level 3: 12 specific pages
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="4-tree-serialization--level-wise-storage">4. <strong>Tree Serialization &amp; Level-wise Storage</strong></h4>
+<p><strong>Purpose</strong>: Storing tree data in level-order format for reconstruction<br />
+<strong>Why Level Order</strong>: Enables breadth-first reconstruction and balanced loading<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Binary tree [A, B, C, D, E, null, F]</li>
+  <li><strong>Process</strong>: Store nodes level by level with null markers</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>Output</strong>: “A</td>
+          <td>B,C</td>
+          <td>D,E,null,F</td>
+          <td>null,null,null,null” (levels separated by</td>
+          <td>)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h4 id="5-priority-processing--urgent-task-handling">5. <strong>Priority Processing &amp; Urgent Task Handling</strong></h4>
+<p><strong>Purpose</strong>: Processing items by priority levels (urgent first, then important, then normal)<br />
+<strong>Why Level Order</strong>: Higher priority levels processed completely before lower ones<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Hospital patient queue with priority levels</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 1 (Critical): [Heart Attack, Stroke]
+Level 2 (Urgent): [Broken Bone, Deep Cut]  
+Level 3 (Normal): [Check-up, Vaccination]
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: All critical patients treated first, then urgent, then normal</li>
+</ul>
+
+<h4 id="6-game-level-design--wave-spawning">6. <strong>Game Level Design &amp; Wave Spawning</strong></h4>
+<p><strong>Purpose</strong>: Spawning enemies or challenges in waves/levels<br />
+<strong>Why Level Order</strong>: Each wave must be completed before next wave starts<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Tower defense game enemy tree</li>
+  <li><strong>Process</strong>: Spawn Wave 1 enemies, then Wave 2, then Wave 3</li>
+  <li><strong>Output</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Wave 1: [3 Basic Enemies] (must be defeated first)
+Wave 2: [2 Advanced Enemies, 1 Tank] 
+Wave 3: [1 Boss Enemy]
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="7-educational-content-progression">7. <strong>Educational Content Progression</strong></h4>
+<p><strong>Purpose</strong>: Learning prerequisites where each level builds on previous level<br />
+<strong>Why Level Order</strong>: Students must complete current level before advancing<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Programming course curriculum tree</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 1: [Programming Basics]
+Level 2: [Data Types, Variables] 
+Level 3: [Arrays, Functions, Objects]
+Level 4: [Advanced Data Structures]
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Sequential learning path ensuring solid foundation</li>
+</ul>
+
+<h4 id="8-organizational-communication--announcements">8. <strong>Organizational Communication &amp; Announcements</strong></h4>
+<p><strong>Purpose</strong>: Distributing information through hierarchy levels<br />
+<strong>Why Level Order</strong>: Information flows level by level through management chain<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Company announcement about policy change</li>
+  <li><strong>Process</strong>: CEO tells VPs, VPs tell Directors, Directors tell Managers, Managers tell employees</li>
+  <li><strong>Output</strong>: Systematic information distribution ensuring everyone at each level is informed</li>
+</ul>
+
+<h4 id="9-breadth-first-search-in-decision-trees">9. <strong>Breadth-First Search in Decision Trees</strong></h4>
+<p><strong>Purpose</strong>: Exploring all options at current decision level before going deeper<br />
+<strong>Why Level Order</strong>: Avoids getting stuck in deep but poor decision paths<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Investment decision tree</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 1: [Stocks, Bonds, Real Estate] (explore all first)
+Level 2: [Tech Stocks, Blue Chip | Government Bonds, Corporate Bonds | Residential, Commercial]
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Comprehensive analysis of all options at each decision level</li>
+</ul>
+
+<h4 id="10-network-topology--router-configuration">10. <strong>Network Topology &amp; Router Configuration</strong></h4>
+<p><strong>Purpose</strong>: Configuring network devices level by level from core to edge<br />
+<strong>Why Level Order</strong>: Core routers must be configured before distribution and access layers<br />
+<strong>Example</strong>:</p>
+<ul>
+  <li><strong>Input</strong>: Corporate network infrastructure</li>
+  <li><strong>Process</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Level 1: [Core Router] (configure first)
+Level 2: [Distribution Switch A, Distribution Switch B]
+Level 3: [Access Switch 1, Access Switch 2, Access Switch 3, Access Switch 4]
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Output</strong>: Properly configured network with connectivity flowing from core outward</li>
+</ul>
+
+<h3 id="complexity"><strong>Complexity:</strong></h3>
+<ul>
+  <li><strong>Time</strong>: O(n)</li>
+  <li><strong>Space</strong>: O(w) - where w is the maximum width of the tree</li>
+</ul>
+
+<hr />
+
+<h2 id="complete-implementation-of-inorder-preorder-postorder-and-level-order-traversals">Complete Implementation of Inorder, Preorder, Postorder, and Level Order Traversals</h2>
+
+<h3 id="create-a-treenode-class---the-building-block">Create a TreeNode Class - The Building Block</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="cm">/**
+ * TreeNode represents a single node in our binary tree
+ * Think of it as a container that holds data and references to children
+ */</span>
+<span class="kd">class</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="no">E</span> <span class="n">element</span><span class="o">;</span>              <span class="c1">// 📦 The data stored in this node</span>
+    <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">left</span><span class="o">;</span>       <span class="c1">// ⬅️ Points to the left child</span>
+    <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">right</span><span class="o">;</span>      <span class="c1">// ➡️ Points to the right child</span>
+    <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">parent</span><span class="o">;</span>     <span class="c1">// ⬆️ Points to the parent (optional)</span>
+    
+    <span class="c1">// Create a new node with data</span>
+    <span class="kd">public</span> <span class="nf">TreeNode</span><span class="o">(</span><span class="no">E</span> <span class="n">element</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">element</span> <span class="o">=</span> <span class="n">element</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// Create a new node with data and parent reference</span>
+    <span class="kd">public</span> <span class="nf">TreeNode</span><span class="o">(</span><span class="no">E</span> <span class="n">element</span><span class="o">,</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">element</span> <span class="o">=</span> <span class="n">element</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    
+    <span class="c1">// Override toString for easy printing of node data</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="create-a-binarytree-class-to-implement-all-four-traversal-algorithms">Create a BinaryTree Class to implement all four traversal algorithms</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * BinaryTree implementation with all four traversal methods
+ * Supports both recursive and iterative approaches
+ */</span>
+<span class="kd">class</span> <span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">root</span><span class="o">;</span>  <span class="c1">// The root of our tree</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>          <span class="c1">// Number of nodes in the tree</span>
+    
+    <span class="kd">public</span> <span class="nf">BinaryTree</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// Tree Construction Methods</span>
+    <span class="c1">// Here IllegalStateException is an unchecked exception that indicates the tree already has a root</span>
+    <span class="c1">// serves as explicit documentation to inform developers about potential exceptions. But it works fine without it.</span>
+    <span class="kd">public</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">addRoot</span><span class="o">(</span><span class="no">E</span> <span class="n">element</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IllegalStateException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="s">"Tree already has a root"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeNode</span><span class="o">&lt;&gt;(</span><span class="n">element</span><span class="o">);</span>
+        <span class="n">size</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">addLeft</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">parent</span><span class="o">,</span> <span class="no">E</span> <span class="n">element</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Node already has a left child"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeNode</span><span class="o">&lt;&gt;(</span><span class="n">element</span><span class="o">,</span> <span class="n">parent</span><span class="o">);</span>
+        <span class="n">parent</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">child</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="n">child</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">addRight</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">parent</span><span class="o">,</span> <span class="no">E</span> <span class="n">element</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Node already has a right child"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeNode</span><span class="o">&lt;&gt;(</span><span class="n">element</span><span class="o">,</span> <span class="n">parent</span><span class="o">);</span>
+        <span class="n">parent</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">child</span><span class="o">;</span>
+        <span class="n">size</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="n">child</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// Basic Tree Properties</span>
+    <span class="c1">// These methods provide basic information about the tree structure</span>
+    <span class="c1">// Not required for all the cases, but useful for understanding the tree</span>
+    <span class="kd">public</span> <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">getRoot</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">root</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">size</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="c1">// PREORDER TRAVERSAL: Root → Left → Right</span>
+    <span class="c1">// Public method to setup, initialize and call the actual algorithm</span>
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">preorderTraversal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">preorderHelper</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// Core algorithm for preorder traversal</span>
+    <span class="c1">// Recursively visit the root first, then left subtree, then right subtree</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">preorderHelper</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">node</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">element</span><span class="o">);</span>                    <span class="c1">// ✅ Visit root first</span>
+            <span class="n">preorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>          <span class="c1">// 🔄 Then left subtree</span>
+            <span class="n">preorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>         <span class="c1">// 🔄 Finally right subtree</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// INORDER TRAVERSAL: Left → Root → Right</span>
+    <span class="c1">// Public method to setup, initialize and call the actual algorithm</span>
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">inorderTraversal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">inorderHelper</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+
+    <span class="c1">// Core algorithm for inorder traversal</span>
+    <span class="c1">// Recursively visit the left subtree first, then root, then right subtree</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">inorderHelper</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">node</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">inorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>           <span class="c1">// 🔄 Left subtree first</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">element</span><span class="o">);</span>                   <span class="c1">// ✅ Then visit root</span>
+            <span class="n">inorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>          <span class="c1">// 🔄 Finally right subtree</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// 🔍 POSTORDER TRAVERSAL: Left → Right → Root</span>
+    <span class="c1">// Public method to setup, initialize and call the actual algorithm</span>
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">postorderTraversal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">postorderHelper</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// Core algorithm for postorder traversal</span>
+    <span class="c1">// Recursively visit the left subtree first, then right subtree, then root</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">postorderHelper</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">node</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">postorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>         <span class="c1">// 🔄 Left subtree first</span>
+            <span class="n">postorderHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>        <span class="c1">// 🔄 Then right subtree</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">element</span><span class="o">);</span>                   <span class="c1">// ✅ Finally visit root</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// LEVEL ORDER TRAVERSAL: Level by level</span>
+    <span class="c1">// Also known as Breadth-First Search (BFS)</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="nf">levelOrderTraversal</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        
+        <span class="c1">// Start from the root and use a queue to explore each level</span>
+        <span class="nc">Queue</span><span class="o">&lt;</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LinkedList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
+        
+        <span class="k">while</span> <span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">current</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">element</span><span class="o">);</span>                <span class="c1">// ✅ Visit current node and add to result list</span>
+            
+            <span class="c1">// Add children to queue for next level</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">left</span><span class="o">);</span> <span class="c1">// Add left child to queue</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">right</span><span class="o">);</span> <span class="c1">// Add right child to queue</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// 🎨 Tree Visualization</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printTreeStructure</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🌳 Tree Structure:"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"(empty tree)"</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">printHelper</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="s">""</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printHelper</span><span class="o">(</span><span class="nc">TreeNode</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">node</span><span class="o">,</span> <span class="nc">String</span> <span class="n">prefix</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isLast</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="o">(</span><span class="n">isLast</span> <span class="o">?</span> <span class="s">"└── "</span> <span class="o">:</span> <span class="s">"├── "</span><span class="o">)</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="na">element</span><span class="o">);</span>
+            
+            <span class="c1">// 📝 Handle children</span>
+            <span class="kt">boolean</span> <span class="n">hasLeft</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="kt">boolean</span> <span class="n">hasRight</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+            
+            <span class="k">if</span> <span class="o">(</span><span class="n">hasLeft</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">printHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="o">(</span><span class="n">isLast</span> <span class="o">?</span> <span class="s">"    "</span> <span class="o">:</span> <span class="s">"│   "</span><span class="o">),</span> <span class="o">!</span><span class="n">hasRight</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">hasRight</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">printHelper</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="o">(</span><span class="n">isLast</span> <span class="o">?</span> <span class="s">"    "</span> <span class="o">:</span> <span class="s">"│   "</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="-complete-demo-with-practical-examples">🚀 Complete Demo with Practical Examples</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TreeTraversalDemo</span> <span class="o">{</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"BINARY TREE TRAVERSAL ALGORITHMS DEMO"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Author: Mahedee Hasan"</span><span class="o">);</span>
+
+        <span class="c1">//  Creates a string by repeating the double horizontal line character (═) 50 times</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"═"</span><span class="o">.</span><span class="na">repeat</span><span class="o">(</span><span class="mi">50</span><span class="o">));</span>
+        
+        <span class="c1">// Build example tree</span>
+        <span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">buildExampleTree</span><span class="o">();</span>
+        
+        <span class="c1">// Show tree structure</span>
+        <span class="c1">// Show original tree in a structured format</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">printTreeStructure</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        
+        <span class="c1">// Demonstrate all traversals</span>
+        <span class="n">demonstrateTraversals</span><span class="o">(</span><span class="n">tree</span><span class="o">);</span>
+        
+        <span class="c1">// 📊 Show practical applications</span>
+        <span class="n">demonstratePracticalApplications</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">buildExampleTree</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Building this tree:</span>
+        <span class="c1">//       A</span>
+        <span class="c1">//      / \</span>
+        <span class="c1">//     B   C</span>
+        <span class="c1">//    / \   \</span>
+        <span class="c1">//   D   E   F</span>
+        <span class="c1">//  /</span>
+        <span class="c1">// G</span>
+        
+        <span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">tree</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BinaryTree</span><span class="o">&lt;&gt;();</span>
+        
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addRoot</span><span class="o">(</span><span class="s">"A"</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="s">"B"</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">b</span><span class="o">,</span> <span class="s">"D"</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">b</span><span class="o">,</span> <span class="s">"E"</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="s">"F"</span><span class="o">);</span>
+        <span class="n">tree</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">d</span><span class="o">,</span> <span class="s">"G"</span><span class="o">);</span>
+        
+        <span class="k">return</span> <span class="n">tree</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">demonstrateTraversals</span><span class="o">(</span><span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">tree</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"TRAVERSAL RESULTS:"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"─"</span><span class="o">.</span><span class="na">repeat</span><span class="o">(</span><span class="mi">40</span><span class="o">));</span>
+        
+        <span class="c1">// Preorder traversal</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">preorder</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">preorderTraversal</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Preorder  (Root→Left→Right): "</span> <span class="o">+</span> <span class="n">preorder</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Use case: Tree copying, directory listing"</span><span class="o">);</span>
+        <span class="c1">// Output: [A, B, D, G, E, C, F]</span>
+
+        <span class="c1">// Inorder</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">inorder</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">inorderTraversal</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🟩 Inorder   (Left→Root→Right): "</span> <span class="o">+</span> <span class="n">inorder</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   💡 Use case: BST sorted output, expression trees"</span><span class="o">);</span>
+        
+        <span class="c1">// Postorder</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">postorder</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">postorderTraversal</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🟨 Postorder (Left→Right→Root): "</span> <span class="o">+</span> <span class="n">postorder</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   💡 Use case: Tree deletion, folder size calculation"</span><span class="o">);</span>
+        
+        <span class="c1">// Level Order</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">levelOrder</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">levelOrderTraversal</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🟪 Level Order (Top→Bottom): "</span> <span class="o">+</span> <span class="n">levelOrder</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   💡 Use case: BFS, shortest path, tree printing"</span><span class="o">);</span>
+        
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">demonstratePracticalApplications</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🎯 PRACTICAL APPLICATIONS:"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"─"</span><span class="o">.</span><span class="na">repeat</span><span class="o">(</span><span class="mi">40</span><span class="o">));</span>
+        
+        <span class="c1">// BST example</span>
+        <span class="n">demonstrateBSTSorting</span><span class="o">();</span>
+        
+        <span class="c1">// Expression tree example</span>
+        <span class="n">demonstrateExpressionEvaluation</span><span class="o">();</span>
+        
+        <span class="c1">// File system example</span>
+        <span class="n">demonstrateFileSystemOperations</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">demonstrateBSTSorting</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"📊 Binary Search Tree Sorting:"</span><span class="o">);</span>
+        
+        <span class="nc">BinaryTree</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">bst</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BinaryTree</span><span class="o">&lt;&gt;();</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">root</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="na">addRoot</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">left</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="mi">30</span><span class="o">);</span>
+        <span class="nc">TreeNode</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">right</span> <span class="o">=</span> <span class="n">bst</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="mi">70</span><span class="o">);</span>
+        <span class="n">bst</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+        <span class="n">bst</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+        <span class="n">bst</span><span class="o">.</span><span class="na">addLeft</span><span class="o">(</span><span class="n">right</span><span class="o">,</span> <span class="mi">60</span><span class="o">);</span>
+        <span class="n">bst</span><span class="o">.</span><span class="na">addRight</span><span class="o">(</span><span class="n">right</span><span class="o">,</span> <span class="mi">80</span><span class="o">);</span>
+        
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Input BST: [50, 30, 70, 20, 40, 60, 80]"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Inorder:   "</span> <span class="o">+</span> <span class="n">bst</span><span class="o">.</span><span class="na">inorderTraversal</span><span class="o">());</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   ✅ Automatically sorted!"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">demonstrateExpressionEvaluation</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"🧮 Expression Tree Evaluation:"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Expression: (3 + 5) * 2"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Inorder:    3 + 5 * 2     (infix notation)"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Postorder:  3 5 + 2 *     (postfix notation)"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   ✅ Different traversals = Different notations!"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">demonstrateFileSystemOperations</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"📁 File System Operations:"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Preorder:   List directories before contents"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Postorder:  Calculate sizes (children first)"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   Level Order: Show hierarchy level by level"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"   ✅ Each traversal serves different purposes!"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="-expected-output">📋 Expected Output</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>🌳 BINARY TREE TRAVERSAL ALGORITHMS DEMO
+Author: Mahedee Hasan
+══════════════════════════════════════════════════
+
+🌳 Tree Structure:
+└── A
+    ├── B
+    │   ├── D
+    │   │   └── G
+    │   └── E
+    └── C
+        └── F
+
+🔍 TRAVERSAL RESULTS:
+────────────────────────────────────────
+🟦 Preorder  (Root→Left→Right): [A, B, D, G, E, C, F]
+   💡 Use case: Tree copying, directory listing
+🟩 Inorder   (Left→Root→Right): [G, D, B, E, A, C, F]
+   💡 Use case: BST sorted output, expression trees
+🟨 Postorder (Left→Right→Root): [G, D, E, B, F, C, A]
+   💡 Use case: Tree deletion, folder size calculation
+🟪 Level Order (Top→Bottom): [A, B, C, D, E, F, G]
+   💡 Use case: BFS, shortest path, tree printing
+
+🎯 PRACTICAL APPLICATIONS:
+────────────────────────────────────────
+📊 Binary Search Tree Sorting:
+   Input BST: [50, 30, 70, 20, 40, 60, 80]
+   Inorder:   [20, 30, 40, 50, 60, 70, 80]
+   ✅ Automatically sorted!
+
+🧮 Expression Tree Evaluation:
+   Expression: (3 + 5) * 2
+   Inorder:    3 + 5 * 2     (infix notation)
+   Postorder:  3 5 + 2 *     (postfix notation)
+   ✅ Different traversals = Different notations!
+
+📁 File System Operations:
+   Preorder:   List directories before contents
+   Postorder:  Calculate sizes (children first)
+   Level Order: Show hierarchy level by level
+   ✅ Each traversal serves different purposes!
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="performance-analysis">Performance Analysis</h2>
+
+<h3 id="-complexity-comparison">📊 Complexity Comparison</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Traversal</strong></th>
+      <th><strong>Time Complexity</strong></th>
+      <th><strong>Space Complexity</strong></th>
+      <th><strong>Best Use Case</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Preorder</strong></td>
+      <td>O(n)</td>
+      <td>O(h)</td>
+      <td>Tree copying, prefix expressions</td>
+    </tr>
+    <tr>
+      <td><strong>Inorder</strong></td>
+      <td>O(n)</td>
+      <td>O(h)</td>
+      <td>BST sorted output, expression trees</td>
+    </tr>
+    <tr>
+      <td><strong>Postorder</strong></td>
+      <td>O(n)</td>
+      <td>O(h)</td>
+      <td>Tree deletion, postfix expressions</td>
+    </tr>
+    <tr>
+      <td><strong>Level Order</strong></td>
+      <td>O(n)</td>
+      <td>O(w)</td>
+      <td>Level-wise processing, BFS</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Where:</strong></p>
+<ul>
+  <li><strong>n</strong> = number of nodes</li>
+  <li><strong>h</strong> = height of the tree (O(log n) for balanced, O(n) for skewed)</li>
+  <li><strong>w</strong> = maximum width of the tree</li>
+</ul>
+
+<h3 id="-performance-considerations">⚡ Performance Considerations</h3>
+
+<h4 id="-recursive-vs-iterative">🔄 <strong>Recursive vs Iterative:</strong></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Approach</strong></th>
+      <th><strong>Pros</strong></th>
+      <th><strong>Cons</strong></th>
+      <th><strong>Best For</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Recursive</strong></td>
+      <td>✅ Intuitive, clean code</td>
+      <td>❌ Stack overflow risk</td>
+      <td>Small to medium trees</td>
+    </tr>
+    <tr>
+      <td><strong>Iterative</strong></td>
+      <td>✅ No stack overflow</td>
+      <td>❌ More complex code</td>
+      <td>Large, deep trees</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--- Reviewed up to --->
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Binary tree traversal algorithms are <strong>fundamental building blocks</strong> in computer science, providing systematic ways to process tree structures efficiently. Each traversal method has unique characteristics that make it optimal for specific scenarios:</p>
+
+<h3 id="-key-takeaways">🎯 <strong>Key Takeaways:</strong></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Algorithm</strong></th>
+      <th><strong>Strength</strong></th>
+      <th><strong>Best Application</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>🟦 Preorder</strong></td>
+      <td>Root-first processing</td>
+      <td>Tree copying, directory listing</td>
+    </tr>
+    <tr>
+      <td><strong>🟩 Inorder</strong></td>
+      <td>Natural BST sorting</td>
+      <td>Sorted data retrieval, expression parsing</td>
+    </tr>
+    <tr>
+      <td><strong>🟨 Postorder</strong></td>
+      <td>Children-first processing</td>
+      <td>Tree deletion, size calculation</td>
+    </tr>
+    <tr>
+      <td><strong>🟪 Level Order</strong></td>
+      <td>Level-wise exploration</td>
+      <td>BFS, shortest path, tree printing</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="-why-these-algorithms-matter">💡 <strong>Why These Algorithms Matter:</strong></h3>
+
+<ol>
+  <li><strong>Foundation Knowledge</strong>: Essential for advanced data structures</li>
+  <li><strong>Problem Solving</strong>: Core technique for tree-based problems</li>
+  <li><strong>Performance</strong>: Choose right algorithm for optimal efficiency</li>
+  <li><strong>Practical Applications</strong>: Used in databases, compilers, file systems</li>
+  <li><strong>Algorithmic Thinking</strong>: Develops recursive and iterative thinking skills</li>
+</ol>
+
+<h3 id="-next-steps-for-learning">🚀 <strong>Next Steps for Learning:</strong></h3>
+
+<ul>
+  <li><strong>🌳 Advanced Trees</strong>: AVL trees, Red-Black trees, B-trees</li>
+  <li><strong>📊 Graph Algorithms</strong>: DFS and BFS on graphs</li>
+  <li><strong>🔄 Dynamic Programming</strong>: Tree-based DP problems</li>
+  <li><strong>🎮 Real Projects</strong>: Implement file explorers, expression evaluators</li>
+  <li><strong>📈 Optimization</strong>: Study cache-efficient traversal techniques</li>
+</ul>
+
+<h3 id="-academic-and-professional-value">🎓 <strong>Academic and Professional Value:</strong></h3>
+
+<p>Understanding these algorithms is crucial for:</p>
+<ul>
+  <li><strong>📚 Computer Science Education</strong>: Fundamental CS concepts</li>
+  <li><strong>💼 Technical Interviews</strong>: Common algorithm questions</li>
+  <li><strong>🏢 Software Development</strong>: Building tree-based applications</li>
+  <li><strong>🔬 Research</strong>: Foundation for advanced algorithmic research</li>
+</ul>
+
+<p>The mastery of tree traversal algorithms represents a significant milestone in your journey through data structures and algorithms. These techniques will serve as building blocks for more complex algorithms and real-world applications throughout your career in computer science.</p>
+
+<p><strong>Remember</strong>: The choice of traversal algorithm should always be based on your specific requirements - there’s no “one size fits all” solution, but there’s always an optimal choice for each scenario! 🎯</p>
+
+<hr />
+
+<p><a href="https://github.com/mahedee/code-sample02/tree/master/binary-tree-traversal-app">⬇️ <strong>Source code</strong></a></p>
+
+<p><strong>Connect with me</strong>:</p>
+<ul>
+  <li>💼 <a href="https://www.linkedin.com/in/mahedee/">LinkedIn</a></li>
+  <li>🐙 <a href="https://github.com/mahedee">GitHub</a></li>
+  <li>
+    <h2 id="-blog">📝 <a href="https://mahedee.net/">Blog</a></h2>
+  </li>
+</ul>
+
+<p>🌟 <em>Found this helpful? Please share it with others who might benefit from understanding binary tree traversal algorithms.</em> 🌟</p>]]></content><author><name>Mahedee Hasan</name></author><category term="Data Structures" /><category term="Algorithms" /><category term="Computer Science" /><category term="Java" /><category term="binary-trees" /><category term="tree-traversal" /><category term="depth-first-search" /><category term="breadth-first-search" /><category term="dfs" /><category term="bfs" /><category term="preorder" /><category term="inorder" /><category term="postorder" /><category term="level-order" /><category term="recursion" /><category term="java" /><category term="algorithms" /><category term="data-structures" /><category term="computer-science" /><category term="programming-tutorial" /><summary type="html"><![CDATA[Binary tree traversal algorithms are fundamental techniques that allow systematic visiting of every node in a tree. This comprehensive guide covers all four major traversal methods with complete implementations, real-world applications, and performance analysis.]]></summary></entry><entry><title type="html">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#</title><link href="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="alternate" type="text/html" title="Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#" /><published>2025-03-05T00:00:00-05:00</published><updated>2025-03-05T00:00:00-05:00</updated><id>https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp</id><content type="html" xml:base="https://mahedee.net//simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/"><![CDATA[<p>Managing the complexity of modern software systems can be a daunting task, especially when interacting with multiple interconnected subsystems. One practical approach to handle this challenge is the Facade Design Pattern, which provides a simplified interface to access complex subsystems. In this article, we’ll explore how the Facade Design Pattern can streamline the processing of orders in an e-commerce platform, using C# for implementation.</p>
 
 <p><strong>What is the Facade Design Pattern?</strong>
 The Facade Design Pattern is a structural pattern that simplifies the interaction between a client and multiple subsystems by providing a unified interface. It hides the complexities of the subsystems and offers a cleaner, more maintainable way for the client to access their functionality.</p>
@@ -3137,347 +4430,4 @@ kubectl delete <span class="nt">-f</span> service_aks.yml
   </li>
 </ul>
 
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/aks-hrm">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET Core" /><category term="Kubernetes" /><category term="SQL Server" /><category term="Docker" /><category term="Azure" /><category term="DevOps" /><category term="Microservices" /><category term="aspnetcore" /><category term="kubernetes" /><category term="sqlserver" /><category term="docker" /><category term="azure" /><category term="devops" /><category term="microservices" /><summary type="html"><![CDATA[Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.]]></summary></entry><entry><title type="html">Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications</title><link href="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/" rel="alternate" type="text/html" title="Using Azure Functions Timer Trigger for Seamless Cache Auto-Refresh in Real-World Applications" /><published>2024-06-10T00:00:00-04:00</published><updated>2024-06-10T00:00:00-04:00</updated><id>https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications</id><content type="html" xml:base="https://mahedee.net//using_azure_functions_timer_trigger_for_seamless_cache_auto_refresh_in_real_world_applications/"><![CDATA[<p><strong>What is Azure Functions?</strong>
-Azure Functions is a serverless compute service that allows you to run event-driven code without provisioning or managing servers. You can use Azure Functions to run code in response to events such as HTTP requests, timer triggers, blob storage, queue messages, and more. Azure Functions is a great way to build serverless applications that scale automatically and only pay for the resources you use. Azure Functions supports multiple programming languages including C#, JavaScript, Python, and PowerShell. It is called serverless because you don’t have to worry about the underlying infrastructure. Azure Functions takes care of scaling, monitoring, and managing the infrastructure for you. You can focus on writing code and building applications without worrying about the infrastructure.</p>
-
-<p><strong>Different Types of Functions</strong></p>
-
-<ul>
-  <li>Timer Trigger: It is a function that runs on a schedule. You can specify the schedule using a cron expression. The function will run at the specified time.</li>
-  <li>HTTP Trigger: It is a function that runs when an HTTP request is received. You can specify the HTTP method (GET, POST, PUT, DELETE) and the route. The function will run when an HTTP request is received at the specified route.</li>
-  <li>Blob Trigger: It is a function that runs when a blob is added or updated in a storage account. You can specify the storage account and the container. The function will run when a blob is added or updated in the specified container.</li>
-  <li>Queue Trigger: It is a function that runs when a message is added to a queue in a storage account. You can specify the storage account and the queue. The function will run when a message is added to the specified queue.</li>
-  <li>Event Grid Trigger: It is a function that runs when an event is published to an event grid topic. You can specify the event grid topic. The function will run when an event is published to the specified topic.</li>
-  <li>Event Hub Trigger: It is a function that runs when an event is received from an event hub. You can specify the event hub. The function will run when an event is received from the specified event hub.</li>
-  <li>RabbitMQ Trigger: It is a function that runs when a message is received from a RabbitMQ queue. You can specify the RabbitMQ queue. The function will run when a message is received from the specified queue.</li>
-  <li>Service Bus Queue Trigger: It is a function that runs when a message is added to a queue in a service bus namespace. You can specify the service bus namespace and the queue. The function will run when a message is added to the specified queue.</li>
-  <li>Service Bus Topic Trigger: It is a function that runs when a message is added to a topic in a service bus namespace. You can specify the service bus namespace and the topic. The function will run when a message is added to the specified topic.</li>
-  <li>Durable Functions: It is a function that runs a workflow. You can specify the workflow using code or an orchestration. The function will run the workflow.</li>
-  <li>Cosmos DB Trigger: It is a function that runs when a document is added or updated in a Cosmos DB database. You can specify the Cosmos DB database and the collection. The function will run when a document is added or updated in the specified collection.</li>
-  <li>SignalR Service Trigger: It is a function that runs when a message is received from a SignalR service. You can specify the SignalR service. The function will run when a message is received from the specified service.</li>
-</ul>
-
-<p><strong>Some real-world examples of Azure Functions are:</strong></p>
-<ul>
-  <li>A function that runs on a schedule to update exchange rates in a cache</li>
-  <li>A function that sends an email when a new record is added to a database</li>
-  <li>A function that runs when a message is added to a queue</li>
-  <li>A function that runs when an event is published to an event grid topic</li>
-  <li>A function that runs when a document is added or updated in a Cosmos DB database</li>
-  <li>A function that runs when a message is received from a RabbitMQ queue</li>
-  <li>A function that processes images uploaded to a blob storage account</li>
-</ul>
-
-<p><strong>What is Redis?</strong>
-Redis is an in-memory data store that can be used as a database, message broker, or cache in your applications. Redis is a key-value store that stores data in memory for fast access. Redis is a popular choice for caching because it is fast, scalable, and reliable. Redis supports multiple data structures including strings, lists, sets, sorted sets, and hashes.</p>
-
-<p><strong>Some real-world examples of Redis are:</strong></p>
-<ul>
-  <li>A cache for storing frequently accessed data i.e. user sessions, product catalog, etc.</li>
-  <li>A database for storing data that needs to be accessed quickly i.e. user profiles, product details, etc.</li>
-  <li>A leader board for storing scores and rankings i.e. game scores, user rankings, etc.</li>
-</ul>
-
-<p><strong>Implementation</strong></p>
-
-<p><strong>Step 1: Create a azure timer function</strong></p>
-<ul>
-  <li>Open Visual Studio</li>
-  <li>Select File -&gt; New -&gt; Project</li>
-  <li>Select “Azure Functions” template</li>
-  <li>Enter the project name, i.e, “CacheRefreshAzureFunction”, specify the Location and Solution name, i.e, “CacheRefreshFunction”, and click Next</li>
-  <li>Select Functions worker as .NET Framework Isolated v4. I will discuss the different Functions later.</li>
-  <li>Select Function as Timer Trigger</li>
-  <li>Uncheck the “Use Azureite for runtime storage account” and “Enable container support” checkbox. I will discuss about these later.</li>
-  <li>Keep the default Schedule value as “0 */5 * * * *” which means the function will run every 5 minutes. You can change the value later.</li>
-  <li>Click Create</li>
-</ul>
-
-<p><strong>Note: Different Types of Functions workers</strong></p>
-<ul>
-  <li>.NET Framework Isolated v4: This is the default option. It is a .NET 5 based worker. It is a new worker and it is recommended to use this worker for new projects. The isolated worker is a new worker that runs in a separate process from the runtime. This means that the worker can run on a different version of .NET than the runtime. This allows you to use the latest version of .NET with your functions.</li>
-  <li>.NET Framework v1: This is the old worker. It is based on .NET Core 3.1. It is recommended to use this worker for old projects.</li>
-</ul>
-
-<p><strong>Step 2: Run Redis in Docker</strong>
-Let’s run Redis in a Docker container to run azure function locally. Assume you have Docker installed on your machine.</p>
-
-<ul>
-  <li>Run docker desktop on your machine</li>
-  <li>Open a powershell terminal</li>
-  <li>Run the following command to run the Redis container</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 6379:6379 --name redis-cache redis
-</code></pre></div></div>
-
-<ul>
-  <li>Run the following command to check if the Redis container is</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
-</code></pre></div></div>
-<ul>
-  <li>Run the following command to connect to the Redis container</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec -it redis-cache redis-cli 
-</code></pre></div></div>
-<ul>
-  <li>Run the following command to set a key-value pair in Redis</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set key value
-example: set name "John Doe"
-</code></pre></div></div>
-
-<ul>
-  <li>Run the following command to get the value of a key in Redis</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get key
-
-example: get name
-</code></pre></div></div>
-<ul>
-  <li>Run the following command to exit the Redis CLI</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exit
-</code></pre></div></div>
-
-<p><strong>Step 3: Set redis connection string in windows environment variable</strong>
-Let’s set the Redis connection string in the Windows environment variable to use it in the Azure Function App. I will use environment variable to get the Redis connection string in the Azure Function App.</p>
-
-<ul>
-  <li>Open the PowerShell</li>
-  <li>Run the following command to set the Redis connection string in the Windows environment variable</li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">setx</span> <span class="nf">RedisConnectionString</span> <span class="nf">"localhost:6379"</span> 
-</code></pre></div></div>
-<ul>
-  <li>
-    <p>setx command is used to set the value of an environment variable. Since, Redis is running on localhost and the default port is 6379, I have set the value as “localhost:6379”.</p>
-  </li>
-  <li>
-    <p>Run the following command in Powershell Terminal to get the Redis connection string from the Windows environment variable</p>
-  </li>
-</ul>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">echo</span> <span class="nf">$env:RedisConnectionString</span>
-</code></pre></div></div>
-<ul>
-  <li>Or, run the following command in command prompt to get the Redis connection string from the Windows environment variable</li>
-</ul>
-
-<pre><code class="language-cmd">echo %RedisConnectionString%
-</code></pre>
-
-<p><strong>Step 4: Install Nuget Packages in CacheRefreshAzureFunction Project</strong>
-Install the following Nuget packages in the CacheRefreshAzureFunction project</p>
-
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Install-Package</span> <span class="nf">StackExchange.Redis</span>
-<span class="nf">Install-Package</span> <span class="nf">Newtonsoft.Json</span>
-</code></pre></div></div>
-
-<p><strong>Step 5: Modify the Azure Function App in Local Machine</strong></p>
-<ul>
-  <li>Click on the Solution file -&gt; CacheRefreshFunction.sln to open the solution in Visual Studio</li>
-  <li>Rename the Function1.cs file to CacheRefreshTimerTriggerFunction.cs</li>
-  <li>Open the CacheRefreshTimerTriggerFunction.cs file</li>
-  <li>Modify the CacheRefreshTimerTriggerFunction class as follows</li>
-</ul>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Microsoft.Azure.Functions.Worker</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Microsoft.Extensions.Logging</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">Newtonsoft.Json.Linq</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">StackExchange.Redis</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Net.Http</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
-
-<span class="k">namespace</span> <span class="nn">CacheRefreshAzureFunction</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">CacheRefreshTimerTriggerFunction</span>
-    <span class="p">{</span>
-        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ILogger</span> <span class="n">_logger</span><span class="p">;</span>
-        <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="p">();</span>
-
-        <span class="k">public</span> <span class="nf">CacheRefreshTimerTriggerFunction</span><span class="p">(</span><span class="n">ILoggerFactory</span> <span class="n">loggerFactory</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_logger</span> <span class="p">=</span> <span class="n">loggerFactory</span><span class="p">.</span><span class="n">CreateLogger</span><span class="p">&lt;</span><span class="n">CacheRefreshTimerTriggerFunction</span><span class="p">&gt;();</span>
-        <span class="p">}</span>
-
-        <span class="p">[</span><span class="nf">Function</span><span class="p">(</span><span class="s">"CacheRefreshTimerTriggerFunction"</span><span class="p">)]</span>
-        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">RunAsync</span><span class="p">([</span><span class="nf">TimerTrigger</span><span class="p">(</span><span class="s">"*/5 * * * * *"</span><span class="p">)]</span> <span class="n">ScheduleTimerInfo</span> <span class="n">timerInfo</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"Cache refresh function executed at: </span><span class="p">{</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
-
-            <span class="k">try</span>
-            <span class="p">{</span>
-                <span class="c1">// Fetch fresh data from API (e.g., Exchange Rates API)</span>
-                <span class="kt">string</span> <span class="n">apiUrl</span> <span class="p">=</span> <span class="s">"https://api.exchangerate-api.com/v4/latest/USD"</span><span class="p">;</span>
-                <span class="kt">string</span> <span class="n">responseData</span> <span class="p">=</span> <span class="k">await</span> <span class="n">httpClient</span><span class="p">.</span><span class="nf">GetStringAsync</span><span class="p">(</span><span class="n">apiUrl</span><span class="p">);</span>
-
-                <span class="c1">// Connect to Redis Cache</span>
-                <span class="c1">// ConnectionMultiplexer object is used to connect to the Redis server</span>
-                <span class="c1">// IDatabase object is used to interact with the Redis database</span>
-                <span class="kt">string</span> <span class="n">cacheConnectionString</span> <span class="p">=</span> <span class="n">Environment</span><span class="p">.</span><span class="nf">GetEnvironmentVariable</span><span class="p">(</span><span class="s">"RedisConnectionString"</span><span class="p">)?.</span><span class="nf">Trim</span><span class="p">();</span>
-  
-
-                <span class="n">ConnectionMultiplexer</span> <span class="n">redis</span> <span class="p">=</span> <span class="n">ConnectionMultiplexer</span><span class="p">.</span><span class="nf">Connect</span><span class="p">(</span><span class="n">cacheConnectionString</span><span class="p">);</span>
-                <span class="n">IDatabase</span> <span class="n">cache</span> <span class="p">=</span> <span class="n">redis</span><span class="p">.</span><span class="nf">GetDatabase</span><span class="p">();</span>
-
-                <span class="c1">// Store data in Redis Cache (Cache expiration: 5 minutes)</span>
-                <span class="c1">// Cache expiration means that the stored data will be automatically removed from the cache after 5 minutes.</span>
-                <span class="c1">// This helps ensure that the cache does not hold stale data and is refreshed periodically.</span>
-                <span class="n">cache</span><span class="p">.</span><span class="nf">StringSet</span><span class="p">(</span><span class="s">"ExchangeRates"</span><span class="p">,</span> <span class="n">responseData</span><span class="p">,</span> <span class="n">TimeSpan</span><span class="p">.</span><span class="nf">FromMinutes</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
-
-                <span class="c1">// Retrieve data from cache</span>
-                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">"Exchange rates updated successfully in Redis Cache."</span><span class="p">);</span>
-
-                <span class="c1">// Retrieve data from cache</span>
-                <span class="kt">string</span> <span class="n">cachedData</span> <span class="p">=</span> <span class="n">cache</span><span class="p">.</span><span class="nf">StringGet</span><span class="p">(</span><span class="s">"ExchangeRates"</span><span class="p">);</span>
-
-
-                <span class="c1">// Show the cached data in the log</span>
-
-                <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">cachedData</span><span class="p">))</span>
-                <span class="p">{</span>
-                    <span class="c1">// Parse the JSON response</span>
-                    <span class="kt">var</span> <span class="n">exchangeRates</span> <span class="p">=</span> <span class="n">JObject</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">cachedData</span><span class="p">);</span>
-
-                    <span class="c1">// Extract specific rates</span>
-                    <span class="kt">var</span> <span class="n">usdToBdt</span> <span class="p">=</span> <span class="n">exchangeRates</span><span class="p">[</span><span class="s">"rates"</span><span class="p">][</span><span class="s">"BDT"</span><span class="p">].</span><span class="n">Value</span><span class="p">&lt;</span><span class="kt">decimal</span><span class="p">&gt;();</span>
-                    <span class="kt">var</span> <span class="n">usdToCad</span> <span class="p">=</span> <span class="n">exchangeRates</span><span class="p">[</span><span class="s">"rates"</span><span class="p">][</span><span class="s">"CAD"</span><span class="p">].</span><span class="n">Value</span><span class="p">&lt;</span><span class="kt">decimal</span><span class="p">&gt;();</span>
-
-                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">"Current exchange rate:"</span><span class="p">);</span>
-                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"USD to BDT: </span><span class="p">{</span><span class="n">usdToBdt</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
-                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">$"USD to CAD: </span><span class="p">{</span><span class="n">usdToCad</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
-                <span class="p">}</span>
-                <span class="k">else</span>
-                <span class="p">{</span>
-                    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="s">"Cache is empty! Data retrieval failed."</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogError</span><span class="p">(</span><span class="s">$"Error updating and retrieving cache: </span><span class="p">{</span><span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">timerInfo</span><span class="p">.</span><span class="n">IsPastDue</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="s">"The function is running later than scheduled."</span><span class="p">);</span>
-            <span class="p">}</span>
-
-            <span class="n">timerInfo</span><span class="p">.</span><span class="n">Last</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-            <span class="n">timerInfo</span><span class="p">.</span><span class="n">Next</span> <span class="p">=</span> <span class="n">timerInfo</span><span class="p">.</span><span class="n">Last</span><span class="p">.</span><span class="nf">AddSeconds</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="k">public</span> <span class="k">class</span> <span class="nc">ScheduleTimerInfo</span>
-    <span class="p">{</span>
-        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Last</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
-        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Next</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">AddSeconds</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
-
-        <span class="c1">// This property is used to determine if the timer is past due</span>
-        <span class="c1">// It defines a method that returns true if the current time is greater than the Next property</span>
-        <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsPastDue</span> <span class="p">=&gt;</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span> <span class="p">&gt;</span> <span class="n">Next</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>Here, I have created a CacheRefreshTimerTriggerFunction class that contains a RunAsync method. The RunAsync method is decorated with the Function attribute and takes a ScheduleTimerInfo parameter. The RunAsync method is responsible for refreshing the cache at regular intervals. The method fetches fresh data from an API (e.g., Exchange Rates API), stores the data in a Redis cache, and retrieves the data from the cache. The method logs the exchange rates in the console.</p>
-  </li>
-  <li>
-    <p>[TimerTrigger(“*/5 * * * * *”)] attribute is used to specify the schedule of the function. In this case, the function will run every 5 seconds. */5 * * * * * is a cron expression.</p>
-  </li>
-  <li>
-    <p>You can use https://crontab.cronhub.io/ to generate the cron expression.</p>
-  </li>
-  <li>
-    <p>To know more about cron expression, read my article on <a href="https://mahedee.net/understanding_cron_expression_a_complete_guide/">Cron Expression</a></p>
-  </li>
-  <li>
-    <p>Now run the project and you will see the logs in the console as follows</p>
-  </li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2025-02-23T01:42:52.477Z] Exchange rates updated successfully in Redis Cache.
-[2025-02-23T01:42:52.503Z] Current exchange rate:
-[2025-02-23T01:42:52.503Z] USD to CAD: 1.42
-[2025-02-23T01:42:52.503Z] USD to BDT: 121.53
-</code></pre></div></div>
-
-<p><strong>Step 6: Create Redis Cache in Azure</strong></p>
-<ul>
-  <li>Log in to the Azure Portal (https://portal.azure.com/)</li>
-  <li>Click on Create a resource group and enter the resource group name, i.e., “myresourcegroup”, Location i.e., “West US” and click on Review + Create</li>
-  <li>Search “Azure Cache for Redis” and click on Create</li>
-  <li>Select Azure Cache for Redis</li>
-  <li>Select the Subscription, Resource Group i.e. myresourcegroup, DNS name i.e. exrateredis, Location i.e. West US, Cache type i.e. Standard, Pricing tier i.e. Basic C0 and click on Review + Create</li>
-  <li>Click on Create</li>
-  <li>Wait for the deployment to complete. It may take a few minutes.</li>
-</ul>
-
-<p><strong>Step 7: Deploy the Azure Function App to Azure</strong></p>
-<ul>
-  <li>Right-click on the project in Visual Studio and select Publish</li>
-  <li>In the next screen, select Target as Azure and click on Next</li>
-  <li>Select Your Azure Subscription and click on Create New</li>
-  <li>Type the App Name, Subscription, Resource Group, Hosting Plan and click on Create as shown below</li>
-  <li>Here, I have created an Application Insights which is used to monitor the Azure Function App. I will use it later to see the logs as output.</li>
-  <li>Select Function Name and click on Next</li>
-  <li>Select Publish and click on Finish</li>
-  <li>Click on Publish button to deploy the Azure Function App to Azure</li>
-  <li>Wait for the deployment to complete</li>
-  <li>Click on the Browse button to open the Azure Function App in the browser</li>
-</ul>
-
-<p><img src="/assets/images/posts/2024/az-func-deployment.png" alt="" /></p>
-
-<p><strong>Step 8: Add Redis Connection String in Environment Variable in Azure Function App</strong></p>
-<ul>
-  <li>Click on “Azure Cache for Redis” in the Azure Portal</li>
-  <li>Click on recent cache name i.e. exrateredis</li>
-  <li>Click Settings -&gt; Authentication</li>
-  <li>Click on Access keys tab</li>
-  <li>Uncheck “Disable Access Keys Authentication” checkbox and click on Save</li>
-  <li>Copy the Primary connection string which is used to connect to the Redis Cache</li>
-  <li>Click on the Azure Function App i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
-  <li>Click on Settings -&gt; Environment variables</li>
-  <li>Select App Settings and click on Add button</li>
-  <li>Enter the Name as “RedisConnectionString” and Value as the copied Primary connection string and click on Apply as shown below</li>
-</ul>
-
-<p><img src="/assets/images/posts/2024/az-env-variable.png" alt="" /></p>
-
-<p><strong>Step 9: Set Firewall Rule in Azure Cache for Redis</strong></p>
-<ul>
-  <li>Click on your deployed Azure Function i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
-  <li>Click on Properties tab of overview section, you will find the Outbound IP Addresses</li>
-  <li>Now, sort the Outbound IP Addresses and copy the first IP Address and last IP Address</li>
-  <li>Click on Redis Cache i.e. exrateredis in the Azure Portal</li>
-  <li>Click on Settings -&gt; Firewall</li>
-  <li>Click on Add button</li>
-  <li>Enter the Name as “AzureFunctionApp” and Start IP as the copied first IP Address and End IP as the copied last IP Address.</li>
-  <li>Save the changes to apply the firewall rule.</li>
-  <li>Click on Settings -&gt; Private Endpoint and click on Enable Public Network Access and click on Save as below</li>
-</ul>
-
-<p><img src="/assets/images/posts/2024/az-func-enable-public-net.png" alt="" /></p>
-
-<p><strong>Step 10: Test the Azure Function App in Azure</strong></p>
-<ul>
-  <li>Click on the Azure Function App i.e. “CacheRefreshAzureFunction198412” in the Azure Portal</li>
-  <li>Click on Functions -&gt; CacheRefreshTimerTriggerFunction</li>
-  <li>Click on Logs to see the logs</li>
-  <li>You will see the logs as follows. You are actually seeing the logs in Application Insights.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2024/az-func-output.png" alt="" /></p>
-
-<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/CacheRefreshFunction">Souce Code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="C#" /><category term="Cache Management" /><category term="Azure Functions" /><category term="Azure" /><category term="Redis" /><category term="csharp" /><category term="cache-management" /><category term="azure-functions" /><category term="azure" /><category term="redis" /><summary type="html"><![CDATA[In this article, I’ll walk you through the process of creating and deploying an Azure Timer Trigger Function that automatically refreshes data in a Redis Cache. You’ll learn how to set up a function that updates exchange rates at regular intervals, ensuring your application always has the most up-to-date information. This real-world example will guide you step-by-step through both the development and deployment phases using C# and Azure]]></summary></entry></feed>
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/aks-hrm">Source code</a></strong></p>]]></content><author><name>Mahedee Hasan</name></author><category term="ASP.NET Core" /><category term="Kubernetes" /><category term="SQL Server" /><category term="Docker" /><category term="Azure" /><category term="DevOps" /><category term="Microservices" /><category term="aspnetcore" /><category term="kubernetes" /><category term="sqlserver" /><category term="docker" /><category term="azure" /><category term="devops" /><category term="microservices" /><summary type="html"><![CDATA[Securing RabbitMQ with SSL/TLS and enabling HTTPS access for the Management UI is essential to protect data and ensure a secure environment. This guide walks you through the steps to set up RabbitMQ with SSL/TLS on Docker Desktop and enable HTTPS for the Management UI. Follow along to configure RabbitMQ to handle encrypted AMQP connections as well as a secure Management interface.]]></summary></entry></feed>

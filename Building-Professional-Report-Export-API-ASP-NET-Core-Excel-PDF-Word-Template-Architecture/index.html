@@ -1,0 +1,1958 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture - Think Simple</title>
+<meta name="description" content="In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture">
+<meta property="og:url" content="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/">
+
+
+  <meta property="og:description" content="In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-05-08T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features." />
+<meta property="og:description" content="In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features." />
+<link rel="canonical" href="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" />
+<meta property="og:url" content="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-05-08T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-05-08T00:00:00-04:00","datePublished":"2025-05-08T00:00:00-04:00","description":"In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features.","headline":"Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/"},"url":"https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture">
+    <meta itemprop="description" content="In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features.">
+    <meta itemprop="datePublished" content="May 08, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  17 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Introduction</strong></p>
+
+<p>In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making. Whether it’s generating employee reports, financial statements, or operational dashboards, having a robust and scalable report generation system is crucial for any business application.</p>
+
+<p>A Report Export API serves as a centralized solution that can transform your application data into professionally formatted documents across multiple formats. This approach not only ensures consistency in branding and styling but also provides flexibility for different use cases and user preferences.</p>
+
+<p>This comprehensive guide demonstrates how to build a robust Report Export API in ASP.NET Core using a template-based architecture that supports Excel, PDF, and Word formats with professional branding and enterprise-ready features.</p>
+
+<p><strong>Why Report Export APIs are Important</strong></p>
+
+<p>Report export functionality is critical in enterprise applications for several reasons:</p>
+
+<ul>
+  <li><strong>Business Intelligence</strong>: Enables stakeholders to analyze data offline and create presentations</li>
+  <li><strong>Compliance &amp; Auditing</strong>: Provides documentation trails required by regulatory frameworks</li>
+  <li><strong>Data Sharing</strong>: Facilitates sharing of structured data across different teams and departments</li>
+  <li><strong>Professional Presentation</strong>: Creates polished, branded reports for client-facing communications</li>
+  <li><strong>Backup &amp; Archival</strong>: Provides data snapshots for historical reference and backup purposes</li>
+  <li><strong>Integration</strong>: Enables data exchange with external systems and third-party applications</li>
+  <li><strong>User Experience</strong>: Gives users flexibility to consume data in their preferred format</li>
+</ul>
+
+<p><strong>What You’ll Learn</strong></p>
+
+<p>In this tutorial, you will learn how to:</p>
+
+<ul>
+  <li>Design a scalable template-based architecture for report generation</li>
+  <li>Implement professional Excel reports with EPPlus</li>
+  <li>Create PDF documents with iTextSharp</li>
+  <li>Generate Word documents with OpenXML</li>
+  <li>Add company branding and professional styling</li>
+  <li>Implement dependency injection for better testability</li>
+  <li>Create reusable templates for different data types</li>
+  <li>Build RESTful API endpoints for report downloads</li>
+  <li>Handle multiple export formats efficiently</li>
+</ul>
+
+<p><strong>Tools and Technology Used</strong></p>
+
+<ul>
+  <li><strong>ASP.NET Core 8.0</strong>: Core framework for building the Web API</li>
+  <li><strong>Entity Framework Core</strong>: Data access and in-memory database for demo</li>
+  <li><strong>EPPlus 7.5.1</strong>: Excel file generation and manipulation</li>
+  <li><strong>iTextSharp.LGPLv2.Core 3.4.22</strong>: PDF document generation</li>
+  <li><strong>DocumentFormat.OpenXml 3.2.0</strong>: Word document generation</li>
+  <li><strong>Swagger/OpenAPI</strong>: API documentation and testing</li>
+  <li><strong>Visual Studio 2022</strong> or <strong>Visual Studio Code</strong>: Development environment</li>
+  <li><strong>C# 12</strong>: Programming language</li>
+  <li><strong>SQL Server</strong> (optional): Production database</li>
+</ul>
+
+<p><strong>Architecture Overview</strong></p>
+
+<p>Our Report Export API follows a clean, template-based architecture that separates concerns and ensures maintainability:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ExportReportAPI/
+├── Controllers/
+│   └── EmployeesController.cs          # API endpoints
+├── Data/
+│   ├── ApplicationDbContext.cs         # Database context
+│   └── DatabaseSeeder.cs              # Sample data
+├── Generator/
+│   ├── Interfaces/
+│   │   ├── IReportTemplate.cs          # Base template interface
+│   │   ├── IExcelTemplate.cs           # Excel template interface
+│   │   ├── IPDFTemplate.cs             # PDF template interface
+│   │   └── IWordTemplate.cs            # Word template interface
+│   └── Templates/
+│       ├── ExcelTemplate.cs            # Excel implementation
+│       ├── PDFTemplate.cs              # PDF implementation
+│       └── WordTemplate.cs             # Word implementation
+├── Models/
+│   ├── Employee.cs                     # Data model
+│   └── ExportResult.cs                 # Export result wrapper
+├── Services/
+│   ├── IExportService.cs              # Export service interface
+│   └── ExportService.cs               # Export service implementation
+├── images/
+│   └── mahedeedotnet_log.png          # Company logo
+└── Program.cs                         # Application configuration
+</code></pre></div></div>
+
+<p><strong>Key Features</strong></p>
+
+<ul>
+  <li><strong>Template-Based Architecture</strong>: Reusable templates for different formats</li>
+  <li><strong>Professional Branding</strong>: Company logo, headers, and consistent styling</li>
+  <li><strong>Dependency Injection</strong>: Loosely coupled, testable components</li>
+  <li><strong>Multiple Export Formats</strong>: Excel, PDF, and Word support</li>
+  <li><strong>RESTful API Design</strong>: Clean, intuitive endpoints</li>
+  <li><strong>Enterprise-Ready</strong>: Professional formatting and error handling</li>
+</ul>
+
+<hr />
+
+<h2 id="step-1-create-aspnet-core-web-api-project">Step 1: Create ASP.NET Core Web API Project</h2>
+
+<p>First, create a new ASP.NET Core Web API project:</p>
+
+<p><strong>Option 1: Using Visual Studio</strong></p>
+<ol>
+  <li>Open Visual Studio 2022</li>
+  <li>Click “Create a new project”</li>
+  <li>Select “ASP.NET Core Web API”</li>
+  <li>Name your project “ExportReportAPI”</li>
+  <li>Choose “.NET 8.0” as the target framework</li>
+  <li>Enable “Use controllers” and “Enable OpenAPI support”</li>
+</ol>
+
+<p><strong>Option 2: Using .NET CLI</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet new webapi <span class="nt">-n</span> ExportReportAPI
+<span class="nb">cd </span>ExportReportAPI
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-2-install-required-nuget-packages">Step 2: Install Required NuGet Packages</h2>
+
+<p>Install the necessary NuGet packages for report generation:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"DocumentFormat.OpenXml"</span> <span class="na">Version=</span><span class="s">"3.2.0"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"EPPlus"</span> <span class="na">Version=</span><span class="s">"7.5.1"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"iTextSharp.LGPLv2.Core"</span> <span class="na">Version=</span><span class="s">"3.4.22"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore.InMemory"</span> <span class="na">Version=</span><span class="s">"8.0.11"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Swashbuckle.AspNetCore"</span> <span class="na">Version=</span><span class="s">"6.6.2"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Using Package Manager Console:</strong></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Install-Package</span><span class="w"> </span><span class="nx">EPPlus</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="nx">7.5.1</span><span class="w">
+</span><span class="n">Install-Package</span><span class="w"> </span><span class="nx">iTextSharp.LGPLv2.Core</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="nx">3.4.22</span><span class="w">
+</span><span class="n">Install-Package</span><span class="w"> </span><span class="nx">DocumentFormat.OpenXml</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="nx">3.2.0</span><span class="w">
+</span><span class="n">Install-Package</span><span class="w"> </span><span class="nx">Microsoft.EntityFrameworkCore.InMemory</span><span class="w"> </span><span class="nt">-Version</span><span class="w"> </span><span class="nx">8.0.11</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Using .NET CLI:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet add package EPPlus <span class="nt">--version</span> 7.5.1
+dotnet add package iTextSharp.LGPLv2.Core <span class="nt">--version</span> 3.4.22
+dotnet add package DocumentFormat.OpenXml <span class="nt">--version</span> 3.2.0
+dotnet add package Microsoft.EntityFrameworkCore.InMemory <span class="nt">--version</span> 8.0.11
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-3-create-data-models">Step 3: Create Data Models</h2>
+
+<p>Create the core data models for our application.</p>
+
+<p><strong>Models/Employee.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ExportReportAPI.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Employee</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FullName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Designation</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Department</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Phone</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Salary</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">JoinDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Models/ExportResult.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ExportReportAPI.Models</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Represents the result of an export operation</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ExportResult</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">Data</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">&gt;();</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">ContentType</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">FileName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-4-setup-database-context-and-seeding">Step 4: Setup Database Context and Seeding</h2>
+
+<p><strong>Data/ApplicationDbContext.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">Employees</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">ModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">modelBuilder</span><span class="p">);</span>
+
+            <span class="c1">// Configure Employee entity</span>
+            <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;(</span><span class="n">entity</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">HasKey</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">FullName</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Designation</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">50</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Department</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">50</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Email</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Phone</span><span class="p">).</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">20</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Salary</span><span class="p">).</span><span class="nf">HasPrecision</span><span class="p">(</span><span class="m">18</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Data/DatabaseSeeder.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">DatabaseSeeder</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">SeedDatabase</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span> <span class="c1">// Database already seeded</span>
+            <span class="p">}</span>
+
+            <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+            <span class="p">{</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">FullName</span> <span class="p">=</span> <span class="s">"John Doe"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Software Engineer"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">"IT"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">"john.doe@company.com"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">"+1-555-0101"</span><span class="p">,</span>
+                    <span class="n">Salary</span> <span class="p">=</span> <span class="m">75000</span><span class="p">,</span>
+                    <span class="n">JoinDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"2022-01-15"</span><span class="p">)</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">FullName</span> <span class="p">=</span> <span class="s">"Jane Smith"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Senior Developer"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">"IT"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">"jane.smith@company.com"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">"+1-555-0102"</span><span class="p">,</span>
+                    <span class="n">Salary</span> <span class="p">=</span> <span class="m">85000</span><span class="p">,</span>
+                    <span class="n">JoinDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"2021-03-10"</span><span class="p">)</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">FullName</span> <span class="p">=</span> <span class="s">"Michael Johnson"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"Project Manager"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">"PMO"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">"michael.johnson@company.com"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">"+1-555-0103"</span><span class="p">,</span>
+                    <span class="n">Salary</span> <span class="p">=</span> <span class="m">95000</span><span class="p">,</span>
+                    <span class="n">JoinDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"2020-07-22"</span><span class="p">)</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">FullName</span> <span class="p">=</span> <span class="s">"Sarah Wilson"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"UI/UX Designer"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">"Design"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">"sarah.wilson@company.com"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">"+1-555-0104"</span><span class="p">,</span>
+                    <span class="n">Salary</span> <span class="p">=</span> <span class="m">70000</span><span class="p">,</span>
+                    <span class="n">JoinDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"2022-09-05"</span><span class="p">)</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Employee</span>
+                <span class="p">{</span>
+                    <span class="n">FullName</span> <span class="p">=</span> <span class="s">"David Brown"</span><span class="p">,</span>
+                    <span class="n">Designation</span> <span class="p">=</span> <span class="s">"DevOps Engineer"</span><span class="p">,</span>
+                    <span class="n">Department</span> <span class="p">=</span> <span class="s">"IT"</span><span class="p">,</span>
+                    <span class="n">Email</span> <span class="p">=</span> <span class="s">"david.brown@company.com"</span><span class="p">,</span>
+                    <span class="n">Phone</span> <span class="p">=</span> <span class="s">"+1-555-0105"</span><span class="p">,</span>
+                    <span class="n">Salary</span> <span class="p">=</span> <span class="m">80000</span><span class="p">,</span>
+                    <span class="n">JoinDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">"2021-11-18"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+
+            <span class="n">context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">AddRange</span><span class="p">(</span><span class="n">employees</span><span class="p">);</span>
+            <span class="n">context</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-5-create-template-interfaces">Step 5: Create Template Interfaces</h2>
+
+<p>Design the template interfaces that define the contract for each export format.</p>
+
+<p><strong>Generator/Interfaces/IReportTemplate.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Base interface for all report templates</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IReportTemplate</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Generator/Interfaces/IExcelTemplate.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Interface for Excel report generation</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IExcelTemplate</span> <span class="p">:</span> <span class="n">IReportTemplate</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateExcelReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Generator/Interfaces/IPDFTemplate.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Interface for PDF report generation</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IPDFTemplate</span> <span class="p">:</span> <span class="n">IReportTemplate</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GeneratePDFReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Generator/Interfaces/IWordTemplate.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Interface for Word document generation</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IWordTemplate</span> <span class="p">:</span> <span class="n">IReportTemplate</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateWordReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-6-implement-excel-template">Step 6: Implement Excel Template</h2>
+
+<p>Create a professional Excel template with company branding and styling.</p>
+
+<p><strong>Generator/Templates/ExcelTemplate.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">OfficeOpenXml</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Generator.Templates</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Professional Excel report template with company branding</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ExcelTemplate</span> <span class="p">:</span> <span class="n">IExcelTemplate</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="kt">string</span> <span class="n">_logoPath</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ExcelTemplate</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">_logoPath</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="nf">Combine</span><span class="p">(</span><span class="n">AppContext</span><span class="p">.</span><span class="n">BaseDirectory</span><span class="p">,</span> <span class="s">"images"</span><span class="p">,</span> <span class="s">"mahedeedotnet_log.png"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="nf">GenerateExcelReportAsync</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reportTitle</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateExcelReportAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">package</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ExcelPackage</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">worksheet</span> <span class="p">=</span> <span class="n">package</span><span class="p">.</span><span class="n">Workbook</span><span class="p">.</span><span class="n">Worksheets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Employees"</span><span class="p">);</span>
+            
+            <span class="kt">int</span> <span class="n">currentRow</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+            
+            <span class="c1">// Add company header section</span>
+            <span class="n">currentRow</span> <span class="p">=</span> <span class="nf">AddCompanyHeader</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">);</span>
+            
+            <span class="c1">// Add report title</span>
+            <span class="n">currentRow</span> <span class="p">=</span> <span class="nf">AddReportTitle</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">reportTitle</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">);</span>
+            
+            <span class="c1">// Add additional info if provided</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">additionalInfo</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">additionalInfo</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">currentRow</span> <span class="p">=</span> <span class="nf">AddAdditionalInfo</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="c1">// Add data table</span>
+            <span class="n">currentRow</span> <span class="p">=</span> <span class="nf">AddDataTable</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">employees</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">);</span>
+            
+            <span class="c1">// Add footer</span>
+            <span class="nf">AddFooter</span><span class="p">(</span><span class="n">worksheet</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">);</span>
+            
+            <span class="c1">// Apply styling and formatting</span>
+            <span class="nf">ApplyWorksheetFormatting</span><span class="p">(</span><span class="n">worksheet</span><span class="p">);</span>
+
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ExportResult</span>
+            <span class="p">{</span>
+                <span class="n">Data</span> <span class="p">=</span> <span class="n">package</span><span class="p">.</span><span class="nf">GetAsByteArray</span><span class="p">(),</span>
+                <span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"</span><span class="p">,</span>
+                <span class="n">FileName</span> <span class="p">=</span> <span class="s">$"</span><span class="p">{</span><span class="n">reportTitle</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="s">"_"</span><span class="p">)}</span><span class="s">_</span><span class="p">{</span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">:</span><span class="n">yyyyMMdd_HHmmss</span><span class="p">}</span><span class="s">.xlsx"</span>
+            <span class="p">};</span>
+
+            <span class="k">return</span> <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">FromResult</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">int</span> <span class="nf">AddCompanyHeader</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">,</span> <span class="kt">int</span> <span class="n">startRow</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Add company logo</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">File</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">_logoPath</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">picture</span> <span class="p">=</span> <span class="n">worksheet</span><span class="p">.</span><span class="n">Drawings</span><span class="p">.</span><span class="nf">AddPicture</span><span class="p">(</span><span class="s">"CompanyLogo"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">FileInfo</span><span class="p">(</span><span class="n">_logoPath</span><span class="p">));</span>
+                <span class="n">picture</span><span class="p">.</span><span class="nf">SetPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                <span class="n">picture</span><span class="p">.</span><span class="nf">SetSize</span><span class="p">(</span><span class="m">150</span><span class="p">,</span> <span class="m">75</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="kt">int</span> <span class="n">currentRow</span> <span class="p">=</span> <span class="n">startRow</span> <span class="p">+</span> <span class="m">4</span><span class="p">;</span> <span class="c1">// Leave space for logo</span>
+            
+            <span class="c1">// Company name</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="s">"Mahedee.net"</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Bold</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">=</span> <span class="m">16</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Merge</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelHorizontalAlignment</span><span class="p">.</span><span class="n">Center</span><span class="p">;</span>
+            <span class="n">currentRow</span><span class="p">++;</span>
+            
+            <span class="c1">// Company slogan</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="s">"Think Simple"</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">=</span> <span class="m">12</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Merge</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelHorizontalAlignment</span><span class="p">.</span><span class="n">Center</span><span class="p">;</span>
+            <span class="n">currentRow</span><span class="p">++;</span>
+            
+            <span class="c1">// Company address</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="s">"Toronto, ON, Canada"</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">currentRow</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Merge</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">currentRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelHorizontalAlignment</span><span class="p">.</span><span class="n">Center</span><span class="p">;</span>
+            <span class="n">currentRow</span> <span class="p">+=</span> <span class="m">2</span><span class="p">;</span>
+            
+            <span class="k">return</span> <span class="n">currentRow</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">int</span> <span class="nf">AddReportTitle</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">,</span> <span class="kt">string</span> <span class="n">title</span><span class="p">,</span> <span class="kt">int</span> <span class="n">startRow</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">title</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Bold</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">=</span> <span class="m">14</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">startRow</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Merge</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelHorizontalAlignment</span><span class="p">.</span><span class="n">Center</span><span class="p">;</span>
+            
+            <span class="k">return</span> <span class="n">startRow</span> <span class="p">+</span> <span class="m">2</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">int</span> <span class="nf">AddAdditionalInfo</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span> <span class="n">additionalInfo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">startRow</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">info</span> <span class="k">in</span> <span class="n">additionalInfo</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="s">$"</span><span class="p">{</span><span class="n">info</span><span class="p">.</span><span class="n">Key</span><span class="p">}</span><span class="s">:"</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Bold</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">2</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">info</span><span class="p">.</span><span class="n">Value</span><span class="p">?.</span><span class="nf">ToString</span><span class="p">();</span>
+                <span class="n">startRow</span><span class="p">++;</span>
+            <span class="p">}</span>
+            
+            <span class="k">return</span> <span class="n">startRow</span> <span class="p">+</span> <span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">int</span> <span class="nf">AddDataTable</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">,</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">int</span> <span class="n">startRow</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Add headers</span>
+            <span class="kt">string</span><span class="p">[]</span> <span class="n">headers</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"ID"</span><span class="p">,</span> <span class="s">"Full Name"</span><span class="p">,</span> <span class="s">"Designation"</span><span class="p">,</span> <span class="s">"Department"</span><span class="p">,</span> <span class="s">"Email"</span><span class="p">,</span> <span class="s">"Phone"</span><span class="p">,</span> <span class="s">"Salary"</span><span class="p">,</span> <span class="s">"Join Date"</span> <span class="p">};</span>
+            
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">headers</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">headers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            
+            <span class="c1">// Style headers</span>
+            <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">range</span> <span class="p">=</span> <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">startRow</span><span class="p">,</span> <span class="n">headers</span><span class="p">.</span><span class="n">Length</span><span class="p">])</span>
+            <span class="p">{</span>
+                <span class="n">range</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Bold</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+                <span class="n">range</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">Fill</span><span class="p">.</span><span class="n">PatternType</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelFillStyle</span><span class="p">.</span><span class="n">Solid</span><span class="p">;</span>
+                <span class="n">range</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">Fill</span><span class="p">.</span><span class="n">BackgroundColor</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">Drawing</span><span class="p">.</span><span class="n">Color</span><span class="p">.</span><span class="n">LightBlue</span><span class="p">);</span>
+                <span class="n">range</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">Border</span><span class="p">.</span><span class="nf">BorderAround</span><span class="p">(</span><span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelBorderStyle</span><span class="p">.</span><span class="n">Thin</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="n">startRow</span><span class="p">++;</span>
+            
+            <span class="c1">// Add data</span>
+            <span class="kt">var</span> <span class="n">employeeList</span> <span class="p">=</span> <span class="n">employees</span><span class="p">.</span><span class="nf">ToList</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">employeeList</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="kt">var</span> <span class="n">emp</span> <span class="p">=</span> <span class="n">employeeList</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">2</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">FullName</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">3</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Designation</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">4</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Department</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">5</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Email</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">6</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Phone</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">7</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">Salary</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">7</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Numberformat</span><span class="p">.</span><span class="n">Format</span> <span class="p">=</span> <span class="s">"$#,##0.00"</span><span class="p">;</span>
+                <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="n">emp</span><span class="p">.</span><span class="n">JoinDate</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"yyyy-MM-dd"</span><span class="p">);</span>
+                
+                <span class="c1">// Add borders</span>
+                <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">range</span> <span class="p">=</span> <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">startRow</span> <span class="p">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">headers</span><span class="p">.</span><span class="n">Length</span><span class="p">])</span>
+                <span class="p">{</span>
+                    <span class="n">range</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">Border</span><span class="p">.</span><span class="nf">BorderAround</span><span class="p">(</span><span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelBorderStyle</span><span class="p">.</span><span class="n">Thin</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            
+            <span class="k">return</span> <span class="n">startRow</span> <span class="p">+</span> <span class="n">employeeList</span><span class="p">.</span><span class="n">Count</span> <span class="p">+</span> <span class="m">2</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">AddFooter</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">,</span> <span class="kt">int</span> <span class="n">startRow</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="s">$"Generated on: </span><span class="p">{</span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">:</span><span class="n">yyyy</span><span class="p">-</span><span class="n">MM</span><span class="p">-</span><span class="n">dd</span> <span class="n">HH</span><span class="p">:</span><span class="n">mm</span><span class="p">}</span><span class="s">"</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">startRow</span><span class="p">,</span> <span class="m">8</span><span class="p">].</span><span class="n">Merge</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Size</span> <span class="p">=</span> <span class="m">9</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">Style</span><span class="p">.</span><span class="n">ExcelHorizontalAlignment</span><span class="p">.</span><span class="n">Center</span><span class="p">;</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">[</span><span class="n">startRow</span><span class="p">,</span> <span class="m">1</span><span class="p">].</span><span class="n">Style</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Italic</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">ApplyWorksheetFormatting</span><span class="p">(</span><span class="n">ExcelWorksheet</span> <span class="n">worksheet</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Auto-fit columns</span>
+            <span class="n">worksheet</span><span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="nf">AutoFitColumns</span><span class="p">();</span>
+            
+            <span class="c1">// Set minimum column widths</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">col</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">col</span> <span class="p">&lt;=</span> <span class="m">8</span><span class="p">;</span> <span class="n">col</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">worksheet</span><span class="p">.</span><span class="nf">Column</span><span class="p">(</span><span class="n">col</span><span class="p">).</span><span class="n">Width</span> <span class="p">&lt;</span> <span class="m">10</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">worksheet</span><span class="p">.</span><span class="nf">Column</span><span class="p">(</span><span class="n">col</span><span class="p">).</span><span class="n">Width</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-7-create-export-service">Step 7: Create Export Service</h2>
+
+<p>Create a service that orchestrates the different template implementations.</p>
+
+<p><strong>Services/IExportService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IExportService</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToExcelAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToPdfAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToWordAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Services/ExportService.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Services</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Main export service that coordinates different template implementations</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ExportService</span> <span class="p">:</span> <span class="n">IExportService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IExcelTemplate</span> <span class="n">_excelTemplate</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IPDFTemplate</span> <span class="n">_pdfTemplate</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IWordTemplate</span> <span class="n">_wordTemplate</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ExportService</span><span class="p">(</span>
+            <span class="n">IExcelTemplate</span> <span class="n">excelTemplate</span><span class="p">,</span>
+            <span class="n">IPDFTemplate</span> <span class="n">pdfTemplate</span><span class="p">,</span>
+            <span class="n">IWordTemplate</span> <span class="n">wordTemplate</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_excelTemplate</span> <span class="p">=</span> <span class="n">excelTemplate</span><span class="p">;</span>
+            <span class="n">_pdfTemplate</span> <span class="p">=</span> <span class="n">pdfTemplate</span><span class="p">;</span>
+            <span class="n">_wordTemplate</span> <span class="p">=</span> <span class="n">wordTemplate</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToExcelAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_excelTemplate</span><span class="p">.</span><span class="nf">GenerateExcelReportAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="n">reportTitle</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToPdfAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_pdfTemplate</span><span class="p">.</span><span class="nf">GeneratePDFReportAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="n">reportTitle</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">ExportToWordAsync</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">,</span> <span class="kt">string</span> <span class="n">reportTitle</span> <span class="p">=</span> <span class="s">"Employee Report"</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;?</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_wordTemplate</span><span class="p">.</span><span class="nf">GenerateWordReportAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="n">reportTitle</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-8-create-api-controller">Step 8: Create API Controller</h2>
+
+<p>Implement the RESTful API endpoints for report generation.</p>
+
+<p><strong>Controllers/EmployeesController.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ExportReportAPI.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EmployeesController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_context</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IExportService</span> <span class="n">_exportService</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">EmployeesController</span><span class="p">(</span><span class="n">ApplicationDbContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">IExportService</span> <span class="n">exportService</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+            <span class="n">_exportService</span> <span class="p">=</span> <span class="n">exportService</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Get all employees</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;returns&gt;List of employees&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetEmployees</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Get employee by ID</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name="id"&gt;Employee ID&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;Employee details&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">GetEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">employee</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Export employees to Excel format</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;returns&gt;Excel file download&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"export/excel"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">ExportToExcel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+            
+            <span class="kt">var</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span>
+            <span class="p">{</span>
+                <span class="p">{</span> <span class="s">"Report Type"</span><span class="p">,</span> <span class="s">"Employee Directory"</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Total Records"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="n">Count</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Generated By"</span><span class="p">,</span> <span class="s">"Export Report API"</span> <span class="p">}</span>
+            <span class="p">};</span>
+            
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_exportService</span><span class="p">.</span><span class="nf">ExportToExcelAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="s">"Employee Directory Report"</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+            
+            <span class="k">return</span> <span class="nf">File</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Export employees to PDF format</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;returns&gt;PDF file download&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"export/pdf"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">ExportToPdf</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+            
+            <span class="kt">var</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span>
+            <span class="p">{</span>
+                <span class="p">{</span> <span class="s">"Report Type"</span><span class="p">,</span> <span class="s">"Employee Directory"</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Total Records"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="n">Count</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Generated By"</span><span class="p">,</span> <span class="s">"Export Report API"</span> <span class="p">}</span>
+            <span class="p">};</span>
+            
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_exportService</span><span class="p">.</span><span class="nf">ExportToPdfAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="s">"Employee Directory Report"</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+            
+            <span class="k">return</span> <span class="nf">File</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Export employees to Word format</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;returns&gt;Word document file download&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"export/word"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">ExportToWord</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+            
+            <span class="kt">var</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span>
+            <span class="p">{</span>
+                <span class="p">{</span> <span class="s">"Report Type"</span><span class="p">,</span> <span class="s">"Employee Directory"</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Total Records"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="n">Count</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s">"Generated By"</span><span class="p">,</span> <span class="s">"Export Report API"</span> <span class="p">}</span>
+            <span class="p">};</span>
+            
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_exportService</span><span class="p">.</span><span class="nf">ExportToWordAsync</span><span class="p">(</span><span class="n">employees</span><span class="p">,</span> <span class="s">"Employee Directory Report"</span><span class="p">,</span> <span class="n">additionalInfo</span><span class="p">);</span>
+            
+            <span class="k">return</span> <span class="nf">File</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Create a new employee</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name="employee"&gt;Employee data&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;Created employee&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;&gt;</span> <span class="nf">PostEmployee</span><span class="p">(</span><span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="s">"GetEmployee"</span><span class="p">,</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">employee</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Update an existing employee</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name="id"&gt;Employee ID&lt;/param&gt;</span>
+        <span class="c1">/// &lt;param name="employee"&gt;Updated employee data&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;No content on success&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">PutEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Employee</span> <span class="n">employee</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="p">!=</span> <span class="n">employee</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="nf">Entry</span><span class="p">(</span><span class="n">employee</span><span class="p">).</span><span class="n">State</span> <span class="p">=</span> <span class="n">EntityState</span><span class="p">.</span><span class="n">Modified</span><span class="p">;</span>
+
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">DbUpdateConcurrencyException</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="nf">EmployeeExists</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="k">throw</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Delete an employee</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="c1">/// &lt;param name="id"&gt;Employee ID&lt;/param&gt;</span>
+        <span class="c1">/// &lt;returns&gt;No content on success&lt;/returns&gt;</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteEmployee</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">employee</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">bool</span> <span class="nf">EmployeeExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-9-configure-application-startup">Step 9: Configure Application Startup</h2>
+
+<p>Configure dependency injection and application settings.</p>
+
+<p><strong>Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ExportReportAPI.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Generator.Interfaces</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Generator.Templates</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ExportReportAPI.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Reflection</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">options</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"EmployeeDb"</span><span class="p">));</span>
+
+<span class="c1">// Register template services</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IExcelTemplate</span><span class="p">,</span> <span class="n">ExcelTemplate</span><span class="p">&gt;();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IPDFTemplate</span><span class="p">,</span> <span class="n">PDFTemplate</span><span class="p">&gt;();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IWordTemplate</span><span class="p">,</span> <span class="n">WordTemplate</span><span class="p">&gt;();</span>
+
+<span class="c1">// Register main export service</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IExportService</span><span class="p">,</span> <span class="n">ExportService</span><span class="p">&gt;();</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerDoc</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="k">new</span><span class="p">()</span> <span class="p">{</span> 
+        <span class="n">Title</span> <span class="p">=</span> <span class="s">"Export Report API"</span><span class="p">,</span> 
+        <span class="n">Version</span> <span class="p">=</span> <span class="s">"v1"</span><span class="p">,</span>
+        <span class="n">Description</span> <span class="p">=</span> <span class="s">"ASP.NET Core Web API for exporting reports in multiple formats (Excel, PDF, Word)"</span>
+    <span class="p">});</span>
+    
+    <span class="c1">// Include XML comments for better documentation</span>
+    <span class="kt">var</span> <span class="n">xmlFile</span> <span class="p">=</span> <span class="s">$"</span><span class="p">{</span><span class="n">Assembly</span><span class="p">.</span><span class="nf">GetExecutingAssembly</span><span class="p">().</span><span class="nf">GetName</span><span class="p">().</span><span class="n">Name</span><span class="p">}</span><span class="s">.xml"</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">xmlPath</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="nf">Combine</span><span class="p">(</span><span class="n">AppContext</span><span class="p">.</span><span class="n">BaseDirectory</span><span class="p">,</span> <span class="n">xmlFile</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">File</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">xmlPath</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">c</span><span class="p">.</span><span class="nf">IncludeXmlComments</span><span class="p">(</span><span class="n">xmlPath</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Configure EPPlus license</span>
+<span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">ExcelPackage</span><span class="p">.</span><span class="n">LicenseContext</span> <span class="p">=</span> <span class="n">OfficeOpenXml</span><span class="p">.</span><span class="n">LicenseContext</span><span class="p">.</span><span class="n">NonCommercial</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Seed database with sample data</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;();</span>
+    <span class="n">DatabaseSeeder</span><span class="p">.</span><span class="nf">SeedDatabase</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerEndpoint</span><span class="p">(</span><span class="s">"/swagger/v1/swagger.json"</span><span class="p">,</span> <span class="s">"Export Report API V1"</span><span class="p">);</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">RoutePrefix</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span> <span class="c1">// Set Swagger UI at the app's root</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-10-update-project-configuration">Step 10: Update Project Configuration</h2>
+
+<p>Update the project file to include proper settings and logo copying.</p>
+
+<p><strong>ExportReportAPI.csproj</strong></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk.Web"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;TargetFramework&gt;</span>net8.0<span class="nt">&lt;/TargetFramework&gt;</span>
+    <span class="nt">&lt;Nullable&gt;</span>enable<span class="nt">&lt;/Nullable&gt;</span>
+    <span class="nt">&lt;ImplicitUsings&gt;</span>enable<span class="nt">&lt;/ImplicitUsings&gt;</span>
+    <span class="nt">&lt;GenerateDocumentationFile&gt;</span>true<span class="nt">&lt;/GenerateDocumentationFile&gt;</span>
+    <span class="nt">&lt;NoWarn&gt;</span>$(NoWarn);1591<span class="nt">&lt;/NoWarn&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+
+  <span class="nt">&lt;ItemGroup&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"DocumentFormat.OpenXml"</span> <span class="na">Version=</span><span class="s">"3.2.0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"EPPlus"</span> <span class="na">Version=</span><span class="s">"7.5.1"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"iTextSharp.LGPLv2.Core"</span> <span class="na">Version=</span><span class="s">"3.4.22"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore.InMemory"</span> <span class="na">Version=</span><span class="s">"8.0.11"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Swashbuckle.AspNetCore"</span> <span class="na">Version=</span><span class="s">"6.6.2"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/ItemGroup&gt;</span>
+
+  <span class="nt">&lt;ItemGroup&gt;</span>
+    <span class="nt">&lt;Content</span> <span class="na">Include=</span><span class="s">"images\**"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;CopyToOutputDirectory&gt;</span>PreserveNewest<span class="nt">&lt;/CopyToOutputDirectory&gt;</span>
+    <span class="nt">&lt;/Content&gt;</span>
+  <span class="nt">&lt;/ItemGroup&gt;</span>
+
+<span class="nt">&lt;/Project&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-11-add-company-logo">Step 11: Add Company Logo</h2>
+
+<ol>
+  <li>Create an <code class="language-plaintext highlighter-rouge">images</code> folder in your project root</li>
+  <li>Add your company logo file (e.g., <code class="language-plaintext highlighter-rouge">mahedeedotnet_log.png</code>)</li>
+  <li>The logo will be automatically included in the reports</li>
+</ol>
+
+<p><strong>Folder Structure:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ExportReportAPI/
+├── images/
+│   └── mahedeedotnet_log.png
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-12-run-and-test-the-application">Step 12: Run and Test the Application</h2>
+
+<ol>
+  <li><strong>Build and Run the Application:</strong></li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet build
+dotnet run
+</code></pre></div></div>
+
+<ol>
+  <li><strong>Access Swagger UI:</strong>
+    <ul>
+      <li>Open your browser and navigate to <code class="language-plaintext highlighter-rouge">https://localhost:7xxx</code> (port will vary)</li>
+      <li>You’ll see the Swagger UI with all available endpoints</li>
+    </ul>
+  </li>
+  <li><strong>Test Export Endpoints:</strong>
+    <ul>
+      <li><strong>Excel Export</strong>: <code class="language-plaintext highlighter-rouge">GET /api/employees/export/excel</code></li>
+      <li><strong>PDF Export</strong>: <code class="language-plaintext highlighter-rouge">GET /api/employees/export/pdf</code></li>
+      <li><strong>Word Export</strong>: <code class="language-plaintext highlighter-rouge">GET /api/employees/export/word</code></li>
+    </ul>
+  </li>
+  <li><strong>Test with Sample Data:</strong>
+    <ul>
+      <li>The application automatically seeds sample employee data</li>
+      <li>You can also add/modify employees through the CRUD endpoints</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="key-features-implemented">Key Features Implemented</h2>
+
+<h3 id="1-template-based-architecture">1. <strong>Template-Based Architecture</strong></h3>
+<ul>
+  <li><strong>Reusable Templates</strong>: Each format has its own dedicated template class</li>
+  <li><strong>Interface-Driven Design</strong>: Clear contracts for different export formats</li>
+  <li><strong>Dependency Injection</strong>: Loosely coupled components for better testability</li>
+</ul>
+
+<h3 id="2-professional-branding">2. <strong>Professional Branding</strong></h3>
+<ul>
+  <li><strong>Company Logo</strong>: Automatically embedded in all report formats</li>
+  <li><strong>Consistent Headers</strong>: Company name, slogan, and address</li>
+  <li><strong>Professional Styling</strong>: Colors, fonts, and layout consistency</li>
+</ul>
+
+<h3 id="3-multi-format-support">3. <strong>Multi-Format Support</strong></h3>
+<ul>
+  <li><strong>Excel</strong>: Rich formatting with EPPlus</li>
+  <li><strong>PDF</strong>: Professional layout with iTextSharp</li>
+  <li><strong>Word</strong>: Structured documents with OpenXML</li>
+</ul>
+
+<h3 id="4-enterprise-features">4. <strong>Enterprise Features</strong></h3>
+<ul>
+  <li><strong>Custom Titles</strong>: Dynamic report titles</li>
+  <li><strong>Additional Information</strong>: Support for metadata and extra details</li>
+  <li><strong>Timestamp Footers</strong>: Generation timestamps and page numbers</li>
+  <li><strong>Error Handling</strong>: Robust error handling and validation</li>
+</ul>
+
+<h3 id="5-api-design">5. <strong>API Design</strong></h3>
+<ul>
+  <li><strong>RESTful Endpoints</strong>: Clean, intuitive API design</li>
+  <li><strong>Swagger Documentation</strong>: Comprehensive API documentation</li>
+  <li><strong>File Downloads</strong>: Proper file response handling</li>
+</ul>
+
+<hr />
+
+<h2 id="benefits-of-this-architecture">Benefits of This Architecture</h2>
+
+<h3 id="1-maintainability">1. <strong>Maintainability</strong></h3>
+<ul>
+  <li>Each report format has its own dedicated class</li>
+  <li>Clear separation of concerns</li>
+  <li>Easy to modify individual formats without affecting others</li>
+</ul>
+
+<h3 id="2-reusability">2. <strong>Reusability</strong></h3>
+<ul>
+  <li>Templates can be reused for different data types</li>
+  <li>Common branding and styling logic is encapsulated</li>
+  <li>Easy to create new report types using existing templates</li>
+</ul>
+
+<h3 id="3-testability">3. <strong>Testability</strong></h3>
+<ul>
+  <li>Each template can be unit tested independently</li>
+  <li>Mock dependencies easily for testing</li>
+  <li>Clean interfaces make testing straightforward</li>
+</ul>
+
+<h3 id="4-extensibility">4. <strong>Extensibility</strong></h3>
+<ul>
+  <li>Easy to add new report formats (e.g., CSV, JSON)</li>
+  <li>Simple to extend existing templates with new features</li>
+  <li>Support for different data types beyond Employee</li>
+</ul>
+
+<h3 id="5-performance">5. <strong>Performance</strong></h3>
+<ul>
+  <li>Efficient memory usage with proper disposal</li>
+  <li>Streaming for large datasets</li>
+  <li>Asynchronous operations for better scalability</li>
+</ul>
+
+<hr />
+
+<h2 id="advanced-usage-examples">Advanced Usage Examples</h2>
+
+<h3 id="custom-report-with-additional-information">Custom Report with Additional Information</h3>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"export/excel/custom"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">ExportCustomExcel</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">employees</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Employees</span>
+        <span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Department</span> <span class="p">==</span> <span class="s">"IT"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+    
+    <span class="kt">var</span> <span class="n">additionalInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="p">{</span> <span class="s">"Department Filter"</span><span class="p">,</span> <span class="s">"IT Department Only"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"Report Period"</span><span class="p">,</span> <span class="s">"Q4 2025"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"Generated By"</span><span class="p">,</span> <span class="s">"John Doe"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"Total Records"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="n">Count</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"Average Salary"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="nf">Average</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Salary</span><span class="p">).</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"C"</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">};</span>
+    
+    <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_exportService</span><span class="p">.</span><span class="nf">ExportToExcelAsync</span><span class="p">(</span>
+        <span class="n">employees</span><span class="p">,</span> 
+        <span class="s">"IT Department Employee Report"</span><span class="p">,</span> 
+        <span class="n">additionalInfo</span>
+    <span class="p">);</span>
+    
+    <span class="k">return</span> <span class="nf">File</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="direct-template-usage">Direct Template Usage</h3>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CustomReportService</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IExcelTemplate</span> <span class="n">_excelTemplate</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="nf">CustomReportService</span><span class="p">(</span><span class="n">IExcelTemplate</span> <span class="n">excelTemplate</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_excelTemplate</span> <span class="p">=</span> <span class="n">excelTemplate</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ExportResult</span><span class="p">&gt;</span> <span class="nf">GenerateMonthlyReport</span><span class="p">(</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Employee</span><span class="p">&gt;</span> <span class="n">employees</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">customInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">object</span><span class="p">&gt;</span>
+        <span class="p">{</span>
+            <span class="p">{</span> <span class="s">"Report Type"</span><span class="p">,</span> <span class="s">"Monthly Employee Report"</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"Period"</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"MMMM yyyy"</span><span class="p">)</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"Department Count"</span><span class="p">,</span> <span class="n">employees</span><span class="p">.</span><span class="nf">GroupBy</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Department</span><span class="p">).</span><span class="nf">Count</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">};</span>
+        
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_excelTemplate</span><span class="p">.</span><span class="nf">GenerateExcelReportAsync</span><span class="p">(</span>
+            <span class="n">employees</span><span class="p">,</span> 
+            <span class="s">"Monthly Employee Report"</span><span class="p">,</span> 
+            <span class="n">customInfo</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="future-enhancements">Future Enhancements</h2>
+
+<p>The template-based architecture enables easy implementation of:</p>
+
+<h3 id="1-additional-format-support">1. <strong>Additional Format Support</strong></h3>
+<ul>
+  <li>CSV export for data analysis</li>
+  <li>JSON export for API integration</li>
+  <li>XML export for legacy systems</li>
+</ul>
+
+<h3 id="2-advanced-features">2. <strong>Advanced Features</strong></h3>
+<ul>
+  <li>Charts and graphs integration</li>
+  <li>Multiple worksheets/pages</li>
+  <li>Dynamic template selection</li>
+  <li>Custom report layouts</li>
+</ul>
+
+<h3 id="3-enterprise-features">3. <strong>Enterprise Features</strong></h3>
+<ul>
+  <li>Multi-language support</li>
+  <li>Theme-based styling</li>
+  <li>User-specific branding</li>
+  <li>Report scheduling and automation</li>
+</ul>
+
+<h3 id="4-performance-optimizations">4. <strong>Performance Optimizations</strong></h3>
+<ul>
+  <li>Streaming for large datasets</li>
+  <li>Background processing</li>
+  <li>Caching for frequently generated reports</li>
+  <li>Compression for large files</li>
+</ul>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This comprehensive guide demonstrated how to build a professional Report Export API in ASP.NET Core using a template-based architecture. The solution provides:</p>
+
+<ul>
+  <li><strong>Multiple Export Formats</strong>: Excel, PDF, and Word support</li>
+  <li><strong>Professional Branding</strong>: Consistent company branding across all formats</li>
+  <li><strong>Scalable Architecture</strong>: Template-based design for easy extension</li>
+  <li><strong>Enterprise-Ready Features</strong>: Professional styling, error handling, and performance optimization</li>
+  <li><strong>Clean API Design</strong>: RESTful endpoints with comprehensive documentation</li>
+</ul>
+
+<p>The template-based approach ensures that your report generation system is maintainable, testable, and easily extensible for future requirements. Whether you’re building internal business applications or client-facing systems, this architecture provides a solid foundation for professional report generation.</p>
+
+<p>The complete source code provides a working example that you can customize and extend based on your specific business requirements. The separation of concerns and dependency injection make it easy to add new features, modify existing templates, or integrate with different data sources.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/export-report-api">Complete Source Code Available</a></strong></p>
+
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#epplus" class="page__taxonomy-item" rel="tag">epplus</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#excel" class="page__taxonomy-item" rel="tag">excel</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#itextsharp" class="page__taxonomy-item" rel="tag">itextsharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#openxml" class="page__taxonomy-item" rel="tag">openxml</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pdf" class="page__taxonomy-item" rel="tag">pdf</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reports" class="page__taxonomy-item" rel="tag">reports</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#word" class="page__taxonomy-item" rel="tag">word</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#reports" class="page__taxonomy-item" rel="tag">Reports</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-05-08T00:00:00-04:00">May 08, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Building+a+Professional+Report+Export+API+in+ASP.NET+Core%3A+Excel%2C+PDF+%26+Word+Generation+with+Template+Architecture%20https%3A%2F%2Fmahedee.net%2FBuilding-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2FBuilding-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2FBuilding-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/structuring-agile-work-epics-stories-artifacts/" class="pagination--pager" title="Structuring Agile Work Using Epics, Stories, Tasks, DoR, DoD, Artifact and more
+">Previous</a>
+    
+    
+      <a href="/Binary_Tree_Traversal_Algorithms_using_java/" class="pagination--pager" title="Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Binary_Tree_Traversal_Algorithms_using_java/" rel="permalink">Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  15 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Binary tree traversal algorithms are fundamental techniques that allow systematic visiting of every node in a tree. This comprehensive guide covers all four ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/structuring-agile-work-epics-stories-artifacts/" rel="permalink">Structuring Agile Work Using Epics, Stories, Tasks, DoR, DoD, Artifact and more
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  21 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">End-to-end practical reference for structuring agile work using epics, user stories, tasks, DoR, DoD, templates, and traceability.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/simplifying-e-commerce-order-processing-with-the-facade-design-pattern-in-csharp/" rel="permalink">Simplifying E-Commerce Order Processing with the Facade Design Pattern in C#
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover how the Facade Design Pattern simplifies e-commerce order processing by unifying complex subsystems into a single interface. This article provides a...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/facade_design_pattern_real_world_use_cases/" rel="permalink">Simplifying Complex Systems: 10 Real-World Use Cases of the Facade Design Pattern
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Simplify complex software systems with the Facade Design Pattern. Explore its key components and discover 10 real-world use cases where it streamlines operat...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+  
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

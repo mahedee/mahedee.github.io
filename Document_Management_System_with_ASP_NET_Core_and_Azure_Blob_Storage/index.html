@@ -1,0 +1,1172 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide - Think Simple</title>
+<meta name="description" content="Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide">
+<meta property="og:url" content="https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/">
+
+
+  <meta property="og:description" content="Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-12-21T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage." />
+<meta property="og:description" content="Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage." />
+<link rel="canonical" href="https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" />
+<meta property="og:url" content="https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-12-21T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-12-21T00:00:00-05:00","datePublished":"2025-12-21T00:00:00-05:00","description":"Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage.","headline":"Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/"},"url":"https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide">
+    <meta itemprop="description" content="Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complete implementation, architecture patterns, and best practices for secure file handling and storage.">
+    <meta itemprop="datePublished" content="December 21, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- Article banner image (optional) -->
+<!-- ![Document Management System Banner](./images/dms-banner.png) -->
+
+<p><strong>Introduction</strong></p>
+
+<p>A <strong>Document Management System (DMS)</strong> is a critical component in modern business applications, enabling secure storage, retrieval, and management of digital documents. This comprehensive guide demonstrates how to build a production-ready DMS using <strong>ASP.NET Core Web API</strong> integrated with <strong>Azure Blob Storage</strong>.</p>
+
+<p><strong>🎯 What We Are Building</strong></p>
+
+<p>A Document Management System that:</p>
+
+<ul>
+  <li>Supports uploads: PDF, JPG, PNG, MP4</li>
+  <li>Stores files in Azure Blob Storage</li>
+  <li>Persists document metadata in a database</li>
+</ul>
+
+<p><strong>Users can:</strong></p>
+
+<ul>
+  <li>Upload documents</li>
+  <li>Download or view documents</li>
+  <li>List documents by customer</li>
+  <li>Delete documents (if allowed)</li>
+</ul>
+
+<p>Let’s develop the application step-by-step using azure blob storage for file handling and ASP.NET Core for the API.</p>
+
+<p><strong>🛠️ Technologies Used</strong></p>
+<ul>
+  <li>ASP.NET Core Web API</li>
+  <li>Azure Blob Storage</li>
+  <li>Entity Framework Core</li>
+  <li>SQL Server (or any relational database)</li>
+  <li>C#</li>
+  <li>Swagger for API documentation</li>
+</ul>
+
+<p><strong>Step 1: Create Azure Blob Storage</strong>
+First, create an Azure Blob Storage account to store the documents. You can do this via the Azure Portal or using the Azure CLI.</p>
+
+<ul>
+  <li>In Azure Portal:
+    <ul>
+      <li>Create Storage Account</li>
+      <li>Performance: Standard</li>
+      <li>Redundancy: LRS</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/001_create_a_new_container.png" alt="" /></p>
+
+<ul>
+  <li>Create Blob Container
+    <ul>
+      <li>Container name: documents</li>
+      <li>Access level: Private</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/001_create_a_new_container.png" alt="" /></p>
+
+<ul>
+  <li>Get Connection String</li>
+</ul>
+
+<p>Storage Account → Access keys → Connection string</p>
+
+<p>or use Azure CLI:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az storage account show-connection-string <span class="nt">--name</span> &lt;your-storage-account-name&gt; <span class="nt">--resource-group</span> &lt;your-resource-group&gt;
+</code></pre></div></div>
+<p>Example</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> az storage account show-connection-string <span class="nt">--name</span> mahedeeblobstorage01 <span class="nt">--resource-group</span> BlobStorageRGh
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+ </span><span class="nl">"connectionString"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=mahedeeblobstorage01;AccountKey=APCKnzRKEeF4+SaUabbXRSiM0ujmaG/lRY/L/KlggL3/FYCy/zzEZY7lZkFsFkrMDmFiUjzZCXRdlZE+ASt3OhCzg==;BlobEndpoint=https://mahedeeblobstorage01.blob.core.windows.net/;FileEndpoint=https://mahedeeblobstorage01.file.core.windows.net/;QueueEndpoint=https://mahedeeblobstorage01.queue.core.windows.net/;TableEndpoint=https://mahedeeblobstorage01.table.core.windows.net/"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Troubleshooting Tips:</strong></p>
+<ul>
+  <li>If Azure CLI fails to create the storage account, check local firewall/proxy settings. Temporarily disabling the firewall allowed the command to succeed and the connection string to be retrieved. Prefer whitelisting Azure endpoints or adjusting proxy rules rather than fully disabling the firewall.</li>
+</ul>
+
+<p><strong>Step 2: Create Database (Metadata)</strong></p>
+<ul>
+  <li>Create a new database in your local server name - DocumentDB</li>
+  <li>Create a table to store document metadata</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">USE</span> <span class="n">DocumentDB</span><span class="p">;</span>
+<span class="k">GO</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">DOCUMENTS</span> <span class="p">(</span>
+    <span class="n">ID</span> <span class="n">UNIQUEIDENTIFIER</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">DEFAULT</span> <span class="n">NEWID</span><span class="p">(),</span>
+    <span class="n">FILE_NAME</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>           <span class="c1">-- Blob file name in Azure</span>
+    <span class="n">ORIGINAL_FILE_NAME</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>  <span class="c1">-- Original uploaded file name</span>
+    <span class="n">CUSTOMER_ID</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">UPLOADED_BY</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">UPLOAD_DATE</span> <span class="nb">DATETIME</span> <span class="k">DEFAULT</span> <span class="n">GETDATE</span><span class="p">(),</span>
+    <span class="n">CONTENT_TYPE</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">GO</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Create ASP.NET Core Web API Project</strong></p>
+<ul>
+  <li>Open Visual Studio and create a new ASP.NET Core Web API project named DMS.Api</li>
+  <li>Install necessary NuGet packages:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet add package Azure.Storage.Blobs
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Swashbuckle.AspNetCore
+dotnet add Microsoft.AspNetCore.OpenApi
+</code></pre></div></div>
+
+<p><strong>Step 4: Configure appsettings.json</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"AzureBlob"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"connectionString"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=mahedeeblobstorage01;AccountKey=APCKnzRKEeF4+SaUabbXRSiM0ujmaG/lRY/L/KlggL3/FYCy/zzEZY7lZkFsFkrMDmFiUjzZCXRdlZE+ASt3OhCzg==;BlobEndpoint=https://mahedeeblobstorage01.blob.core.windows.net/;FileEndpoint=https://mahedeeblobstorage01.file.core.windows.net/;QueueEndpoint=https://mahedeeblobstorage01.queue.core.windows.net/;TableEndpoint=https://mahedeeblobstorage01.table.core.windows.net/"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ContainerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"documents"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"ConnectionStrings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"DefaultConnection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Server=.;Database=DocumentDB; User Id = sa; Password = mypassword; TrustServerCertificate=True;"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Step 5: Implement the Document Entity</strong></p>
+
+<p>Create Document.cs in Models folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">DMS.Api.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Document</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Guid</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">required</span> <span class="kt">string</span> <span class="n">FileName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>          <span class="c1">// stored in blob</span>
+        <span class="k">public</span> <span class="n">required</span> <span class="kt">string</span> <span class="n">OriginalFileName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>  <span class="c1">// user file name</span>
+        <span class="k">public</span> <span class="n">required</span> <span class="kt">string</span> <span class="n">CustomerId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">required</span> <span class="kt">string</span> <span class="n">UploadedBy</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">UploadDate</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">required</span> <span class="kt">string</span> <span class="n">ContentType</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 6: Implement the DbContext</strong>
+Create DmsDbContext.cs in Data folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">DMS.Api.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">DMS.Api.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ApplicationDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">ApplicationDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Document</span><span class="p">&gt;</span> <span class="n">Documents</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">ModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">modelBuilder</span><span class="p">);</span>
+
+            <span class="c1">// Configure Document entity</span>
+            <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Document</span><span class="p">&gt;(</span><span class="n">entity</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">HasKey</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">FileName</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">255</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">OriginalFileName</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">255</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">CustomerId</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">UploadedBy</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">ContentType</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">().</span><span class="nf">HasMaxLength</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+                <span class="n">entity</span><span class="p">.</span><span class="nf">Property</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="n">e</span><span class="p">.</span><span class="n">UploadDate</span><span class="p">).</span><span class="nf">IsRequired</span><span class="p">();</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Implement Azure Blob Storage Service</strong></p>
+
+<p>Create BlobService.cs in Services folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Azure.Storage.Blobs</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">DMS.Api.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">BlobStorageService</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">BlobContainerClient</span> <span class="n">_container</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">BlobStorageService</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">config</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_container</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BlobContainerClient</span><span class="p">(</span>
+                <span class="n">config</span><span class="p">[</span><span class="s">"AzureBlob:ConnectionString"</span><span class="p">],</span>
+                <span class="n">config</span><span class="p">[</span><span class="s">"AzureBlob:ContainerName"</span><span class="p">]);</span>
+
+            <span class="n">_container</span><span class="p">.</span><span class="nf">CreateIfNotExists</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">UploadAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">Stream</span> <span class="n">stream</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">blob</span> <span class="p">=</span> <span class="n">_container</span><span class="p">.</span><span class="nf">GetBlobClient</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">blob</span><span class="p">.</span><span class="nf">UploadAsync</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="k">true</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Stream</span><span class="p">&gt;</span> <span class="nf">DownloadAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">fileName</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">blob</span> <span class="p">=</span> <span class="n">_container</span><span class="p">.</span><span class="nf">GetBlobClient</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+            <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">blob</span><span class="p">.</span><span class="nf">DownloadAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">Content</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">fileName</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">blob</span> <span class="p">=</span> <span class="n">_container</span><span class="p">.</span><span class="nf">GetBlobClient</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">blob</span><span class="p">.</span><span class="nf">DeleteIfExistsAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 8: Implement Document Controller</strong></p>
+
+<p>Create DocumentController.cs in Controllers folder</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">DMS.Api.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">DMS.Api.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">DMS.Api.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">DMS.Api.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">DocumentsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">BlobStorageService</span> <span class="n">_blobService</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">ApplicationDbContext</span> <span class="n">_db</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">DocumentsController</span><span class="p">(</span><span class="n">BlobStorageService</span> <span class="n">blobService</span><span class="p">,</span> <span class="n">ApplicationDbContext</span> <span class="n">db</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_blobService</span> <span class="p">=</span> <span class="n">blobService</span><span class="p">;</span>
+            <span class="n">_db</span> <span class="p">=</span> <span class="n">db</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"upload"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Upload</span><span class="p">(</span>
+            <span class="n">IFormFile</span> <span class="n">file</span><span class="p">,</span>
+            <span class="kt">string</span> <span class="n">customerId</span><span class="p">,</span><span class="m">0</span>
+            <span class="kt">string</span> <span class="n">uploadedBy</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">uniqueFileName</span> <span class="p">=</span> <span class="s">$"</span><span class="p">{</span><span class="n">Guid</span><span class="p">.</span><span class="nf">NewGuid</span><span class="p">()}{</span><span class="n">Path</span><span class="p">.</span><span class="nf">GetExtension</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">FileName</span><span class="p">)}</span><span class="s">"</span><span class="p">;</span>
+
+            <span class="k">await</span> <span class="n">_blobService</span><span class="p">.</span><span class="nf">UploadAsync</span><span class="p">(</span><span class="n">uniqueFileName</span><span class="p">,</span> <span class="n">file</span><span class="p">.</span><span class="nf">OpenReadStream</span><span class="p">());</span>
+
+            <span class="kt">var</span> <span class="n">document</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Document</span>
+            <span class="p">{</span>
+                <span class="n">Id</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="nf">NewGuid</span><span class="p">(),</span>
+                <span class="n">FileName</span> <span class="p">=</span> <span class="n">uniqueFileName</span><span class="p">,</span>
+                <span class="n">OriginalFileName</span> <span class="p">=</span> <span class="n">file</span><span class="p">.</span><span class="n">FileName</span><span class="p">,</span>
+                <span class="n">CustomerId</span> <span class="p">=</span> <span class="n">customerId</span><span class="p">,</span>
+                <span class="n">UploadedBy</span> <span class="p">=</span> <span class="n">uploadedBy</span><span class="p">,</span>
+                <span class="n">UploadDate</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">,</span>
+                <span class="n">ContentType</span> <span class="p">=</span> <span class="n">file</span><span class="p">.</span><span class="n">ContentType</span>
+            <span class="p">};</span>
+
+            <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">document</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">document</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Download</span><span class="p">(</span><span class="n">Guid</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">doc</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">doc</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+
+            <span class="kt">var</span> <span class="n">stream</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_blobService</span><span class="p">.</span><span class="nf">DownloadAsync</span><span class="p">(</span><span class="n">doc</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nf">File</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">doc</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">doc</span><span class="p">.</span><span class="n">OriginalFileName</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"customer/{customerId}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">GetByCustomer</span><span class="p">(</span><span class="kt">string</span> <span class="n">customerId</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">docs</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span>
+                <span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">d</span> <span class="p">=&gt;</span> <span class="n">d</span><span class="p">.</span><span class="n">CustomerId</span> <span class="p">==</span> <span class="n">customerId</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">docs</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">GetAllDocuments</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">docs</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span>
+                <span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">d</span> <span class="p">=&gt;</span> <span class="k">new</span>
+                <span class="p">{</span>
+                    <span class="n">d</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+                    <span class="n">d</span><span class="p">.</span><span class="n">FileName</span><span class="p">,</span>
+                    <span class="n">d</span><span class="p">.</span><span class="n">OriginalFileName</span><span class="p">,</span>
+                    <span class="n">d</span><span class="p">.</span><span class="n">CustomerId</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">docs</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Delete</span><span class="p">(</span><span class="n">Guid</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">doc</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">doc</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+
+            <span class="k">await</span> <span class="n">_blobService</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">doc</span><span class="p">.</span><span class="n">FileName</span><span class="p">);</span>
+
+            <span class="n">_db</span><span class="p">.</span><span class="n">Documents</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">doc</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="s">"Deleted"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 9: Configure Services in Program.cs</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">DMS.Api.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">DMS.Api.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add Entity Framework</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">ApplicationDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">GetConnectionString</span><span class="p">(</span><span class="s">"DefaultConnection"</span><span class="p">)));</span>
+
+<span class="c1">// Add Azure Blob Storage Service</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">BlobStorageService</span><span class="p">&gt;();</span>
+
+<span class="c1">// Add controllers</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="c1">// Add services to the container.</span>
+<span class="c1">// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="c1">// Map controllers</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><strong>Step 10: Run and Test the API</strong></p>
+<ul>
+  <li>Run the application and browse to Swagger UI at <code class="language-plaintext highlighter-rouge">http://localhost:5284/swagger/index.html</code></li>
+  <li>Test the endpoints:
+    <ul>
+      <li>Upload documents</li>
+      <li>Download/view documents</li>
+      <li>List documents by customer</li>
+      <li>Delete documents</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/dms_swagger_ui.png" alt="" /></p>
+
+<p>If you see in azure portal the uploaded files in blob container and metadata in database table, congratulations! You have successfully built a Document Management System using ASP.NET Core Web API and Azure Blob Storage.</p>
+
+<p><img src="/assets/images/posts/2025/dms_file_in_azure_blob_storage.png" alt="" /></p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/dms-azure-blob-aspnet">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#asp-net-core" class="page__taxonomy-item" rel="tag">asp-net-core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#azure-blob-storage" class="page__taxonomy-item" rel="tag">azure-blob-storage</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#cloud-integration" class="page__taxonomy-item" rel="tag">cloud-integration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#cloud-storage" class="page__taxonomy-item" rel="tag">cloud-storage</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#database-design" class="page__taxonomy-item" rel="tag">database-design</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#document-management" class="page__taxonomy-item" rel="tag">document-management</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#entity-framework" class="page__taxonomy-item" rel="tag">entity-framework</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#file-upload" class="page__taxonomy-item" rel="tag">file-upload</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#microsoft-azure" class="page__taxonomy-item" rel="tag">microsoft-azure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rest-api" class="page__taxonomy-item" rel="tag">rest-api</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#software-development" class="page__taxonomy-item" rel="tag">software-development</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#web-api" class="page__taxonomy-item" rel="tag">web-api</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#cloud-computing" class="page__taxonomy-item" rel="tag">Cloud Computing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#software-architecture" class="page__taxonomy-item" rel="tag">Software Architecture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-development" class="page__taxonomy-item" rel="tag">Web Development</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-12-21T00:00:00-05:00">December 21, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Document+Management+System+with+ASP.NET+Core+and+Azure+Blob+Storage%3A+Complete+Implementation+Guide%20https%3A%2F%2Fmahedee.net%2FDocument_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2FDocument_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2FDocument_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Binary_Tree_Traversal_Algorithms_using_java/" class="pagination--pager" title="Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Binary_Tree_Traversal_Algorithms_using_java/" rel="permalink">Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  25 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Binary tree traversal algorithms are fundamental techniques that allow systematic visiting of every node in a tree. This comprehensive guide covers all four ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Developing-and-Testing-a-Multi-Environment-ASP-NET-Core-Application-with-SQL-Server/" rel="permalink">Developing and Testing a Multi-Environment ASP.NET Core Application with SQL Server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  24 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In enterprise applications, we need to continuously switch between different environments for testing and running applications. In this article, I will show ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" rel="permalink">Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  17 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In modern enterprise applications, the ability to export data into professional reports is essential for business operations, compliance, and decision-making...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/structuring-agile-work-epics-stories-artifacts/" rel="permalink">Structuring Agile Work Using Epics, Stories, Tasks, DoR, DoD, Artifact and more
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  21 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">End-to-end practical reference for structuring agile work using epics, user stories, tasks, DoR, DoD, templates, and traceability.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

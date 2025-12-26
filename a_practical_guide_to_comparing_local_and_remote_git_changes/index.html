@@ -1,0 +1,1087 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>A Practical Guide to Comparing Local and Remote Git Changes - Think Simple</title>
+<meta name="description" content="Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="A Practical Guide to Comparing Local and Remote Git Changes">
+<meta property="og:url" content="https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/">
+
+
+  <meta property="og:description" content="Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-08-07T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>A Practical Guide to Comparing Local and Remote Git Changes | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="A Practical Guide to Comparing Local and Remote Git Changes" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes." />
+<meta property="og:description" content="Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes." />
+<link rel="canonical" href="https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/" />
+<meta property="og:url" content="https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-08-07T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A Practical Guide to Comparing Local and Remote Git Changes" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-08-07T00:00:00-04:00","datePublished":"2025-08-07T00:00:00-04:00","description":"Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes.","headline":"A Practical Guide to Comparing Local and Remote Git Changes","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/"},"url":"https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="A Practical Guide to Comparing Local and Remote Git Changes">
+    <meta itemprop="description" content="Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental or risky changes.">
+    <meta itemprop="datePublished" content="August 07, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">A Practical Guide to Comparing Local and Remote Git Changes
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- Article banner image (optional) -->
+<!-- ![Document Management System Banner](./images/dms-banner.png) -->
+
+<p><strong>Introduction</strong></p>
+
+<p>In real-world software development, one mistake can easily slip into production—not because of bad code, but because changes were not reviewed properly before pushing.</p>
+
+<p>Questions developers often ask themselves:</p>
+
+<ul>
+  <li>What exactly did I change locally?</li>
+  <li>How different is my branch from origin/main?</li>
+  <li>Will my push override someone else’s work?</li>
+  <li>What will actually go into my Pull Request?</li>
+</ul>
+
+<p>If you’ve ever asked these questions, this article is for you.</p>
+
+<p>In this guide, I’ll show you step by step how to compare your local changes with a remote branch, using both VS Code (visual) and Git commands (precise)—with real-world use cases you’ll face daily as a developer.</p>
+
+<p><strong>Why This Matters in Real Projects</strong></p>
+
+<p>Before jumping into commands and tools, let’s ground this in reality.</p>
+
+<p><strong>Real-World Scenarios</strong></p>
+<ul>
+  <li>You finished a feature and want to review changes before pushing</li>
+  <li>You’re about to create a Pull Request</li>
+  <li>Another teammate pushed changes and you want to check for conflicts early</li>
+  <li>You want to make sure only intended files go into the commit
+In professional teams, checking differences against the remote branch is a must, not a nice-to-have.</li>
+</ul>
+
+<p>Now, let’s start comparing local and remote Git changes effectively using practical tools and commands and real-world examples. In this I will use one of my github repository - https://github.com/mahedee/file-generator</p>
+
+<p>Assuming you have cloned the repository and made some local changes.</p>
+
+<p><strong>Step 0: Always Fetch the Latest Remote Changes</strong></p>
+
+<p>Before comparing anything, make sure your local repo knows about the latest remote state.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin
+</code></pre></div></div>
+
+<p><strong>⚠️ Important:</strong></p>
+<ul>
+  <li>This updates remote references like origin/main</li>
+  <li>It does not modify your local code</li>
+  <li>Skipping this step is one of the most common Git mistakes.</li>
+</ul>
+
+<p><strong>Part 1: Comparing Changes Using VS Code (Visual Approach)</strong></p>
+
+<p>VS Code has excellent built-in Git support. No extra plugins are required.
+For best results, you can install the GitLens extension, but it’s optional.</p>
+
+<p><strong>Step 1: Open Source Control</strong></p>
+
+<ul>
+  <li>Open VS Code in your project folder</li>
+  <li>Open the Source Control panel: Go to View → Source Control</li>
+  <li>Or, Shortcut: Ctrl + Shift + G</li>
+  <li>Or, click the Source Control icon in the sidebar</li>
+</ul>
+
+<p>You’ll immediately see:</p>
+
+<ul>
+  <li>M → Modified files</li>
+  <li>A → Added files</li>
+  <li>D → Deleted files</li>
+</ul>
+
+<p>This shows your local changes, but not yet compared to remote.</p>
+
+<p><img src="/assets/images/posts/2025/git_01_changes_in_vs.png" alt="" /></p>
+
+<p><strong>Step 2: Compare Local Branch with Remote Branch</strong></p>
+<ul>
+  <li>Right-click on a changed file</li>
+  <li>Choose Open Changes or Open Changes with…</li>
+  <li>You will see the local changes on the right side and the previous version on the left side.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/git_01_compare.png" alt="" /></p>
+
+<p>Or,</p>
+<ul>
+  <li>Press Ctrl + Shift + P</li>
+  <li>Search for:</li>
+</ul>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Git:</span> <span class="nf">Compare</span> <span class="nf">with</span> <span class="nf">Branch...</span>
+<span class="nf">Or,</span> 
+<span class="nf">Git:</span> <span class="nf">Open</span> <span class="nf">Changes</span>
+</code></pre></div></div>
+<ul>
+  <li>Select the remote branch to compare against, e.g., origin/main
+VS Code will now show:</li>
+  <li>All files that differ between your local branch and the remote branch</li>
+  <li>Side-by-side diff view</li>
+</ul>
+
+<p>This is ideal before pushing or creating a PR.</p>
+
+<p><strong>Step 3: Review File-Level Differences</strong>
+Click on any file to see:</p>
+<ul>
+  <li>Left panel → Remote branch version</li>
+  <li>Right panel → Your local version</li>
+</ul>
+
+<p>Color indicators:</p>
+<ul>
+  <li>🟢 Added lines</li>
+  <li>🔴 Removed lines</li>
+  <li>🔵 Modified lines</li>
+</ul>
+
+<p>This visual review helps catch unintended changes quickly.</p>
+
+<p><img src="/assets/images/posts/2025/git_02_individual_file_change_vs.png" alt="" /></p>
+
+<p><strong>Step 4: Compare a Single File with Remote</strong></p>
+
+<p>Sometimes you only care about one file.</p>
+<ul>
+  <li>Open the file</li>
+  <li>Right-click inside the editor</li>
+</ul>
+
+<p>Choose: Open Changes -&gt; Open Changes with Branch or Tag…</p>
+
+<p><img src="/assets/images/posts/2025/git_02_ind_file_compare.png" alt="" /></p>
+
+<p><strong>Part 2: Comparing Changes Using Git Commands (Precise Approach)</strong></p>
+
+<p>While VS Code is great visually, Git CLI gives absolute clarity—especially in complex situations.</p>
+
+<p><strong>Step 1: Check Status of Local Changes</strong>
+First, see what files are changed locally:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+</code></pre></div></div>
+
+<p>This shows:</p>
+<ul>
+  <li>Modified files</li>
+  <li>Untracked files</li>
+  <li>Staged vs unstaged changes</li>
+  <li>Whether you’re ahead, behind, or diverged from remote</li>
+</ul>
+
+<p><strong>Step 2: See Commit Differences</strong></p>
+
+<ul>
+  <li>Commits in local but not in remote:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log origin/dev..HEAD <span class="nt">--oneline</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Commits in remote but not in local:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log HEAD..origin/dev <span class="nt">--oneline</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>This is extremely useful before rebasing or pushing.</p>
+
+<p><strong>Step 3: See Line-by-Line Differences</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff origin/dev
+</code></pre></div></div>
+
+<p>Shows:</p>
+<ul>
+  <li>Exact differences between your local working tree and remote branch</li>
+  <li>This is the most commonly used comparison command.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/git_04_diff.png" alt="" /></p>
+
+<p><strong>Step 4: See Only File Names Changed</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-status</span> origin/dev
+</code></pre></div></div>
+
+<p>Sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M src/service/UserService.java
+A src/service/NewFeature.java
+D src/legacy/OldCode.java
+</code></pre></div></div>
+
+<p>Perfect for:</p>
+<ul>
+  <li>Impact analysis</li>
+  <li>Code reviews</li>
+  <li>Release summaries</li>
+</ul>
+
+<p><strong>Step 5: Compare Specific Files</strong>
+To compare a specific file:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff origin/dev <span class="nt">--</span> path/to/your/file.ext
+</code></pre></div></div>
+<p>Example:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git diff origin/dev <span class="nt">--</span> file_generator_app/src/main/java/com/filegenerator/business/encryption/AESEncryptionEngine.java
+</code></pre></div></div>
+
+<p>This shows only changes in that file compared to remote.</p>
+
+<p><strong>Step 6: Compare Only Committed Changes</strong></p>
+
+<p>If you’ve already committed changes locally but haven’t pushed them yet:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff origin/main..HEAD
+</code></pre></div></div>
+
+<p>This command shows exactly what your local commits will add to the remote branch when pushed—perfect for final review before sharing your work.</p>
+
+<p><strong>Part 3: Advanced Real-World Scenarios</strong></p>
+
+<p><strong>Scenario 1: Feature Branch vs Main Branch</strong></p>
+
+<p>Before opening a Pull Request, always review what changes will be included:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff origin/main..feature/login-enhancement
+</code></pre></div></div>
+
+<p>This command shows exactly what your PR will contain, helping you:</p>
+<ul>
+  <li>Ensure no unrelated changes are included</li>
+  <li>Verify all intended features are present</li>
+  <li>Catch any debugging code or temporary changes</li>
+</ul>
+
+<p><strong>Scenario 2: Safe Push Verification</strong></p>
+
+<p>Before pushing to any shared branch, always run this safety check:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin
+git status
+</code></pre></div></div>
+
+<p>If you see output like:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Your branch is behind 'origin/main' by 3 commits
+</code></pre></div></div>
+
+<p>⚠️ <strong>Action Required:</strong> Pull or rebase first to avoid merge conflicts and potential overwrites.</p>
+
+<p><strong>Scenario 3: Staged vs Unstaged Review</strong></p>
+
+<p>Before committing, review both staged and unstaged changes separately:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff            <span class="c"># Shows unstaged changes</span>
+git diff <span class="nt">--staged</span>   <span class="c"># Shows staged changes</span>
+</code></pre></div></div>
+
+<p>This two-step review prevents:</p>
+<ul>
+  <li>Accidentally committing debugging code</li>
+  <li>Missing important changes that weren’t staged</li>
+  <li>Creating incomplete or broken commits</li>
+</ul>
+
+<p><strong>Best Practices Checklist</strong></p>
+
+<p>Follow this checklist for professional Git workflows:</p>
+
+<p>✅ <strong>Always run <code class="language-plaintext highlighter-rouge">git fetch</code> before any comparison</strong><br />
+✅ <strong>Compare against <code class="language-plaintext highlighter-rouge">origin/main</code>, not local <code class="language-plaintext highlighter-rouge">main</code></strong><br />
+✅ <strong>Use VS Code for visual diff inspection</strong><br />
+✅ <strong>Use Git CLI for precise command-line analysis</strong><br />
+✅ <strong>Stage changes selectively using <code class="language-plaintext highlighter-rouge">git add -p</code></strong><br />
+✅ <strong>Review diffs before every commit and push</strong><br />
+✅ <strong>Verify branch status before pushing to shared repositories</strong></p>
+
+<p><strong>Recommended Tool: GitLens Extension for VS Code</strong></p>
+
+<p>While not required, the GitLens extension significantly enhances your Git workflow with:</p>
+
+<ul>
+  <li><strong>Line-level blame information</strong> - See who changed what and when</li>
+  <li><strong>Rich file history visualization</strong> - Track changes over time</li>
+  <li><strong>Advanced commit comparison</strong> - Side-by-side commit analysis</li>
+  <li><strong>Team collaboration insights</strong> - Understand team contribution patterns</li>
+</ul>
+
+<p><strong>Installation:</strong> Search “GitLens” in VS Code Extensions and install it. Especially valuable for large codebases and team environments.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>Comparing local changes with remote branches isn’t an advanced Git technique—it’s a fundamental professional practice that separates experienced developers from beginners.</p>
+
+<p><strong>The Visual + Command-Line Approach:</strong></p>
+<ul>
+  <li><strong>VS Code</strong> provides intuitive visual feedback for quick reviews</li>
+  <li><strong>Git CLI</strong> offers precise, scriptable analysis for complex scenarios</li>
+</ul>
+
+<p><strong>This workflow prevents common disasters:</strong></p>
+<ul>
+  <li>🚫 Broken builds reaching production</li>
+  <li>🚫 Risky Pull Requests with unreviewed changes</li>
+  <li>🚫 Accidental overwrites of team members’ work</li>
+  <li>🚫 Emergency production fixes due to poor change management</li>
+</ul>
+
+<p>Make this comparison workflow part of your daily development routine. When you do, Git transforms from feeling unpredictable and risky to becoming a reliable, confidence-inspiring tool.</p>
+
+<p><strong>Remember:</strong> Professional developers don’t just write code—they carefully manage and review every change before it affects others.</p>
+
+<hr />
+
+<p><em>Found this guide helpful? Share it with your development team and help create better Git practices across your organization.</em></p>
+
+<p><strong>Happy coding! 🚀</strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#best-practices" class="page__taxonomy-item" rel="tag">best-practices</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#code-review" class="page__taxonomy-item" rel="tag">code-review</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#developer-productivity" class="page__taxonomy-item" rel="tag">developer-productivity</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#devops" class="page__taxonomy-item" rel="tag">devops</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git-branches" class="page__taxonomy-item" rel="tag">git-branches</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git-cli" class="page__taxonomy-item" rel="tag">git-cli</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git-commands" class="page__taxonomy-item" rel="tag">git-commands</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git-diff" class="page__taxonomy-item" rel="tag">git-diff</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git-workflow" class="page__taxonomy-item" rel="tag">git-workflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#github" class="page__taxonomy-item" rel="tag">github</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pull-request" class="page__taxonomy-item" rel="tag">pull-request</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#software-engineering" class="page__taxonomy-item" rel="tag">software-engineering</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#source-control" class="page__taxonomy-item" rel="tag">source-control</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#version-control" class="page__taxonomy-item" rel="tag">version-control</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#visual-studio-code" class="page__taxonomy-item" rel="tag">visual-studio-code</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#vs-code" class="page__taxonomy-item" rel="tag">vs-code</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#developer-tools" class="page__taxonomy-item" rel="tag">Developer Tools</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#devops" class="page__taxonomy-item" rel="tag">DevOps</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#git" class="page__taxonomy-item" rel="tag">Git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#software-development" class="page__taxonomy-item" rel="tag">Software Development</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#version-control" class="page__taxonomy-item" rel="tag">Version Control</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-08-07T00:00:00-04:00">August 07, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=A+Practical+Guide+to+Comparing+Local+and+Remote+Git+Changes%20https%3A%2F%2Fmahedee.net%2Fa_practical_guide_to_comparing_local_and_remote_git_changes%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fa_practical_guide_to_comparing_local_and_remote_git_changes%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fa_practical_guide_to_comparing_local_and_remote_git_changes%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Binary_Tree_Traversal_Algorithms_using_java/" class="pagination--pager" title="Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+">Previous</a>
+    
+    
+      <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage-copy/" class="pagination--pager" title="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/a_practical_guide_to_comparing_local_and_remote_git_changes/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" rel="permalink">Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complet...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage-copy/" rel="permalink">Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complet...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Binary_Tree_Traversal_Algorithms_using_java/" rel="permalink">Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  25 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Binary tree traversal algorithms are fundamental techniques that allow systematic visiting of every node in a tree. This comprehensive guide covers all four ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Developing-and-Testing-a-Multi-Environment-ASP-NET-Core-Application-with-SQL-Server/" rel="permalink">Developing and Testing a Multi-Environment ASP.NET Core Application with SQL Server
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  24 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">In enterprise applications, we need to continuously switch between different environments for testing and running applications. In this article, I will show ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

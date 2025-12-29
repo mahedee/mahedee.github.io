@@ -1,0 +1,1848 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana - Think Simple</title>
+<meta name="description" content="Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana">
+<meta property="og:url" content="https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/">
+
+
+  <meta property="og:description" content="Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-12-28T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring." />
+<meta property="og:description" content="Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring." />
+<link rel="canonical" href="https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" />
+<meta property="og:url" content="https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-12-28T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-12-28T00:00:00-05:00","datePublished":"2025-12-28T00:00:00-05:00","description":"Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.","headline":"Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/"},"url":"https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana">
+    <meta itemprop="description" content="Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.">
+    <meta itemprop="datePublished" content="December 28, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- Article banner image (optional) -->
+<!-- ![Document Management System Banner](./images/dms-banner.png) -->
+
+<p><strong>Introduction</strong></p>
+
+<p>In today’s fast-paced software development environment, auditing, security, monitoring the performance and health of your applications is crucial. For .NET Core APIs, integrating Prometheus for metrics collection and Grafana for visualization provides a powerful solution for observability. This article will guide you through the process of implementing metrics and dashboards for your .NET Core APIs using Prometheus and Grafana.</p>
+
+<p><strong>What is Prometheus?</strong>
+Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud. It collects and stores metrics as time series data, allowing you to monitor your applications and infrastructure effectively. Prometheus support for different types of matrics, including counters, gauges, histograms, and summaries.</p>
+
+<p><strong>What is Grafana?</strong>
+Grafana is an open-source platform for monitoring and observability that allows you to visualize data from various sources, including Prometheus. It provides a rich set of features for creating interactive and customizable dashboards. It supports visualize data through a pluggable architecture. It supports various data sources, including Prometheus, InfluxDB, Elasticsearch, and many others.</p>
+
+<p><strong>Features Offered by Prometheus and Grafana</strong></p>
+<ul>
+  <li><strong>Metrics Collection</strong>: Prometheus collects metrics from your .NET Core APIs, including request rates, error rates, and response times.</li>
+  <li><strong>Data Storage</strong>: Prometheus stores the collected metrics in a time-series database, allowing for efficient querying and analysis.</li>
+  <li><strong>Visualization</strong>: Grafana provides a user-friendly interface to create dashboards and visualize the metrics collected by Prometheus.</li>
+  <li><strong>Alerting</strong>: Prometheus can be configured to send alerts based on specific conditions, helping you proactively monitor your applications. For example, you can set up alerts for high error rates or slow response times.</li>
+  <li><strong>Custom Dashboards</strong>: Grafana allows you to create custom dashboards tailored to your monitoring needs, enabling you to focus on the metrics that matter most to your applications.</li>
+</ul>
+
+<p><strong>Pros and Cons of Using Prometheus and Grafana</strong>
+<strong>Pros:</strong></p>
+<ul>
+  <li>Open-source and free to use.</li>
+  <li>Highly customizable and extensible.</li>
+  <li>Strong community support and extensive documentation.</li>
+  <li>Seamless integration with .NET Core APIs.</li>
+  <li>Real-time monitoring and alerting capabilities.</li>
+  <li>Broad compatibility with various data sources.</li>
+</ul>
+
+<p><strong>Cons:</strong></p>
+<ul>
+  <li>Requires initial setup and configuration.</li>
+  <li>May have a learning curve for beginners.</li>
+  <li>Resource-intensive for large-scale deployments.</li>
+</ul>
+
+<p><strong>Step-by-Step Guide to Implementing Metrics and Dashboards</strong></p>
+
+<p><strong>Step 1: Create a .NET Core API Project</strong>
+Start by creating a new .NET Core API project using the .NET CLI or Visual Studio.</p>
+
+<ul>
+  <li>Create a solution and a new Web API project:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet new webapi <span class="nt">-n</span> EcommerceApi
+<span class="nb">cd </span>EcommerceApi
+dotnet new sln <span class="nt">-n</span> EcommerceSolution
+dotnet sln add .<span class="se">\E</span>commerceApi.csproj
+</code></pre></div></div>
+
+<p><strong>Step 2: Install the Required NuGet Packages</strong></p>
+
+<p>Install the following NuGet packages for metrics collection and Prometheus integration:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet add package Microsoft.EntityFrameworkCore.InMemory <span class="nt">--version</span> 9.0.0
+dotnet add package Swashbuckle.AspNetCore <span class="nt">--version</span> 6.8.1
+dotnet add package App.Metrics <span class="nt">--version</span> 4.3.0
+dotnet add package App.Metrics.AspNetCore <span class="nt">--version</span> 4.3.0
+dotnet add package App.Metrics.AspNetCore.Endpoints <span class="nt">--version</span> 4.3.0
+dotnet add package App.Metrics.Formatters.Prometheus <span class="nt">--version</span> 4.3.0
+</code></pre></div></div>
+
+<p><strong>Package Overview:</strong></p>
+<ul>
+  <li><strong>Microsoft.EntityFrameworkCore.InMemory</strong>: Provides in-memory database capabilities for development and testing.</li>
+  <li><strong>Swashbuckle.AspNetCore</strong>: Enables Swagger/OpenAPI documentation for your API endpoints.</li>
+  <li><strong>App.Metrics</strong>: Core metrics library that provides various metric types (counters, gauges, histograms).</li>
+  <li><strong>App.Metrics.AspNetCore</strong>: ASP.NET Core integration for automatic HTTP metrics collection.</li>
+  <li><strong>App.Metrics.AspNetCore.Endpoints</strong>: Provides endpoints to expose metrics data via HTTP.</li>
+  <li><strong>App.Metrics.Formatters.Prometheus</strong>: Formats metrics data in Prometheus-compatible format for scraping.</li>
+</ul>
+
+<p><strong>Step 3: Create Product Entity in Entities Folder</strong>
+Create a new folder named <code class="language-plaintext highlighter-rouge">Entities</code> and add a <code class="language-plaintext highlighter-rouge">Product.cs</code> file to define the Product entity.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Entities</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">StockQuantity</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 4: Set Up the Database Context in Data Folder</strong>
+Create a new folder named <code class="language-plaintext highlighter-rouge">Data</code> and add an <code class="language-plaintext highlighter-rouge">EcommerceDbContext.cs</code> file to set up the database context.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EcommerceApi.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Data</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">EcommerceDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">EcommerceDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">EcommerceDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">ModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">base</span><span class="p">.</span><span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">modelBuilder</span><span class="p">);</span>
+
+            <span class="c1">// Seed some initial data for testing</span>
+            <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;().</span><span class="nf">HasData</span><span class="p">(</span>
+                <span class="k">new</span> <span class="n">Product</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Laptop"</span><span class="p">,</span>
+                    <span class="n">Description</span> <span class="p">=</span> <span class="s">"High-performance laptop for gaming and work"</span><span class="p">,</span>
+                    <span class="n">Price</span> <span class="p">=</span> <span class="m">999.99m</span><span class="p">,</span>
+                    <span class="n">StockQuantity</span> <span class="p">=</span> <span class="m">50</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Product</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="m">2</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Smartphone"</span><span class="p">,</span>
+                    <span class="n">Description</span> <span class="p">=</span> <span class="s">"Latest smartphone with advanced features"</span><span class="p">,</span>
+                    <span class="n">Price</span> <span class="p">=</span> <span class="m">699.99m</span><span class="p">,</span>
+                    <span class="n">StockQuantity</span> <span class="p">=</span> <span class="m">100</span>
+                <span class="p">},</span>
+                <span class="k">new</span> <span class="n">Product</span>
+                <span class="p">{</span>
+                    <span class="n">Id</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="s">"Headphones"</span><span class="p">,</span>
+                    <span class="n">Description</span> <span class="p">=</span> <span class="s">"Wireless noise-canceling headphones"</span><span class="p">,</span>
+                    <span class="n">Price</span> <span class="p">=</span> <span class="m">199.99m</span><span class="p">,</span>
+                    <span class="n">StockQuantity</span> <span class="p">=</span> <span class="m">75</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 5: Create Product Repository in Repositories Folder</strong></p>
+
+<p>Create a new folder named <code class="language-plaintext highlighter-rouge">Repositories</code> and add a <code class="language-plaintext highlighter-rouge">IProductRepository.cs</code> file to handle data access for products.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">EcommerceApi.Entities</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Repositories</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">interface</span> <span class="nc">IProductRepository</span>
+    <span class="p">{</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">();</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">?&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">);</span>
+        <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">ProductRepository.cs</code> file to implement the repository interface.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EcommerceApi.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EcommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Repositories</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProductRepository</span> <span class="p">:</span> <span class="n">IProductRepository</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">EcommerceDbContext</span> <span class="n">_context</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ProductRepository</span><span class="p">(</span><span class="n">EcommerceDbContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span> <span class="p">=</span> <span class="n">context</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetAllAsync</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">?&gt;</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="nf">CreateAsync</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">product</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">DeleteAsync</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+            <span class="n">_context</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="k">await</span> <span class="n">_context</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 6: Register Metrics in Metrics Folder</strong>
+Create a new folder named <code class="language-plaintext highlighter-rouge">Metrics</code> and add a <code class="language-plaintext highlighter-rouge">MetricsRegistry.cs</code> file to define custom metrics.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">App.Metrics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.Counter</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.Histogram</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.Timer</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.Gauge</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Metrics</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Centralized metrics registry for tracking various API performance and business metrics</span>
+    <span class="c1">/// Used for monitoring API usage, performance, errors, and business KPIs in Grafana dashboards</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">MetricsRegistry</span>
+    <span class="p">{</span>
+        <span class="err">#</span><span class="n">region</span> <span class="n">Counter</span> <span class="n">Metrics</span> <span class="p">-</span> <span class="n">Track</span> <span class="n">API</span> <span class="n">Call</span> <span class="n">Frequency</span>
+        
+        <span class="c1">// Product Read Operations</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">GetByProductIdCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"get_product_by_id_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Calls</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"operation"</span><span class="p">,</span> <span class="s">"read"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">GetAllProductsCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"get_all_products_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span> 
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Calls</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"operation"</span><span class="p">,</span> <span class="s">"read"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="c1">// Product Write Operations</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">CreateProductCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"create_product_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Calls</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"operation"</span><span class="p">,</span> <span class="s">"create"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">UpdateProductCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"update_product_total"</span><span class="p">,</span> 
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Calls</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"operation"</span><span class="p">,</span> <span class="s">"update"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">DeleteProductCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"delete_product_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Calls</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"operation"</span><span class="p">,</span> <span class="s">"delete"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="c1">// Error Counters</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">ProductNotFoundCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"product_not_found_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Errors</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"error_type"</span><span class="p">,</span> <span class="s">"not_found"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">ValidationErrorCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"validation_error_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span> 
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Errors</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"error_type"</span><span class="p">,</span> <span class="s">"validation"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">ServerErrorCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"server_error_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Errors</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"error_type"</span><span class="p">,</span> <span class="s">"server_error"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+
+        <span class="err">#</span><span class="n">region</span> <span class="n">Timer</span> <span class="n">Metrics</span> <span class="p">-</span> <span class="n">Track</span> <span class="n">Response</span> <span class="n">Time</span> <span class="n">Performance</span>
+
+        <span class="c1">// API Response Time Timers</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">TimerOptions</span> <span class="n">GetProductByIdTimer</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">TimerOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"get_product_by_id_duration"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Requests</span><span class="p">,</span>
+            <span class="n">DurationUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Milliseconds</span><span class="p">,</span>
+            <span class="n">RateUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Seconds</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">TimerOptions</span> <span class="n">GetAllProductsTimer</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">TimerOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"get_all_products_duration"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span> 
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Requests</span><span class="p">,</span>
+            <span class="n">DurationUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Milliseconds</span><span class="p">,</span>
+            <span class="n">RateUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Seconds</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">TimerOptions</span> <span class="n">CreateProductTimer</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">TimerOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"create_product_duration"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Requests</span><span class="p">,</span>
+            <span class="n">DurationUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Milliseconds</span><span class="p">,</span>
+            <span class="n">RateUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Seconds</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">TimerOptions</span> <span class="n">UpdateProductTimer</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">TimerOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"update_product_duration"</span><span class="p">,</span> 
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Requests</span><span class="p">,</span>
+            <span class="n">DurationUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Milliseconds</span><span class="p">,</span>
+            <span class="n">RateUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Seconds</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">TimerOptions</span> <span class="n">DeleteProductTimer</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">TimerOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"delete_product_duration"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Requests</span><span class="p">,</span>
+            <span class="n">DurationUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Milliseconds</span><span class="p">,</span>
+            <span class="n">RateUnit</span> <span class="p">=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="n">Seconds</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+
+        <span class="err">#</span><span class="n">region</span> <span class="n">Histogram</span> <span class="n">Metrics</span> <span class="p">-</span> <span class="n">Track</span> <span class="n">Distribution</span> <span class="n">of</span> <span class="n">Values</span>
+
+        <span class="c1">// Request Size Distribution</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">HistogramOptions</span> <span class="n">RequestSizeHistogram</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">HistogramOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"request_size_bytes"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Bytes</span>
+        <span class="p">};</span>
+
+        <span class="c1">// Response Size Distribution  </span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">HistogramOptions</span> <span class="n">ResponseSizeHistogram</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">HistogramOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"response_size_bytes"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Bytes</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+
+        <span class="err">#</span><span class="n">region</span> <span class="n">Gauge</span> <span class="n">Metrics</span> <span class="p">-</span> <span class="n">Track</span> <span class="n">Current</span> <span class="n">State</span> <span class="n">Values</span>
+
+        <span class="c1">// Current System State</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">ActiveConnectionsGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"active_connections_current"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Connections</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">TotalProductsGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"total_products_current"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Items</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">MemoryUsageGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"memory_usage_bytes"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"ProductAPI"</span><span class="p">,</span> 
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Bytes</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+
+        <span class="err">#</span><span class="n">region</span> <span class="n">Business</span> <span class="n">Metrics</span> <span class="p">-</span> <span class="n">Track</span> <span class="n">Business</span> <span class="n">KPIs</span>
+
+        <span class="c1">// Business Intelligence Counters</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">ProductViewsCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"product_views_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"BusinessMetrics"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Events</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"metric_type"</span><span class="p">,</span> <span class="s">"engagement"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">CounterOptions</span> <span class="n">ProductCreatedTodayCounter</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">CounterOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"products_created_today_total"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"BusinessMetrics"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Items</span><span class="p">,</span>
+            <span class="n">Tags</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricTags</span><span class="p">(</span><span class="s">"time_period"</span><span class="p">,</span> <span class="s">"daily"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="c1">// Average Product Price Gauge</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">AverageProductPriceGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"average_product_price"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"BusinessMetrics"</span><span class="p">,</span> 
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="nf">Custom</span><span class="p">(</span><span class="s">"currency"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+
+        <span class="err">#</span><span class="n">region</span> <span class="n">Health</span> <span class="n">Check</span> <span class="n">Metrics</span>
+
+        <span class="c1">// Database Health</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">DatabaseHealthGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"database_health_status"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"HealthCheck"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="nf">Custom</span><span class="p">(</span><span class="s">"status"</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="c1">// API Health Score</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">GaugeOptions</span> <span class="n">ApiHealthScoreGauge</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">GaugeOptions</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"api_health_score"</span><span class="p">,</span>
+            <span class="n">Context</span> <span class="p">=</span> <span class="s">"HealthCheck"</span><span class="p">,</span>
+            <span class="n">MeasurementUnit</span> <span class="p">=</span> <span class="n">App</span><span class="p">.</span><span class="n">Metrics</span><span class="p">.</span><span class="n">Unit</span><span class="p">.</span><span class="n">Percent</span>
+        <span class="p">};</span>
+
+        <span class="err">#</span><span class="n">endregion</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 7: Create Product Controller in Controllers Folder</strong></p>
+<ul>
+  <li>Create a new folder named <code class="language-plaintext highlighter-rouge">Controllers</code> and add a <code class="language-plaintext highlighter-rouge">ProductsController.cs</code> file to handle API requests for products.</li>
+  <li>Implement the controller with metrics tracking for each endpoint.</li>
+  <li>In the below code, we have implemented metrics tracking for all CRUD operations on products.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EcommerceApi.Entities</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EcommerceApi.Repositories</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EcommerceApi.Metrics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text.Json</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">EcommerceApi.Controllers</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ProductController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IProductRepository</span> <span class="n">_productRepository</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">IMetrics</span> <span class="n">_metrics</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">ProductController</span><span class="p">(</span><span class="n">IProductRepository</span> <span class="n">productRepository</span><span class="p">,</span> <span class="n">IMetrics</span> <span class="n">metrics</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_productRepository</span> <span class="p">=</span> <span class="n">productRepository</span><span class="p">;</span>
+            <span class="n">_metrics</span> <span class="p">=</span> <span class="n">metrics</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Product</span>
+        <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetAllProducts</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// Start timing the operation</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">timer</span> <span class="p">=</span> <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="nf">Time</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">GetAllProductsTimer</span><span class="p">);</span>
+            
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Increment API call counter</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">GetAllProductsCounter</span><span class="p">);</span>
+
+                <span class="kt">var</span> <span class="n">products</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
+                
+                <span class="c1">// Update business metrics</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">TotalProductsGauge</span><span class="p">,</span> <span class="n">products</span><span class="p">.</span><span class="nf">Count</span><span class="p">());</span>
+                
+                <span class="c1">// Calculate and update average product price</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">products</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">averagePrice</span> <span class="p">=</span> <span class="n">products</span><span class="p">.</span><span class="nf">Average</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">AverageProductPriceGauge</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">averagePrice</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Track response size</span>
+                <span class="kt">var</span> <span class="n">responseJson</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">products</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">responseSize</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetByteCount</span><span class="p">(</span><span class="n">responseJson</span><span class="p">);</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Histogram</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ResponseSizeHistogram</span><span class="p">,</span> <span class="n">responseSize</span><span class="p">);</span>
+
+                <span class="c1">// Update API health score (100 for successful operations)</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">products</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Track server errors</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ServerErrorCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update API health score on error</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                
+                <span class="k">throw</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// GET: api/Product/5</span>
+        <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">GetProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Start timing the operation</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">timer</span> <span class="p">=</span> <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="nf">Time</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">GetProductByIdTimer</span><span class="p">);</span>
+            
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Increment API call counter</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">GetByProductIdCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Track product views for business analytics</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ProductViewsCounter</span><span class="p">);</span>
+
+                <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                
+                <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track not found errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ProductNotFoundCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for client errors (75 - not as bad as server errors)</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">75</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Track response size</span>
+                <span class="kt">var</span> <span class="n">responseJson</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">responseSize</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetByteCount</span><span class="p">(</span><span class="n">responseJson</span><span class="p">);</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Histogram</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ResponseSizeHistogram</span><span class="p">,</span> <span class="n">responseSize</span><span class="p">);</span>
+
+                <span class="c1">// Update API health score for successful operations</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Track server errors</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ServerErrorCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update API health score on server error</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                
+                <span class="k">throw</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// POST: api/Product</span>
+        <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;&gt;</span> <span class="nf">CreateProduct</span><span class="p">(</span><span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Start timing the operation</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">timer</span> <span class="p">=</span> <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="nf">Time</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">CreateProductTimer</span><span class="p">);</span>
+            
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Increment API call counter</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">CreateProductCounter</span><span class="p">);</span>
+
+                <span class="c1">// Track request size</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">requestJson</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+                    <span class="kt">var</span> <span class="n">requestSize</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetByteCount</span><span class="p">(</span><span class="n">requestJson</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Histogram</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">RequestSizeHistogram</span><span class="p">,</span> <span class="n">requestSize</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Validation checks</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span> <span class="p">||</span> <span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">product</span><span class="p">.</span><span class="n">Name</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ValidationErrorCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">80</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="s">"Product name is required"</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="kt">var</span> <span class="n">createdProduct</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">CreateAsync</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+                
+                <span class="c1">// Track business metrics</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ProductCreatedTodayCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update total products count</span>
+                <span class="kt">var</span> <span class="n">allProducts</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">TotalProductsGauge</span><span class="p">,</span> <span class="n">allProducts</span><span class="p">.</span><span class="nf">Count</span><span class="p">());</span>
+                
+                <span class="c1">// Update average price</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">allProducts</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">averagePrice</span> <span class="p">=</span> <span class="n">allProducts</span><span class="p">.</span><span class="nf">Average</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">AverageProductPriceGauge</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">averagePrice</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Track response size</span>
+                <span class="kt">var</span> <span class="n">responseJson</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">createdProduct</span><span class="p">);</span>
+                <span class="kt">var</span> <span class="n">responseSize</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetByteCount</span><span class="p">(</span><span class="n">responseJson</span><span class="p">);</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Histogram</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ResponseSizeHistogram</span><span class="p">,</span> <span class="n">responseSize</span><span class="p">);</span>
+
+                <span class="c1">// Update API health score for successful operations</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">GetProduct</span><span class="p">),</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">createdProduct</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">createdProduct</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Track server errors</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ServerErrorCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update API health score on server error</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                
+                <span class="k">throw</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// PUT: api/Product/5</span>
+        <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">Product</span> <span class="n">product</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Start timing the operation</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">timer</span> <span class="p">=</span> <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="nf">Time</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">UpdateProductTimer</span><span class="p">);</span>
+            
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Increment API call counter</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">UpdateProductCounter</span><span class="p">);</span>
+
+                <span class="c1">// Track request size</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">requestJson</span> <span class="p">=</span> <span class="n">JsonSerializer</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+                    <span class="kt">var</span> <span class="n">requestSize</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Text</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetByteCount</span><span class="p">(</span><span class="n">requestJson</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Histogram</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">RequestSizeHistogram</span><span class="p">,</span> <span class="n">requestSize</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Validation checks</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="p">==</span> <span class="k">null</span> <span class="p">||</span> <span class="n">id</span> <span class="p">!=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ValidationErrorCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">80</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="s">"Product ID mismatch"</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">product</span><span class="p">.</span><span class="n">Name</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ValidationErrorCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for validation errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">80</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="s">"Product name is required"</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="kt">var</span> <span class="n">existingProduct</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetByIdAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">existingProduct</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track not found errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ProductNotFoundCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for client errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">75</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="kt">var</span> <span class="n">updatedProduct</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">UpdateAsync</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+                
+                <span class="c1">// Update business metrics after successful update</span>
+                <span class="kt">var</span> <span class="n">allProducts</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">allProducts</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">averagePrice</span> <span class="p">=</span> <span class="n">allProducts</span><span class="p">.</span><span class="nf">Average</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">AverageProductPriceGauge</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">averagePrice</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Update API health score for successful operations</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">updatedProduct</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Track server errors</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ServerErrorCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update API health score on server error</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                
+                <span class="k">throw</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// DELETE: api/Product/5</span>
+        <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">DeleteProduct</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Start timing the operation</span>
+            <span class="k">using</span> <span class="nn">var</span> <span class="n">timer</span> <span class="p">=</span> <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="nf">Time</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">DeleteProductTimer</span><span class="p">);</span>
+            
+            <span class="k">try</span>
+            <span class="p">{</span>
+                <span class="c1">// Increment API call counter</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">DeleteProductCounter</span><span class="p">);</span>
+
+                <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">DeleteAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+                
+                <span class="k">if</span> <span class="p">(!</span><span class="n">result</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="c1">// Track not found errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ProductNotFoundCounter</span><span class="p">);</span>
+                    
+                    <span class="c1">// Update API health score for client errors</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">75</span><span class="p">);</span>
+                    
+                    <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Update business metrics after successful deletion</span>
+                <span class="kt">var</span> <span class="n">allProducts</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_productRepository</span><span class="p">.</span><span class="nf">GetAllAsync</span><span class="p">();</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">TotalProductsGauge</span><span class="p">,</span> <span class="n">allProducts</span><span class="p">.</span><span class="nf">Count</span><span class="p">());</span>
+                
+                <span class="c1">// Update average price</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">allProducts</span><span class="p">.</span><span class="nf">Any</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="kt">var</span> <span class="n">averagePrice</span> <span class="p">=</span> <span class="n">allProducts</span><span class="p">.</span><span class="nf">Average</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">);</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">AverageProductPriceGauge</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">averagePrice</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">AverageProductPriceGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Update API health score for successful operations</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Track server errors</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Counter</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ServerErrorCounter</span><span class="p">);</span>
+                
+                <span class="c1">// Update API health score on server error</span>
+                <span class="n">_metrics</span><span class="p">.</span><span class="n">Measure</span><span class="p">.</span><span class="n">Gauge</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="n">MetricsRegistry</span><span class="p">.</span><span class="n">ApiHealthScoreGauge</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+                
+                <span class="k">throw</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 8: Configure Program.cs for Metrics, Middleware, and Database</strong>
+Update the <code class="language-plaintext highlighter-rouge">Program.cs</code> file to configure services, middleware, and database context.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">EcommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">EcommerceApi.Repositories</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.AspNetCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">App.Metrics.Formatters.Prometheus</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Configure metrics with Prometheus formatters and web tracking</span>
+<span class="c1">// This enables comprehensive HTTP request monitoring and Prometheus integration for Grafana</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Host</span><span class="p">.</span><span class="nf">UseMetricsWebTracking</span><span class="p">().</span><span class="nf">UseMetrics</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">EndpointOptions</span> <span class="p">=</span> <span class="n">endpointoptions</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="c1">// Configure Prometheus text formatter for /metrics-text endpoint (human readable)</span>
+        <span class="n">endpointoptions</span><span class="p">.</span><span class="n">MetricsTextEndpointOutputFormatter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricsPrometheusTextOutputFormatter</span><span class="p">();</span>
+        <span class="c1">// Configure Prometheus protobuf formatter for /metrics endpoint (efficient binary format)</span>
+        <span class="n">endpointoptions</span><span class="p">.</span><span class="n">MetricsEndpointOutputFormatter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MetricsPrometheusProtobufOutputFormatter</span><span class="p">();</span>
+        <span class="c1">// Disable environment info endpoint to reduce security exposure</span>
+        <span class="n">endpointoptions</span><span class="p">.</span><span class="n">EnvironmentInfoEndpointEnabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}).</span><span class="nf">UseMetricsWebTracking</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="c1">// Enable Apdex (Application Performance Index) tracking for user satisfaction monitoring</span>
+    <span class="c1">// Apdex measures response time satisfaction: Satisfied/Tolerating/Frustrated requests</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">ApdexTrackingEnabled</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="c1">// Set Apdex T threshold to 0.1 seconds (100ms) - responses faster than this are "satisfied"</span>
+    <span class="n">options</span><span class="p">.</span><span class="n">ApdexTSeconds</span> <span class="p">=</span> <span class="m">0.1</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// Add services to the container.</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+
+<span class="c1">// Add Swagger services</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerDoc</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="k">new</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">OpenApi</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">OpenApiInfo</span> 
+    <span class="p">{</span> 
+        <span class="n">Title</span> <span class="p">=</span> <span class="s">"Ecommerce API"</span><span class="p">,</span> 
+        <span class="n">Version</span> <span class="p">=</span> <span class="s">"v1"</span><span class="p">,</span>
+        <span class="n">Description</span> <span class="p">=</span> <span class="s">"A simple ecommerce API for product management"</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// Configure Entity Framework with In-Memory Database</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">EcommerceDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">options</span><span class="p">.</span><span class="nf">UseInMemoryDatabase</span><span class="p">(</span><span class="s">"EcommerceInMemoryDb"</span><span class="p">));</span>
+
+<span class="c1">// Register Repository</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IProductRepository</span><span class="p">,</span> <span class="n">ProductRepository</span><span class="p">&gt;();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Ensure the database is created and seeded</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">EcommerceDbContext</span><span class="p">&gt;();</span>
+    <span class="n">context</span><span class="p">.</span><span class="n">Database</span><span class="p">.</span><span class="nf">EnsureCreated</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerEndpoint</span><span class="p">(</span><span class="s">"/swagger/v1/swagger.json"</span><span class="p">,</span> <span class="s">"Ecommerce API v1"</span><span class="p">);</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">RoutePrefix</span> <span class="p">=</span> <span class="s">"swagger"</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="c1">// Enable metrics collection middleware - automatically tracks HTTP requests/responses</span>
+<span class="c1">// This captures timing, status codes, and other HTTP metrics for Grafana monitoring</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseMetricsAllMiddleware</span><span class="p">();</span>
+<span class="c1">// Expose metrics endpoints (/metrics, /metrics-text, /ping) for Prometheus scraping</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseMetricsAllEndpoints</span><span class="p">();</span>
+
+<span class="c1">// Map controllers</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Now you can run your .NET Core API project, and it will expose metrics at the <code class="language-plaintext highlighter-rouge">/metrics</code> endpoint in a Prometheus-compatible format. You can then configure Prometheus to scrape this endpoint and set up Grafana dashboards to visualize the collected metrics.</p>
+
+<p>Example Endpoint:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Swagger UI: http://localhost:5262/swagger
+Metrics Endpoints (for Grafana):
+http://localhost:5262/metrics - Prometheus protobuf format
+http://localhost:5262/metrics-text - Prometheus text format
+http://localhost:5262/ping - Health check
+</code></pre></div></div>
+
+<p><strong>Step 9: Setting Up Prometheus</strong></p>
+
+<p>To set up Prometheus to scrape metrics from your .NET Core API, follow these steps:</p>
+<ol>
+  <li><strong>Download and Install Prometheus</strong>: You can download Prometheus from the <a href="https://prometheus.io/download/">official website</a>.</li>
+</ol>
+
+<ul>
+  <li>Download the latest stable version (ex. prometheus-3.8.1.windows-amd64.zip) and extract the files to a directory of your choice.</li>
+</ul>
+
+<ol>
+  <li><strong>Configure Prometheus</strong>: After extracting Prometheus, navigate to the directory and you will find a <code class="language-plaintext highlighter-rouge">prometheus.yml</code> file. Modify this file to add your .NET Core API as a scrape target.</li>
+</ol>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">prometheus.yml</code> configuration file with the following content:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">global</span><span class="pi">:</span>
+  <span class="na">scrape_interval</span><span class="pi">:</span> <span class="s">15s</span>
+<span class="na">scrape_configs</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">job_name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">ecommerce_api'</span>
+    <span class="na">static_configs</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">targets</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">localhost:5262'</span><span class="pi">]</span>  <span class="c1"># Replace with your API's host and port</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Save and close the file.</li>
+</ul>
+
+<ol>
+  <li><strong>Run Prometheus</strong>: To start Prometheus with the updated configuration, run the following command in the terminal from the directory where Prometheus is located:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.<span class="se">\p</span>rometheus.exe <span class="nt">--config</span>.file<span class="o">=</span>prometheus.yml
+</code></pre></div></div>
+
+<ul>
+  <li>Keep the Prometheus server running to allow it to scrape metrics from your .NET Core API.</li>
+  <li>Now you can access the Prometheus web interface at <code class="language-plaintext highlighter-rouge">http://localhost:9090</code> to query and visualize the metrics being collected.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/prometheus_01.png" alt="Prometheus Dashboard" /></p>
+
+<p>As you can see that Prometheus is configured, you can try with different query to verify or move to next step. For example, you can use the following query to see the total number of requests to the <code class="language-plaintext highlighter-rouge">GetAllProducts</code> endpoint:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sum(rate(get_all_products_total[1m]))
+</code></pre></div></div>
+
+<p>And you can use the following query to see the average response time for the <code class="language-plaintext highlighter-rouge">GetProductById</code> endpoint:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>avg(rate(get_product_by_id_duration_sum[1m])) / avg(rate(get_product_by_id_duration_count[1m]))
+</code></pre></div></div>
+
+<p><strong>Step 10: Setting Up Grafana</strong>
+To set up Grafana to visualize the metrics collected by Prometheus, follow these steps:</p>
+
+<ol>
+  <li><strong>Download and Install Grafana</strong>: You can download Grafana from the <a href="https://grafana.com/grafana/download">official website</a>.
+    <ul>
+      <li>Download the latest stable version which match with your OS  (ex. grafana-enterprise_12.3.1_20271043721_windows_amd64.tar.gz) and extract the files to a directory of your choice.</li>
+      <li>Run the Grafana server by executing <code class="language-plaintext highlighter-rouge">grafana-server.exe</code> in bin folder from the extracted directory.</li>
+      <li>Keep the Grafana server running to allow access to the web interface.</li>
+      <li>Now you can access the Grafana web interface at <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/assets/images/posts/2025/grafana_login_01.png" alt="" /></p>
+
+<ol>
+  <li><strong>Add Prometheus as a Data Source</strong>:
+    <ul>
+      <li>Open Grafana in your web browser (default is <code class="language-plaintext highlighter-rouge">http://localhost:3000</code>).</li>
+      <li>Log in with the default credentials (<code class="language-plaintext highlighter-rouge">admin</code>/<code class="language-plaintext highlighter-rouge">admin</code>).</li>
+      <li>You can either change the password or skip to keep the default user credential.</li>
+      <li>Click on Gear Icon at the top left side and go to “Connections” &gt; “Data Sources” and click “Add data source”.</li>
+      <li>Or, from the dashboard home page, click on “Add data source”.</li>
+      <li>Select “Prometheus” from the list of data sources.</li>
+      <li>Set the URL to <code class="language-plaintext highlighter-rouge">http://localhost:9090</code> (or wherever your Prometheus server is running) and click “Save &amp; Test”.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/assets/images/posts/2025/prometheus_config_in_grafana_01.png" alt="" /></p>
+
+<p><strong>Step 11: Configure a Custom Dashboards in Grafana</strong></p>
+
+<p><strong>Step i: Create a New Dashboard</strong></p>
+<ol>
+  <li>Click the <code class="language-plaintext highlighter-rouge">+</code> icon at the top right corner</li>
+  <li>Select “Create” → “Dashboard”</li>
+  <li>Click “Add visualization”</li>
+  <li>Select your “Prometheus” data source</li>
+</ol>
+
+<p><strong>Step ii: Add Panels for Your API Metrics</strong></p>
+
+<p>Based on your metrics output from <code class="language-plaintext highlighter-rouge">http://localhost:5262/metrics-text</code>, create these panels:</p>
+
+<p><img src="/assets/images/posts/2025/grafana_panel_setup01.png" alt="" /></p>
+
+<p><strong>Panel 1: Total HTTP Requests</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Total HTTP Requests”</li>
+  <li><strong>Query</strong>: <code class="language-plaintext highlighter-rouge">application_httprequests_transactions_count</code></li>
+  <li><strong>Panel Type</strong>: Stat</li>
+  <li><strong>Description</strong>: Shows total number of requests processed</li>
+  <li><strong>Note</strong>: Select Code option to write query</li>
+  <li>Save the panel and save the dashboard. In my case - “Mahedee’s Dashboard”</li>
+  <li>Now from your dashboard -&gt; Click on Add -&gt; Visualization and the following panels.</li>
+</ul>
+
+<p><strong>Panel 2: Request Rate</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Requests per Second”</li>
+  <li><strong>Query</strong>: <code class="language-plaintext highlighter-rouge">rate(application_httprequests_transactions_count[5m])</code></li>
+  <li><strong>Panel Type</strong>: Time Series</li>
+  <li><strong>Unit</strong>: requests/sec</li>
+</ul>
+
+<p><strong>Panel 3: Average Response Time</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Average Response Time”</li>
+  <li><strong>Query</strong>: <code class="language-plaintext highlighter-rouge">rate(application_httprequests_transactions_sum[5m]) / rate(application_httprequests_transactions_count[5m])</code></li>
+  <li><strong>Panel Type</strong>: Stat</li>
+  <li><strong>Unit</strong>: seconds</li>
+</ul>
+
+<p><strong>Panel 4: Response Time Percentiles</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Response Time Distribution”</li>
+  <li><strong>Queries</strong>:
+    <ul>
+      <li>Alias “50th”: <code class="language-plaintext highlighter-rouge">application_httprequests_transactions{quantile="0.5"}</code></li>
+      <li>Alias “75th”: <code class="language-plaintext highlighter-rouge">application_httprequests_transactions{quantile="0.75"}</code></li>
+      <li>Alias “95th”: <code class="language-plaintext highlighter-rouge">application_httprequests_transactions{quantile="0.95"}</code></li>
+      <li>Alias “99th”: <code class="language-plaintext highlighter-rouge">application_httprequests_transactions{quantile="0.99"}</code></li>
+    </ul>
+  </li>
+  <li><strong>Panel Type</strong>: Time Series</li>
+  <li><strong>Unit</strong>: seconds</li>
+</ul>
+
+<p><strong>Panel 5: Apdex Score</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Application Performance Index (User Satisfaction)”</li>
+  <li><strong>Query</strong>: <code class="language-plaintext highlighter-rouge">application_httprequests_apdex</code></li>
+  <li><strong>Panel Type</strong>: Stat</li>
+  <li><strong>Unit</strong>: percent (0-100)</li>
+  <li><strong>Thresholds</strong>: Green &gt; 85, Yellow &gt; 70, Red &lt; 70</li>
+</ul>
+
+<p><strong>Panel 6: Active Requests</strong></p>
+<ul>
+  <li><strong>Title</strong>: “Currently Active Requests”</li>
+  <li><strong>Query</strong>: <code class="language-plaintext highlighter-rouge">application_httprequests_active</code></li>
+  <li><strong>Panel Type</strong>: Stat</li>
+  <li><strong>Unit</strong>: short</li>
+</ul>
+
+<p><strong>Note: You can add more panels based on the metrics you have implemented in your .NET Core API. Customize the dashboard layout and styles as per your preference.</strong></p>
+
+<p><strong>Optional Steps: Generate Test Data</strong></p>
+
+<p>Before you can see data in your dashboard, generate some API traffic. You can create a shell script using the following commands and run it in your terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate sustained traffic to create visible metrics</span>
+<span class="k">for </span>i <span class="k">in</span> <span class="o">{</span>1..100<span class="o">}</span><span class="p">;</span> <span class="k">do
+  </span>curl http://localhost:5262/api/Product
+  curl http://localhost:5262/api/Product/1
+  curl http://localhost:5262/api/Product/2
+  <span class="nb">sleep </span>0.2
+<span class="k">done</span>
+
+<span class="c"># Create some products</span>
+curl <span class="nt">-X</span> POST http://localhost:5262/api/Product <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{"name":"Dashboard Test Product","description":"Testing dashboard","price":99.99,"stockQuantity":10}'</span>
+
+<span class="c"># Test 404 errors</span>
+curl http://localhost:5262/api/Product/999
+curl http://localhost:5262/api/Product/888
+</code></pre></div></div>
+
+<p><strong>Step iii: View your dashboard</strong></p>
+<ul>
+  <li>After adding all the panels, save your dashboard. You should now see real-time metrics from your .NET Core API displayed in Grafana.</li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/grafana_custom_dashboard01.png" alt="" /></p>
+
+<p><strong>Step 11: Import Pre-Built Dashboards in Grafana</strong></p>
+
+<ul>
+  <li>Click on the “+” icon on the top right and select “Import Dashboard”.</li>
+  <li>Let’s import a dashboard from Grafana’s dashboard repository. For example, you can use the dashboard ID <code class="language-plaintext highlighter-rouge">4334</code> for a Prometheus overview dashboard it is called - ‘App Metrics - Web Monitoring - Prometheus’.</li>
+  <li>Visit <a href="https://grafana.com/grafana/dashboards">Grafana Dashboards</a> to find more dashboards. If you want to explore more dashboards, you can search for “.NET Core” or “App Metrics” to find relevant dashboards and you will get the dashboard ID from there.</li>
+  <li>Enter <code class="language-plaintext highlighter-rouge">4334</code> in the “Import via grafana.com” field and click “Load”.</li>
+  <li>Select the Prometheus data source you added earlier and click “Import”.</li>
+  <li>Save the dashboard.</li>
+  <li>You will see the following dashboard:</li>
+</ul>
+
+<p><img src="/assets/images/posts/2025/grafana_dashboard_4334.png" alt="" /></p>
+
+<p><strong>Conclusion</strong>
+Implementing metrics and dashboards for your .NET Core APIs using Prometheus and Grafana significantly enhances your application’s observability. By following the steps outlined in this guide, you can effectively monitor your API’s performance, track key metrics, and visualize data through customizable dashboards. This setup not only helps in identifying performance bottlenecks but also aids in proactive issue resolution, ensuring a robust and reliable application.</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/master/grafana-dotnet-core">Source code</a></strong></p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#configuration" class="page__taxonomy-item" rel="tag">configuration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#devops" class="page__taxonomy-item" rel="tag">devops</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#grafana" class="page__taxonomy-item" rel="tag">grafana</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#metrics" class="page__taxonomy-item" rel="tag">metrics</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#monitoring" class="page__taxonomy-item" rel="tag">monitoring</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#observability" class="page__taxonomy-item" rel="tag">observability</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#prometheus" class="page__taxonomy-item" rel="tag">prometheus</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#net-core" class="page__taxonomy-item" rel="tag">.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#devops" class="page__taxonomy-item" rel="tag">DevOps</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#monitoring" class="page__taxonomy-item" rel="tag">Monitoring</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-12-28T00:00:00-05:00">December 28, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Implementing+Metrics+and+Dashboards+for+.NET+Core+APIs+with+Prometheus+and+Grafana%20https%3A%2F%2Fmahedee.net%2Fimplementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fimplementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fimplementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" class="pagination--pager" title="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" rel="permalink">Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complet...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/build-java-projects-offline-maven-local-repository-windows/" rel="permalink">Build Java Projects Offline: A Practical Guide to Using Maven Local Repository on Windows
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Need to build Java projects without internet access? This guide walks through using Maven local repositories, manually installing JAR files, and building Jav...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/a_practical_guide_to_comparing_local_and_remote_git_changes/" rel="permalink">A Practical Guide to Comparing Local and Remote Git Changes
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Binary_Tree_Traversal_Algorithms_using_java/" rel="permalink">Binary Tree Traversal Algorithms in Java: Complete Guide to Preorder, Inorder, Postorder, and Level Order Traversals
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  25 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Binary tree traversal algorithms are fundamental techniques that allow systematic visiting of every node in a tree. This comprehensive guide covers all four ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

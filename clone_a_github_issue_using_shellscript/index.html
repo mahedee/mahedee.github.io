@@ -1,0 +1,1119 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to Clone a GitHub Issue Using PowerShell and Shell Scripts - Think Simple</title>
+<meta name="description" content="Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="How to Clone a GitHub Issue Using PowerShell and Shell Scripts">
+<meta property="og:url" content="https://mahedee.net/clone_a_github_issue_using_shellscript/">
+
+
+  <meta property="og:description" content="Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-11-04T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/clone_a_github_issue_using_shellscript/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to Clone a GitHub Issue Using PowerShell and Shell Scripts | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="How to Clone a GitHub Issue Using PowerShell and Shell Scripts" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency" />
+<meta property="og:description" content="Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency" />
+<link rel="canonical" href="https://mahedee.net/clone_a_github_issue_using_shellscript/" />
+<meta property="og:url" content="https://mahedee.net/clone_a_github_issue_using_shellscript/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-11-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to Clone a GitHub Issue Using PowerShell and Shell Scripts" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-11-04T00:00:00-05:00","datePublished":"2025-11-04T00:00:00-05:00","description":"Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency","headline":"How to Clone a GitHub Issue Using PowerShell and Shell Scripts","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/clone_a_github_issue_using_shellscript/"},"url":"https://mahedee.net/clone_a_github_issue_using_shellscript/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to Clone a GitHub Issue Using PowerShell and Shell Scripts">
+    <meta itemprop="description" content="Step-by-step guide to cloning GitHub issues using PowerShell and shell scripts to automate issue duplication and improve workflow efficiency">
+    <meta itemprop="datePublished" content="November 04, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to Clone a GitHub Issue Using PowerShell and Shell Scripts
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <!-- Article banner image (optional) -->
+<!-- ![Document Management System Banner](./images/dms-banner.png) -->
+
+<h2 id="overview">Overview</h2>
+
+<p>This comprehensive guide demonstrates how to clone GitHub issues using both PowerShell and shell scripts. The solution automatically creates a duplicate issue with the same title and body content, then closes the original issue with a reference to the newly created one.</p>
+
+<!-- completed up to -->
+
+<h2 id="what-is-issue-cloning">What is Issue Cloning?</h2>
+
+<p>Issue cloning is the process of creating a new GitHub issue that duplicates the content of an existing issue. This is useful for:</p>
+<ul>
+  <li>Moving issues between repositories</li>
+  <li>Creating templates from existing issues</li>
+  <li>Archiving resolved issues while maintaining their content</li>
+  <li>Reorganizing project workflows</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<h3 id="1-installing-github-cli">1. Installing GitHub CLI</h3>
+
+<h4 id="on-windows-using-winget">On Windows using winget</h4>
+
+<p>First, check if winget is available:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get-Command</span><span class="w"> </span><span class="nx">winget</span><span class="w"> </span><span class="nt">-ErrorAction</span><span class="w"> </span><span class="nx">SilentlyContinue</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If winget is not found, you can try adding it to your PATH:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">PATH</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s2">";C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_1.27.440.0_x64__8wekyb3d8bbwe"</span><span class="w">
+</span><span class="n">winget</span><span class="w"> </span><span class="nt">--version</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Install GitHub CLI:</p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">winget</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--id</span><span class="w"> </span><span class="nx">GitHub.cli</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="alternative-installation-methods">Alternative Installation Methods</h4>
+
+<p><strong>Method 1: Manual Download</strong></p>
+<ul>
+  <li>Download from GitHub: https://github.com/cli/cli/releases</li>
+  <li>Install the <code class="language-plaintext highlighter-rouge">.msi</code> file for Windows</li>
+</ul>
+
+<p><strong>Method 2: Using Chocolatey</strong></p>
+<ul>
+  <li>Chocolatey is a package manager for Windows. Install GitHub CLI with:</li>
+</ul>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">choco</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">gh</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Method 3: Direct Download</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$progressPreference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'silentlyContinue'</span><span class="w">
+</span><span class="n">Invoke-WebRequest</span><span class="w"> </span><span class="nt">-Uri</span><span class="w"> </span><span class="nx">https://github.com/cli/cli/releases/latest/download/gh_windows_amd64.msi</span><span class="w"> </span><span class="nt">-OutFile</span><span class="w"> </span><span class="nx">gh_installer.msi</span><span class="w">
+</span><span class="n">Start-Process</span><span class="w"> </span><span class="nx">msiexec.exe</span><span class="w"> </span><span class="nt">-ArgumentList</span><span class="w"> </span><span class="s2">"/i"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gh_installer.msi"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/quiet"</span><span class="w"> </span><span class="nt">-Wait</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="2-add-github-cli-to-path">2. Add GitHub CLI to PATH</h3>
+
+<p>After installation, add GitHub CLI to your system PATH:</p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">PATH</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s2">";C:\Program Files\GitHub CLI"</span><span class="w">
+</span><span class="n">gh</span><span class="w"> </span><span class="nt">--version</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="3-github-authentication">3. GitHub Authentication</h3>
+
+<p>Authenticate with GitHub:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh auth login
+</code></pre></div></div>
+
+<p>Follow the prompts to authenticate using your browser or personal access token.</p>
+
+<h2 id="solution-overview">Solution Overview</h2>
+
+<p>We’ve created two scripts that provide the same functionality:</p>
+<ol>
+  <li><strong>PowerShell Script</strong> (<code class="language-plaintext highlighter-rouge">clone_issue.ps1</code>) - Cross-platform PowerShell solution</li>
+  <li><strong>Shell Script</strong> (<code class="language-plaintext highlighter-rouge">clone_issue.sh</code>) - Traditional bash script</li>
+</ol>
+
+<p>Both scripts:</p>
+<ul>
+  <li>Accept issue number as a parameter</li>
+  <li>Retrieve the original issue’s title and body</li>
+  <li>Create a new issue with identical content</li>
+  <li>Add a reference note (“Cloned from #[original_issue_number]”)</li>
+  <li>Automatically close the original issue with a comment referencing the new issue</li>
+</ul>
+
+<p><strong>clone_issue.ps1</strong></p>
+
+<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nf">#!</span><span class="nv">/usr/bin/env</span> <span class="nf">pwsh</span>
+
+<span class="p">&lt;</span><span class="nf">#</span>
+<span class="nf">.SYNOPSIS</span>
+    <span class="nf">Clone</span> <span class="nf">a</span> <span class="nf">GitHub</span> <span class="nf">issue</span> <span class="nf">by</span> <span class="nf">creating</span> <span class="nf">a</span> <span class="nf">new</span> <span class="nf">issue</span> <span class="nf">with</span> <span class="nf">the</span> <span class="nf">same</span> <span class="nf">title</span> <span class="kr">and</span> <span class="nf">body.</span>
+
+<span class="nf">.AUTHOR</span>
+    <span class="nf">Mahedee</span> <span class="nf">Hasan</span>
+
+<span class="nf">.DESCRIPTION</span>
+    <span class="nf">This</span> <span class="nf">script</span> <span class="nf">uses</span> <span class="nf">GitHub</span> <span class="nf">CLI</span> <span class="nf">to</span> <span class="nf">retrieve</span> <span class="nf">an</span> <span class="nf">existing</span> <span class="nf">issue</span> <span class="kr">and</span> <span class="nf">create</span> <span class="nf">a</span> <span class="nf">new</span> <span class="nf">one</span>
+    <span class="nf">with</span> <span class="nf">the</span> <span class="nf">same</span> <span class="nf">content,</span> <span class="nf">adding</span> <span class="nf">a</span> <span class="nf">note</span> <span class="nf">that</span> <span class="nf">it</span> <span class="nf">was</span> <span class="nf">cloned</span> <span class="nf">from</span> <span class="nf">the</span> <span class="nf">original.</span>
+    <span class="nf">After</span> <span class="nf">successful</span> <span class="nf">creation,</span> <span class="nf">it</span> <span class="nf">closes</span> <span class="nf">the</span> <span class="nf">original</span> <span class="nf">issue</span> <span class="nf">with</span> <span class="nf">a</span> <span class="nf">comment</span> <span class="nf">referencing</span> <span class="nf">the</span> <span class="nf">new</span> <span class="nf">issue.</span>
+
+<span class="nf">.PARAMETER</span> <span class="nf">IssueNumber</span>
+    <span class="nf">The</span> <span class="nf">issue</span> <span class="nf">number</span> <span class="nf">to</span> <span class="nf">clone.</span>
+
+<span class="nf">.PARAMETER</span> <span class="nf">Repository</span>
+    <span class="nf">The</span> <span class="nf">repository</span> <span class="nf">in</span> <span class="nf">format</span> <span class="nf">"owner</span><span class="nv">/repo".</span> <span class="nf">Defaults</span> <span class="nf">to</span> <span class="nf">"mahedee</span><span class="nv">/rnd".</span>
+
+<span class="nf">.EXAMPLE</span>
+    <span class="nf">.\clone_issue.ps1</span> <span class="nf">-IssueNumber</span> <span class="mf">7</span>
+    
+<span class="nf">.EXAMPLE</span>
+    <span class="nf">.\clone_issue.ps1</span> <span class="nf">-IssueNumber</span> <span class="mf">7</span> <span class="nf">-Repository</span> <span class="nf">"username</span><span class="nv">/repository"</span>
+
+<span class="nf">.EXAMPLE</span>
+    <span class="nf">.\clone_issue.ps1</span> <span class="mf">9</span>
+<span class="nf">#</span><span class="p">&gt;</span>
+
+<span class="nf">param</span><span class="s">(
+    [Parameter(Mandatory=$true)]
+    [int]$IssueNumber,
+    
+    [Parameter(Mandatory=$false)]
+    [string]$Repository = "arisha/myrepo"
+)</span>
+
+<span class="nf">#</span> <span class="nf">Check</span> <span class="kr">if</span> <span class="nf">GitHub</span> <span class="nf">CLI</span> <span class="nf">is</span> <span class="nf">available</span>
+<span class="nf">try</span> <span class="p">{</span>
+    <span class="nf">$null</span> <span class="nf">=</span> <span class="nf">Get-Command</span> <span class="nf">gh</span> <span class="nf">-ErrorAction</span> <span class="nf">Stop</span>
+<span class="p">}</span> <span class="nf">catch</span> <span class="p">{</span>
+    <span class="nf">Write-Error</span> <span class="nf">"GitHub</span> <span class="nf">CLI</span> <span class="s">(gh)</span> <span class="nf">is</span> <span class="kr">not</span> <span class="nf">found.</span> <span class="nf">Please</span> <span class="nf">install</span> <span class="nf">GitHub</span> <span class="nf">CLI</span> <span class="kr">and</span> <span class="nf">ensure</span> <span class="nf">it's</span> <span class="nf">in</span> <span class="nf">your</span> <span class="nf">PATH."</span>
+    <span class="nb">exit</span> <span class="mf">1</span>
+<span class="p">}</span>
+
+<span class="nf">try</span> <span class="p">{</span>
+    <span class="nf">Write-Host</span> <span class="nf">"Retrieving</span> <span class="nf">issue</span> <span class="nf">#$IssueNumber</span> <span class="nf">from</span> <span class="nf">repository</span> <span class="nf">$Repository..."</span>
+    
+    <span class="nf">#</span> <span class="nf">Get</span> <span class="nf">issue</span> <span class="nf">title</span>
+    <span class="nf">$title</span> <span class="nf">=</span> <span class="nf">gh</span> <span class="nf">issue</span> <span class="nf">view</span> <span class="nf">$IssueNumber</span> <span class="nf">-R</span> <span class="nf">$Repository</span> <span class="nf">--json</span> <span class="nf">title</span> <span class="nf">-q</span> <span class="nf">.title</span>
+    <span class="kr">if</span> <span class="s">($LASTEXITCODE -ne 0)</span> <span class="p">{</span>
+        <span class="nf">Write-Error</span> <span class="nf">"Failed</span> <span class="nf">to</span> <span class="nf">retrieve</span> <span class="nf">issue</span> <span class="nf">#$IssueNumber.</span> <span class="nf">Please</span> <span class="nf">check</span> <span class="kr">if</span> <span class="nf">the</span> <span class="nf">issue</span> <span class="nf">exists</span> <span class="kr">and</span> <span class="nf">you</span> <span class="nf">have</span> <span class="nf">access</span> <span class="nf">to</span> <span class="nf">the</span> <span class="nf">repository."</span>
+        <span class="nb">exit</span> <span class="mf">1</span>
+    <span class="p">}</span>
+    
+    <span class="nf">#</span> <span class="nf">Get</span> <span class="nf">issue</span> <span class="nf">body</span>
+    <span class="nf">$body</span> <span class="nf">=</span> <span class="nf">gh</span> <span class="nf">issue</span> <span class="nf">view</span> <span class="nf">$IssueNumber</span> <span class="nf">-R</span> <span class="nf">$Repository</span> <span class="nf">--json</span> <span class="nf">body</span> <span class="nf">-q</span> <span class="nf">.body</span>
+    <span class="kr">if</span> <span class="s">($LASTEXITCODE -ne 0)</span> <span class="p">{</span>
+        <span class="nf">Write-Error</span> <span class="nf">"Failed</span> <span class="nf">to</span> <span class="nf">retrieve</span> <span class="nf">issue</span> <span class="nf">body</span> <span class="kr">for</span> <span class="nf">#$IssueNumber."</span>
+        <span class="nb">exit</span> <span class="mf">1</span>
+    <span class="p">}</span>
+    
+    <span class="nf">#</span> <span class="nf">Create</span> <span class="nf">the</span> <span class="nf">cloned</span> <span class="nf">issue</span> <span class="nf">body</span> <span class="nf">with</span> <span class="nf">reference</span> <span class="nf">to</span> <span class="nf">original</span>
+    <span class="nf">$clonedBody</span> <span class="nf">=</span> <span class="nf">"$body`n`nCloned</span> <span class="nf">from</span> <span class="nf">#$IssueNumber"</span>
+    
+    <span class="nf">Write-Host</span> <span class="nf">"Creating</span> <span class="nf">new</span> <span class="nf">issue</span> <span class="nf">with</span> <span class="nf">title:</span> <span class="nf">$title"</span>
+    
+    <span class="nf">#</span> <span class="nf">Create</span> <span class="nf">new</span> <span class="nf">issue</span> <span class="kr">and</span> <span class="nf">capture</span> <span class="nf">the</span> <span class="nf">result</span>
+    <span class="nf">$createOutput</span> <span class="nf">=</span> <span class="nf">gh</span> <span class="nf">issue</span> <span class="nf">create</span> <span class="nf">-R</span> <span class="nf">$Repository</span> <span class="nf">--title</span> <span class="nf">"$title"</span> <span class="nf">--body</span> <span class="nf">"$clonedBody"</span> <span class="mf">2</span><span class="p">&gt;</span><span class="nf">&amp;1</span>
+    
+    <span class="kr">if</span> <span class="s">($LASTEXITCODE -eq 0)</span> <span class="p">{</span>
+        <span class="nf">#</span> <span class="nf">Extract</span> <span class="nf">issue</span> <span class="nf">number</span> <span class="nf">from</span> <span class="nf">URL</span> <span class="s">(format: https://github.com/owner/repo/issues/123)</span>
+        <span class="kr">if</span> <span class="s">($createOutput -match '/issues/(</span><span class="se">\</span><span class="err">d+</span><span class="se">)</span><span class="s">$') {
+            $newIssueNumber = $matches[1]
+            Write-Host "Successfully created new issue #$newIssueNumber!" -ForegroundColor Green
+            
+            # Close the original issue with a comment
+            Write-Host "Closing original issue #$IssueNumber..."
+            $closeComment = "Created new issue #$newIssueNumber"
+            
+            gh issue close $IssueNumber -R $Repository --comment "$closeComment"
+            
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "Successfully closed original issue #$IssueNumber with reference to new issue #$newIssueNumber!" -ForegroundColor Green
+            } else {
+                Write-Warning "New issue #$newIssueNumber was created, but failed to close the original issue #$IssueNumber."
+            }
+        } else {
+            Write-Host "New issue created successfully, but couldn't extract issue number from output: $createOutput" -ForegroundColor Yellow
+            Write-Warning "Please manually close issue #$IssueNumber if needed."
+        }
+    } else {
+        Write-Error "Failed to create the cloned issue. Error: $createOutput"
+        exit 1
+    }
+    
+} catch {
+    Write-Error "An error occurred: $($_.Exception.Message)"
+    exit 1
+}
+</span></code></pre></div></div>
+
+<p><strong>clone_issue.sh</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># Clone a GitHub issue by creating a new issue with the same title and body,</span>
+<span class="c"># then close the original issue with a comment referencing the new one.</span>
+<span class="c">#</span>
+<span class="c"># Author: Mahedee Hasan</span>
+<span class="c">#</span>
+<span class="c"># Usage: ./clone_issue.sh &lt;issue_number&gt; [repository]</span>
+<span class="c">#</span>
+<span class="c"># Parameters:</span>
+<span class="c">#   issue_number: The issue number to clone (required)</span>
+<span class="c">#   repository:   The repository in format "owner/repo" (optional, defaults to "mahedee/rnd")</span>
+<span class="c">#</span>
+<span class="c"># Examples:</span>
+<span class="c">#   ./clone_issue.sh 7</span>
+<span class="c">#   ./clone_issue.sh 7 "username/repository"</span>
+
+<span class="c"># Add GitHub CLI to PATH</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PATH</span><span class="s2">:/c/Program Files/GitHub CLI"</span>
+
+<span class="c"># Check if issue number is provided</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Error: Issue number is required"</span>
+    <span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> &lt;issue_number&gt; [repository]"</span>
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nv">ISSUE</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">REPO</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="s2">"arisha/myrepo"</span><span class="k">}</span>
+
+<span class="c"># Check if GitHub CLI is available</span>
+<span class="k">if</span> <span class="o">!</span> <span class="nb">command</span> <span class="nt">-v</span> gh &amp;&gt; /dev/null<span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Error: GitHub CLI (gh) is not found. Please install GitHub CLI and ensure it's in your PATH."</span>
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"Retrieving issue #</span><span class="nv">$ISSUE</span><span class="s2"> from repository </span><span class="nv">$REPO</span><span class="s2">..."</span>
+
+<span class="c"># Get issue title</span>
+<span class="nv">TITLE</span><span class="o">=</span><span class="si">$(</span>gh issue view <span class="nv">$ISSUE</span> <span class="nt">-R</span> <span class="nv">$REPO</span> <span class="nt">--json</span> title <span class="nt">-q</span> .title<span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Error: Failed to retrieve issue #</span><span class="nv">$ISSUE</span><span class="s2">. Please check if the issue exists and you have access to the repository."</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c"># Get issue body</span>
+<span class="nv">BODY</span><span class="o">=</span><span class="si">$(</span>gh issue view <span class="nv">$ISSUE</span> <span class="nt">-R</span> <span class="nv">$REPO</span> <span class="nt">--json</span> body <span class="nt">-q</span> .body<span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Error: Failed to retrieve issue body for #</span><span class="nv">$ISSUE</span><span class="s2">."</span>
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"Creating new issue with title: </span><span class="nv">$TITLE</span><span class="s2">"</span>
+
+<span class="c"># Create the cloned issue body with reference to original</span>
+<span class="nv">CLONED_BODY</span><span class="o">=</span><span class="s2">"</span><span class="nv">$BODY</span><span class="s2">
+
+Cloned from #</span><span class="nv">$ISSUE</span><span class="s2">"</span>
+
+<span class="c"># Create new issue and capture the result</span>
+<span class="nv">CREATE_OUTPUT</span><span class="o">=</span><span class="si">$(</span>gh issue create <span class="nt">-R</span> <span class="nv">$REPO</span> <span class="nt">--title</span> <span class="s2">"</span><span class="nv">$TITLE</span><span class="s2">"</span> <span class="nt">--body</span> <span class="s2">"</span><span class="nv">$CLONED_BODY</span><span class="s2">"</span> 2&gt;&amp;1<span class="si">)</span>
+<span class="nv">CREATE_EXIT_CODE</span><span class="o">=</span><span class="nv">$?</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$CREATE_EXIT_CODE</span> <span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c"># Extract issue number from URL (format: https://github.com/owner/repo/issues/123)</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$CREATE_OUTPUT</span> <span class="o">=</span>~ /issues/<span class="o">([</span>0-9]+<span class="o">)</span><span class="nv">$ </span><span class="o">]]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nv">NEW_ISSUE_NUMBER</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">BASH_REMATCH</span><span class="p">[1]</span><span class="k">}</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="s2">"Successfully created new issue #</span><span class="nv">$NEW_ISSUE_NUMBER</span><span class="s2">!"</span>
+        
+        <span class="c"># Close the original issue with a comment</span>
+        <span class="nb">echo</span> <span class="s2">"Closing original issue #</span><span class="nv">$ISSUE</span><span class="s2">..."</span>
+        <span class="nv">CLOSE_COMMENT</span><span class="o">=</span><span class="s2">"Created new issue #</span><span class="nv">$NEW_ISSUE_NUMBER</span><span class="s2">"</span>
+        
+        gh issue close <span class="nv">$ISSUE</span> <span class="nt">-R</span> <span class="nv">$REPO</span> <span class="nt">--comment</span> <span class="s2">"</span><span class="nv">$CLOSE_COMMENT</span><span class="s2">"</span>
+        
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+            </span><span class="nb">echo</span> <span class="s2">"Successfully closed original issue #</span><span class="nv">$ISSUE</span><span class="s2"> with reference to new issue #</span><span class="nv">$NEW_ISSUE_NUMBER</span><span class="s2">!"</span>
+        <span class="k">else
+            </span><span class="nb">echo</span> <span class="s2">"Warning: New issue #</span><span class="nv">$NEW_ISSUE_NUMBER</span><span class="s2"> was created, but failed to close the original issue #</span><span class="nv">$ISSUE</span><span class="s2">."</span>
+        <span class="k">fi
+    else
+        </span><span class="nb">echo</span> <span class="s2">"New issue created successfully, but couldn't extract issue number from output: </span><span class="nv">$CREATE_OUTPUT</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="s2">"Warning: Please manually close issue #</span><span class="nv">$ISSUE</span><span class="s2"> if needed."</span>
+    <span class="k">fi
+else
+    </span><span class="nb">echo</span> <span class="s2">"Error: Failed to create the cloned issue. Error: </span><span class="nv">$CREATE_OUTPUT</span><span class="s2">"</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<h2 id="powershell-script-implementation">PowerShell Script Implementation</h2>
+
+<h3 id="script-features">Script Features</h3>
+
+<p>The PowerShell script (<code class="language-plaintext highlighter-rouge">clone_issue.ps1</code>) offers:</p>
+<ul>
+  <li><strong>Parameter validation</strong> with mandatory issue number</li>
+  <li><strong>Flexible repository specification</strong> (defaults to “arisha/myrepo”)</li>
+  <li><strong>Comprehensive error handling</strong> with detailed messages</li>
+  <li><strong>Built-in help documentation</strong> using PowerShell comment-based help</li>
+  <li><strong>Cross-platform compatibility</strong> (Windows, Linux, macOS)</li>
+</ul>
+
+<h3 id="usage-examples">Usage Examples</h3>
+
+<p><strong>Basic usage:</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="n">\clone_issue.ps1</span><span class="w"> </span><span class="nt">-IssueNumber</span><span class="w"> </span><span class="nx">9</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Short parameter syntax:</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="n">\clone_issue.ps1</span><span class="w"> </span><span class="nx">9</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>With custom repository:</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="n">\clone_issue.ps1</span><span class="w"> </span><span class="nt">-IssueNumber</span><span class="w"> </span><span class="nx">9</span><span class="w"> </span><span class="nt">-Repository</span><span class="w"> </span><span class="s2">"username/repository"</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Get help:</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get-Help</span><span class="w"> </span><span class="o">.</span><span class="nx">\clone_issue.ps1</span><span class="w"> </span><span class="nt">-Full</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="script-workflow">Script Workflow</h3>
+
+<ol>
+  <li><strong>Validation</strong>: Checks if GitHub CLI is installed and accessible</li>
+  <li><strong>Retrieval</strong>: Fetches the original issue’s title and body using <code class="language-plaintext highlighter-rouge">gh issue view</code></li>
+  <li><strong>Creation</strong>: Creates a new issue with the same content plus a clone reference</li>
+  <li><strong>Extraction</strong>: Parses the new issue URL to extract the issue number</li>
+  <li><strong>Closure</strong>: Closes the original issue with a comment linking to the new issue</li>
+</ol>
+
+<h2 id="shell-script-implementation">Shell Script Implementation</h2>
+
+<h3 id="script-features-1">Script Features</h3>
+
+<p>The shell script (<code class="language-plaintext highlighter-rouge">clone_issue.sh</code>) provides:</p>
+<ul>
+  <li><strong>Command-line parameter support</strong> for issue number and repository</li>
+  <li><strong>POSIX-compliant bash scripting</strong> for maximum compatibility</li>
+  <li><strong>Regex pattern matching</strong> for URL parsing</li>
+  <li><strong>Comprehensive error checking</strong> with exit codes</li>
+  <li><strong>Git Bash compatibility</strong> on Windows</li>
+</ul>
+
+<h3 id="usage-examples-1">Usage Examples</h3>
+
+<p><strong>Basic usage:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./clone_issue.sh 9
+</code></pre></div></div>
+
+<p><strong>With custom repository:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./clone_issue.sh 9 <span class="s2">"username/repository"</span>
+</code></pre></div></div>
+
+<p><strong>Make script executable (Linux/macOS):</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x clone_issue.sh
+./clone_issue.sh 9
+</code></pre></div></div>
+
+<h3 id="script-workflow-1">Script Workflow</h3>
+
+<ol>
+  <li><strong>Parameter Check</strong>: Validates that issue number is provided</li>
+  <li><strong>CLI Verification</strong>: Ensures GitHub CLI is available in PATH</li>
+  <li><strong>Data Retrieval</strong>: Uses <code class="language-plaintext highlighter-rouge">gh issue view</code> with JSON output parsing</li>
+  <li><strong>Issue Creation</strong>: Creates new issue and captures the output</li>
+  <li><strong>URL Parsing</strong>: Extracts issue number using bash regex matching</li>
+  <li><strong>Original Closure</strong>: Closes the original issue with reference comment</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This comprehensive solution provides robust GitHub issue cloning capabilities using both PowerShell and shell scripts. The automated workflow saves time while maintaining data integrity and providing proper cross-references between original and cloned issues.</p>
+
+<p>Choose the PowerShell script for cross-platform compatibility and advanced parameter handling, or use the shell script for lightweight, POSIX-compliant environments. Both scripts provide the same core functionality with appropriate error handling and user feedback. Happy coding!</p>
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
+<!-- Horizontal Unit -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="7189599032"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#automation" class="page__taxonomy-item" rel="tag">automation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#bash" class="page__taxonomy-item" rel="tag">bash</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#command" class="page__taxonomy-item" rel="tag">command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#devops" class="page__taxonomy-item" rel="tag">devops</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#github-issues" class="page__taxonomy-item" rel="tag">github-issues</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#github" class="page__taxonomy-item" rel="tag">github</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#powershell" class="page__taxonomy-item" rel="tag">powershell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#shell" class="page__taxonomy-item" rel="tag">shell</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#tools" class="page__taxonomy-item" rel="tag">tools</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#command" class="page__taxonomy-item" rel="tag">Command</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#devops" class="page__taxonomy-item" rel="tag">DevOps</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#github" class="page__taxonomy-item" rel="tag">Github</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#tools" class="page__taxonomy-item" rel="tag">Tools</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-11-04T00:00:00-05:00">November 04, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+Clone+a+GitHub+Issue+Using+PowerShell+and+Shell+Scripts%20https%3A%2F%2Fmahedee.net%2Fclone_a_github_issue_using_shellscript%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fclone_a_github_issue_using_shellscript%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fclone_a_github_issue_using_shellscript%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" class="pagination--pager" title="Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+">Previous</a>
+    
+    
+      <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" class="pagination--pager" title="Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/clone_a_github_issue_using_shellscript/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Document_Management_System_with_ASP_NET_Core_and_Azure_Blob_Storage/" rel="permalink">Document Management System with ASP.NET Core and Azure Blob Storage: Complete Implementation Guide
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to build a robust Document Management System using ASP.NET Core Web API integrated with Azure Blob Storage. This comprehensive guide covers complet...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/build-java-projects-offline-maven-local-repository-windows/" rel="permalink">Build Java Projects Offline: A Practical Guide to Using Maven Local Repository on Windows
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Need to build Java projects without internet access? This guide walks through using Maven local repositories, manually installing JAR files, and building Jav...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/a_practical_guide_to_comparing_local_and_remote_git_changes/" rel="permalink">A Practical Guide to Comparing Local and Remote Git Changes
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Not sure what will be pushed to origin/main? This guide shows how to compare local and remote Git branches using VS Code and Git commands to avoid accidental...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Add sense code for all page : added globaly -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+
+  </body>
+</html>

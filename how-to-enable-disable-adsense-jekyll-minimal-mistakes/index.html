@@ -287,7 +287,7 @@
 
 
 
-  18 minute read
+  34 minute read
 </p>
           
         </header>
@@ -317,13 +317,13 @@
             </ul>
           </li>
           <li><a href="#step-3-include-ads-in-layout">Step 3: Include Ads in Layout</a></li>
-          <li><a href="#step-4-configure-adstxt-optional-but-recommended">Step 4: Configure ads.txt (Optional but Recommended)</a></li>
+          <li><a href="#step-4-configure-global-adsense-optional">Step 4: Configure Global AdSense (Optional)</a></li>
+          <li><a href="#step-5-configure-adstxt-optional-but-recommended">Step 5: Configure ads.txt (Optional but Recommended)</a></li>
         </ul>
       </li>
       <li><a href="#disabling-adsense">Disabling AdSense</a>
         <ul>
-          <li><a href="#method-1-comment-out-layout-includes-recommended">Method 1: Comment Out Layout Includes (Recommended)</a></li>
-          <li><a href="#method-2-comment-out-ad-code-in-include-files">Method 2: Comment Out Ad Code in Include Files</a>
+          <li><a href="#method-1-complete-adsense-removal-recommended">Method 1: Complete AdSense Removal (Recommended)</a>
             <ul>
               <li><a href="#_includesadvertisementshtml">_includes/advertisements.html</a></li>
               <li><a href="#_includesvertical_advertisementhtml">_includes/vertical_advertisement.html</a></li>
@@ -348,9 +348,11 @@
       <li><a href="#troubleshooting">Troubleshooting</a>
         <ul>
           <li><a href="#common-issues">Common Issues</a></li>
+          <li><a href="#verification-steps">Verification Steps</a></li>
           <li><a href="#debugging-steps">Debugging Steps</a></li>
         </ul>
       </li>
+      <li><a href="#common-pitfalls">Common Pitfalls</a></li>
       <li><a href="#alternative-monetization-methods">Alternative Monetization Methods</a></li>
       <li><a href="#conclusion">Conclusion</a></li>
     </ul>
@@ -358,8 +360,9 @@
 </ul>
             </nav>
 
-            <!-- AdSense disabled: <!-- AdSense disabled: <!--<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
-crossorigin="anonymous"></script> -->
+            <!-- AdSense disabled: <!-- AdSense Disabled
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
 <!-- vertical unit -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -368,9 +371,9 @@ crossorigin="anonymous"></script> -->
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
 <script>
-     // (adsbygoogle = window.adsbygoogle || []).push({});
-</script> --> -->
--->
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+--> -->
 
 </aside>
         
@@ -398,8 +401,11 @@ crossorigin="anonymous"></script> -->
 └── adsense.html                # Basic placeholder (currently empty)
 
 _layouts/
-└── single.html                 # Main post layout where ads are included
+├── single.html                 # Main post layout where ads are included
+└── default.html                # Base layout with global AdSense scripts
 </code></pre></div></div>
+
+<p><strong>Important Note:</strong> AdSense code can exist in multiple locations. The <code class="language-plaintext highlighter-rouge">default.html</code> layout is the base template for all pages and may contain global AdSense scripts that affect the entire site.</p>
 
 <h2 id="setting-up-adsense-enabling">Setting Up AdSense (Enabling)</h2>
 
@@ -495,7 +501,7 @@ _layouts/
     
     
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__bio"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
 
       <span class="nt">&lt;/div&gt;</span>
     
@@ -1079,7 +1085,625 @@ Databases can batch-process notifications and ensure delivery to all recipients 
 --&gt;
 </code></pre></div></div>
 
-<h3 id="step-4-configure-adstxt-optional-but-recommended">Step 4: Configure ads.txt (Optional but Recommended)</h3>
+<h3 id="step-4-configure-global-adsense-optional">Step 4: Configure Global AdSense (Optional)</h3>
+
+<p>You may also add global AdSense scripts in <code class="language-plaintext highlighter-rouge">_layouts/default.html</code> for site-wide functionality:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- In the main content area --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"initial-content"</span><span class="nt">&gt;</span>
+  
+
+
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span> <span class="na">role=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+  
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sidebar sticky"</span><span class="nt">&gt;</span>
+  
+
+
+<span class="nt">&lt;div</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/Person"</span><span class="nt">&gt;</span>
+
+  
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__avatar"</span><span class="nt">&gt;</span>
+      
+
+      
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/assets/images/me.jpg"</span> <span class="na">alt=</span><span class="s">"Mahedee Hasan"</span> <span class="na">itemprop=</span><span class="s">"image"</span><span class="nt">&gt;</span>
+      
+    <span class="nt">&lt;/div&gt;</span>
+  
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__content"</span><span class="nt">&gt;</span>
+    
+      <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"author__name"</span> <span class="na">itemprop=</span><span class="s">"name"</span><span class="nt">&gt;</span>Mahedee Hasan<span class="nt">&lt;/h3&gt;</span>
+    
+    
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__bio"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
+
+      <span class="nt">&lt;/div&gt;</span>
+    
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__urls-wrapper"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn btn--inverse"</span><span class="nt">&gt;</span>Follow<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"author__urls social-icons"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;li</span> <span class="na">itemprop=</span><span class="s">"homeLocation"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/Place"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-map-marker-alt"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"name"</span><span class="nt">&gt;</span>Toronto, Ontario, Canada<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+      
+
+      
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"mailto:mahedee.hasan@gmail.com"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-envelope-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Email<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://mahedee.net"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-link"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Website<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://mvp.microsoft.com/en-us/PublicProfile/5001294"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-award"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> MVP<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.linkedin.com/in/mahedee/"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-linkedin"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> LinkedIn<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://twitter.com/mahedeehasan"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-twitter-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Twitter<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://facebook.com/mahedee19"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-facebook-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Facebook<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/mahedee"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-github"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> GitHub<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.buymeacoffee.com/mahedee"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa fa-coffee"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Buy me a Coffee<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <span class="c">&lt;!--
+  &lt;li&gt;
+    &lt;a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer"&gt;
+      &lt;i class="fas fa-fw" aria-hidden="true"&gt;&lt;/i&gt; Custom Social Profile Link
+    &lt;/a&gt;
+  &lt;/li&gt;
+--&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+  
+  <span class="nt">&lt;/div&gt;</span>
+
+
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"page"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"headline"</span> <span class="na">content=</span><span class="s">"Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their differences, practical use cases, and when to choose each approach to optimize your application’s performance and user experience."</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"datePublished"</span> <span class="na">content=</span><span class="s">"December 02, 2024"</span><span class="nt">&gt;</span>
+    
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__inner-wrap"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;header&gt;</span>
+          <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"page-title"</span> <span class="na">class=</span><span class="s">"page__title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+<span class="nt">&lt;/h1&gt;</span>
+          
+            <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  3 minute read
+<span class="nt">&lt;/p&gt;</span>
+          
+        <span class="nt">&lt;/header&gt;</span>
+      
+
+      <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"page__content"</span> <span class="na">itemprop=</span><span class="s">"text"</span><span class="nt">&gt;</span>
+        
+        <span class="nt">&lt;p&gt;</span>In modern application development, delivering timely and accurate notifications is crucial to ensuring a seamless user experience. However, the mechanisms used to handle notifications can vary significantly depending on the application’s needs. Two commonly used approaches are the <span class="nt">&lt;strong&gt;</span>Observer Design Pattern<span class="nt">&lt;/strong&gt;</span> for real-time notifications and <span class="nt">&lt;strong&gt;</span>databases<span class="nt">&lt;/strong&gt;</span> for persistent notifications. This article delves into the differences between these methods, their practical use cases, and guidance on when to use each.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Understanding the Basics<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>The Observer Pattern<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The Observer pattern is a behavioral design pattern where an object, called the <span class="nt">&lt;strong&gt;</span>subject<span class="nt">&lt;/strong&gt;</span>, maintains a list of its dependents, known as <span class="nt">&lt;strong&gt;</span>observers<span class="nt">&lt;/strong&gt;</span>, and notifies them of any state changes. It is ideal for scenarios requiring <span class="nt">&lt;strong&gt;</span>real-time updates<span class="nt">&lt;/strong&gt;</span>.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Key Characteristics:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Real-time notifications.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Decouples subjects and observers.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Flexible for dynamic subscription and unsubscription.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Example:<span class="nt">&lt;/strong&gt;</span> Stock market applications notify registered users of price changes in real-time.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Database-Driven Notifications<span class="nt">&lt;/strong&gt;</span>
+In contrast, databases are used to store notifications persistently. Applications periodically query the database or send notifications based on database triggers. This approach suits scenarios where users may not need immediate updates.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Key Characteristics:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Persistent data storage.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Reliable for offline access.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Better for historical data retrieval and reporting.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Example:<span class="nt">&lt;/strong&gt;</span> Email notifications for account activity or billing reminders are generated and stored in a database before being sent to users.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>When to Use the Observer Pattern<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>1. Real-Time Updates<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When users need <span class="nt">&lt;strong&gt;</span>instant notifications<span class="nt">&lt;/strong&gt;</span> about events, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Stock price changes.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Live sports scores.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Real-time chat applications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Observer Pattern?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The Observer pattern’s ability to push updates immediately ensures users receive information without delay.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>2. Dynamic User Subscriptions<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+In scenarios where users frequently subscribe or unsubscribe to updates, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>News apps with customizable notifications.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Weather updates for specific locations.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Observer Pattern?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The pattern dynamically manages subscriptions without requiring extensive database operations.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>3. Event-Driven Architectures<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Applications with a high volume of <span class="nt">&lt;strong&gt;</span>events triggering actions<span class="nt">&lt;/strong&gt;</span> benefit from the Observer pattern, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>IoT systems where sensors notify a central system of status changes.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Gaming systems providing real-time alerts.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>When to Use Databases for Notifications<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>1. Historical Data and Persistent Storage<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When notifications need to be stored for later reference or analytics, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Banking apps saving transaction alerts.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>E-commerce platforms storing order updates.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases ensure data integrity and allow users to access past notifications at any time.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>2. Offline Notifications<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+For applications where users might not always be connected, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Travel apps storing booking confirmations.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Educational platforms saving course notifications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases allow notifications to persist until the user reconnects.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>3. Bulk Notifications<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When sending notifications to a large user base, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Marketing emails or SMS campaigns.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>System-wide announcements in corporate tools.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases can batch-process notifications and ensure delivery to all recipients without overwhelming the system.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Combining Observer Pattern and Databases<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Many applications blend both approaches for a balanced solution. For example:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A news app uses the Observer pattern to deliver breaking news in real-time and stores all notifications in a database for users to browse later.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A stock trading app pushes real-time price alerts using the Observer pattern while persisting all alerts in a database for audit purposes.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>How It Works:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ol&gt;</span>
+  <span class="nt">&lt;li&gt;</span>The Observer pattern handles immediate delivery.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A separate service persists the notifications in a database.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Users can access past notifications through database queries.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ol&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Advantages and Limitations<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Observer Pattern<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;strong&gt;</span>Advantages:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Provides instant updates.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Decouples components for better scalability.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Limitations:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>May become complex with too many observers.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>No built-in persistence for notifications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;h3</span> <span class="na">id=</span><span class="s">"databases"</span><span class="nt">&gt;</span>Databases<span class="nt">&lt;/h3&gt;</span>
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Advantages:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Reliable for storing and retrieving data.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Ensures notifications are available even if users are offline.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Limitations:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Cannot deliver real-time updates without additional components like polling or WebSockets.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Choosing the Right Approach<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Criterion<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Observer Pattern<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Database<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Notification Speed<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Real-time<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Slightly delayed<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Persistence<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Not built-in<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Yes<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Offline Access<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>No<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Yes<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Dynamic Subscriptions<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Highly suitable<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>May require additional logic<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Use Case Examples<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Stock alerts, live sports updates<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Billing reminders, historical logs<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;h2</span> <span class="na">id=</span><span class="s">"conclusion"</span><span class="nt">&gt;</span>Conclusion<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>The Observer pattern and databases serve distinct purposes in handling notifications. While the Observer pattern excels in real-time scenarios, databases provide reliability and persistence. Choosing the right approach—or combining both—depends on your application’s specific requirements. By understanding their strengths and limitations, you can design a notification system that meets both immediate and long-term needs effectively.<span class="nt">&lt;/p&gt;</span>
+
+
+        <span class="c">&lt;!-- AdSense disabled: &lt;!-- AdSense Disabled
+&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"&gt;&lt;/script&gt;
+&lt;!-- Horizontal Unit --&gt;</span>
+<span class="nt">&lt;ins</span> <span class="na">class=</span><span class="s">"adsbygoogle"</span>
+     <span class="na">style=</span><span class="s">"display:inline-block;width:728px;height:90px"</span>
+     <span class="na">data-ad-client=</span><span class="s">"ca-pub-3654930341568980"</span>
+     <span class="na">data-ad-slot=</span><span class="s">"7189599032"</span><span class="nt">&gt;&lt;/ins&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+     <span class="p">(</span><span class="nx">adsbygoogle</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">adsbygoogle</span> <span class="o">||</span> <span class="p">[]).</span><span class="nf">push</span><span class="p">({});</span>
+<span class="nt">&lt;/script&gt;</span>
+--&gt; --&gt;
+        
+      <span class="nt">&lt;/section&gt;</span>
+
+      <span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;</span>
+        
+        
+  
+
+
+  
+  
+  
+
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__taxonomy"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-tags"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Tags: <span class="nt">&lt;/strong&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"keywords"</span><span class="nt">&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#database"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>database<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#design-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>design-pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#observer-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>observer-pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#software-architecture"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>software-architecture<span class="nt">&lt;/a&gt;</span>
+    
+    <span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__taxonomy"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-folder-open"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Categories: <span class="nt">&lt;/strong&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"keywords"</span><span class="nt">&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#database"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Database<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#design-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Design Pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#software-architecture"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Software Architecture<span class="nt">&lt;/a&gt;</span>
+    
+    <span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+
+
+        
+          <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__date"</span><span class="nt">&gt;&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-calendar-alt"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Updated:<span class="nt">&lt;/strong&gt;</span> <span class="nt">&lt;time</span> <span class="na">datetime=</span><span class="s">"2024-12-02T00:00:00-05:00"</span><span class="nt">&gt;</span>December 02, 2024<span class="nt">&lt;/time&gt;&lt;/p&gt;</span>
+        
+      <span class="nt">&lt;/footer&gt;</span>
+
+      <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"page__share"</span><span class="nt">&gt;</span>
+  
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://twitter.com/intent/tweet?text=Real-Time+vs+Persistent+Notifications%3A+Choosing+Between+Observer+Pattern+and+Databases%20https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--twitter"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on Twitter"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-twitter"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> Twitter<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--facebook"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on Facebook"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-facebook"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> Facebook<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--linkedin"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on LinkedIn"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-linkedin"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> LinkedIn<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+<span class="nt">&lt;/section&gt;</span>
+
+
+      
+  <span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"pagination"</span><span class="nt">&gt;</span>
+    
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/leveraging_the_observer_design_pattern_10_real_world_examples_in_action/"</span> <span class="na">class=</span><span class="s">"pagination--pager"</span> <span class="na">title=</span><span class="s">"Leveraging the Observer Design Pattern : 10 Real-World Examples in Action
+"</span><span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;</span>
+    
+    
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/how-to-enable-disable-adsense-jekyll-minimal-mistakes/"</span> <span class="na">class=</span><span class="s">"pagination--pager"</span> <span class="na">title=</span><span class="s">"How to Enable and Disable AdSense in Jekyll Minimal Mistakes Blog
+"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+    
+  <span class="nt">&lt;/nav&gt;</span>
+
+    <span class="nt">&lt;/div&gt;</span>
+
+    
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__comments"</span><span class="nt">&gt;</span>
+  
+  
+      <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"page__comments-title"</span><span class="nt">&gt;</span>Comments<span class="nt">&lt;/h4&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"fb-root"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">async</span> <span class="na">defer</span> <span class="na">crossorigin=</span><span class="s">"anonymous"</span> <span class="na">src=</span><span class="s">"https://connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v18.0&amp;appId=1641495303280571"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"fb-comments"</span> 
+     <span class="na">data-href=</span><span class="s">"https://mahedee.net/real_time_vs_persistent_notifications_observer_pattern_or_databases/"</span> 
+     <span class="na">data-width=</span><span class="s">"100%"</span> 
+     <span class="na">data-numposts=</span><span class="s">"10"</span>
+     <span class="na">data-colorscheme=</span><span class="s">"light"</span>
+     <span class="na">data-order-by=</span><span class="s">"social"</span>
+     <span class="na">data-mobile=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+    
+<span class="nt">&lt;/div&gt;</span>
+
+    
+  <span class="nt">&lt;/article&gt;</span>
+
+  
+  
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__related"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"page__related-title"</span><span class="nt">&gt;</span>You May Also Enjoy<span class="nt">&lt;/h4&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__wrapper"</span><span class="nt">&gt;</span>
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/2010-01-01-could-not-access-network-location-systemdriveinetpubwwwroot/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  2 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/procedural-vs-object-oriented-programming/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>Procedural vs Object-Oriented Programming: Key Differences Explained
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  6 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>A comprehensive comparison of procedural and object-oriented programming paradigms, exploring their key differences, advantages, and practical applications i...<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  18 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/my-vs-code-extensions-for-daily-development/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>My VS Code Extensions for Daily Development Work
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  3 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  
+  
+<span class="nt">&lt;/div&gt;</span>
+
+  
+  <span class="nt">&lt;ins</span> <span class="na">class=</span><span class="s">"adsbygoogle"</span>
+       <span class="na">style=</span><span class="s">"display:block"</span>
+       <span class="na">data-ad-client=</span><span class="s">"YOUR-PUBLISHER-ID"</span>
+       <span class="na">data-ad-slot=</span><span class="s">"YOUR-AD-SLOT-ID"</span>
+       <span class="na">data-ad-format=</span><span class="s">"auto"</span>
+       <span class="na">data-full-width-responsive=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/ins&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Before closing body tag --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">async</span> <span class="na">src=</span><span class="s">"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-PUBLISHER-ID"</span>
+        <span class="na">crossorigin=</span><span class="s">"anonymous"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<h3 id="step-5-configure-adstxt-optional-but-recommended">Step 5: Configure ads.txt (Optional but Recommended)</h3>
 
 <p>Create or update the <code class="language-plaintext highlighter-rouge">ads.txt</code> file in your root directory:</p>
 
@@ -1090,14 +1714,13 @@ Databases can batch-process notifications and ensure delivery to all recipients 
 
 <h2 id="disabling-adsense">Disabling AdSense</h2>
 
-<p>There are several ways to disable AdSense depending on your needs:</p>
+<p>There are several ways to disable AdSense depending on your needs. <strong>Important:</strong> You must check ALL locations where AdSense code might exist.</p>
 
-<h3 id="method-1-comment-out-layout-includes-recommended">Method 1: Comment Out Layout Includes (Recommended)</h3>
+<h3 id="method-1-complete-adsense-removal-recommended">Method 1: Complete AdSense Removal (Recommended)</h3>
 
-<p>This method keeps your ad code intact but prevents it from loading:</p>
+<p>This comprehensive method ensures all AdSense code is disabled:</p>
 
-<p>In <code class="language-plaintext highlighter-rouge">_layouts/single.html</code>, comment out the ad includes:</p>
-
+<p><strong>Step 1:</strong> Comment out ad includes in <code class="language-plaintext highlighter-rouge">_layouts/single.html</code>:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- AdSense disabled: &lt;!-- AdSense Disabled
 &lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
      crossorigin="anonymous"&gt;&lt;/script&gt;
@@ -1141,7 +1764,7 @@ Databases can batch-process notifications and ensure delivery to all recipients 
     
     
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__bio"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (10th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 15 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
 
       <span class="nt">&lt;/div&gt;</span>
     
@@ -1725,16 +2348,626 @@ Databases can batch-process notifications and ensure delivery to all recipients 
 --&gt; --&gt;
 </code></pre></div></div>
 
-<p><strong>Advantages:</strong></p>
-<ul>
-  <li>Quick to enable/disable</li>
-  <li>Preserves your ad configuration</li>
-  <li>Clean and reversible</li>
-</ul>
+<p><strong>Step 2:</strong> Comment out global AdSense in <code class="language-plaintext highlighter-rouge">_layouts/default.html</code>:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Main content area --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"initial-content"</span><span class="nt">&gt;</span>
+  
 
-<h3 id="method-2-comment-out-ad-code-in-include-files">Method 2: Comment Out Ad Code in Include Files</h3>
 
-<p>Comment out the actual ad code in the include files:</p>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span> <span class="na">role=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+  
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"sidebar sticky"</span><span class="nt">&gt;</span>
+  
+
+
+<span class="nt">&lt;div</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/Person"</span><span class="nt">&gt;</span>
+
+  
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__avatar"</span><span class="nt">&gt;</span>
+      
+
+      
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/assets/images/me.jpg"</span> <span class="na">alt=</span><span class="s">"Mahedee Hasan"</span> <span class="na">itemprop=</span><span class="s">"image"</span><span class="nt">&gt;</span>
+      
+    <span class="nt">&lt;/div&gt;</span>
+  
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__content"</span><span class="nt">&gt;</span>
+    
+      <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"author__name"</span> <span class="na">itemprop=</span><span class="s">"name"</span><span class="nt">&gt;</span>Mahedee Hasan<span class="nt">&lt;/h3&gt;</span>
+    
+    
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__bio"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;p&gt;</span>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.<span class="nt">&lt;/p&gt;</span>
+
+      <span class="nt">&lt;/div&gt;</span>
+    
+  <span class="nt">&lt;/div&gt;</span>
+
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"author__urls-wrapper"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn btn--inverse"</span><span class="nt">&gt;</span>Follow<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"author__urls social-icons"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;li</span> <span class="na">itemprop=</span><span class="s">"homeLocation"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/Place"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-map-marker-alt"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"name"</span><span class="nt">&gt;</span>Toronto, Ontario, Canada<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+      
+
+      
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"mailto:mahedee.hasan@gmail.com"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-envelope-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Email<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://mahedee.net"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-link"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Website<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://mvp.microsoft.com/en-us/PublicProfile/5001294"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-award"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> MVP<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.linkedin.com/in/mahedee/"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-linkedin"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> LinkedIn<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://twitter.com/mahedeehasan"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-twitter-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Twitter<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://facebook.com/mahedee19"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-facebook-square"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Facebook<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/mahedee"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-github"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> GitHub<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://www.buymeacoffee.com/mahedee"</span> <span class="na">rel=</span><span class="s">"nofollow noopener noreferrer"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa fa-coffee"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Buy me a Coffee<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <span class="c">&lt;!--
+  &lt;li&gt;
+    &lt;a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer"&gt;
+      &lt;i class="fas fa-fw" aria-hidden="true"&gt;&lt;/i&gt; Custom Social Profile Link
+    &lt;/a&gt;
+  &lt;/li&gt;
+--&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+  
+  <span class="nt">&lt;/div&gt;</span>
+
+
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"page"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"headline"</span> <span class="na">content=</span><span class="s">"Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Deciding between real-time notifications with the Observer pattern and persistent updates using databases can be challenging. This article breaks down their differences, practical use cases, and when to choose each approach to optimize your application’s performance and user experience."</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">itemprop=</span><span class="s">"datePublished"</span> <span class="na">content=</span><span class="s">"December 02, 2024"</span><span class="nt">&gt;</span>
+    
+
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__inner-wrap"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;header&gt;</span>
+          <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"page-title"</span> <span class="na">class=</span><span class="s">"page__title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>Real-Time vs Persistent Notifications: Choosing Between Observer Pattern and Databases
+<span class="nt">&lt;/h1&gt;</span>
+          
+            <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  3 minute read
+<span class="nt">&lt;/p&gt;</span>
+          
+        <span class="nt">&lt;/header&gt;</span>
+      
+
+      <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"page__content"</span> <span class="na">itemprop=</span><span class="s">"text"</span><span class="nt">&gt;</span>
+        
+        <span class="nt">&lt;p&gt;</span>In modern application development, delivering timely and accurate notifications is crucial to ensuring a seamless user experience. However, the mechanisms used to handle notifications can vary significantly depending on the application’s needs. Two commonly used approaches are the <span class="nt">&lt;strong&gt;</span>Observer Design Pattern<span class="nt">&lt;/strong&gt;</span> for real-time notifications and <span class="nt">&lt;strong&gt;</span>databases<span class="nt">&lt;/strong&gt;</span> for persistent notifications. This article delves into the differences between these methods, their practical use cases, and guidance on when to use each.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Understanding the Basics<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>The Observer Pattern<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The Observer pattern is a behavioral design pattern where an object, called the <span class="nt">&lt;strong&gt;</span>subject<span class="nt">&lt;/strong&gt;</span>, maintains a list of its dependents, known as <span class="nt">&lt;strong&gt;</span>observers<span class="nt">&lt;/strong&gt;</span>, and notifies them of any state changes. It is ideal for scenarios requiring <span class="nt">&lt;strong&gt;</span>real-time updates<span class="nt">&lt;/strong&gt;</span>.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Key Characteristics:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Real-time notifications.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Decouples subjects and observers.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Flexible for dynamic subscription and unsubscription.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Example:<span class="nt">&lt;/strong&gt;</span> Stock market applications notify registered users of price changes in real-time.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Database-Driven Notifications<span class="nt">&lt;/strong&gt;</span>
+In contrast, databases are used to store notifications persistently. Applications periodically query the database or send notifications based on database triggers. This approach suits scenarios where users may not need immediate updates.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Key Characteristics:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Persistent data storage.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Reliable for offline access.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Better for historical data retrieval and reporting.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Example:<span class="nt">&lt;/strong&gt;</span> Email notifications for account activity or billing reminders are generated and stored in a database before being sent to users.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>When to Use the Observer Pattern<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>1. Real-Time Updates<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When users need <span class="nt">&lt;strong&gt;</span>instant notifications<span class="nt">&lt;/strong&gt;</span> about events, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Stock price changes.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Live sports scores.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Real-time chat applications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Observer Pattern?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The Observer pattern’s ability to push updates immediately ensures users receive information without delay.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>2. Dynamic User Subscriptions<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+In scenarios where users frequently subscribe or unsubscribe to updates, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>News apps with customizable notifications.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Weather updates for specific locations.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Observer Pattern?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+The pattern dynamically manages subscriptions without requiring extensive database operations.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>3. Event-Driven Architectures<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Applications with a high volume of <span class="nt">&lt;strong&gt;</span>events triggering actions<span class="nt">&lt;/strong&gt;</span> benefit from the Observer pattern, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>IoT systems where sensors notify a central system of status changes.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Gaming systems providing real-time alerts.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>When to Use Databases for Notifications<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>1. Historical Data and Persistent Storage<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When notifications need to be stored for later reference or analytics, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Banking apps saving transaction alerts.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>E-commerce platforms storing order updates.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases ensure data integrity and allow users to access past notifications at any time.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>2. Offline Notifications<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+For applications where users might not always be connected, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Travel apps storing booking confirmations.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Educational platforms saving course notifications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases allow notifications to persist until the user reconnects.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>3. Bulk Notifications<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+When sending notifications to a large user base, such as:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Marketing emails or SMS campaigns.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>System-wide announcements in corporate tools.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Why Use Databases?<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+Databases can batch-process notifications and ensure delivery to all recipients without overwhelming the system.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Combining Observer Pattern and Databases<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Many applications blend both approaches for a balanced solution. For example:<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A news app uses the Observer pattern to deliver breaking news in real-time and stores all notifications in a database for users to browse later.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A stock trading app pushes real-time price alerts using the Observer pattern while persisting all alerts in a database for audit purposes.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>How It Works:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ol&gt;</span>
+  <span class="nt">&lt;li&gt;</span>The Observer pattern handles immediate delivery.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>A separate service persists the notifications in a database.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Users can access past notifications through database queries.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ol&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Advantages and Limitations<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Observer Pattern<span class="nt">&lt;/strong&gt;&lt;br</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;strong&gt;</span>Advantages:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Provides instant updates.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Decouples components for better scalability.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Limitations:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>May become complex with too many observers.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>No built-in persistence for notifications.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;h3</span> <span class="na">id=</span><span class="s">"databases"</span><span class="nt">&gt;</span>Databases<span class="nt">&lt;/h3&gt;</span>
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Advantages:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Reliable for storing and retrieving data.<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Ensures notifications are available even if users are offline.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Limitations:<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;ul&gt;</span>
+  <span class="nt">&lt;li&gt;</span>Cannot deliver real-time updates without additional components like polling or WebSockets.<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;strong&gt;</span>Choosing the Right Approach<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Criterion<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Observer Pattern<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+      <span class="nt">&lt;th&gt;&lt;strong&gt;</span>Database<span class="nt">&lt;/strong&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+  <span class="nt">&lt;tbody&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Notification Speed<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Real-time<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Slightly delayed<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Persistence<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Not built-in<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Yes<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Offline Access<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>No<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Yes<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Dynamic Subscriptions<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Highly suitable<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>May require additional logic<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;td&gt;&lt;strong&gt;</span>Use Case Examples<span class="nt">&lt;/strong&gt;&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Stock alerts, live sports updates<span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;td&gt;</span>Billing reminders, historical logs<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;h2</span> <span class="na">id=</span><span class="s">"conclusion"</span><span class="nt">&gt;</span>Conclusion<span class="nt">&lt;/h2&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>The Observer pattern and databases serve distinct purposes in handling notifications. While the Observer pattern excels in real-time scenarios, databases provide reliability and persistence. Choosing the right approach—or combining both—depends on your application’s specific requirements. By understanding their strengths and limitations, you can design a notification system that meets both immediate and long-term needs effectively.<span class="nt">&lt;/p&gt;</span>
+
+
+        <span class="c">&lt;!-- AdSense disabled: &lt;!-- AdSense Disabled
+&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"&gt;&lt;/script&gt;
+&lt;!-- Horizontal Unit --&gt;</span>
+<span class="nt">&lt;ins</span> <span class="na">class=</span><span class="s">"adsbygoogle"</span>
+     <span class="na">style=</span><span class="s">"display:inline-block;width:728px;height:90px"</span>
+     <span class="na">data-ad-client=</span><span class="s">"ca-pub-3654930341568980"</span>
+     <span class="na">data-ad-slot=</span><span class="s">"7189599032"</span><span class="nt">&gt;&lt;/ins&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+     <span class="p">(</span><span class="nx">adsbygoogle</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">adsbygoogle</span> <span class="o">||</span> <span class="p">[]).</span><span class="nf">push</span><span class="p">({});</span>
+<span class="nt">&lt;/script&gt;</span>
+--&gt; --&gt;
+        
+      <span class="nt">&lt;/section&gt;</span>
+
+      <span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;</span>
+        
+        
+  
+
+
+  
+  
+  
+
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__taxonomy"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-tags"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Tags: <span class="nt">&lt;/strong&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"keywords"</span><span class="nt">&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#database"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>database<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#design-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>design-pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#observer-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>observer-pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/tags/#software-architecture"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>software-architecture<span class="nt">&lt;/a&gt;</span>
+    
+    <span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__taxonomy"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-folder-open"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Categories: <span class="nt">&lt;/strong&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">itemprop=</span><span class="s">"keywords"</span><span class="nt">&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#database"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Database<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#design-pattern"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Design Pattern<span class="nt">&lt;/a&gt;&lt;span</span> <span class="na">class=</span><span class="s">"sep"</span><span class="nt">&gt;</span>, <span class="nt">&lt;/span&gt;</span>
+    
+      
+      
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/categories/#software-architecture"</span> <span class="na">class=</span><span class="s">"page__taxonomy-item"</span> <span class="na">rel=</span><span class="s">"tag"</span><span class="nt">&gt;</span>Software Architecture<span class="nt">&lt;/a&gt;</span>
+    
+    <span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+
+
+        
+          <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__date"</span><span class="nt">&gt;&lt;strong&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-fw fa-calendar-alt"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> Updated:<span class="nt">&lt;/strong&gt;</span> <span class="nt">&lt;time</span> <span class="na">datetime=</span><span class="s">"2024-12-02T00:00:00-05:00"</span><span class="nt">&gt;</span>December 02, 2024<span class="nt">&lt;/time&gt;&lt;/p&gt;</span>
+        
+      <span class="nt">&lt;/footer&gt;</span>
+
+      <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"page__share"</span><span class="nt">&gt;</span>
+  
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://twitter.com/intent/tweet?text=Real-Time+vs+Persistent+Notifications%3A+Choosing+Between+Observer+Pattern+and+Databases%20https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--twitter"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on Twitter"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-twitter"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> Twitter<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--facebook"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on Facebook"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-facebook"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> Facebook<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fmahedee.net%2Freal_time_vs_persistent_notifications_observer_pattern_or_databases%2F"</span> <span class="na">class=</span><span class="s">"btn btn--linkedin"</span> <span class="na">onclick=</span><span class="s">"window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"</span> <span class="na">title=</span><span class="s">"Share on LinkedIn"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fab fa-fw fa-linkedin"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;&lt;span&gt;</span> LinkedIn<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+<span class="nt">&lt;/section&gt;</span>
+
+
+      
+  <span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"pagination"</span><span class="nt">&gt;</span>
+    
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/leveraging_the_observer_design_pattern_10_real_world_examples_in_action/"</span> <span class="na">class=</span><span class="s">"pagination--pager"</span> <span class="na">title=</span><span class="s">"Leveraging the Observer Design Pattern : 10 Real-World Examples in Action
+"</span><span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;</span>
+    
+    
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/how-to-enable-disable-adsense-jekyll-minimal-mistakes/"</span> <span class="na">class=</span><span class="s">"pagination--pager"</span> <span class="na">title=</span><span class="s">"How to Enable and Disable AdSense in Jekyll Minimal Mistakes Blog
+"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+    
+  <span class="nt">&lt;/nav&gt;</span>
+
+    <span class="nt">&lt;/div&gt;</span>
+
+    
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__comments"</span><span class="nt">&gt;</span>
+  
+  
+      <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"page__comments-title"</span><span class="nt">&gt;</span>Comments<span class="nt">&lt;/h4&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"fb-root"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">async</span> <span class="na">defer</span> <span class="na">crossorigin=</span><span class="s">"anonymous"</span> <span class="na">src=</span><span class="s">"https://connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v18.0&amp;appId=1641495303280571"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"fb-comments"</span> 
+     <span class="na">data-href=</span><span class="s">"https://mahedee.net/real_time_vs_persistent_notifications_observer_pattern_or_databases/"</span> 
+     <span class="na">data-width=</span><span class="s">"100%"</span> 
+     <span class="na">data-numposts=</span><span class="s">"10"</span>
+     <span class="na">data-colorscheme=</span><span class="s">"light"</span>
+     <span class="na">data-order-by=</span><span class="s">"social"</span>
+     <span class="na">data-mobile=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+    
+<span class="nt">&lt;/div&gt;</span>
+
+    
+  <span class="nt">&lt;/article&gt;</span>
+
+  
+  
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"page__related"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;h4</span> <span class="na">class=</span><span class="s">"page__related-title"</span><span class="nt">&gt;</span>You May Also Enjoy<span class="nt">&lt;/h4&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__wrapper"</span><span class="nt">&gt;</span>
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/2010-01-01-could-not-access-network-location-systemdriveinetpubwwwroot/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  2 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/procedural-vs-object-oriented-programming/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>Procedural vs Object-Oriented Programming: Key Differences Explained
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  6 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>A comprehensive comparison of procedural and object-oriented programming paradigms, exploring their key differences, advantages, and practical applications i...<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  18 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+          
+
+
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"grid__item"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">"archive__item"</span> <span class="na">itemscope</span> <span class="na">itemtype=</span><span class="s">"https://schema.org/CreativeWork"</span><span class="nt">&gt;</span>
+    
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"archive__item-title"</span> <span class="na">itemprop=</span><span class="s">"headline"</span><span class="nt">&gt;</span>
+      
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/my-vs-code-extensions-for-daily-development/"</span> <span class="na">rel=</span><span class="s">"permalink"</span><span class="nt">&gt;</span>My VS Code Extensions for Daily Development Work
+<span class="nt">&lt;/a&gt;</span>
+      
+    <span class="nt">&lt;/h2&gt;</span>
+    
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"page__meta"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"far fa-clock"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/i&gt;</span> 
+
+
+
+
+  3 minute read
+<span class="nt">&lt;/p&gt;</span>
+    
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"archive__item-excerpt"</span> <span class="na">itemprop=</span><span class="s">"description"</span><span class="nt">&gt;</span>A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/article&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+        
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  
+  
+<span class="nt">&lt;/div&gt;</span>
+
+  
+  <span class="c">&lt;!-- AdSense disabled:
+  &lt;ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-xxxxxxxxxx"
+       data-ad-slot="xxxxxxxxxx"
+       data-ad-format="auto"
+       data-full-width-responsive="true"&gt;&lt;/ins&gt;
+  --&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Before closing body tag --&gt;</span>
+<span class="c">&lt;!-- AdSense disabled: Global AdSense script
+&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxx"
+        crossorigin="anonymous"&gt;&lt;/script&gt;
+--&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Step 3:</strong> Comment out ad code in include files (optional extra safety):</p>
 
 <h4 id="_includesadvertisementshtml">_includes/advertisements.html</h4>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- AdSense Disabled
@@ -1824,27 +3057,39 @@ Databases can batch-process notifications and ensure delivery to all recipients 
 <h3 id="common-issues">Common Issues</h3>
 
 <ol>
-  <li><strong>Ads not showing</strong>
+  <li><strong>Ads still showing after disabling</strong>
     <ul>
-      <li>Check if your site is approved by AdSense</li>
-      <li>Verify publisher ID and ad slot IDs are correct</li>
-      <li>Ensure ads.txt is properly configured</li>
+      <li><strong>Cause:</strong> AdSense code exists in multiple locations</li>
+      <li><strong>Solution:</strong> Check both <code class="language-plaintext highlighter-rouge">_layouts/single.html</code> AND <code class="language-plaintext highlighter-rouge">_layouts/default.html</code></li>
+      <li>Search for <code class="language-plaintext highlighter-rouge">googlesyndication</code> or <code class="language-plaintext highlighter-rouge">adsbygoogle</code> across all files</li>
+      <li>Rebuild production site: <code class="language-plaintext highlighter-rouge">./build-production.ps1</code></li>
     </ul>
   </li>
-  <li><strong>Invalid traffic warnings</strong>
+  <li><strong>AdSense code in unexpected places</strong>
     <ul>
-      <li>Don’t click on your own ads</li>
-      <li>Monitor for bot traffic</li>
-      <li>Use Google Analytics to understand traffic patterns</li>
+      <li>Use search: <code class="language-plaintext highlighter-rouge">grep -r "adsbygoogle" .</code> or <code class="language-plaintext highlighter-rouge">grep -r "googlesyndication" .</code></li>
+      <li>Check all layout files: <code class="language-plaintext highlighter-rouge">default.html</code>, <code class="language-plaintext highlighter-rouge">single.html</code>, <code class="language-plaintext highlighter-rouge">home.html</code></li>
+      <li>Verify include files are actually commented out</li>
     </ul>
   </li>
-  <li><strong>Revenue drops</strong>
+  <li><strong>Caching issues</strong>
     <ul>
-      <li>Check for policy violations</li>
-      <li>Monitor ad placement and performance</li>
-      <li>Consider seasonal variations</li>
+      <li>Clear browser cache and cookies</li>
+      <li>Clear CDN cache if using one</li>
+      <li>Hard refresh (Ctrl+F5) the website</li>
+      <li>Check in incognito/private browsing mode</li>
     </ul>
   </li>
+</ol>
+
+<h3 id="verification-steps">Verification Steps</h3>
+
+<ol>
+  <li><strong>Check browser console for JavaScript errors</strong></li>
+  <li><strong>Browser DevTools → Network tab:</strong> No requests to <code class="language-plaintext highlighter-rouge">googlesyndication.com</code></li>
+  <li><strong>View page source:</strong> Search for <code class="language-plaintext highlighter-rouge">adsbygoogle</code> (should only find commented code)</li>
+  <li><strong>Console test:</strong> <code class="language-plaintext highlighter-rouge">window.adsbygoogle</code> should return <code class="language-plaintext highlighter-rouge">undefined</code></li>
+  <li><strong>Check generated HTML:</strong> Verify <code class="language-plaintext highlighter-rouge">_site</code> folder contains commented ads only</li>
 </ol>
 
 <h3 id="debugging-steps">Debugging Steps</h3>
@@ -1855,6 +3100,15 @@ Databases can batch-process notifications and ensure delivery to all recipients 
   <li>Use Google Tag Assistant for validation</li>
   <li>Test with different browsers and devices</li>
 </ol>
+
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+
+<ul>
+  <li><strong>Missing default.html layout:</strong> Always check the base layout file</li>
+  <li><strong>Incomplete commenting:</strong> Ensure HTML comments are properly closed</li>
+  <li><strong>Multiple AdSense implementations:</strong> Some themes have ads in several places</li>
+  <li><strong>Build cache:</strong> Always rebuild after making changes</li>
+</ul>
 
 <h2 id="alternative-monetization-methods">Alternative Monetization Methods</h2>
 
@@ -1880,17 +3134,18 @@ Databases can batch-process notifications and ensure delivery to all recipients 
 <strong>Tested with:</strong> Jekyll 4.x, Minimal Mistakes theme<br />
 <strong>AdSense API Version:</strong> Current as of 2025</p>
 
-        <!-- AdSense disabled: <!-- AdSense disabled: <!--<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
-crossorigin="anonymous"></script> -->
+        <!-- AdSense disabled: <!-- AdSense Disabled
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+     crossorigin="anonymous"></script>
 <!-- Horizontal Unit -->
 <ins class="adsbygoogle"
      style="display:inline-block;width:728px;height:90px"
      data-ad-client="ca-pub-3654930341568980"
      data-ad-slot="7189599032"></ins>
 <script>
-     // (adsbygoogle = window.adsbygoogle || []).push({});
-</script> --> -->
--->
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+--> -->
         
       </section>
 
@@ -2141,12 +3396,14 @@ crossorigin="anonymous"></script> -->
 </div>
 
 
+      <!-- AdSense disabled:
       <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-3654930341568980"
      data-ad-slot="2244980843"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
+     -->
 
     </div>
 
@@ -2247,9 +3504,9 @@ crossorigin="anonymous"></script> -->
 
 
         <!-- AdSense disabled: Add sense code for all page : added globaly
-<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
-crossorigin="anonymous"></script> -->
--->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
 
   </body>
 </html>

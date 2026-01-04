@@ -1,0 +1,1451 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024) - Think Simple</title>
+<meta name="description" content="Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)">
+<meta property="og:url" content="https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/">
+
+
+  <meta property="og:description" content="Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2025-05-03T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024) | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization." />
+<meta property="og:description" content="Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization." />
+<link rel="canonical" href="https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/" />
+<meta property="og:url" content="https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-05-03T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2025-05-03T00:00:00-04:00","datePublished":"2025-05-03T00:00:00-04:00","description":"Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization.","headline":"Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/"},"url":"https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)">
+    <meta itemprop="description" content="Complete modern guide to finding table sizes in SQL Server 2016-2024. Includes new DMFs, JSON features, temporal tables, and Azure SQL Database methods with performance optimization.">
+    <meta itemprop="datePublished" content="May 03, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Comprehensive Guide to SQL Server Table Sizes: Modern Methods &amp; Alternative Approaches (2016-2024)
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  14 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>SQL Server has evolved significantly since 2010, introducing powerful new features for monitoring table sizes and database storage. This comprehensive guide covers traditional methods alongside cutting-edge approaches available in modern SQL Server versions (2016-2024), including Azure SQL Database optimizations.</p>
+
+<p>Whether you’re managing on-premises SQL Server instances, Azure SQL databases, or hybrid environments, this guide provides the most efficient and feature-rich methods for table size analysis.</p>
+
+<h2 id="whats-new-in-modern-sql-server-versions">What’s New in Modern SQL Server Versions</h2>
+
+<h3 id="sql-server-2016-features">SQL Server 2016+ Features</h3>
+<ul>
+  <li><strong>sys.dm_db_file_space_usage</strong>: Enhanced file space monitoring</li>
+  <li><strong>Query Store integration</strong>: Historical size tracking</li>
+  <li><strong>Temporal table considerations</strong>: System-versioned table sizing</li>
+</ul>
+
+<h3 id="sql-server-2017-features">SQL Server 2017+ Features</h3>
+<ul>
+  <li><strong>Graph database tables</strong>: Specialized sizing for graph workloads</li>
+  <li><strong>Adaptive query processing</strong>: Better performance for size queries</li>
+</ul>
+
+<h3 id="sql-server-2019-features">SQL Server 2019+ Features</h3>
+<ul>
+  <li><strong>Intelligent Query Processing</strong>: Optimized execution for complex size queries</li>
+  <li><strong>Memory-optimized tempdb metadata</strong>: Faster system view queries</li>
+  <li><strong>Accelerated Database Recovery</strong>: Impact on log space calculations</li>
+</ul>
+
+<h3 id="sql-server-2022-features">SQL Server 2022+ Features</h3>
+<ul>
+  <li><strong>Intelligent Query Processing enhancements</strong>: Parameter Sensitive Plan optimization</li>
+  <li><strong>Ledger tables</strong>: Additional considerations for blockchain-verified tables</li>
+  <li><strong>Query Store for secondary replicas</strong>: Better monitoring in Always On scenarios</li>
+</ul>
+
+<h2 id="method-1-modern-dynamic-management-functions-sql-server-2016">Method 1: Modern Dynamic Management Functions (SQL Server 2016+)</h2>
+
+<h3 id="using-sysdm_db_partition_stats-recommended-for-modern-versions">Using sys.dm_db_partition_stats (Recommended for Modern Versions)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Most efficient method for SQL Server 2016+</span>
+<span class="k">SELECT</span> 
+    <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TotalRows</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">ReservedSpaceMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">UsedSpaceMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">in_row_data_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">InRowDataMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">lob_used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">LobDataMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">row_overflow_used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">RowOverflowMB</span><span class="p">,</span>
+    <span class="c1">-- Calculate compression ratio if available</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> 
+        <span class="k">THEN</span> <span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span>
+        <span class="k">ELSE</span> <span class="mi">0</span> 
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">CompressionRatio</span><span class="p">,</span>
+    <span class="c1">-- New in 2016+: More detailed page type breakdown</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">in_row_used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">InRowUsedMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">in_row_reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">InRowReservedMB</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+    <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>  <span class="c1">-- Clustered index or heap only</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="enhanced-query-with-temporal-table-support-sql-server-2016">Enhanced Query with Temporal Table Support (SQL Server 2016+)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Advanced query including temporal table analysis</span>
+<span class="k">WITH</span> <span class="n">ModernTableSizes</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">temporal_type_desc</span> <span class="k">AS</span> <span class="n">TemporalType</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">history_table_id</span><span class="p">,</span>
+        <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">temporal_type</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">history_table_id</span><span class="p">)</span> <span class="k">END</span> <span class="k">AS</span> <span class="n">HistoryTableName</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">CurrentRows</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">CurrentSizeMB</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">CurrentUsedMB</span><span class="p">,</span>
+        <span class="c1">-- Memory-optimized table detection (2014+, enhanced 2016+)</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">durability_desc</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">is_memory_optimized</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+        <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">temporal_type_desc</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">history_table_id</span><span class="p">,</span> 
+             <span class="n">t</span><span class="p">.</span><span class="n">durability_desc</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">is_memory_optimized</span><span class="p">,</span> <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span>
+<span class="p">),</span>
+<span class="n">HistoryTableSizes</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">h</span><span class="p">.</span><span class="n">object_id</span> <span class="k">AS</span> <span class="n">HistoryTableId</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">HistoryRows</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">HistorySizeMB</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">h</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">h</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">h</span><span class="p">.</span><span class="n">temporal_type</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1">-- History table</span>
+        <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">h</span><span class="p">.</span><span class="n">object_id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">mts</span><span class="p">.</span><span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">mts</span><span class="p">.</span><span class="n">TableName</span><span class="p">,</span>
+    <span class="n">mts</span><span class="p">.</span><span class="n">TemporalType</span><span class="p">,</span>
+    <span class="n">mts</span><span class="p">.</span><span class="n">HistoryTableName</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">mts</span><span class="p">.</span><span class="n">CurrentRows</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Current</span> <span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">mts</span><span class="p">.</span><span class="n">CurrentSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Current</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistoryRows</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="n">History</span> <span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistorySizeMB</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">History</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">mts</span><span class="p">.</span><span class="n">CurrentSizeMB</span> <span class="o">+</span> <span class="k">ISNULL</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistorySizeMB</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Total</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">mts</span><span class="p">.</span><span class="n">durability_desc</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Durability</span><span class="p">],</span>
+    <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">mts</span><span class="p">.</span><span class="n">is_memory_optimized</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Yes'</span> <span class="k">ELSE</span> <span class="s1">'No'</span> <span class="k">END</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Memory</span> <span class="n">Optimized</span><span class="p">],</span>
+    <span class="c1">-- Calculate growth potential for temporal tables</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">mts</span><span class="p">.</span><span class="n">TemporalType</span> <span class="o">=</span> <span class="s1">'SYSTEM_VERSIONED_TEMPORAL_TABLE'</span> <span class="k">AND</span> <span class="k">ISNULL</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistoryRows</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">THEN</span> <span class="n">FORMAT</span><span class="p">((</span><span class="k">CAST</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistorySizeMB</span> <span class="k">AS</span> <span class="nb">FLOAT</span><span class="p">)</span> <span class="o">/</span> <span class="n">mts</span><span class="p">.</span><span class="n">CurrentSizeMB</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">'N1'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'%'</span>
+        <span class="k">ELSE</span> <span class="s1">'N/A'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="p">[</span><span class="n">History</span> <span class="n">Ratio</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">ModernTableSizes</span> <span class="n">mts</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">HistoryTableSizes</span> <span class="n">hts</span> <span class="k">ON</span> <span class="n">mts</span><span class="p">.</span><span class="n">history_table_id</span> <span class="o">=</span> <span class="n">hts</span><span class="p">.</span><span class="n">HistoryTableId</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="p">(</span><span class="n">mts</span><span class="p">.</span><span class="n">CurrentSizeMB</span> <span class="o">+</span> <span class="k">ISNULL</span><span class="p">(</span><span class="n">hts</span><span class="p">.</span><span class="n">HistorySizeMB</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-2-json-integration--modern-formatting-sql-server-2016">Method 2: JSON Integration &amp; Modern Formatting (SQL Server 2016+)</h2>
+
+<h3 id="table-size-report-as-json">Table Size Report as JSON</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Generate JSON report for modern applications</span>
+<span class="k">SELECT</span> 
+    <span class="p">(</span>
+        <span class="k">SELECT</span> 
+            <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="k">schema_name</span><span class="p">,</span>
+            <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="k">table_name</span><span class="p">,</span>
+            <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="k">row_count</span><span class="p">,</span>
+            <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">reserved_mb</span><span class="p">,</span>
+            <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">used_mb</span><span class="p">,</span>
+            <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">in_row_data_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">data_mb</span><span class="p">,</span>
+            <span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">lob_used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lob_mb</span><span class="p">,</span>
+            <span class="n">GETDATE</span><span class="p">()</span> <span class="k">AS</span> <span class="n">report_timestamp</span><span class="p">,</span>
+            <span class="c1">-- Add compression info for 2016+</span>
+            <span class="p">(</span><span class="k">SELECT</span> 
+                <span class="n">data_compression_desc</span> 
+             <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">partitions</span> <span class="n">p</span> 
+             <span class="k">WHERE</span> <span class="n">p</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> 
+                <span class="k">AND</span> <span class="n">p</span><span class="p">.</span><span class="n">index_id</span> <span class="o">=</span> <span class="mi">0</span> 
+                <span class="k">AND</span> <span class="n">p</span><span class="p">.</span><span class="n">partition_number</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="p">)</span> <span class="k">AS</span> <span class="n">compression_type</span>
+        <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+        <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+        <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+        <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+        <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span>
+        <span class="k">FOR</span> <span class="n">JSON</span> <span class="n">PATH</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">(</span><span class="s1">'table_sizes'</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">TableSizeReport</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="modern-formatted-output-with-string_agg-sql-server-2017">Modern Formatted Output with STRING_AGG (SQL Server 2017+)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Using STRING_AGG for summary reporting (SQL Server 2017+)</span>
+<span class="k">WITH</span> <span class="n">SizeCategories</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">SizeMB</span><span class="p">,</span>
+        <span class="k">CASE</span> 
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;=</span> <span class="mi">1000</span> <span class="k">THEN</span> <span class="s1">'Large (&gt;1GB)'</span>
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="k">THEN</span> <span class="s1">'Medium (100MB-1GB)'</span>
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="k">THEN</span> <span class="s1">'Small (10-100MB)'</span>
+            <span class="k">ELSE</span> <span class="s1">'Tiny (&lt;10MB)'</span>
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">SizeCategory</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">SizeCategory</span><span class="p">,</span>
+    <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableCount</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">SizeMB</span><span class="p">),</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="n">TotalSize</span><span class="p">,</span>
+    <span class="n">STRING_AGG</span><span class="p">(</span><span class="n">SchemaName</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">TableName</span><span class="p">,</span> <span class="s1">', '</span><span class="p">)</span> <span class="n">WITHIN</span> <span class="k">GROUP</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">SizeMB</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TopTables</span>
+<span class="k">FROM</span> <span class="n">SizeCategories</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">SizeCategory</span>
+<span class="k">ORDER</span> <span class="k">BY</span> 
+    <span class="k">CASE</span> <span class="n">SizeCategory</span>
+        <span class="k">WHEN</span> <span class="s1">'Large (&gt;1GB)'</span> <span class="k">THEN</span> <span class="mi">1</span>
+        <span class="k">WHEN</span> <span class="s1">'Medium (100MB-1GB)'</span> <span class="k">THEN</span> <span class="mi">2</span>
+        <span class="k">WHEN</span> <span class="s1">'Small (10-100MB)'</span> <span class="k">THEN</span> <span class="mi">3</span>
+        <span class="k">ELSE</span> <span class="mi">4</span>
+    <span class="k">END</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-3-memory-optimized-table-analysis-sql-server-2014-enhanced-2016">Method 3: Memory-Optimized Table Analysis (SQL Server 2014+, Enhanced 2016+)</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Specialized query for memory-optimized tables</span>
+<span class="k">WITH</span> <span class="n">MemoryOptimizedAnalysis</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">durability_desc</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ms</span><span class="p">.</span><span class="n">memory_used_by_table_kb</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">MemoryUsedMB</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ms</span><span class="p">.</span><span class="n">memory_used_by_indexes_kb</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">IndexMemoryMB</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+        <span class="c1">-- Calculate memory per row</span>
+        <span class="k">CASE</span> 
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> 
+            <span class="k">THEN</span> <span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ms</span><span class="p">.</span><span class="n">memory_used_by_table_kb</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span>
+            <span class="k">ELSE</span> <span class="mi">0</span>
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">MemoryPerRowBytes</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_xtp_table_memory_stats</span> <span class="n">ms</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ms</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="n">is_memory_optimized</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">durability_desc</span><span class="p">,</span> <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">SchemaName</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">TableName</span> <span class="k">AS</span> <span class="n">FullTableName</span><span class="p">,</span>
+    <span class="n">durability_desc</span> <span class="k">AS</span> <span class="n">Durability</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">RowCount</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">MemoryUsedMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Table</span> <span class="n">Memory</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">IndexMemoryMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Index</span> <span class="n">Memory</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">MemoryUsedMB</span> <span class="o">+</span> <span class="n">IndexMemoryMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Total</span> <span class="n">Memory</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">MemoryPerRowBytes</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' bytes'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Memory</span><span class="o">/</span><span class="k">Row</span><span class="p">],</span>
+    <span class="c1">-- Memory efficiency indicator</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">MemoryPerRowBytes</span> <span class="o">&gt;</span> <span class="mi">10000</span> <span class="k">THEN</span> <span class="s1">'Review for optimization'</span>
+        <span class="k">WHEN</span> <span class="n">MemoryPerRowBytes</span> <span class="o">&gt;</span> <span class="mi">1000</span> <span class="k">THEN</span> <span class="s1">'Normal'</span>
+        <span class="k">ELSE</span> <span class="s1">'Efficient'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">MemoryEfficiency</span>
+<span class="k">FROM</span> <span class="n">MemoryOptimizedAnalysis</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">MemoryUsedMB</span> <span class="o">+</span> <span class="n">IndexMemoryMB</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-4-azure-sql-database-optimization">Method 4: Azure SQL Database Optimization</h2>
+
+<h3 id="azure-sql-database-specific-query">Azure SQL Database Specific Query</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Optimized for Azure SQL Database with DTU/vCore considerations</span>
+<span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">ReservedMB</span><span class="p">,</span>
+    <span class="c1">-- Azure SQL specific calculations</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">ReservedGB</span><span class="p">,</span>
+    <span class="c1">-- Estimate Azure SQL storage cost impact (approximate)</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">25</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">EstimatedMonthlyCost</span><span class="p">,</span>
+    <span class="c1">-- Compression recommendations for Azure SQL</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;</span> <span class="mi">100</span> 
+            <span class="k">AND</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="p">(</span>
+                <span class="k">SELECT</span> <span class="mi">1</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">partitions</span> <span class="n">p</span> 
+                <span class="k">WHERE</span> <span class="n">p</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> 
+                    <span class="k">AND</span> <span class="n">p</span><span class="p">.</span><span class="n">data_compression_desc</span> <span class="o">!=</span> <span class="s1">'NONE'</span>
+            <span class="p">)</span>
+        <span class="k">THEN</span> <span class="s1">'Consider PAGE compression'</span>
+        <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;</span> <span class="mi">1000</span>
+        <span class="k">THEN</span> <span class="s1">'Consider table partitioning'</span>
+        <span class="k">ELSE</span> <span class="s1">'Optimal'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">AzureRecommendation</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="azure-sql-database-resource-consumption">Azure SQL Database Resource Consumption</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Analyze resource consumption patterns (Azure SQL Database)</span>
+<span class="k">SELECT</span> 
+    <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">SizeMB</span><span class="p">,</span>
+    <span class="c1">-- Access patterns for cost optimization</span>
+    <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_seeks</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_scans</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> 
+    <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_lookups</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TotalReads</span><span class="p">,</span>
+    <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_updates</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TotalWrites</span><span class="p">,</span>
+    <span class="c1">-- Calculate read/write ratio for optimization decisions</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_updates</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="s1">'Read-Only'</span>
+        <span class="k">WHEN</span> <span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_seeks</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_scans</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> 
+              <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_lookups</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_updates</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span> 
+        <span class="k">THEN</span> <span class="s1">'Read-Heavy'</span>
+        <span class="k">ELSE</span> <span class="s1">'Write-Heavy'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">AccessPattern</span><span class="p">,</span>
+    <span class="c1">-- Azure SQL optimization suggestions</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;</span> <span class="mi">500</span> 
+            <span class="k">AND</span> <span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_seeks</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_scans</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> 
+                 <span class="k">ISNULL</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ius</span><span class="p">.</span><span class="n">user_lookups</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">100</span>
+        <span class="k">THEN</span> <span class="s1">'Consider archiving or partitioning'</span>
+        <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">&gt;</span> <span class="mi">1000</span>
+        <span class="k">THEN</span> <span class="s1">'Monitor for auto-scaling triggers'</span>
+        <span class="k">ELSE</span> <span class="s1">'Optimally sized'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">AzureOptimization</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_index_usage_stats</span> <span class="n">ius</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ius</span><span class="p">.</span><span class="n">object_id</span> 
+    <span class="k">AND</span> <span class="n">ius</span><span class="p">.</span><span class="n">database_id</span> <span class="o">=</span> <span class="n">DB_ID</span><span class="p">()</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-5-graph-tables-support-sql-server-2017">Method 5: Graph Tables Support (SQL Server 2017+)</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Specialized analysis for graph tables (SQL Server 2017+)</span>
+<span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_node</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Node Table'</span>
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Edge Table'</span> 
+        <span class="k">ELSE</span> <span class="s1">'Regular Table'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">GraphTableType</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">SizeMB</span><span class="p">,</span>
+    <span class="c1">-- Graph-specific metrics</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_node</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Vertices: '</span> <span class="o">+</span> <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span>
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Edges: '</span> <span class="o">+</span> <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span>
+        <span class="k">ELSE</span> <span class="s1">'N/A'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">GraphMetric</span><span class="p">,</span>
+    <span class="c1">-- Performance considerations for graph queries</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">AND</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000000</span> 
+        <span class="k">THEN</span> <span class="s1">'Consider edge table partitioning'</span>
+        <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_node</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">AND</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100000</span> 
+        <span class="k">THEN</span> <span class="s1">'Monitor node query performance'</span>
+        <span class="k">ELSE</span> <span class="s1">'Optimal'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">GraphOptimization</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">AND</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">is_node</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">OR</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">OR</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span><span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">is_node</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-6-intelligent-query-processing-integration-sql-server-2019">Method 6: Intelligent Query Processing Integration (SQL Server 2019+)</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Leverage Query Store for historical table size analysis</span>
+<span class="k">WITH</span> <span class="n">HistoricalSizes</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">qsq</span><span class="p">.</span><span class="n">query_id</span><span class="p">,</span>
+        <span class="n">qsp</span><span class="p">.</span><span class="n">plan_id</span><span class="p">,</span>
+        <span class="n">qsrs</span><span class="p">.</span><span class="n">avg_logical_io_reads</span><span class="p">,</span>
+        <span class="n">qsrs</span><span class="p">.</span><span class="n">avg_physical_io_reads</span><span class="p">,</span>
+        <span class="n">qsrs</span><span class="p">.</span><span class="n">execution_type_desc</span><span class="p">,</span>
+        <span class="n">LAG</span><span class="p">(</span><span class="n">qsrs</span><span class="p">.</span><span class="n">avg_logical_io_reads</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+            <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">qsq</span><span class="p">.</span><span class="n">query_id</span> 
+            <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">qsrs</span><span class="p">.</span><span class="n">last_execution_time</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">prev_logical_io</span><span class="p">,</span>
+        <span class="n">qsrs</span><span class="p">.</span><span class="n">last_execution_time</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">query_store_query</span> <span class="n">qsq</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">query_store_plan</span> <span class="n">qsp</span> <span class="k">ON</span> <span class="n">qsq</span><span class="p">.</span><span class="n">query_id</span> <span class="o">=</span> <span class="n">qsp</span><span class="p">.</span><span class="n">query_id</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">query_store_runtime_stats</span> <span class="n">qsrs</span> <span class="k">ON</span> <span class="n">qsp</span><span class="p">.</span><span class="n">plan_id</span> <span class="o">=</span> <span class="n">qsrs</span><span class="p">.</span><span class="n">plan_id</span>
+    <span class="k">WHERE</span> <span class="n">qsq</span><span class="p">.</span><span class="n">query_sql_text</span> <span class="k">LIKE</span> <span class="s1">'%SELECT%FROM sys.dm_db_partition_stats%'</span>
+        <span class="k">OR</span> <span class="n">qsq</span><span class="p">.</span><span class="n">query_sql_text</span> <span class="k">LIKE</span> <span class="s1">'%sp_spaceused%'</span>
+<span class="p">),</span>
+<span class="n">CurrentTableSizes</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">CurrentSizeMB</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">cts</span><span class="p">.</span><span class="n">SchemaName</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">cts</span><span class="p">.</span><span class="n">TableName</span> <span class="k">AS</span> <span class="n">FullTableName</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">cts</span><span class="p">.</span><span class="n">CurrentSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Current</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="c1">-- Query performance insights</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="k">AVG</span><span class="p">(</span><span class="n">hs</span><span class="p">.</span><span class="n">avg_logical_io_reads</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10000</span> 
+        <span class="k">THEN</span> <span class="s1">'High IO - Consider indexing'</span>
+        <span class="k">WHEN</span> <span class="k">AVG</span><span class="p">(</span><span class="n">hs</span><span class="p">.</span><span class="n">avg_logical_io_reads</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">100</span> 
+        <span class="k">THEN</span> <span class="s1">'Low IO - Efficient access'</span>
+        <span class="k">ELSE</span> <span class="s1">'Normal IO'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">PerformanceInsight</span><span class="p">,</span>
+    <span class="c1">-- Intelligent QP recommendations</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">cts</span><span class="p">.</span><span class="n">CurrentSizeMB</span> <span class="o">&gt;</span> <span class="mi">1000</span> 
+        <span class="k">THEN</span> <span class="s1">'Enable Adaptive Joins and Memory Grant Feedback'</span>
+        <span class="k">WHEN</span> <span class="n">cts</span><span class="p">.</span><span class="n">CurrentSizeMB</span> <span class="o">&gt;</span> <span class="mi">100</span> 
+        <span class="k">THEN</span> <span class="s1">'Monitor for Batch Mode on Rowstore'</span>
+        <span class="k">ELSE</span> <span class="s1">'Standard processing sufficient'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">IQPRecommendation</span>
+<span class="k">FROM</span> <span class="n">CurrentTableSizes</span> <span class="n">cts</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">HistoricalSizes</span> <span class="n">hs</span> <span class="k">ON</span> <span class="mi">1</span><span class="o">=</span><span class="mi">1</span>  <span class="c1">-- Simplified join for demo</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">cts</span><span class="p">.</span><span class="n">SchemaName</span><span class="p">,</span> <span class="n">cts</span><span class="p">.</span><span class="n">TableName</span><span class="p">,</span> <span class="n">cts</span><span class="p">.</span><span class="n">CurrentSizeMB</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">cts</span><span class="p">.</span><span class="n">CurrentSizeMB</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-7-powershell-7--modern-automation">Method 7: PowerShell 7 &amp; Modern Automation</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Modern PowerShell 7 script with parallel processing</span><span class="w">
+</span><span class="kr">using</span><span class="w"> </span><span class="kr">namespace</span><span class="w"> </span><span class="n">System.Collections.Generic</span><span class="w">
+
+</span><span class="kr">param</span><span class="p">(</span><span class="w">
+    </span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="nv">$ServerInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="nv">$Database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"master"</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="n">int</span><span class="p">]</span><span class="nv">$ParallelBatchSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="n">switch</span><span class="p">]</span><span class="nv">$IncludeAzureMetrics</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="n">switch</span><span class="p">]</span><span class="nv">$ExportToJson</span><span class="p">,</span><span class="w">
+    </span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="nv">$OutputPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"."</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span><span class="c"># Import modern SQL Server module</span><span class="w">
+</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">SqlServer</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+
+</span><span class="c"># Define modern T-SQL query</span><span class="w">
+</span><span class="nv">$modernQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sh">@"
+SELECT 
+    OBJECT_SCHEMA_NAME(ps.object_id) AS SchemaName,
+    OBJECT_NAME(ps.object_id) AS TableName,
+    SUM(ps.row_count) AS RowCount,
+    SUM(ps.reserved_page_count) * 8.0 / 1024 AS ReservedMB,
+    SUM(ps.used_page_count) * 8.0 / 1024 AS UsedMB,
+    SUM(ps.in_row_data_page_count) * 8.0 / 1024 AS DataMB,
+    SUM(ps.lob_used_page_count) * 8.0 / 1024 AS LobMB,
+    t.is_memory_optimized,
+    t.temporal_type_desc,
+    CASE WHEN t.is_node = 1 THEN 'Node' 
+         WHEN t.is_edge = 1 THEN 'Edge' 
+         ELSE 'Regular' END AS TableType
+FROM sys.dm_db_partition_stats ps
+INNER JOIN sys.tables t ON ps.object_id = t.object_id
+WHERE t.type = 'U' AND ps.index_id &lt; 2
+GROUP BY ps.object_id, t.is_memory_optimized, t.temporal_type_desc, t.is_node, t.is_edge
+ORDER BY SUM(ps.reserved_page_count) DESC
+"@</span><span class="w">
+
+</span><span class="kr">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">Write-Host</span><span class="w"> </span><span class="s2">"Analyzing table sizes using modern methods..."</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">Green</span><span class="w">
+    
+    </span><span class="nv">$results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Invoke-Sqlcmd</span><span class="w"> </span><span class="nt">-ServerInstance</span><span class="w"> </span><span class="nv">$ServerInstance</span><span class="w"> </span><span class="nt">-Database</span><span class="w"> </span><span class="nv">$Database</span><span class="w"> </span><span class="nt">-Query</span><span class="w"> </span><span class="nv">$modernQuery</span><span class="w"> </span><span class="nt">-TrustServerCertificate</span><span class="w">
+    
+    </span><span class="c"># Process results with modern PowerShell features</span><span class="w">
+    </span><span class="nv">$analysis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$results</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ForEach-Object</span><span class="w"> </span><span class="nt">-Parallel</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="p">[</span><span class="n">PSCustomObject</span><span class="p">]@{</span><span class="w">
+            </span><span class="nx">FullName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"</span><span class="si">$(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">SchemaName</span><span class="si">)</span><span class="s2">.</span><span class="si">$(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">TableName</span><span class="si">)</span><span class="s2">"</span><span class="w">
+            </span><span class="nx">RowCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">long</span><span class="p">]</span><span class="bp">$_</span><span class="err">.</span><span class="nx">RowCount</span><span class="w">
+            </span><span class="nx">SizeMB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">math</span><span class="p">]</span><span class="err">::</span><span class="nx">Round</span><span class="err">(</span><span class="bp">$_</span><span class="err">.</span><span class="nx">ReservedMB</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="err">)</span><span class="w">
+            </span><span class="nx">DataMB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">math</span><span class="p">]</span><span class="err">::</span><span class="nx">Round</span><span class="err">(</span><span class="bp">$_</span><span class="err">.</span><span class="nx">DataMB</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="err">)</span><span class="w">
+            </span><span class="nx">LobMB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">math</span><span class="p">]</span><span class="err">::</span><span class="nx">Round</span><span class="err">(</span><span class="bp">$_</span><span class="err">.</span><span class="nx">LobMB</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="err">)</span><span class="w">
+            </span><span class="nx">IsMemoryOptimized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">$_</span><span class="err">.</span><span class="nx">is_memory_optimized</span><span class="w">
+            </span><span class="nx">TemporalType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">$_</span><span class="err">.</span><span class="nx">temporal_type_desc</span><span class="w">
+            </span><span class="nx">TableType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">$_</span><span class="err">.</span><span class="nx">TableType</span><span class="w">
+            </span><span class="nx">SizeCategory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">switch</span><span class="w"> </span><span class="err">(</span><span class="bp">$_</span><span class="err">.</span><span class="nx">ReservedMB</span><span class="err">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="p">{</span><span class="bp">$_</span><span class="w"> </span><span class="o">-ge</span><span class="w"> </span><span class="mi">1024</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"Large (&gt;1GB)"</span><span class="w"> </span><span class="p">}</span><span class="w">
+                </span><span class="p">{</span><span class="bp">$_</span><span class="w"> </span><span class="o">-ge</span><span class="w"> </span><span class="mi">100</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"Medium (100MB-1GB)"</span><span class="w"> </span><span class="p">}</span><span class="w">
+                </span><span class="p">{</span><span class="bp">$_</span><span class="w"> </span><span class="o">-ge</span><span class="w"> </span><span class="mi">10</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"Small (10-100MB)"</span><span class="w"> </span><span class="p">}</span><span class="w">
+                </span><span class="n">default</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"Tiny (&lt;10MB)"</span><span class="w"> </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+            </span><span class="n">EstimatedGrowth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">RowCount</span><span class="w"> </span><span class="o">-gt</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+                </span><span class="p">[</span><span class="n">math</span><span class="p">]::</span><span class="n">Round</span><span class="p">((</span><span class="bp">$_</span><span class="o">.</span><span class="nf">ReservedMB</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="bp">$_</span><span class="o">.</span><span class="nf">RowCount</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">1000</span><span class="p">,</span><span class="w"> </span><span class="nx">4</span><span class="p">)</span><span class="w"> 
+            </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+                </span><span class="mi">0</span><span class="w"> 
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w"> </span><span class="nt">-ThrottleLimit</span><span class="w"> </span><span class="nv">$ParallelBatchSize</span><span class="w">
+    
+    </span><span class="c"># Display results</span><span class="w">
+    </span><span class="nv">$analysis</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Sort-Object</span><span class="w"> </span><span class="nx">SizeMB</span><span class="w"> </span><span class="nt">-Descending</span><span class="w"> </span><span class="o">|</span><span class="w"> 
+        </span><span class="n">Format-Table</span><span class="w"> </span><span class="nx">FullName</span><span class="p">,</span><span class="w"> 
+                    </span><span class="p">@{</span><span class="nx">Name</span><span class="o">=</span><span class="s2">"Rows"</span><span class="p">;</span><span class="w"> </span><span class="nx">Expression</span><span class="o">=</span><span class="p">{</span><span class="bp">$_</span><span class="o">.</span><span class="nf">RowCount</span><span class="o">.</span><span class="nf">ToString</span><span class="p">(</span><span class="s2">"N0"</span><span class="p">)};</span><span class="w"> </span><span class="n">Align</span><span class="o">=</span><span class="s2">"Right"</span><span class="p">},</span><span class="w">
+                    </span><span class="p">@{</span><span class="nx">Name</span><span class="o">=</span><span class="s2">"Size (MB)"</span><span class="p">;</span><span class="w"> </span><span class="nx">Expression</span><span class="o">=</span><span class="p">{</span><span class="bp">$_</span><span class="o">.</span><span class="nf">SizeMB</span><span class="o">.</span><span class="nf">ToString</span><span class="p">(</span><span class="s2">"N2"</span><span class="p">)};</span><span class="w"> </span><span class="n">Align</span><span class="o">=</span><span class="s2">"Right"</span><span class="p">},</span><span class="w">
+                    </span><span class="p">@{</span><span class="nx">Name</span><span class="o">=</span><span class="s2">"Category"</span><span class="p">;</span><span class="w"> </span><span class="nx">Expression</span><span class="o">=</span><span class="p">{</span><span class="bp">$_</span><span class="o">.</span><span class="nf">SizeCategory</span><span class="p">}},</span><span class="w">
+                    </span><span class="p">@{</span><span class="nx">Name</span><span class="o">=</span><span class="s2">"Type"</span><span class="p">;</span><span class="w"> </span><span class="nx">Expression</span><span class="o">=</span><span class="p">{</span><span class="bp">$_</span><span class="o">.</span><span class="nf">TableType</span><span class="p">}},</span><span class="w">
+                    </span><span class="p">@{</span><span class="nx">Name</span><span class="o">=</span><span class="s2">"Memory Opt"</span><span class="p">;</span><span class="w"> </span><span class="nx">Expression</span><span class="o">=</span><span class="p">{</span><span class="kr">if</span><span class="p">(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">IsMemoryOptimized</span><span class="p">){</span><span class="s2">"Yes"</span><span class="p">}</span><span class="kr">else</span><span class="p">{</span><span class="s2">"No"</span><span class="p">}}}</span><span class="w"> </span><span class="err">-</span><span class="nx">AutoSize</span><span class="w">
+    
+    </span><span class="c"># Export to JSON if requested</span><span class="w">
+    </span><span class="nx">if</span><span class="w"> </span><span class="err">(</span><span class="nv">$ExportToJson</span><span class="err">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nv">$jsonPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Join-Path</span><span class="w"> </span><span class="nv">$OutputPath</span><span class="w"> </span><span class="s2">"table_sizes_</span><span class="si">$(</span><span class="n">Get-Date</span><span class="w"> </span><span class="nt">-Format</span><span class="w"> </span><span class="s1">'yyyyMMdd_HHmmss'</span><span class="p">)</span><span class="s2">.json"</span><span class="w">
+        </span><span class="nv">$analysis</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ConvertTo-Json</span><span class="w"> </span><span class="nt">-Depth</span><span class="w"> </span><span class="nx">3</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Out-File</span><span class="w"> </span><span class="nv">$jsonPath</span><span class="w"> </span><span class="nt">-Encoding</span><span class="w"> </span><span class="nx">UTF8</span><span class="w">
+        </span><span class="n">Write-Host</span><span class="w"> </span><span class="s2">"Results exported to: </span><span class="nv">$jsonPath</span><span class="s2">"</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">Cyan</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    
+    </span><span class="c"># Summary statistics</span><span class="w">
+    </span><span class="nv">$summary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w">
+        </span><span class="nx">TotalTables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$analysis</span><span class="err">.</span><span class="nx">Count</span><span class="w">
+        </span><span class="nx">TotalSizeMB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">(</span><span class="nv">$analysis</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">Measure</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="nx">SizeMB</span><span class="w"> </span><span class="err">-</span><span class="nx">Sum</span><span class="err">).</span><span class="nx">Sum</span><span class="w">
+        </span><span class="nx">LargestTable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">(</span><span class="nv">$analysis</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">Sort</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="nx">SizeMB</span><span class="w"> </span><span class="err">-</span><span class="nx">Descending</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">Select</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="err">-</span><span class="nx">First</span><span class="w"> </span><span class="mi">1</span><span class="err">).</span><span class="nx">FullName</span><span class="w">
+        </span><span class="nx">MemoryOptimizedTables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">(</span><span class="nv">$analysis</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">Where</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="nx">IsMemoryOptimized</span><span class="w"> </span><span class="err">-</span><span class="nx">eq</span><span class="w"> </span><span class="bp">$true</span><span class="err">).</span><span class="nx">Count</span><span class="w">
+        </span><span class="nx">TemporalTables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">(</span><span class="nv">$analysis</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">Where</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="nx">TemporalType</span><span class="w"> </span><span class="err">-</span><span class="nx">ne</span><span class="w"> </span><span class="s1">'NON_TEMPORAL_TABLE'</span><span class="err">).</span><span class="nx">Count</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    
+    </span><span class="nx">Write</span><span class="err">-</span><span class="nx">Host</span><span class="w"> </span><span class="s2">"</span><span class="se">`n</span><span class="s2">=== SUMMARY ==="</span><span class="w"> </span><span class="err">-</span><span class="nx">ForegroundColor</span><span class="w"> </span><span class="nx">Yellow</span><span class="w">
+    </span><span class="nv">$summary</span><span class="err">.</span><span class="nx">GetEnumerator</span><span class="err">()</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="nx">ForEach</span><span class="err">-</span><span class="nx">Object</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">Write-Host</span><span class="w"> </span><span class="s2">"</span><span class="si">$(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">Key</span><span class="si">)</span><span class="s2">: </span><span class="si">$(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">Value</span><span class="si">)</span><span class="s2">"</span><span class="w"> </span><span class="nt">-ForegroundColor</span><span class="w"> </span><span class="nx">White</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="nx">catch</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">Write-Error</span><span class="w"> </span><span class="s2">"Failed to analyze table sizes: </span><span class="si">$(</span><span class="bp">$_</span><span class="o">.</span><span class="nf">Exception</span><span class="o">.</span><span class="nf">Message</span><span class="si">)</span><span class="s2">"</span><span class="w">
+    </span><span class="kr">exit</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="method-8-advanced-analytics--machine-learning-integration-sql-server-2017">Method 8: Advanced Analytics &amp; Machine Learning Integration (SQL Server 2017+)</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Predictive table growth analysis using SQL Server ML Services</span>
+<span class="k">WITH</span> <span class="n">TableGrowthData</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">CurrentRows</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">CurrentSizeMB</span><span class="p">,</span>
+        <span class="c1">-- Simulate historical data points for ML</span>
+        <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TableRank</span><span class="p">,</span>
+        <span class="c1">-- Calculate growth velocity based on modification patterns</span>
+        <span class="k">CASE</span> 
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000000</span> <span class="k">THEN</span> <span class="s1">'High Growth'</span>
+            <span class="k">WHEN</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100000</span> <span class="k">THEN</span> <span class="s1">'Medium Growth'</span>
+            <span class="k">ELSE</span> <span class="s1">'Low Growth'</span>
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">GrowthCategory</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="p">),</span>
+<span class="n">PredictiveAnalysis</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="o">*</span><span class="p">,</span>
+        <span class="c1">-- Simple linear prediction (can be enhanced with R/Python integration)</span>
+        <span class="n">CurrentSizeMB</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">2</span> <span class="k">AS</span> <span class="n">Predicted3MonthSizeMB</span><span class="p">,</span>
+        <span class="n">CurrentSizeMB</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span> <span class="k">AS</span> <span class="n">Predicted6MonthSizeMB</span><span class="p">,</span>
+        <span class="n">CurrentSizeMB</span> <span class="o">*</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">Predicted12MonthSizeMB</span><span class="p">,</span>
+        <span class="c1">-- Risk assessment</span>
+        <span class="k">CASE</span> 
+            <span class="k">WHEN</span> <span class="n">CurrentSizeMB</span> <span class="o">&gt;</span> <span class="mi">10000</span> <span class="k">THEN</span> <span class="s1">'Critical - Monitor closely'</span>
+            <span class="k">WHEN</span> <span class="n">CurrentSizeMB</span> <span class="o">&gt;</span> <span class="mi">1000</span> <span class="k">THEN</span> <span class="s1">'Warning - Plan capacity'</span>
+            <span class="k">ELSE</span> <span class="s1">'Normal'</span>
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">RiskLevel</span>
+    <span class="k">FROM</span> <span class="n">TableGrowthData</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">SchemaName</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">TableName</span> <span class="k">AS</span> <span class="n">FullTableName</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">CurrentRows</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Current</span> <span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">CurrentSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Current</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">GrowthCategory</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">Predicted3MonthSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="mi">3</span><span class="o">-</span><span class="k">Month</span> <span class="n">Projection</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">Predicted6MonthSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="mi">6</span><span class="o">-</span><span class="k">Month</span> <span class="n">Projection</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">Predicted12MonthSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="mi">12</span><span class="o">-</span><span class="k">Month</span> <span class="n">Projection</span><span class="p">],</span>
+    <span class="n">RiskLevel</span><span class="p">,</span>
+    <span class="c1">-- Capacity planning recommendations</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">Predicted12MonthSizeMB</span> <span class="o">&gt;</span> <span class="mi">50000</span> <span class="k">THEN</span> <span class="s1">'Consider table partitioning'</span>
+        <span class="k">WHEN</span> <span class="n">Predicted6MonthSizeMB</span> <span class="o">&gt;</span> <span class="n">CurrentSizeMB</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">THEN</span> <span class="s1">'Review growth patterns'</span>
+        <span class="k">WHEN</span> <span class="n">GrowthCategory</span> <span class="o">=</span> <span class="s1">'High Growth'</span> <span class="k">THEN</span> <span class="s1">'Monitor weekly'</span>
+        <span class="k">ELSE</span> <span class="s1">'Standard monitoring'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">CapacityRecommendation</span>
+<span class="k">FROM</span> <span class="n">PredictiveAnalysis</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CurrentSizeMB</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="best-practices-for-modern-sql-server-versions">Best Practices for Modern SQL Server Versions</h2>
+
+<h3 id="1-performance-optimization">1. Performance Optimization</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Enable Query Store for better monitoring (SQL Server 2016+)</span>
+<span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="p">[</span><span class="n">YourDatabase</span><span class="p">]</span> <span class="k">SET</span> <span class="n">QUERY_STORE</span> <span class="o">=</span> <span class="k">ON</span>
+<span class="p">(</span>
+    <span class="n">OPERATION_MODE</span> <span class="o">=</span> <span class="n">READ_WRITE</span><span class="p">,</span>
+    <span class="n">CLEANUP_POLICY</span> <span class="o">=</span> <span class="p">(</span><span class="n">STALE_QUERY_THRESHOLD_DAYS</span> <span class="o">=</span> <span class="mi">90</span><span class="p">),</span>
+    <span class="n">DATA_FLUSH_INTERVAL_SECONDS</span> <span class="o">=</span> <span class="mi">900</span><span class="p">,</span>
+    <span class="n">INTERVAL_LENGTH_MINUTES</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="n">MAX_STORAGE_SIZE_MB</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
+    <span class="n">QUERY_CAPTURE_MODE</span> <span class="o">=</span> <span class="n">AUTO</span><span class="p">,</span>
+    <span class="n">SIZE_BASED_CLEANUP_MODE</span> <span class="o">=</span> <span class="n">AUTO</span>
+<span class="p">);</span>
+
+<span class="c1">-- Use Intelligent Query Processing features</span>
+<span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="n">SCOPED</span> <span class="n">CONFIGURATION</span> <span class="k">SET</span> <span class="n">BATCH_MODE_ON_ROWSTORE</span> <span class="o">=</span> <span class="k">ON</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="n">SCOPED</span> <span class="n">CONFIGURATION</span> <span class="k">SET</span> <span class="n">BATCH_MODE_ADAPTIVE_JOINS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="n">SCOPED</span> <span class="n">CONFIGURATION</span> <span class="k">SET</span> <span class="n">INTERLEAVED_EXECUTION_TVF</span> <span class="o">=</span> <span class="k">ON</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="2-modern-monitoring-setup">2. Modern Monitoring Setup</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create automated monitoring with SQL Server Agent (Enhanced for 2016+)</span>
+<span class="k">DECLARE</span> <span class="o">@</span><span class="k">sql</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="k">MAX</span><span class="p">)</span> <span class="o">=</span> <span class="n">N</span><span class="s1">'
+INSERT INTO TableSizeHistory 
+SELECT 
+    GETDATE() AS RecordDate,
+    DB_NAME() AS DatabaseName,
+    OBJECT_SCHEMA_NAME(ps.object_id) AS SchemaName,
+    OBJECT_NAME(ps.object_id) AS TableName,
+    SUM(ps.row_count) AS RowCount,
+    SUM(ps.reserved_page_count) * 8.0 / 1024 AS ReservedMB,
+    SUM(ps.used_page_count) * 8.0 / 1024 AS UsedMB,
+    SUM(ps.in_row_data_page_count) * 8.0 / 1024 AS DataMB,
+    SUM(ps.lob_used_page_count) * 8.0 / 1024 AS LobMB,
+    t.is_memory_optimized,
+    t.temporal_type_desc
+FROM sys.dm_db_partition_stats ps
+INNER JOIN sys.tables t ON ps.object_id = t.object_id
+WHERE t.type = </span><span class="se">''</span><span class="s1">U</span><span class="se">''</span><span class="s1"> AND ps.index_id &lt; 2
+GROUP BY ps.object_id, t.is_memory_optimized, t.temporal_type_desc;'</span><span class="p">;</span>
+
+<span class="c1">-- Execute via SQL Server Agent job</span>
+<span class="k">EXEC</span> <span class="n">msdb</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_add_job</span> 
+    <span class="o">@</span><span class="n">job_name</span> <span class="o">=</span> <span class="s1">'Modern Table Size Monitoring'</span><span class="p">,</span>
+    <span class="o">@</span><span class="n">enabled</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="3-cloud-ready-monitoring">3. Cloud-Ready Monitoring</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Azure SQL Database compatible monitoring</span>
+<span class="n">IF</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">database_service_objectives</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+    <span class="c1">-- Azure SQL Database specific optimizations</span>
+    <span class="k">SELECT</span> 
+        <span class="s1">'Azure SQL Database'</span> <span class="k">AS</span> <span class="n">Environment</span><span class="p">,</span>
+        <span class="n">service_objective</span> <span class="k">AS</span> <span class="n">ServiceTier</span><span class="p">,</span>
+        <span class="n">dtu_limit</span> <span class="k">AS</span> <span class="n">DTULimit</span><span class="p">,</span>
+        <span class="n">db_maxsize_in_bytes</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">MaxSizeGB</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">database_service_objectives</span><span class="p">;</span>
+<span class="k">END</span>
+<span class="k">ELSE</span>
+<span class="k">BEGIN</span>
+    <span class="c1">-- On-premises SQL Server</span>
+    <span class="k">SELECT</span> 
+        <span class="s1">'On-Premises SQL Server'</span> <span class="k">AS</span> <span class="n">Environment</span><span class="p">,</span>
+        <span class="n">SERVERPROPERTY</span><span class="p">(</span><span class="s1">'Edition'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Edition</span><span class="p">,</span>
+        <span class="n">SERVERPROPERTY</span><span class="p">(</span><span class="s1">'ProductVersion'</span><span class="p">)</span> <span class="k">AS</span> <span class="k">Version</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Modern SQL Server versions offer significantly enhanced capabilities for table size monitoring and analysis. The evolution from basic stored procedures to intelligent, predictive analytics represents a major advancement in database administration capabilities.</p>
+
+<h3 id="key-takeaways">Key Takeaways:</h3>
+
+<ol>
+  <li><strong>Use sys.dm_db_partition_stats</strong> for the most efficient queries in SQL Server 2016+</li>
+  <li><strong>Leverage JSON output</strong> for integration with modern applications</li>
+  <li><strong>Consider memory-optimized and temporal table</strong> implications</li>
+  <li><strong>Implement predictive analytics</strong> for proactive capacity planning</li>
+  <li><strong>Optimize for cloud environments</strong> with Azure SQL Database considerations</li>
+  <li><strong>Automate with modern PowerShell</strong> and parallel processing</li>
+</ol>
+
+<h3 id="quick-modern-reference">Quick Modern Reference:</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Modern one-liner for daily use (SQL Server 2016+)</span>
+<span class="k">SELECT</span> 
+    <span class="n">CONCAT</span><span class="p">(</span><span class="n">OBJECT_SCHEMA_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">object_id</span><span class="p">))</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Table</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Rows</span><span class="p">],</span>
+    <span class="n">CONCAT</span><span class="p">(</span><span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">),</span> <span class="s1">' MB'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Size</span><span class="p">],</span>
+    <span class="n">STRING_AGG</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_memory_optimized</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Memory-Opt '</span> <span class="k">ELSE</span> <span class="s1">''</span> <span class="k">END</span> <span class="o">+</span>
+               <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">temporal_type</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="s1">'Temporal '</span> <span class="k">ELSE</span> <span class="s1">''</span> <span class="k">END</span> <span class="o">+</span>
+               <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_node</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Graph-Node'</span> 
+                    <span class="k">WHEN</span> <span class="n">t</span><span class="p">.</span><span class="n">is_edge</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'Graph-Edge'</span> 
+                    <span class="k">ELSE</span> <span class="s1">'Regular'</span> <span class="k">END</span><span class="p">,</span> <span class="s1">', '</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Features</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span> <span class="k">ON</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span> <span class="k">AND</span> <span class="n">ps</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>This modern approach ensures optimal performance, comprehensive analysis, and future-ready database administration practices.</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#azure-sql" class="page__taxonomy-item" rel="tag">azure-sql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#database-monitoring" class="page__taxonomy-item" rel="tag">database-monitoring</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#database" class="page__taxonomy-item" rel="tag">database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dba" class="page__taxonomy-item" rel="tag">dba</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#modern-features" class="page__taxonomy-item" rel="tag">modern-features</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#performance-tuning" class="page__taxonomy-item" rel="tag">performance-tuning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql-server-2016" class="page__taxonomy-item" rel="tag">sql-server-2016</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql-server-2019" class="page__taxonomy-item" rel="tag">sql-server-2019</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql-server-2022" class="page__taxonomy-item" rel="tag">sql-server-2022</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#t-sql" class="page__taxonomy-item" rel="tag">t-sql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#table-size" class="page__taxonomy-item" rel="tag">table-size</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#database-administration" class="page__taxonomy-item" rel="tag">Database Administration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#database" class="page__taxonomy-item" rel="tag">Database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#modern-sql-server" class="page__taxonomy-item" rel="tag">Modern SQL Server</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#performance" class="page__taxonomy-item" rel="tag">Performance</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2025-05-03T00:00:00-04:00">May 03, 2025</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Comprehensive+Guide+to+SQL+Server+Table+Sizes%3A+Modern+Methods+%26+Alternative+Approaches+%282016-2024%29%20https%3A%2F%2Fmahedee.net%2Fcomprehensive-guide-sql-server-table-sizes-modern-methods%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fcomprehensive-guide-sql-server-table-sizes-modern-methods%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fcomprehensive-guide-sql-server-table-sizes-modern-methods%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/structuring-agile-work-epics-stories-artifacts/" class="pagination--pager" title="Structuring Agile Work Using Epics, Stories, Tasks, DoR, DoD, Artifact and more
+">Previous</a>
+    
+    
+      <a href="/Building-Professional-Report-Export-API-ASP-NET-Core-Excel-PDF-Word-Template-Architecture/" class="pagination--pager" title="Building a Professional Report Export API in ASP.NET Core: Excel, PDF &amp; Word Generation with Template Architecture
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/comprehensive-guide-sql-server-table-sizes-modern-methods/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/social-media-images-jekyll-minimal-mistakes/" rel="permalink">How to Configure Social Media Images for Jekyll Minimal Mistakes Blog
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to configure social media images for your Jekyll Minimal Mistakes blog to get beautiful thumbnails when sharing articles on Facebook, LinkedIn, Twi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/my-vs-code-extensions-for-daily-development/" rel="permalink">My VS Code Extensions for Daily Development Work
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <!-- AdSense disabled:
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+     -->
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- AdSense disabled: Add sense code for all page : added globaly
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
+
+  </body>
+</html>

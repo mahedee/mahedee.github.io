@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to find the size of all tables in SQL Server database - Think Simple</title>
-<meta name="description" content="SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable.">
+<!-- begin _includes/seo.html --><title>How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods - Think Simple</title>
+<meta name="description" content="Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,13 +19,15 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to find the size of all tables in SQL Server database">
+<meta property="og:title" content="How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods">
 <meta property="og:url" content="https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/">
 
 
-  <meta property="og:description" content="SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable.">
+  <meta property="og:description" content="Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices.">
 
 
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
 
 
 
@@ -97,24 +99,24 @@
 
 <!-- SEO tags -->
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to find the size of all tables in SQL Server database | Think Simple</title>
+<title>How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods | Think Simple</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="How to find the size of all tables in SQL Server database" />
+<meta property="og:title" content="How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods" />
 <meta name="author" content="Mahedee Hasan" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable." />
-<meta property="og:description" content="SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable." />
+<meta name="description" content="Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices." />
+<meta property="og:description" content="Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices." />
 <link rel="canonical" href="https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/" />
 <meta property="og:url" content="https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/" />
 <meta property="og:site_name" content="Think Simple" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2010-03-03T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to find the size of all tables in SQL Server database" />
+<meta property="twitter:title" content="How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods" />
 <meta name="twitter:site" content="@" />
 <meta name="twitter:creator" content="@Mahedee Hasan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2010-03-03T00:00:00-05:00","datePublished":"2010-03-03T00:00:00-05:00","description":"SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable.","headline":"How to find the size of all tables in SQL Server database","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/"},"url":"https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2010-03-03T00:00:00-05:00","datePublished":"2010-03-03T00:00:00-05:00","description":"Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices.","headline":"How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/"},"url":"https://mahedee.net/how-to-find-the-size-of-all-tables-in-sql-server-database/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,15 +328,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to find the size of all tables in SQL Server database">
-    <meta itemprop="description" content="SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable.">
+    <meta itemprop="headline" content="How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods">
+    <meta itemprop="description" content="Learn multiple methods to find table sizes in SQL Server including sp_spaceused, system views, and modern T-SQL queries. Complete guide with performance considerations and best practices.">
     <meta itemprop="datePublished" content="March 03, 2010">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to find the size of all tables in SQL Server database
+          <h1 id="page-title" class="page__title" itemprop="headline">How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -342,7 +344,7 @@
 
 
 
-  less than 1 minute read
+  5 minute read
 </p>
           
         </header>
@@ -350,37 +352,268 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>SQL Server gives you everything its stored procedure sp_spaceused. Unfortunately this SP does not support iterating over all tables in a database, so we needed to leverage another (undocumented) Stored Procedure sp_msForEachTable.</p>
+        <h2 id="introduction">Introduction</h2>
 
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SET</span> <span class="n">NOCOUNT</span> <span class="k">ON</span>
+<p>Monitoring table sizes is crucial for SQL Server database administration, performance optimization, and capacity planning. Whether you’re investigating storage usage, identifying tables that need archiving, or planning for database growth, understanding how to accurately measure table sizes is essential.</p>
 
-<span class="n">DBCC</span> <span class="n">UPDATEUSAGE</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<p>This comprehensive guide covers multiple methods to find table sizes in SQL Server, from traditional stored procedures to modern system view queries, with practical examples and performance considerations.</p>
 
-<span class="c1">-- Find DB size.</span>
-<span class="k">EXEC</span> <span class="n">sp_spaceused</span>
+<h2 id="why-monitor-table-sizes">Why Monitor Table Sizes?</h2>
 
-<span class="c1">-- Create a table to counts row and sizes.</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">tbl</span>
-<span class="p">(</span>
-<span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span>
-<span class="p">[</span><span class="k">rows</span><span class="p">]</span> <span class="nb">CHAR</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
-<span class="n">reserved</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
-<span class="k">data</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
-<span class="n">index_size</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
-<span class="n">unused</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
-<span class="p">)</span>
+<p>Understanding table sizes helps with:</p>
 
-<span class="k">INSERT</span> <span class="o">#</span><span class="n">tbl</span> <span class="k">EXEC</span> <span class="n">sp_msForEachTable</span> <span class="s1">'EXEC sp_spaceused </span><span class="se">''</span><span class="s1">?</span><span class="se">''</span><span class="s1">'</span>
+<ul>
+  <li><strong>Capacity Planning</strong>: Predicting future storage requirements</li>
+  <li><strong>Performance Optimization</strong>: Identifying tables that may need indexing or partitioning</li>
+  <li><strong>Maintenance Planning</strong>: Determining which tables need regular maintenance</li>
+  <li><strong>Cost Management</strong>: Understanding storage costs in cloud environments</li>
+  <li><strong>Troubleshooting</strong>: Investigating sudden database growth or performance issues</li>
+</ul>
 
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">#</span><span class="n">tbl</span>
+<h2 id="method-1-using-sp_spaceused-with-sp_msforeachtable-classic-approach">Method 1: Using sp_spaceused with sp_msForEachTable (Classic Approach)</h2>
 
-<span class="c1">-- # of rows.</span>
-<span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="k">CAST</span><span class="p">([</span><span class="k">rows</span><span class="p">]</span> <span class="k">AS</span> <span class="nb">int</span><span class="p">))</span> <span class="k">AS</span> <span class="p">[</span><span class="k">rows</span><span class="p">]</span>
-<span class="k">FROM</span> <span class="o">#</span><span class="n">tbl</span>
+<p>This is the traditional method using SQL Server’s built-in stored procedures. While <code class="language-plaintext highlighter-rouge">sp_spaceused</code> provides detailed space information, it works on individual tables. The undocumented <code class="language-plaintext highlighter-rouge">sp_msForEachTable</code> allows us to iterate over all tables.</p>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">tbl</span>
+<h3 id="basic-implementation">Basic Implementation</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SET</span> <span class="n">NOCOUNT</span> <span class="k">ON</span><span class="p">;</span>
+
+<span class="c1">-- Update usage statistics for accurate results</span>
+<span class="n">DBCC</span> <span class="n">UPDATEUSAGE</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">-- Get overall database size</span>
+<span class="k">EXEC</span> <span class="n">sp_spaceused</span><span class="p">;</span>
+
+<span class="c1">-- Create temporary table to store results</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">TableSizes</span> <span class="p">(</span>
+    <span class="p">[</span><span class="n">TableName</span><span class="p">]</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span>
+    <span class="p">[</span><span class="k">Rows</span><span class="p">]</span> <span class="nb">CHAR</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
+    <span class="p">[</span><span class="n">Reserved</span><span class="p">]</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
+    <span class="p">[</span><span class="k">Data</span><span class="p">]</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
+    <span class="p">[</span><span class="n">IndexSize</span><span class="p">]</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
+    <span class="p">[</span><span class="n">Unused</span><span class="p">]</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- Populate table with space information for each table</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">#</span><span class="n">TableSizes</span> 
+<span class="k">EXEC</span> <span class="n">sp_msForEachTable</span> <span class="s1">'EXEC sp_spaceused </span><span class="se">''</span><span class="s1">?</span><span class="se">''</span><span class="s1">'</span><span class="p">;</span>
+
+<span class="c1">-- Display results sorted by data size</span>
+<span class="k">SELECT</span> 
+    <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">CAST</span><span class="p">([</span><span class="k">Rows</span><span class="p">]</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Reserved</span><span class="p">]</span> <span class="k">AS</span> <span class="n">ReservedSpace</span><span class="p">,</span>
+    <span class="p">[</span><span class="k">Data</span><span class="p">]</span> <span class="k">AS</span> <span class="n">DataSpace</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">IndexSize</span><span class="p">]</span> <span class="k">AS</span> <span class="n">IndexSpace</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">Unused</span><span class="p">]</span> <span class="k">AS</span> <span class="n">UnusedSpace</span>
+<span class="k">FROM</span> <span class="o">#</span><span class="n">TableSizes</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">CAST</span><span class="p">(</span><span class="k">REPLACE</span><span class="p">([</span><span class="k">Data</span><span class="p">],</span> <span class="s1">' KB'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- Show total statistics</span>
+<span class="k">SELECT</span> 
+    <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TotalTables</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="k">CAST</span><span class="p">([</span><span class="k">Rows</span><span class="p">]</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">))</span> <span class="k">AS</span> <span class="n">TotalRows</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="k">REPLACE</span><span class="p">([</span><span class="n">Reserved</span><span class="p">],</span> <span class="s1">' KB'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">))</span> <span class="k">AS</span> <span class="n">TotalReservedKB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="k">REPLACE</span><span class="p">([</span><span class="k">Data</span><span class="p">],</span> <span class="s1">' KB'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">))</span> <span class="k">AS</span> <span class="n">TotalDataKB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="k">CAST</span><span class="p">(</span><span class="k">REPLACE</span><span class="p">([</span><span class="n">IndexSize</span><span class="p">],</span> <span class="s1">' KB'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">INT</span><span class="p">))</span> <span class="k">AS</span> <span class="n">TotalIndexKB</span>
+<span class="k">FROM</span> <span class="o">#</span><span class="n">TableSizes</span><span class="p">;</span>
+
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">TableSizes</span><span class="p">;</span>
 </code></pre></div></div>
-<p>After executing this, you will get the size of all tables in your database.</p>
+
+<h2 id="method-2-using-system-views-modern-approach">Method 2: Using System Views (Modern Approach)</h2>
+
+<p>SQL Server 2005 and later versions provide system views that offer more efficient and flexible ways to query table sizes.</p>
+
+<h3 id="basic-system-view-query">Basic System View Query</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="n">p</span><span class="p">.</span><span class="k">rows</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">total_pages</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">TotalSpaceMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">used_pages</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">UsedSpaceMB</span><span class="p">,</span>
+    <span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">total_pages</span><span class="p">)</span> <span class="o">-</span> <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">used_pages</span><span class="p">))</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">UnusedSpaceMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">data_pages</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">DataSpaceMB</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">indexes</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">partitions</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">object_id</span> <span class="k">AND</span> <span class="n">i</span><span class="p">.</span><span class="n">index_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">index_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">allocation_units</span> <span class="n">au</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">partition_id</span> <span class="o">=</span> <span class="n">au</span><span class="p">.</span><span class="n">container_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+    <span class="k">AND</span> <span class="n">i</span><span class="p">.</span><span class="n">object_id</span> <span class="o">&gt;</span> <span class="mi">255</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="k">rows</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">total_pages</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="comprehensive-system-view-query">Comprehensive System View Query</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span> <span class="n">TableSizes</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">object_id</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">i</span><span class="p">.</span><span class="n">index_id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">THEN</span> <span class="n">p</span><span class="p">.</span><span class="k">rows</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">total_pages</span><span class="p">)</span> <span class="k">AS</span> <span class="n">TotalPages</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">used_pages</span><span class="p">)</span> <span class="k">AS</span> <span class="n">UsedPages</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="n">au</span><span class="p">.</span><span class="n">data_pages</span><span class="p">)</span> <span class="k">AS</span> <span class="n">DataPages</span><span class="p">,</span>
+        <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">i</span><span class="p">.</span><span class="n">index_id</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">au</span><span class="p">.</span><span class="n">used_pages</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">IndexPages</span>
+    <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">indexes</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">object_id</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">partitions</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">object_id</span> <span class="k">AND</span> <span class="n">i</span><span class="p">.</span><span class="n">index_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">index_id</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">allocation_units</span> <span class="n">au</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">partition_id</span> <span class="o">=</span> <span class="n">au</span><span class="p">.</span><span class="n">container_id</span>
+    <span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span>
+<span class="p">),</span>
+<span class="n">TableStats</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">SchemaName</span><span class="p">,</span>
+        <span class="n">TableName</span><span class="p">,</span>
+        <span class="n">RowCount</span><span class="p">,</span>
+        <span class="n">TotalPages</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">TotalSizeMB</span><span class="p">,</span>
+        <span class="n">UsedPages</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">UsedSizeMB</span><span class="p">,</span>
+        <span class="n">DataPages</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">DataSizeMB</span><span class="p">,</span>
+        <span class="n">IndexPages</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">IndexSizeMB</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">TotalPages</span> <span class="o">-</span> <span class="n">UsedPages</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">UnusedSizeMB</span>
+    <span class="k">FROM</span> <span class="n">TableSizes</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">SchemaName</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">TableName</span> <span class="k">AS</span> <span class="n">FullTableName</span><span class="p">,</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">RowCount</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">TotalSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Total</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">DataSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Data</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">IndexSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Index</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="n">UnusedSizeMB</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Unused</span> <span class="k">Size</span><span class="p">],</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">TotalSizeMB</span> <span class="o">&gt;</span> <span class="mi">0</span> 
+        <span class="k">THEN</span> <span class="n">FORMAT</span><span class="p">((</span><span class="n">DataSizeMB</span> <span class="o">/</span> <span class="n">TotalSizeMB</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">'N1'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'%'</span>
+        <span class="k">ELSE</span> <span class="s1">'0%'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Data</span> <span class="o">%</span><span class="p">],</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">TotalSizeMB</span> <span class="o">&gt;</span> <span class="mi">0</span> 
+        <span class="k">THEN</span> <span class="n">FORMAT</span><span class="p">((</span><span class="n">IndexSizeMB</span> <span class="o">/</span> <span class="n">TotalSizeMB</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">'N1'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'%'</span>
+        <span class="k">ELSE</span> <span class="s1">'0%'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Index</span> <span class="o">%</span><span class="p">],</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="n">RowCount</span> <span class="o">&gt;</span> <span class="mi">0</span> 
+        <span class="k">THEN</span> <span class="n">FORMAT</span><span class="p">((</span><span class="n">DataSizeMB</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">/</span> <span class="n">RowCount</span><span class="p">,</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' bytes'</span>
+        <span class="k">ELSE</span> <span class="s1">'0 bytes'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Avg</span> <span class="k">Row</span> <span class="k">Size</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">TableStats</span>
+<span class="k">WHERE</span> <span class="n">TotalSizeMB</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">.</span><span class="mi">01</span>  <span class="c1">-- Filter out very small tables</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TotalSizeMB</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-3-quick-and-efficient-query">Method 3: Quick and Efficient Query</h2>
+
+<p>For most scenarios, this simplified query provides the essential information:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Quick table size query (copy-paste ready)</span>
+<span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Table</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Size</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Used</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">((</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">-</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">))</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="n">Unused</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="performance-considerations">Performance Considerations</h2>
+
+<h3 id="low-impact-query-for-production">Low-Impact Query for Production</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Optimized query with minimal performance impact</span>
+<span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">SchemaName</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">TableName</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">)</span> <span class="k">AS</span> <span class="n">RowCount</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">ReservedMB</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">used_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span> <span class="k">AS</span> <span class="n">UsedMB</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="automation-with-powershell">Automation with PowerShell</h2>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># PowerShell script for automated table size monitoring</span><span class="w">
+</span><span class="n">Import-Module</span><span class="w"> </span><span class="nx">SqlServer</span><span class="w">
+
+</span><span class="nv">$serverName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+</span><span class="nv">$databaseName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"YourDatabase"</span><span class="w">
+
+</span><span class="nv">$sqlQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sh">@"
+SELECT 
+    SCHEMA_NAME(t.schema_id) + '.' + t.name AS FullTableName,
+    SUM(ps.row_count) AS RowCount,
+    SUM(ps.reserved_page_count) * 8.0 / 1024 AS TotalSizeMB
+FROM sys.tables t
+INNER JOIN sys.dm_db_partition_stats ps ON t.object_id = ps.object_id
+WHERE t.type = 'U'
+GROUP BY t.schema_id, t.name
+ORDER BY SUM(ps.reserved_page_count) DESC;
+"@</span><span class="w">
+
+</span><span class="nv">$results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Invoke-Sqlcmd</span><span class="w"> </span><span class="nt">-ServerInstance</span><span class="w"> </span><span class="nv">$serverName</span><span class="w"> </span><span class="nt">-Database</span><span class="w"> </span><span class="nv">$databaseName</span><span class="w"> </span><span class="nt">-Query</span><span class="w"> </span><span class="nv">$sqlQuery</span><span class="w">
+
+</span><span class="nv">$results</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Format-Table</span><span class="w"> </span><span class="nt">-AutoSize</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Run DBCC UPDATEUSAGE</strong> before using sp_spaceused for accurate results</li>
+  <li><strong>Use system views</strong> for better performance in production environments</li>
+  <li><strong>Schedule regular monitoring</strong> to track growth trends</li>
+  <li><strong>Filter small tables</strong> when analyzing large databases</li>
+  <li><strong>Consider index usage</strong> when interpreting size data</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Multiple methods exist for finding table sizes in SQL Server, each with its own advantages:</p>
+
+<ul>
+  <li><strong>sp_spaceused with sp_msForEachTable</strong>: Traditional, detailed, but slower</li>
+  <li><strong>System Views</strong>: Modern, efficient, and flexible</li>
+  <li><strong>Quick Queries</strong>: Fast and practical for most scenarios</li>
+</ul>
+
+<p>Choose the method that best fits your needs, considering factors like performance impact, level of detail required, and automation requirements.</p>
+
+<h3 id="quick-reference">Quick Reference</h3>
+
+<p>The most practical query for daily use:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 
+    <span class="k">SCHEMA_NAME</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Table</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="k">row_count</span><span class="p">),</span> <span class="s1">'N0'</span><span class="p">)</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Rows</span><span class="p">],</span>
+    <span class="n">FORMAT</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="s1">'N2'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' MB'</span> <span class="k">AS</span> <span class="p">[</span><span class="k">Size</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">tables</span> <span class="n">t</span>
+<span class="k">JOIN</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">ps</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">object_id</span> <span class="o">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">WHERE</span> <span class="n">t</span><span class="p">.</span><span class="k">type</span> <span class="o">=</span> <span class="s1">'U'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">reserved_page_count</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>```sql
+SET NOCOUNT ON</p>
+
+<p>DBCC UPDATEUSAGE(0)</p>
+
+<p>– Find DB size.
+EXEC sp_spaceused</p>
+
+<p>– Create a table to counts row and sizes.
+CREATE TABLE #tbl
+(
+[name] NVARCHAR(128),
+[rows] CHAR(11),</p>
 
         
         
@@ -402,11 +635,39 @@
     
       
       
+      <a href="/tags/#database-monitoring" class="page__taxonomy-item" rel="tag">database-monitoring</a><span class="sep">, </span>
+    
+      
+      
       <a href="/tags/#database" class="page__taxonomy-item" rel="tag">database</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a>
+      <a href="/tags/#dba" class="page__taxonomy-item" rel="tag">dba</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#performance-tuning" class="page__taxonomy-item" rel="tag">performance-tuning</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sp-spaceused" class="page__taxonomy-item" rel="tag">sp_spaceused</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#t-sql" class="page__taxonomy-item" rel="tag">t-sql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#table-size" class="page__taxonomy-item" rel="tag">table-size</a>
     
     </span>
   </p>
@@ -427,7 +688,15 @@
     
       
       
+      <a href="/categories/#database-administration" class="page__taxonomy-item" rel="tag">Database Administration</a><span class="sep">, </span>
+    
+      
+      
       <a href="/categories/#database" class="page__taxonomy-item" rel="tag">Database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#performance" class="page__taxonomy-item" rel="tag">Performance</a><span class="sep">, </span>
     
       
       
@@ -445,7 +714,7 @@
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+find+the+size+of+all+tables+in+SQL+Server+database%20https%3A%2F%2Fmahedee.net%2Fhow-to-find-the-size-of-all-tables-in-sql-server-database%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=How+to+Find+Table+Sizes+in+SQL+Server%3A+Complete+Guide+with+Multiple+Methods%20https%3A%2F%2Fmahedee.net%2Fhow-to-find-the-size-of-all-tables-in-sql-server-database%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fhow-to-find-the-size-of-all-tables-in-sql-server-database%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -456,7 +725,7 @@
       
   <nav class="pagination">
     
-      <a href="/how-to-release-port-80/" class="pagination--pager" title="How to release port 80
+      <a href="/global-variable-of-asp-net/" class="pagination--pager" title="Understanding Global Variables in ASP.NET: Application, Cache, Session, and Cookies
 ">Previous</a>
     
     
@@ -573,6 +842,14 @@
 <div class="grid__item">
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
     <h2 class="archive__item-title" itemprop="headline">
       
         <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
@@ -600,6 +877,14 @@
 
 <div class="grid__item">
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
     
     <h2 class="archive__item-title" itemprop="headline">
       

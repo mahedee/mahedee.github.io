@@ -1,0 +1,944 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out - Think Simple</title>
+<meta name="description" content="Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out">
+<meta property="og:url" content="https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/">
+
+
+  <meta property="og:description" content="Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2010-02-04T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period." />
+<meta property="og:description" content="Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period." />
+<link rel="canonical" href="https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/" />
+<meta property="og:url" content="https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-02-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2010-02-04T00:00:00-05:00","datePublished":"2010-02-04T00:00:00-05:00","description":"Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period.","headline":"Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/"},"url":"https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out">
+    <meta itemprop="description" content="Learn how to fix the PageRequestManagerTimeoutException that occurs in ASP.NET AJAX applications when server operations take longer than the default timeout period.">
+    <meta itemprop="datePublished" content="February 04, 2010">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Resolving Sys.WebForms.PageRequestManagerTimeoutException: Server Request Timed Out
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="the-problem">The Problem</h2>
+
+<p>When working with ASP.NET AJAX applications that perform long-running operations, you might encounter the dreaded <code class="language-plaintext highlighter-rouge">Sys.WebForms.PageRequestManagerTimeoutException</code> with the message “The server request timed out.” This error typically manifests as a JavaScript runtime error rather than a server-side exception, making it particularly frustrating to debug.</p>
+
+<h3 id="when-this-error-occurs">When This Error Occurs</h3>
+
+<p>This timeout exception commonly occurs in scenarios such as:</p>
+
+<ul>
+  <li><strong>Large data exports</strong> (e.g., generating hundreds of PDF reports)</li>
+  <li><strong>Complex database operations</strong> that take several minutes to complete</li>
+  <li><strong>File processing operations</strong> involving large files</li>
+  <li><strong>Data import/migration processes</strong> with substantial datasets</li>
+  <li><strong>Report generation</strong> with complex calculations or large datasets</li>
+</ul>
+
+<h3 id="error-details">Error Details</h3>
+
+<p>The error appears as a JavaScript alert or console error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sys.WebForms.PageRequestManagerTimeoutException: The server request timed out.
+</code></pre></div></div>
+
+<p>This occurs because ASP.NET AJAX’s <code class="language-plaintext highlighter-rouge">ScriptManager</code> has a default timeout of <strong>90 seconds</strong> for asynchronous postback operations. When your server-side operation takes longer than this limit, the client-side JavaScript times out and throws this exception.</p>
+
+<h2 id="root-cause">Root Cause</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">PageRequestManagerTimeoutException</code> is caused by the <code class="language-plaintext highlighter-rouge">AsyncPostBackTimeOut</code> property of the <code class="language-plaintext highlighter-rouge">ScriptManager</code> control. This property determines how long the client will wait for a server response during an asynchronous postback before timing out.</p>
+
+<p><strong>Default timeout value</strong>: 90 seconds (90,000 milliseconds)</p>
+
+<h2 id="solutions">Solutions</h2>
+
+<h3 id="solution-1-increase-asyncpostbacktimeout-property">Solution 1: Increase AsyncPostBackTimeOut Property</h3>
+
+<p>The most straightforward solution is to increase the timeout value of the <code class="language-plaintext highlighter-rouge">ScriptManager</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;asp:ScriptManager</span> <span class="na">ID=</span><span class="s">"ScriptManager1"</span> 
+                   <span class="na">AsyncPostBackTimeOut=</span><span class="s">"1200"</span> 
+                   <span class="na">runat=</span><span class="s">"server"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Example Calculation</strong>:</p>
+<ul>
+  <li>If your operation takes 20 minutes to complete</li>
+  <li>20 minutes × 60 seconds = 1,200 seconds</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">AsyncPostBackTimeOut="1200"</code></li>
+</ul>
+
+<h3 id="solution-2-dynamic-timeout-configuration">Solution 2: Dynamic Timeout Configuration</h3>
+
+<p>For operations where the timeout requirement varies, you can set it programmatically:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In your Page_Load or before the long operation</span>
+<span class="n">ScriptManager</span><span class="p">.</span><span class="nf">GetCurrent</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">Page</span><span class="p">).</span><span class="n">AsyncPostBackTimeOut</span> <span class="p">=</span> <span class="m">1800</span><span class="p">;</span> <span class="c1">// 30 minutes</span>
+</code></pre></div></div>
+
+<h3 id="solution-3-web-service-approach">Solution 3: Web Service Approach</h3>
+
+<p>For very long operations, consider using web services with custom timeout handling:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// JavaScript approach for web service calls</span>
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="mi">1800000</span><span class="p">;</span> <span class="c1">// 30 minutes in milliseconds</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">ontimeout</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">The operation timed out. Please try again.</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="solution-4-progress-indicators-and-chunking">Solution 4: Progress Indicators and Chunking</h3>
+
+<p>For better user experience with long operations:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Break large operations into smaller chunks</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">ProcessLargeDataset</span><span class="p">(</span><span class="n">List</span><span class="p">&lt;</span><span class="n">DataItem</span><span class="p">&gt;</span> <span class="n">items</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">chunkSize</span> <span class="p">=</span> <span class="m">50</span><span class="p">;</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">items</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span> <span class="p">+=</span> <span class="n">chunkSize</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">chunk</span> <span class="p">=</span> <span class="n">items</span><span class="p">.</span><span class="nf">Skip</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="nf">Take</span><span class="p">(</span><span class="n">chunkSize</span><span class="p">).</span><span class="nf">ToList</span><span class="p">();</span>
+        <span class="nf">ProcessChunk</span><span class="p">(</span><span class="n">chunk</span><span class="p">);</span>
+        
+        <span class="c1">// Update progress indicator</span>
+        <span class="nf">UpdateProgress</span><span class="p">(</span><span class="n">i</span> <span class="p">+</span> <span class="n">chunk</span><span class="p">.</span><span class="n">Count</span><span class="p">,</span> <span class="n">items</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+        
+        <span class="c1">// Allow UI to refresh</span>
+        <span class="n">System</span><span class="p">.</span><span class="n">Web</span><span class="p">.</span><span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<h3 id="1-consider-user-experience">1. Consider User Experience</h3>
+
+<ul>
+  <li><strong>Progress Indicators</strong>: Always show progress for long operations</li>
+  <li><strong>Cancel Options</strong>: Provide users the ability to cancel long-running processes</li>
+  <li><strong>Time Estimates</strong>: Display estimated completion times when possible</li>
+</ul>
+
+<h3 id="2-server-side-optimizations">2. Server-Side Optimizations</h3>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Optimize database queries</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">context</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">YourDbContext</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">context</span><span class="p">.</span><span class="n">Database</span><span class="p">.</span><span class="n">CommandTimeout</span> <span class="p">=</span> <span class="m">300</span><span class="p">;</span> <span class="c1">// 5 minutes</span>
+    <span class="c1">// Your long-running query here</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="3-alternative-architectures">3. Alternative Architectures</h3>
+
+<p>For very long operations, consider:</p>
+
+<ul>
+  <li><strong>Background processing</strong> with status polling</li>
+  <li><strong>Asynchronous operations</strong> with email notifications</li>
+  <li><strong>Queue-based processing</strong> systems</li>
+  <li><strong>WebSocket connections</strong> for real-time updates</li>
+</ul>
+
+<h3 id="4-configuration-in-webconfig">4. Configuration in Web.config</h3>
+
+<p>You can also set timeout values globally:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;configuration&gt;</span>
+  <span class="nt">&lt;system.web&gt;</span>
+    <span class="nt">&lt;httpRuntime</span> <span class="na">executionTimeout=</span><span class="s">"1800"</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- 30 minutes --&gt;</span>
+    <span class="nt">&lt;compilation</span> <span class="na">debug=</span><span class="s">"false"</span> <span class="na">targetFramework=</span><span class="s">"4.0"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/system.web&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div></div>
+
+<h2 id="prevention-strategies">Prevention Strategies</h2>
+
+<ol>
+  <li><strong>Performance Testing</strong>: Test with realistic data volumes during development</li>
+  <li><strong>Chunked Processing</strong>: Break large operations into smaller, manageable pieces</li>
+  <li><strong>Asynchronous Patterns</strong>: Use async/await patterns where appropriate</li>
+  <li><strong>Caching</strong>: Implement appropriate caching strategies to reduce processing time</li>
+  <li><strong>Database Optimization</strong>: Ensure queries are optimized with proper indexing</li>
+</ol>
+
+<h2 id="monitoring-and-debugging">Monitoring and Debugging</h2>
+
+<h3 id="client-side-debugging">Client-Side Debugging</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add error handling to track timeout issues</span>
+<span class="nx">Sys</span><span class="p">.</span><span class="nx">WebForms</span><span class="p">.</span><span class="nx">PageRequestManager</span><span class="p">.</span><span class="nf">getInstance</span><span class="p">().</span><span class="nf">add_endRequest</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nf">get_error</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">args</span><span class="p">.</span><span class="nf">get_error</span><span class="p">().</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">Sys.WebForms.PageRequestManagerTimeoutException</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Timeout occurred at: </span><span class="dl">'</span> <span class="o">+</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">());</span>
+        <span class="nx">args</span><span class="p">.</span><span class="nf">set_errorHandled</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Operation timed out. Please try again.</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="server-side-logging">Server-Side Logging</h3>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Log long-running operations</span>
+<span class="kt">var</span> <span class="n">stopwatch</span> <span class="p">=</span> <span class="n">Stopwatch</span><span class="p">.</span><span class="nf">StartNew</span><span class="p">();</span>
+<span class="k">try</span>
+<span class="p">{</span>
+    <span class="c1">// Your long operation here</span>
+    <span class="nf">ProcessLargeOperation</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">finally</span>
+<span class="p">{</span>
+    <span class="n">stopwatch</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+    <span class="n">Logger</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="s">$"Operation completed in </span><span class="p">{</span><span class="n">stopwatch</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s">ms"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">Sys.WebForms.PageRequestManagerTimeoutException</code> is a common issue in ASP.NET AJAX applications that can be resolved by adjusting the <code class="language-plaintext highlighter-rouge">AsyncPostBackTimeOut</code> property. However, simply increasing timeout values isn’t always the best solution. Consider implementing progress indicators, breaking operations into chunks, or using alternative architectures for very long processes to provide a better user experience.</p>
+
+<p>Remember that while increasing timeout values solves the immediate problem, optimizing the underlying operations and providing proper user feedback creates a more robust and user-friendly application.</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ajax" class="page__taxonomy-item" rel="tag">ajax</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#aspnet" class="page__taxonomy-item" rel="tag">aspnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#performance" class="page__taxonomy-item" rel="tag">performance</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#scriptmanager" class="page__taxonomy-item" rel="tag">scriptmanager</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#timeout" class="page__taxonomy-item" rel="tag">timeout</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#troubleshooting" class="page__taxonomy-item" rel="tag">troubleshooting</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webforms" class="page__taxonomy-item" rel="tag">webforms</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ajax" class="page__taxonomy-item" rel="tag">AJAX</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net" class="page__taxonomy-item" rel="tag">ASP.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#troubleshooting" class="page__taxonomy-item" rel="tag">Troubleshooting</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-development" class="page__taxonomy-item" rel="tag">Web Development</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-02-04T00:00:00-05:00">February 04, 2010</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Resolving+Sys.WebForms.PageRequestManagerTimeoutException%3A+Server+Request+Timed+Out%20https%3A%2F%2Fmahedee.net%2Fsys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fsys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fsys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/http1-0-503-service-unavailable/" class="pagination--pager" title="Resolving HTTP/1.0 503 Service Unavailable Error in ASP.NET Project Creation
+">Previous</a>
+    
+    
+      <a href="/this-application-was-precompiled-with-personalization-turned-off/" class="pagination--pager" title="Resolving ‘This Application Was Precompiled with Personalization Turned Off’ Error in ASP.NET
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/sys-webforms-page_request_manager_timeout-exception-the-server-request-timed-out/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/social-media-images-jekyll-minimal-mistakes/" rel="permalink">How to Configure Social Media Images for Jekyll Minimal Mistakes Blog
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to configure social media images for your Jekyll Minimal Mistakes blog to get beautiful thumbnails when sharing articles on Facebook, LinkedIn, Twi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/my-vs-code-extensions-for-daily-development/" rel="permalink">My VS Code Extensions for Daily Development Work
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <!-- AdSense disabled:
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+     -->
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- AdSense disabled: Add sense code for all page : added globaly
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
+
+  </body>
+</html>

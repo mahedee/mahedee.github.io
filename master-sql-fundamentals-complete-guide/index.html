@@ -1,0 +1,1444 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations - Think Simple</title>
+<meta name="description" content="Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations">
+<meta property="og:url" content="https://mahedee.net/master-sql-fundamentals-complete-guide/">
+
+
+  <meta property="og:description" content="Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2011-03-04T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/master-sql-fundamentals-complete-guide/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques." />
+<meta property="og:description" content="Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques." />
+<link rel="canonical" href="https://mahedee.net/master-sql-fundamentals-complete-guide/" />
+<meta property="og:url" content="https://mahedee.net/master-sql-fundamentals-complete-guide/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-03-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-03-04T00:00:00-05:00","datePublished":"2011-03-04T00:00:00-05:00","description":"Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques.","headline":"Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/master-sql-fundamentals-complete-guide/"},"url":"https://mahedee.net/master-sql-fundamentals-complete-guide/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations">
+    <meta itemprop="description" content="Complete beginner’s guide to essential SQL operations: CREATE, INSERT, SELECT, UPDATE, DELETE. Learn fundamental database operations with practical examples, best practices, and modern SQL techniques.">
+    <meta itemprop="datePublished" content="March 04, 2011">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>Structured Query Language (SQL) is the foundation of database management and manipulation. Whether you’re building web applications, analyzing data, or managing enterprise systems, mastering these fundamental SQL operations is essential for any developer or data professional.</p>
+
+<p>This comprehensive guide covers the six core SQL operations that form the backbone of database interactions: <strong>CREATE</strong>, <strong>INSERT</strong>, <strong>SELECT</strong>, <strong>UPDATE</strong>, <strong>DELETE</strong>, and <strong>DROP</strong>. These operations are often referred to as CRUD (Create, Read, Update, Delete) operations, plus schema management.</p>
+
+<h2 id="understanding-sql-operations">Understanding SQL Operations</h2>
+
+<h3 id="what-youll-learn">What You’ll Learn</h3>
+
+<ul>
+  <li><strong>Data Definition Language (DDL)</strong>: CREATE and DROP statements for managing database structure</li>
+  <li><strong>Data Manipulation Language (DML)</strong>: INSERT, SELECT, UPDATE, and DELETE for working with data</li>
+  <li><strong>Best Practices</strong>: Modern SQL techniques and optimization strategies</li>
+  <li><strong>Real-world Examples</strong>: Practical scenarios and common use cases</li>
+  <li><strong>Error Handling</strong>: Common mistakes and how to avoid them</li>
+</ul>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<ul>
+  <li>Basic understanding of databases and tables</li>
+  <li>Access to SQL Server Management Studio or similar database tool</li>
+  <li>Familiarity with data types and database concepts</li>
+</ul>
+
+<h2 id="1-create---building-your-database-structure">1. CREATE - Building Your Database Structure</h2>
+
+<p>The CREATE statement is used to create database objects like tables, indexes, views, and stored procedures. Let’s start with creating a table.</p>
+
+<h3 id="basic-table-creation">Basic Table Creation</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a comprehensive employee table</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">employees</span> <span class="p">(</span>
+    <span class="n">employee_id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">first_name</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">last_name</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">email</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">UNIQUE</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">phone</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+    <span class="n">hire_date</span> <span class="nb">DATE</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="n">GETDATE</span><span class="p">(),</span>
+    <span class="n">job_title</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">salary</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">department_id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">is_active</span> <span class="nb">BIT</span> <span class="k">DEFAULT</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">created_at</span> <span class="n">DATETIME2</span> <span class="k">DEFAULT</span> <span class="n">GETDATE</span><span class="p">(),</span>
+    <span class="n">updated_at</span> <span class="n">DATETIME2</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="advanced-table-creation-with-constraints">Advanced Table Creation with Constraints</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create departments table with relationships</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">departments</span> <span class="p">(</span>
+    <span class="n">department_id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">department_name</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">UNIQUE</span><span class="p">,</span>
+    <span class="n">manager_id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">budget</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">budget</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="k">location</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">created_at</span> <span class="n">DATETIME2</span> <span class="k">DEFAULT</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="p">);</span>
+
+<span class="c1">-- Add foreign key constraint</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">FK_employees_department</span> 
+    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">department_id</span><span class="p">)</span> 
+    <span class="k">REFERENCES</span> <span class="n">departments</span><span class="p">(</span><span class="n">department_id</span><span class="p">);</span>
+
+<span class="c1">-- Add check constraints for data validation</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">CHK_employees_salary</span> 
+    <span class="k">CHECK</span> <span class="p">(</span><span class="n">salary</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">AND</span> <span class="n">salary</span> <span class="o">&lt;=</span> <span class="mi">1000000</span><span class="p">);</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">CHK_employees_email_format</span> 
+    <span class="k">CHECK</span> <span class="p">(</span><span class="n">email</span> <span class="k">LIKE</span> <span class="s1">'%@%.%'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="creating-indexes-for-performance">Creating Indexes for Performance</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create indexes for better query performance</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_email</span> <span class="k">ON</span> <span class="n">employees</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_department_id</span> <span class="k">ON</span> <span class="n">employees</span><span class="p">(</span><span class="n">department_id</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_hire_date</span> <span class="k">ON</span> <span class="n">employees</span><span class="p">(</span><span class="n">hire_date</span><span class="p">);</span>
+
+<span class="c1">-- Create composite index for common queries</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_name_department</span> 
+    <span class="k">ON</span> <span class="n">employees</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">department_id</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="2-insert---adding-data-to-your-tables">2. INSERT - Adding Data to Your Tables</h2>
+
+<p>The INSERT statement adds new records to your tables. Let’s explore different methods and best practices.</p>
+
+<h3 id="basic-insert-operations">Basic INSERT Operations</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Insert a single employee record</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employees</span> <span class="p">(</span>
+    <span class="n">first_name</span><span class="p">,</span> 
+    <span class="n">last_name</span><span class="p">,</span> 
+    <span class="n">email</span><span class="p">,</span> 
+    <span class="n">phone</span><span class="p">,</span> 
+    <span class="n">hire_date</span><span class="p">,</span> 
+    <span class="n">job_title</span><span class="p">,</span> 
+    <span class="n">salary</span><span class="p">,</span> 
+    <span class="n">department_id</span>
+<span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+    <span class="s1">'John'</span><span class="p">,</span> 
+    <span class="s1">'Smith'</span><span class="p">,</span> 
+    <span class="s1">'john.smith@company.com'</span><span class="p">,</span> 
+    <span class="s1">'+1-555-0123'</span><span class="p">,</span> 
+    <span class="s1">'2024-01-15'</span><span class="p">,</span> 
+    <span class="s1">'Software Engineer'</span><span class="p">,</span> 
+    <span class="mi">75000</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> 
+    <span class="mi">1</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="multiple-row-insert-sql-server-2008">Multiple Row INSERT (SQL Server 2008+)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Insert multiple employees in a single statement</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employees</span> <span class="p">(</span>
+    <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">job_title</span><span class="p">,</span> <span class="n">salary</span><span class="p">,</span> <span class="n">department_id</span><span class="p">,</span> <span class="n">hire_date</span>
+<span class="p">)</span>
+<span class="k">VALUES</span> 
+    <span class="p">(</span><span class="s1">'Sarah'</span><span class="p">,</span> <span class="s1">'Johnson'</span><span class="p">,</span> <span class="s1">'sarah.johnson@company.com'</span><span class="p">,</span> <span class="s1">'Senior Developer'</span><span class="p">,</span> <span class="mi">85000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'2024-01-10'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Mike'</span><span class="p">,</span> <span class="s1">'Wilson'</span><span class="p">,</span> <span class="s1">'mike.wilson@company.com'</span><span class="p">,</span> <span class="s1">'Project Manager'</span><span class="p">,</span> <span class="mi">90000</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'2024-01-12'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Emily'</span><span class="p">,</span> <span class="s1">'Brown'</span><span class="p">,</span> <span class="s1">'emily.brown@company.com'</span><span class="p">,</span> <span class="s1">'Data Analyst'</span><span class="p">,</span> <span class="mi">65000</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'2024-01-14'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'David'</span><span class="p">,</span> <span class="s1">'Davis'</span><span class="p">,</span> <span class="s1">'david.davis@company.com'</span><span class="p">,</span> <span class="s1">'UX Designer'</span><span class="p">,</span> <span class="mi">70000</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'2024-01-16'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Lisa'</span><span class="p">,</span> <span class="s1">'Garcia'</span><span class="p">,</span> <span class="s1">'lisa.garcia@company.com'</span><span class="p">,</span> <span class="s1">'Marketing Specialist'</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">'2024-01-18'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="insert-with-subquery">INSERT with Subquery</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Insert data from another table or query</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employee_archive</span> <span class="p">(</span>
+    <span class="n">employee_id</span><span class="p">,</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">job_title</span><span class="p">,</span> <span class="n">final_salary</span><span class="p">,</span> <span class="n">termination_date</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">CONCAT</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span> <span class="k">AS</span> <span class="n">full_name</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">FROM</span> <span class="n">employees</span> 
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="insert-with-error-handling">INSERT with Error Handling</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Safe INSERT with transaction and error handling</span>
+<span class="k">BEGIN</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+
+<span class="k">BEGIN</span> <span class="n">TRY</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employees</span> <span class="p">(</span>
+        <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">job_title</span><span class="p">,</span> <span class="n">salary</span><span class="p">,</span> <span class="n">department_id</span>
+    <span class="p">)</span>
+    <span class="k">VALUES</span> <span class="p">(</span>
+        <span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Cooper'</span><span class="p">,</span> <span class="s1">'alice.cooper@company.com'</span><span class="p">,</span> 
+        <span class="s1">'Senior Analyst'</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">3</span>
+    <span class="p">);</span>
+    
+    <span class="k">COMMIT</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+    <span class="n">PRINT</span> <span class="s1">'Employee added successfully.'</span><span class="p">;</span>
+<span class="k">END</span> <span class="n">TRY</span>
+<span class="k">BEGIN</span> <span class="n">CATCH</span>
+    <span class="k">ROLLBACK</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+    <span class="n">PRINT</span> <span class="s1">'Error occurred: '</span> <span class="o">+</span> <span class="n">ERROR_MESSAGE</span><span class="p">();</span>
+<span class="k">END</span> <span class="n">CATCH</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="3-select---retrieving-and-querying-data">3. SELECT - Retrieving and Querying Data</h2>
+
+<p>The SELECT statement is the most frequently used SQL operation for retrieving data from your database.</p>
+
+<h3 id="basic-select-operations">Basic SELECT Operations</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Select all columns (avoid in production)</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+
+<span class="c1">-- Select specific columns (recommended)</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="n">email</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span>
+<span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="select-with-filtering-and-conditions">SELECT with Filtering and Conditions</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Filter employees by department and salary</span>
+<span class="k">SELECT</span> 
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">hire_date</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">1</span> 
+    <span class="k">AND</span> <span class="n">salary</span> <span class="o">&gt;=</span> <span class="mi">70000</span>
+    <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">salary</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- Using LIKE for pattern matching</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">CONCAT</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span> <span class="k">AS</span> <span class="n">full_name</span><span class="p">,</span>
+    <span class="n">email</span><span class="p">,</span>
+    <span class="n">job_title</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">job_title</span> <span class="k">LIKE</span> <span class="s1">'%Engineer%'</span>
+   <span class="k">OR</span> <span class="n">email</span> <span class="k">LIKE</span> <span class="s1">'%@company.com'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="advanced-select-with-joins">Advanced SELECT with JOINs</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Join employees with departments</span>
+<span class="k">SELECT</span> 
+    <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">job_title</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">,</span>
+    <span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span>
+    <span class="n">d</span><span class="p">.</span><span class="k">location</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">;</span>
+
+<span class="c1">-- Left join to include employees without departments</span>
+<span class="k">SELECT</span> 
+    <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">job_title</span><span class="p">,</span>
+    <span class="k">ISNULL</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span> <span class="s1">'Unassigned'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">department_name</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="aggregate-functions-and-grouping">Aggregate Functions and Grouping</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Calculate statistics by department</span>
+<span class="k">SELECT</span> 
+    <span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span>
+    <span class="k">COUNT</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">employee_count</span><span class="p">,</span>
+    <span class="k">AVG</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="k">AS</span> <span class="n">average_salary</span><span class="p">,</span>
+    <span class="k">MIN</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="k">AS</span> <span class="n">min_salary</span><span class="p">,</span>
+    <span class="k">MAX</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="k">AS</span> <span class="n">max_salary</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total_salary_cost</span>
+<span class="k">FROM</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">ON</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> 
+    <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span>
+<span class="k">HAVING</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">average_salary</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="window-functions-sql-server-2005">Window Functions (SQL Server 2005+)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Advanced analytics with window functions</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="c1">-- Ranking within department</span>
+    <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">department_id</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">salary</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">AS</span> <span class="n">salary_rank</span><span class="p">,</span>
+    <span class="c1">-- Running total</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">department_id</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">hire_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">running_total</span><span class="p">,</span>
+    <span class="c1">-- Percentage of department total</span>
+    <span class="n">FORMAT</span><span class="p">(</span>
+        <span class="n">salary</span> <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="o">/</span> <span class="k">SUM</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">department_id</span><span class="p">),</span> 
+        <span class="s1">'N2'</span>
+    <span class="p">)</span> <span class="o">+</span> <span class="s1">'%'</span> <span class="k">AS</span> <span class="n">salary_percentage</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">department_id</span><span class="p">,</span> <span class="n">salary_rank</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="4-update---modifying-existing-data">4. UPDATE - Modifying Existing Data</h2>
+
+<p>The UPDATE statement modifies existing records in your tables.</p>
+
+<h3 id="basic-update-operations">Basic UPDATE Operations</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Update a single employee's information</span>
+<span class="k">UPDATE</span> <span class="n">employees</span>
+<span class="k">SET</span> 
+    <span class="n">job_title</span> <span class="o">=</span> <span class="s1">'Senior Software Engineer'</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="o">=</span> <span class="mi">85000</span><span class="p">,</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">WHERE</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="conditional-updates">Conditional Updates</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Give salary increases based on performance and tenure</span>
+<span class="k">UPDATE</span> <span class="n">employees</span>
+<span class="k">SET</span> 
+    <span class="n">salary</span> <span class="o">=</span> 
+        <span class="k">CASE</span> 
+            <span class="k">WHEN</span> <span class="n">DATEDIFF</span><span class="p">(</span><span class="nb">YEAR</span><span class="p">,</span> <span class="n">hire_date</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="k">THEN</span> <span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">10</span>  <span class="c1">-- 10% for 5+ years</span>
+            <span class="k">WHEN</span> <span class="n">DATEDIFF</span><span class="p">(</span><span class="nb">YEAR</span><span class="p">,</span> <span class="n">hire_date</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">07</span>  <span class="c1">-- 7% for 2-4 years</span>
+            <span class="k">WHEN</span> <span class="n">DATEDIFF</span><span class="p">(</span><span class="nb">YEAR</span><span class="p">,</span> <span class="n">hire_date</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">05</span>  <span class="c1">-- 5% for 1+ years</span>
+            <span class="k">ELSE</span> <span class="n">salary</span>
+        <span class="k">END</span><span class="p">,</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">AND</span> <span class="n">salary</span> <span class="o">&lt;=</span> <span class="mi">100000</span><span class="p">;</span>  <span class="c1">-- Cap increases</span>
+</code></pre></div></div>
+
+<h3 id="update-with-joins">UPDATE with JOINs</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Update employees based on department information</span>
+<span class="k">UPDATE</span> <span class="n">e</span>
+<span class="k">SET</span> 
+    <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">08</span><span class="p">,</span>  <span class="c1">-- 8% increase for high-budget departments</span>
+    <span class="n">e</span><span class="p">.</span><span class="n">updated_at</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">WHERE</span> <span class="n">d</span><span class="p">.</span><span class="n">budget</span> <span class="o">&gt;</span> <span class="mi">500000</span>
+    <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="o">&lt;</span> <span class="mi">90000</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="safe-update-with-transaction">Safe UPDATE with Transaction</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Safe update with rollback capability</span>
+<span class="k">BEGIN</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+
+<span class="c1">-- Show records that will be affected</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span> 
+    <span class="n">first_name</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="n">last_name</span> <span class="k">AS</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="k">AS</span> <span class="n">current_salary</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">05</span> <span class="k">AS</span> <span class="n">new_salary</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- Perform the update</span>
+<span class="k">UPDATE</span> <span class="n">employees</span>
+<span class="k">SET</span> 
+    <span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">05</span><span class="p">,</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">1</span> 
+    <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- Check the results</span>
+<span class="k">SELECT</span> <span class="o">@@</span><span class="n">ROWCOUNT</span> <span class="k">AS</span> <span class="n">rows_affected</span><span class="p">;</span>
+
+<span class="c1">-- Uncomment to commit or rollback</span>
+<span class="c1">-- COMMIT TRANSACTION;</span>
+<span class="c1">-- ROLLBACK TRANSACTION;</span>
+</code></pre></div></div>
+
+<h2 id="5-delete---removing-data">5. DELETE - Removing Data</h2>
+
+<p>The DELETE statement removes records from your tables. Always use with caution!</p>
+
+<h3 id="basic-delete-operations">Basic DELETE Operations</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Delete a specific employee</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="c1">-- Delete employees from a specific department</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">5</span> 
+    <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="conditional-delete">Conditional DELETE</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Delete old inactive records</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="k">AND</span> <span class="n">updated_at</span> <span class="o">&lt;</span> <span class="n">DATEADD</span><span class="p">(</span><span class="nb">YEAR</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="soft-delete-recommended-approach">Soft DELETE (Recommended Approach)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Instead of hard delete, use soft delete for data preservation</span>
+<span class="k">UPDATE</span> <span class="n">employees</span>
+<span class="k">SET</span> 
+    <span class="n">is_active</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">termination_date</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">(),</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">GETDATE</span><span class="p">()</span>
+<span class="k">WHERE</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+
+<span class="c1">-- Create a view for active employees</span>
+<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">active_employees</span> <span class="k">AS</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="n">email</span><span class="p">,</span>
+    <span class="n">job_title</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">department_id</span><span class="p">,</span>
+    <span class="n">hire_date</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="delete-with-joins">DELETE with JOINs</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Delete employees from departments that are being closed</span>
+<span class="k">DELETE</span> <span class="n">e</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">WHERE</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'Legacy Systems'</span><span class="p">,</span> <span class="s1">'Discontinued Products'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="safe-delete-with-backup">Safe DELETE with Backup</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create backup before deletion</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">INTO</span> <span class="n">employees_backup_before_delete</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+<span class="c1">-- Perform the deletion</span>
+<span class="k">BEGIN</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">3</span> 
+    <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">@@</span><span class="n">ROWCOUNT</span> <span class="k">AS</span> <span class="n">deleted_rows</span><span class="p">;</span>
+
+<span class="c1">-- Review and commit/rollback</span>
+<span class="c1">-- COMMIT TRANSACTION;</span>
+<span class="c1">-- ROLLBACK TRANSACTION;</span>
+</code></pre></div></div>
+
+<h2 id="6-drop---removing-database-objects">6. DROP - Removing Database Objects</h2>
+
+<p>The DROP statement permanently removes database objects. Use with extreme caution!</p>
+
+<h3 id="drop-table">DROP TABLE</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Drop a single table</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">temp_employees</span><span class="p">;</span>  <span class="c1">-- SQL Server 2016+</span>
+
+<span class="c1">-- For older versions</span>
+<span class="n">IF</span> <span class="n">OBJECT_ID</span><span class="p">(</span><span class="s1">'temp_employees'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">temp_employees</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="drop-with-dependencies">DROP with Dependencies</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Remove constraints before dropping tables</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span> 
+<span class="k">DROP</span> <span class="k">CONSTRAINT</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">FK_employees_department</span><span class="p">;</span>
+
+<span class="c1">-- Drop indexes</span>
+<span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">IX_employees_email</span> <span class="k">ON</span> <span class="n">employees</span><span class="p">;</span>
+
+<span class="c1">-- Drop the table</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">employees</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="drop-other-objects">DROP Other Objects</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Drop view</span>
+<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">active_employees</span><span class="p">;</span>
+
+<span class="c1">-- Drop stored procedure</span>
+<span class="k">DROP</span> <span class="k">PROCEDURE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">sp_get_employee_by_id</span><span class="p">;</span>
+
+<span class="c1">-- Drop function</span>
+<span class="k">DROP</span> <span class="k">FUNCTION</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">fn_calculate_bonus</span><span class="p">;</span>
+
+<span class="c1">-- Drop entire database (EXTREME CAUTION!)</span>
+<span class="c1">-- DROP DATABASE test_database;</span>
+</code></pre></div></div>
+
+<h2 id="modern-sql-best-practices">Modern SQL Best Practices</h2>
+
+<h3 id="1-use-transactions-for-data-integrity">1. Use Transactions for Data Integrity</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">BEGIN</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+
+<span class="k">BEGIN</span> <span class="n">TRY</span>
+    <span class="c1">-- Multiple related operations</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">departments</span> <span class="p">(</span><span class="n">department_name</span><span class="p">,</span> <span class="n">budget</span><span class="p">)</span> 
+    <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'New Department'</span><span class="p">,</span> <span class="mi">100000</span><span class="p">);</span>
+    
+    <span class="k">DECLARE</span> <span class="o">@</span><span class="n">new_dept_id</span> <span class="nb">INT</span> <span class="o">=</span> <span class="n">SCOPE_IDENTITY</span><span class="p">();</span>
+    
+    <span class="k">UPDATE</span> <span class="n">employees</span> 
+    <span class="k">SET</span> <span class="n">department_id</span> <span class="o">=</span> <span class="o">@</span><span class="n">new_dept_id</span> 
+    <span class="k">WHERE</span> <span class="n">employee_id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    
+    <span class="k">COMMIT</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+<span class="k">END</span> <span class="n">TRY</span>
+<span class="k">BEGIN</span> <span class="n">CATCH</span>
+    <span class="k">ROLLBACK</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+    <span class="n">THROW</span><span class="p">;</span>  <span class="c1">-- Re-throw the error</span>
+<span class="k">END</span> <span class="n">CATCH</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="2-parameterized-queries-prevent-sql-injection">2. Parameterized Queries (Prevent SQL Injection)</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Using parameters in stored procedures</span>
+<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">sp_get_employees_by_department</span>
+    <span class="o">@</span><span class="n">department_id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="o">@</span><span class="n">min_salary</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">AS</span>
+<span class="k">BEGIN</span>
+    <span class="k">SELECT</span> 
+        <span class="n">employee_id</span><span class="p">,</span>
+        <span class="n">first_name</span><span class="p">,</span>
+        <span class="n">last_name</span><span class="p">,</span>
+        <span class="n">job_title</span><span class="p">,</span>
+        <span class="n">salary</span>
+    <span class="k">FROM</span> <span class="n">employees</span>
+    <span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="o">@</span><span class="n">department_id</span>
+        <span class="k">AND</span> <span class="n">salary</span> <span class="o">&gt;=</span> <span class="o">@</span><span class="n">min_salary</span>
+        <span class="k">AND</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="3-data-validation-and-constraints">3. Data Validation and Constraints</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Add comprehensive data validation</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">CHK_employees_hire_date</span> 
+    <span class="k">CHECK</span> <span class="p">(</span><span class="n">hire_date</span> <span class="o">&gt;=</span> <span class="s1">'1900-01-01'</span> <span class="k">AND</span> <span class="n">hire_date</span> <span class="o">&lt;=</span> <span class="n">GETDATE</span><span class="p">());</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">employees</span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">CHK_employees_phone_format</span> 
+    <span class="k">CHECK</span> <span class="p">(</span><span class="n">phone</span> <span class="k">LIKE</span> <span class="s1">'+[0-9]%'</span> <span class="k">OR</span> <span class="n">phone</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="4-indexing-strategy">4. Indexing Strategy</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create covering indexes for common queries</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_covering_search</span>
+<span class="k">ON</span> <span class="n">employees</span> <span class="p">(</span><span class="n">department_id</span><span class="p">,</span> <span class="n">is_active</span><span class="p">)</span>
+<span class="n">INCLUDE</span> <span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">job_title</span><span class="p">,</span> <span class="n">salary</span><span class="p">,</span> <span class="n">email</span><span class="p">);</span>
+
+<span class="c1">-- Partial index for active employees only</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">IX_employees_active_salary</span>
+<span class="k">ON</span> <span class="n">employees</span> <span class="p">(</span><span class="n">salary</span> <span class="k">DESC</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="n">is_active</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="common-pitfalls-and-how-to-avoid-them">Common Pitfalls and How to Avoid Them</h2>
+
+<h3 id="1-missing-where-clauses">1. Missing WHERE Clauses</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- DANGEROUS: Updates all records!</span>
+<span class="c1">-- UPDATE employees SET salary = 50000;</span>
+
+<span class="c1">-- CORRECT: Always use WHERE clause</span>
+<span class="k">UPDATE</span> <span class="n">employees</span> 
+<span class="k">SET</span> <span class="n">salary</span> <span class="o">=</span> <span class="mi">50000</span> 
+<span class="k">WHERE</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="2-not-using-transactions-for-multiple-operations">2. Not Using Transactions for Multiple Operations</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- RISKY: Operations might partially fail</span>
+<span class="c1">-- INSERT INTO departments VALUES ('IT', 1000000);</span>
+<span class="c1">-- INSERT INTO employees VALUES ('John', 'Doe', ...);</span>
+
+<span class="c1">-- SAFE: Use transactions</span>
+<span class="k">BEGIN</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+<span class="k">BEGIN</span> <span class="n">TRY</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">departments</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'IT'</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">);</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employees</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Doe'</span><span class="p">,</span> <span class="p">...);</span>
+    <span class="k">COMMIT</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+<span class="k">END</span> <span class="n">TRY</span>
+<span class="k">BEGIN</span> <span class="n">CATCH</span>
+    <span class="k">ROLLBACK</span> <span class="n">TRANSACTION</span><span class="p">;</span>
+    <span class="n">THROW</span><span class="p">;</span>
+<span class="k">END</span> <span class="n">CATCH</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="3-ignoring-null-values">3. Ignoring NULL Values</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Handle NULL values properly</span>
+<span class="k">SELECT</span> 
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="k">ISNULL</span><span class="p">(</span><span class="n">phone</span><span class="p">,</span> <span class="s1">'No phone'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">phone_display</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="s1">'no-email@company.com'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">contact_email</span>
+<span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="performance-optimization-tips">Performance Optimization Tips</h2>
+
+<h3 id="1-use-appropriate-data-types">1. Use Appropriate Data Types</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Efficient data types</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">optimized_employees</span> <span class="p">(</span>
+    <span class="n">employee_id</span> <span class="nb">INT</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>           <span class="c1">-- Use INT instead of BIGINT if possible</span>
+    <span class="n">first_name</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>                 <span class="c1">-- Use appropriate length</span>
+    <span class="n">is_active</span> <span class="nb">BIT</span><span class="p">,</span>                           <span class="c1">-- Use BIT for boolean values</span>
+    <span class="n">hire_date</span> <span class="nb">DATE</span><span class="p">,</span>                          <span class="c1">-- Use DATE instead of DATETIME if time not needed</span>
+    <span class="n">salary</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>                    <span class="c1">-- Precise decimal for money</span>
+    <span class="n">created_at</span> <span class="n">DATETIME2</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                  <span class="c1">-- Reduce precision if seconds are enough</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="2-efficient-querying">2. Efficient Querying</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Use EXISTS instead of IN for better performance</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="k">EXISTS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="mi">1</span> 
+    <span class="k">FROM</span> <span class="n">departments</span> <span class="n">d</span> 
+    <span class="k">WHERE</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> 
+        <span class="k">AND</span> <span class="n">d</span><span class="p">.</span><span class="n">budget</span> <span class="o">&gt;</span> <span class="mi">500000</span>
+<span class="p">);</span>
+
+<span class="c1">-- Use LIMIT/TOP to restrict result sets</span>
+<span class="k">SELECT</span> <span class="n">TOP</span> <span class="mi">10</span>
+    <span class="n">employee_id</span><span class="p">,</span>
+    <span class="n">first_name</span><span class="p">,</span>
+    <span class="n">last_name</span><span class="p">,</span>
+    <span class="n">salary</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">salary</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Mastering these fundamental SQL operations provides the foundation for effective database management and application development. Remember these key principles:</p>
+
+<h3 id="key-takeaways">Key Takeaways:</h3>
+
+<ol>
+  <li><strong>Always use WHERE clauses</strong> with UPDATE and DELETE statements</li>
+  <li><strong>Implement transactions</strong> for data integrity in multi-step operations</li>
+  <li><strong>Use parameterized queries</strong> to prevent SQL injection</li>
+  <li><strong>Choose appropriate data types</strong> and constraints for data validation</li>
+  <li><strong>Create indexes strategically</strong> for query performance</li>
+  <li><strong>Consider soft deletes</strong> instead of hard deletes for data preservation</li>
+  <li><strong>Test operations</strong> in development environments before production</li>
+</ol>
+
+<h3 id="quick-reference-summary">Quick Reference Summary:</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- CREATE: Define database structure</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="p">(</span><span class="n">column_definitions</span><span class="p">);</span>
+
+<span class="c1">-- INSERT: Add new data</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">table_name</span> <span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="k">values</span><span class="p">);</span>
+
+<span class="c1">-- SELECT: Retrieve data</span>
+<span class="k">SELECT</span> <span class="n">columns</span> <span class="k">FROM</span> <span class="k">table_name</span> <span class="k">WHERE</span> <span class="n">conditions</span><span class="p">;</span>
+
+<span class="c1">-- UPDATE: Modify existing data</span>
+<span class="k">UPDATE</span> <span class="k">table_name</span> <span class="k">SET</span> <span class="k">column</span> <span class="o">=</span> <span class="n">value</span> <span class="k">WHERE</span> <span class="n">conditions</span><span class="p">;</span>
+
+<span class="c1">-- DELETE: Remove data</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">table_name</span> <span class="k">WHERE</span> <span class="n">conditions</span><span class="p">;</span>
+
+<span class="c1">-- DROP: Remove database objects</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">table_name</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>With these fundamentals mastered, you’re well-equipped to build robust database applications and perform effective data management tasks. Continue practicing with real-world scenarios to strengthen your SQL skills.</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#crud-operations" class="page__taxonomy-item" rel="tag">crud-operations</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#database-fundamentals" class="page__taxonomy-item" rel="tag">database-fundamentals</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#database" class="page__taxonomy-item" rel="tag">database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql-basics" class="page__taxonomy-item" rel="tag">sql-basics</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql-tutorial" class="page__taxonomy-item" rel="tag">sql-tutorial</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sql" class="page__taxonomy-item" rel="tag">sql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#t-sql" class="page__taxonomy-item" rel="tag">t-sql</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#database-development" class="page__taxonomy-item" rel="tag">Database Development</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#database" class="page__taxonomy-item" rel="tag">Database</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#sql-fundamentals" class="page__taxonomy-item" rel="tag">SQL Fundamentals</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#sql-server" class="page__taxonomy-item" rel="tag">SQL Server</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2011-03-04T00:00:00-05:00">March 04, 2011</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Master+SQL+Fundamentals%3A+Complete+Guide+to+CREATE%2C+INSERT%2C+SELECT%2C+UPDATE%2C+DELETE+Operations%20https%3A%2F%2Fmahedee.net%2Fmaster-sql-fundamentals-complete-guide%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fmaster-sql-fundamentals-complete-guide%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fmaster-sql-fundamentals-complete-guide%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-check-palindrome-word-using-c/" class="pagination--pager" title="How to check palindrome word using C#
+">Previous</a>
+    
+    
+      <a href="/asp-net-common-interview-questions/" class="pagination--pager" title="100 ASP.NET Common Interview Questions
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/master-sql-fundamentals-complete-guide/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/social-media-images-jekyll-minimal-mistakes/" rel="permalink">How to Configure Social Media Images for Jekyll Minimal Mistakes Blog
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to configure social media images for your Jekyll Minimal Mistakes blog to get beautiful thumbnails when sharing articles on Facebook, LinkedIn, Twi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/my-vs-code-extensions-for-daily-development/" rel="permalink">My VS Code Extensions for Daily Development Work
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <!-- AdSense disabled:
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+     -->
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- AdSense disabled: Add sense code for all page : added globaly
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
+
+  </body>
+</html>

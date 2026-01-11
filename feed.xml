@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://mahedee.net/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net/" rel="alternate" type="text/html" /><updated>2026-01-10T22:40:12-05:00</updated><id>https://mahedee.net/feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples</title><link href="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" rel="alternate" type="text/html" title="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples" /><published>2026-01-03T00:00:00-05:00</published><updated>2026-01-03T00:00:00-05:00</updated><id>https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware</id><content type="html" xml:base="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/"><![CDATA[<p>Modern web applications must handle cross-cutting concerns such as logging, authentication, security, exception handling, and request tracing. In <strong>ASP.NET Core</strong>, middleware is the key architectural component that makes all of this possible in a clean, modular, and scalable way.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://mahedee.net/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mahedee.net/" rel="alternate" type="text/html" /><updated>2026-01-10T22:47:04-05:00</updated><id>https://mahedee.net/feed.xml</id><title type="html">Think Simple</title><subtitle>Think Simple</subtitle><author><name>Mahedee Hasan</name></author><entry><title type="html">Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples</title><link href="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" rel="alternate" type="text/html" title="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples" /><published>2026-01-03T00:00:00-05:00</published><updated>2026-01-03T00:00:00-05:00</updated><id>https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware</id><content type="html" xml:base="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/"><![CDATA[<p>Modern web applications must handle cross-cutting concerns such as logging, authentication, security, exception handling, and request tracing. In <strong>ASP.NET Core</strong>, middleware is the key architectural component that makes all of this possible in a clean, modular, and scalable way.</p>
 
 <p>This article explains <strong>what middleware is</strong>, <strong>why it is important</strong>, <strong>its benefits</strong>, and <strong>how custom middleware is used in real-world and enterprise applications</strong>, with practical examples.</p>
 
@@ -28,33 +28,28 @@
 
 <p>Middleware provides several important benefits:</p>
 
-<ol>
+<ul>
   <li>
-    <p>Separation of Concerns
+    <p><strong>Separation of Concerns</strong>
 Cross-cutting concerns (logging, security, error handling) are separated from business logic.</p>
   </li>
   <li>
-    <p>Reusability
+    <p><strong>Reusability</strong>
 Middleware components can be reused across multiple applications. For example, authentication middleware can be shared.</p>
   </li>
   <li>
-    <p>Centralized Control</p>
+    <p><strong>Centralized Control</strong>
+Common logic like authentication, headers, or exception handling is implemented in one place.</p>
   </li>
-</ol>
-
-<p>Common logic like authentication, headers, or exception handling is implemented in one place.</p>
-
-<ol>
-  <li>Ordered Execution</li>
-</ol>
-
-<p>Middleware runs in a defined order, giving precise control over request handling.</p>
-
-<ol>
-  <li>Performance Optimization</li>
-</ol>
-
-<p>Requests can be terminated early (for example, unauthorized requests), saving resources.</p>
+  <li>
+    <p><strong>Ordered Execution</strong>
+Middleware runs in a defined order, giving precise control over request handling.</p>
+  </li>
+  <li>
+    <p><strong>Performance Optimization</strong>
+Requests can be terminated early (for example, unauthorized requests), saving resources.</p>
+  </li>
+</ul>
 
 <p><strong>Why Middleware Is Important?</strong></p>
 
@@ -373,11 +368,13 @@ dotnet sln MiddlewareSolution.sln add MiddlewareExample.csproj
 
 <p><strong>Step 4: Run the Application</strong></p>
 <ul>
-  <li>Run the application using Visual Studio or the .NET CLI:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet run
-</code></pre></div>    </div>
-    <p><strong>Step 5: Test the Middleware</strong></p>
-  </li>
+  <li>Run the application using Visual Studio or the .NET CLI:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet run
+</code></pre></div></div>
+<p><strong>Step 5: Test the Middleware</strong></p>
+<ul>
   <li>Use a tool like Postman or curl to send requests to the API endpoints. For example, browse to <code class="language-plaintext highlighter-rouge">http://localhost:5113/weatherforecast</code> or any other endpoint defined in your API.</li>
   <li>Observe the console output to see the logged request and response details along with the execution time.</li>
   <li>Sample output in the console:

@@ -1,0 +1,1154 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples - Think Simple</title>
+<meta name="description" content="Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples">
+<meta property="og:url" content="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/">
+
+
+  <meta property="og:description" content="Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-01-03T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications." />
+<meta property="og:description" content="Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications." />
+<link rel="canonical" href="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" />
+<meta property="og:url" content="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-01-03T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2026-01-03T00:00:00-05:00","datePublished":"2026-01-03T00:00:00-05:00","description":"Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications.","headline":"Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/"},"url":"https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/bio-photo-2.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>What do you want, jewels? I am a very extravagant man.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:billyrick@rick.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://thewhip.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/extravagantman" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples">
+    <meta itemprop="description" content="Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications.">
+    <meta itemprop="datePublished" content="January 03, 2026">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Modern web applications must handle cross-cutting concerns such as logging, authentication, security, exception handling, and request tracing. In <strong>ASP.NET Core</strong>, middleware is the key architectural component that makes all of this possible in a clean, modular, and scalable way.</p>
+
+<p>This article explains <strong>what middleware is</strong>, <strong>why it is important</strong>, <strong>its benefits</strong>, and <strong>how custom middleware is used in real-world and enterprise applications</strong>, with practical examples.</p>
+
+<p><strong>What Is Middleware in ASP.NET Core?</strong></p>
+
+<p>Middleware in ASP.NET Core is a software component that sits between the incoming HTTP request and the outgoing HTTP response. Each middleware component:</p>
+
+<ul>
+  <li>Receives an HTTP request</li>
+  <li>Can perform some logic</li>
+  <li>Can pass the request to the next middleware</li>
+  <li>Can perform logic again when the response is returned</li>
+</ul>
+
+<p><strong>Request Pipeline Concept</strong></p>
+
+<p><img src="/assets/images/posts/2026/middleware-chain-pattern.png" alt="" /></p>
+
+<p>Each middleware decides:</p>
+
+<ul>
+  <li>Whether to pass the request forward</li>
+  <li>Whether to short-circuit the pipeline</li>
+</ul>
+
+<p><strong>Benefits of Middleware in ASP.NET Core</strong></p>
+
+<p>Middleware provides several important benefits:</p>
+
+<ol>
+  <li>
+    <p>Separation of Concerns
+Cross-cutting concerns (logging, security, error handling) are separated from business logic.</p>
+  </li>
+  <li>
+    <p>Reusability
+Middleware components can be reused across multiple applications. For example, authentication middleware can be shared.</p>
+  </li>
+  <li>
+    <p>Centralized Control</p>
+  </li>
+</ol>
+
+<p>Common logic like authentication, headers, or exception handling is implemented in one place.</p>
+
+<ol>
+  <li>Ordered Execution</li>
+</ol>
+
+<p>Middleware runs in a defined order, giving precise control over request handling.</p>
+
+<ol>
+  <li>Performance Optimization</li>
+</ol>
+
+<p>Requests can be terminated early (for example, unauthorized requests), saving resources.</p>
+
+<p><strong>Why Middleware Is Important?</strong></p>
+
+<p>Without middleware:</p>
+
+<ul>
+  <li>Logging code would be duplicated everywhere</li>
+  <li>Security logic would pollute controllers</li>
+  <li>Error handling would be inconsistent</li>
+  <li>Applications would become hard to maintain</li>
+</ul>
+
+<p>Middleware enables:</p>
+
+<ul>
+  <li>Clean architecture</li>
+  <li>Maintainable code</li>
+  <li>Enterprise-grade scalability</li>
+  <li>Observability and diagnostics</li>
+</ul>
+
+<p>In modern APIs and microservices, middleware is <strong>not optional</strong>—it is foundational.</p>
+
+<p><strong>Built-in Middleware Components in ASP.NET Core</strong></p>
+
+<p>ASP.NET Core provides many built-in middleware components.</p>
+
+<p><strong>1. Exception Handling Middleware</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">UseExceptionHandler</span><span class="p">(</span><span class="s">"/error"</span><span class="p">);</span>
+</code></pre></div></div>
+<p>Used to handle unhandled exceptions globally. Here /error is the endpoint that returns a standardized error response.
+Real-world use: Enterprise applications use centralized error handling to return consistent error responses and log incidents.</p>
+
+<p><strong>2. Authentication and Authorization</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Real-world use: Validates JWT tokens or OAuth credentials before requests reach controllers.</p>
+
+<p><strong>3. Logging Middleware</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">UseHttpLogging</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Real-world use: Tracks incoming requests and outgoing responses for auditing and debugging.</p>
+
+<p><strong>4. CORS Middleware</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">UseCors</span><span class="p">();</span>
+</code></pre></div></div>
+<p>Real-world use: Allows controlled access to APIs from frontend applications.</p>
+
+<p><strong>What Is Custom Middleware in ASP.NET Core?</strong></p>
+
+<p><strong>Custom middleware</strong> is middleware that you write yourself to handle application-specific or domain-specific requirements.</p>
+
+<p>You create custom middleware when:</p>
+
+<ul>
+  <li>Built-in middleware does not meet your needs</li>
+  <li>You want reusable cross-cutting logic</li>
+  <li>You need centralized enterprise behavior</li>
+</ul>
+
+<p><strong>Why Use Custom Middleware?</strong></p>
+
+<p>ASP.NET Core’s built-in middleware covers many common scenarios, but custom middleware allows you to address specific needs unique to your application or organization.<br />
+Custom middleware provides several advantages:</p>
+
+<ul>
+  <li>Eliminates duplicated logic</li>
+  <li>Enforces enterprise standards</li>
+  <li>Improves security and observability</li>
+  <li>Simplifies controllers</li>
+  <li>Enables consistent behavior across APIs</li>
+</ul>
+
+<p><strong>How to Create Custom Middleware</strong></p>
+
+<p><strong>Basic Custom Middleware Example</strong></p>
+
+<p>Here RequestLoggingMiddleware logs request paths and response statuses. _next is a delegate to the next middleware in the pipeline which is invoked after logging the request. InvokeAsync is the method called for each HTTP request which performs the logging and calls the next middleware. This method is called automatically for each HTTP request.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RequestLoggingMiddleware</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span> <span class="n">_next</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">RequestLoggingMiddleware</span><span class="p">(</span><span class="n">RequestDelegate</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Request Path: </span><span class="p">{</span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Path</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+
+        <span class="k">await</span> <span class="nf">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Response Status: </span><span class="p">{</span><span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Registering Middleware</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="n">UseMiddleware</span><span class="p">&lt;</span><span class="n">RequestLoggingMiddleware</span><span class="p">&gt;();</span>
+</code></pre></div></div>
+
+<!-- Completed up -->
+
+<p><strong>Real-World Custom Middleware Examples</strong></p>
+
+<p><strong>1. Correlation ID Middleware (Enterprise Tracing)</strong></p>
+
+<p>Used in distributed systems to trace requests across services.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CorrelationIdMiddleware</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">HeaderName</span> <span class="p">=</span> <span class="s">"X-Correlation-ID"</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span> <span class="n">_next</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">CorrelationIdMiddleware</span><span class="p">(</span><span class="n">RequestDelegate</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">HeaderName</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">correlationId</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">correlationId</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="nf">NewGuid</span><span class="p">().</span><span class="nf">ToString</span><span class="p">();</span>
+            <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">HeaderName</span><span class="p">]</span> <span class="p">=</span> <span class="n">correlationId</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">HeaderName</span><span class="p">]</span> <span class="p">=</span> <span class="n">correlationId</span><span class="p">;</span>
+        <span class="k">await</span> <span class="nf">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Enterprise use:</strong>
+Used in microservices with tools like Seq, ELK, Application Insights.</p>
+
+<p><strong>2. API Key Validation Middleware</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ApiKeyMiddleware</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span> <span class="n">_next</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">ApiKeyHeader</span> <span class="p">=</span> <span class="s">"X-API-KEY"</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">ApiKeyMiddleware</span><span class="p">(</span><span class="n">RequestDelegate</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">ContainsKey</span><span class="p">(</span><span class="n">ApiKeyHeader</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">=</span> <span class="n">StatusCodes</span><span class="p">.</span><span class="n">Status401Unauthorized</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">await</span> <span class="nf">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Real-world use:</strong>
+Used in B2B integrations where OAuth is unnecessary.</p>
+
+<p><strong>3. Tenant Resolution Middleware (Multi-Tenant SaaS)</strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">TenantMiddleware</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span> <span class="n">_next</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">TenantMiddleware</span><span class="p">(</span><span class="n">RequestDelegate</span> <span class="n">next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">tenantId</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="s">"X-Tenant-ID"</span><span class="p">];</span>
+        <span class="n">context</span><span class="p">.</span><span class="n">Items</span><span class="p">[</span><span class="s">"TenantId"</span><span class="p">]</span> <span class="p">=</span> <span class="n">tenantId</span><span class="p">;</span>
+
+        <span class="k">await</span> <span class="nf">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Enterprise use:</strong>
+Multi-tenant SaaS platforms where each request belongs to a specific tenant.</p>
+
+<p><strong>Create a real-world ASP.NET Core application to implement custom middleware</strong></p>
+
+<p><strong>Use cases:</strong>
+In this section, we will walk through creating a custom middleware that logs request and response details, including execution time.</p>
+
+<p><strong>Step 1: Create an ASP.NET Core Project</strong></p>
+<ul>
+  <li>Open visual studio or your preferred IDE.</li>
+  <li>Create a new ASP.NET Core Web API project name “MiddlewareExample”.</li>
+  <li>Or, use the .NET CLI to create the project and add project to a solution file:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet new webapi <span class="nt">-n</span> MiddlewareExample
+<span class="nb">cd </span>MiddlewareExample
+dotnet new sln <span class="nt">-n</span> MiddlewareSolution
+dotnet sln MiddlewareSolution.sln add MiddlewareExample.csproj
+</code></pre></div></div>
+
+<p><strong>Step 2: Implement Custom Middleware</strong></p>
+<ul>
+  <li>Create a new folder named “Middleware” in the project.</li>
+  <li>Inside the “Middleware” folder, create a new class file named “RequestResponseLoggingMiddleware.cs” and add the following code:</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">MiddlewareExample.Middleware</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">RequestResponseLoggingMiddleware</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span> <span class="n">_next</span><span class="p">;</span>
+
+        <span class="k">public</span> <span class="nf">RequestResponseLoggingMiddleware</span><span class="p">(</span><span class="n">RequestDelegate</span> <span class="n">next</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">_next</span> <span class="p">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">stopwatch</span> <span class="p">=</span> <span class="n">Stopwatch</span><span class="p">.</span><span class="nf">StartNew</span><span class="p">();</span>
+
+            <span class="c1">// Log Request details</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Incoming Request: </span><span class="p">{</span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Method</span><span class="p">}</span><span class="s"> </span><span class="p">{</span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Path</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+
+            <span class="k">await</span> <span class="nf">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+
+            <span class="n">stopwatch</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+
+            <span class="c1">// Log Response details</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Outgoing Response: </span><span class="p">{</span><span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span><span class="p">}</span><span class="s"> | Time Taken: </span><span class="p">{</span><span class="n">stopwatch</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 3: Register Middleware in the Pipeline</strong></p>
+<ul>
+  <li>Open the “Program.cs” file and register the custom middleware in the HTTP request pipeline by adding the following line before <code class="language-plaintext highlighter-rouge">app.UseEndpoints(...)</code>:</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="n">UseMiddleware</span><span class="p">&lt;</span><span class="n">RequestResponseLoggingMiddleware</span><span class="p">&gt;();</span>
+</code></pre></div></div>
+
+<p>My final “Program.cs” should look like this:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MiddlewareExample.Middleware</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Scalar.AspNetCore</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Add services to the container.</span>
+<span class="c1">// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddOpenApi</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="c1">// Add the middleware to the HTTP request pipeline</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseMiddleware</span><span class="p">&lt;</span><span class="n">RequestResponseLoggingMiddleware</span><span class="p">&gt;();</span>
+
+<span class="c1">// Configure the HTTP request pipeline.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">MapOpenApi</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">MapScalarApiReference</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+
+<span class="kt">var</span> <span class="n">summaries</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+<span class="p">{</span>
+    <span class="s">"Freezing"</span><span class="p">,</span> <span class="s">"Bracing"</span><span class="p">,</span> <span class="s">"Chilly"</span><span class="p">,</span> <span class="s">"Cool"</span><span class="p">,</span> <span class="s">"Mild"</span><span class="p">,</span> <span class="s">"Warm"</span><span class="p">,</span> <span class="s">"Balmy"</span><span class="p">,</span> <span class="s">"Hot"</span><span class="p">,</span> <span class="s">"Sweltering"</span><span class="p">,</span> <span class="s">"Scorching"</span>
+<span class="p">};</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">MapGet</span><span class="p">(</span><span class="s">"/weatherforecast"</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">forecast</span> <span class="p">=</span>  <span class="n">Enumerable</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">Select</span><span class="p">(</span><span class="n">index</span> <span class="p">=&gt;</span>
+        <span class="k">new</span> <span class="nf">WeatherForecast</span>
+        <span class="p">(</span>
+            <span class="n">DateOnly</span><span class="p">.</span><span class="nf">FromDateTime</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">AddDays</span><span class="p">(</span><span class="n">index</span><span class="p">)),</span>
+            <span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">Next</span><span class="p">(-</span><span class="m">20</span><span class="p">,</span> <span class="m">55</span><span class="p">),</span>
+            <span class="n">summaries</span><span class="p">[</span><span class="n">Random</span><span class="p">.</span><span class="n">Shared</span><span class="p">.</span><span class="nf">Next</span><span class="p">(</span><span class="n">summaries</span><span class="p">.</span><span class="n">Length</span><span class="p">)]</span>
+        <span class="p">))</span>
+        <span class="p">.</span><span class="nf">ToArray</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">forecast</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nf">WithName</span><span class="p">(</span><span class="s">"GetWeatherForecast"</span><span class="p">);</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+
+<span class="k">record</span> <span class="nc">WeatherForecast</span><span class="p">(</span><span class="n">DateOnly</span> <span class="n">Date</span><span class="p">,</span> <span class="kt">int</span> <span class="n">TemperatureC</span><span class="p">,</span> <span class="kt">string</span><span class="p">?</span> <span class="n">Summary</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">TemperatureF</span> <span class="p">=&gt;</span> <span class="m">32</span> <span class="p">+</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">TemperatureC</span> <span class="p">/</span> <span class="m">0.5556</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Step 4: Run the Application</strong></p>
+<ul>
+  <li>Run the application using Visual Studio or the .NET CLI:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dotnet run
+</code></pre></div>    </div>
+    <p><strong>Step 5: Test the Middleware</strong></p>
+  </li>
+  <li>Use a tool like Postman or curl to send requests to the API endpoints. For example, browse to <code class="language-plaintext highlighter-rouge">http://localhost:5113/weatherforecast</code> or any other endpoint defined in your API.</li>
+  <li>Observe the console output to see the logged request and response details along with the execution time.</li>
+  <li>Sample output in the console:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Outgoing Response: 404 | Time Taken: 10 ms
+Incoming Request: GET /swagger
+Outgoing Response: 404 | Time Taken: 0 ms
+Incoming Request: GET /scalar/v1
+Outgoing Response: 200 | Time Taken: 16 ms
+Incoming Request: GET /scalar/scalar.js
+Outgoing Response: 200 | Time Taken: 30 ms
+Incoming Request: GET /openapi/v1.json
+Outgoing Response: 200 | Time Taken: 96 ms
+Incoming Request: GET /weatherforecast
+Outgoing Response: 200 | Time Taken: 13 ms
+Incoming Request: GET /favicon.ico
+Outgoing Response: 404 | Time Taken: 0 ms
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Understanding Middleware Execution Order</strong>
+The order in which middleware components are added to the pipeline matters. Middleware is executed in the order it is registered. For example, if you have authentication middleware before logging middleware, the logging middleware will only log requests that have passed authentication.</p>
+
+<p>Here is an example of middleware registration order:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">();</span> <span class="c1">// Authentication middleware</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseMiddleware</span><span class="p">&lt;</span><span class="n">RequestResponseLoggingMiddleware</span><span class="p">&gt;();</span> <span class="c1">// Custom logging middleware</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span> <span class="c1">// Authorization middleware</span>
+</code></pre></div></div>
+
+<p><strong>Conclusion</strong>
+Middleware is a powerful feature of ASP.NET Core that enables developers to handle cross-cutting concerns in a clean and modular way. By leveraging both built-in and custom middleware, you can create scalable, maintainable, and enterprise-grade web applications.</p>
+
+<hr />
+<p><a href="https://github.com/mahedee/code-sample02/tree/main/MiddlewareExample">Source Code on GitHub</a></p>
+
+<p>Feel free to share your thoughts or questions in the comments below! Please share this article if you found it helpful. Happy coding!</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#customization" class="page__taxonomy-item" rel="tag">customization</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#middleware" class="page__taxonomy-item" rel="tag">middleware</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#programming" class="page__taxonomy-item" rel="tag">programming</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#software-architecture" class="page__taxonomy-item" rel="tag">software-architecture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#net-core" class="page__taxonomy-item" rel="tag">.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#software-architecture" class="page__taxonomy-item" rel="tag">Software Architecture</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2026-01-03T00:00:00-05:00">January 03, 2026</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Middleware+in+ASP.NET+Core%3A+Why+It+Matters+and+How+to+Build+Custom+Middleware+with+a+Real-World+Examples%20https%3A%2F%2Fmahedee.net%2Fmiddleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fmiddleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fmiddleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/social-media-images-jekyll-minimal-mistakes/" class="pagination--pager" title="How to Configure Social Media Images for Jekyll Minimal Mistakes Blog
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/social-media-images-jekyll-minimal-mistakes/" rel="permalink">How to Configure Social Media Images for Jekyll Minimal Mistakes Blog
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  7 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to configure social media images for your Jekyll Minimal Mistakes blog to get beautiful thumbnails when sharing articles on Facebook, LinkedIn, Twi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-metrics-and-dashboards-dotnet-core-api-prometheus-grafana/" rel="permalink">Implementing Metrics and Dashboards for .NET Core APIs with Prometheus and Grafana
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Step-by-step tutorial to implement metrics and dashboards for .NET Core APIs using Prometheus and Grafana for effective monitoring.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/my-vs-code-extensions-for-daily-development/" rel="permalink">My VS Code Extensions for Daily Development Work
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A comprehensive list of VS Code extensions I use daily for development, productivity, and coding efficiency across multiple languages and frameworks.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <!-- AdSense disabled:
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+     -->
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- AdSense disabled: Add sense code for all page : added globaly
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
+
+  </body>
+</html>

@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to view SQL Server error log - Think Simple</title>
-<meta name="description" content="Think Simple">
+<!-- begin _includes/seo.html --><title>Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs - Think Simple</title>
+<meta name="description" content="Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,19 +19,21 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to view SQL Server error log">
+<meta property="og:title" content="Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs">
 <meta property="og:url" content="https://mahedee.net/how-to-view-sql-server-error-log/">
 
 
-  <meta property="og:description" content="Think Simple">
+  <meta property="og:description" content="Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
 
 
 
 
 
-
-
-  <meta property="article:published_time" content="2010-12-01T00:00:00-05:00">
+  <meta property="article:published_time" content="2011-12-01T00:00:00-05:00">
 
 
 
@@ -97,24 +99,24 @@
 
 <!-- SEO tags -->
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to view SQL Server error log | Think Simple</title>
+<title>Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs | Think Simple</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="How to view SQL Server error log" />
+<meta property="og:title" content="Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs" />
 <meta name="author" content="Mahedee Hasan" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Think Simple" />
-<meta property="og:description" content="Think Simple" />
+<meta name="description" content="Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring." />
+<meta property="og:description" content="Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring." />
 <link rel="canonical" href="https://mahedee.net/how-to-view-sql-server-error-log/" />
 <meta property="og:url" content="https://mahedee.net/how-to-view-sql-server-error-log/" />
 <meta property="og:site_name" content="Think Simple" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2010-12-01T00:00:00-05:00" />
+<meta property="article:published_time" content="2011-12-01T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to view SQL Server error log" />
+<meta property="twitter:title" content="Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs" />
 <meta name="twitter:site" content="@" />
 <meta name="twitter:creator" content="@Mahedee Hasan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2010-12-01T00:00:00-05:00","datePublished":"2010-12-01T00:00:00-05:00","description":"Think Simple","headline":"How to view SQL Server error log","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-view-sql-server-error-log/"},"url":"https://mahedee.net/how-to-view-sql-server-error-log/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-12-01T00:00:00-05:00","datePublished":"2011-12-01T00:00:00-05:00","description":"Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring.","headline":"Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-view-sql-server-error-log/"},"url":"https://mahedee.net/how-to-view-sql-server-error-log/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,15 +328,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to view SQL Server error log">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="December 01, 2010">
+    <meta itemprop="headline" content="Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs">
+    <meta itemprop="description" content="Master SQL Server error log management with this comprehensive guide. Learn multiple methods to view, analyze, and manage error logs for effective database troubleshooting and monitoring.">
+    <meta itemprop="datePublished" content="December 01, 2011">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to view SQL Server error log
+          <h1 id="page-title" class="page__title" itemprop="headline">Complete Guide to SQL Server Error Logs: Viewing, Analyzing, and Managing Database Logs
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -342,7 +344,7 @@
 
 
 
-  less than 1 minute read
+  5 minute read
 </p>
           
         </header>
@@ -350,21 +352,440 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>The SQL Server error log contains user-defined events and certain system events. You can use this error log to troubleshoot problems related to SQL Server.</p>
+        <h2 id="understanding-sql-server-error-logs">Understanding SQL Server Error Logs</h2>
 
-<p><strong>Step to view SQL Server error log</strong></p>
-
-<ul>
-  <li>Object Explorer -&gt; Server -&gt; Management -&gt; SQL Server Logs.</li>
-</ul>
-
-<p><img src="/assets/images/posts/2010/11.jpg" alt="" /></p>
+<p>SQL Server error logs are crucial diagnostic tools that contain detailed information about system events, errors, warnings, and informational messages. These logs are essential for:</p>
 
 <ul>
-  <li>Right-click a log -&gt; Click View SQL Server Log.</li>
+  <li><strong>Troubleshooting database issues</strong></li>
+  <li><strong>Monitoring system health</strong></li>
+  <li><strong>Tracking security events</strong></li>
+  <li><strong>Performance analysis</strong></li>
+  <li><strong>Audit compliance</strong></li>
+  <li><strong>Proactive maintenance</strong></li>
 </ul>
 
-<p><img src="/assets/images/posts/2010/12.jpg" alt="" /></p>
+<h3 id="types-of-information-in-error-logs">Types of Information in Error Logs</h3>
+
+<p><strong>System Events:</strong></p>
+<ul>
+  <li>Server startup and shutdown events</li>
+  <li>Service status changes</li>
+  <li>Configuration modifications</li>
+  <li>Backup and restore operations</li>
+</ul>
+
+<p><strong>Error Messages:</strong></p>
+<ul>
+  <li>Connection failures</li>
+  <li>Query execution errors</li>
+  <li>Hardware-related issues</li>
+  <li>Database corruption indicators</li>
+</ul>
+
+<p><strong>Security Events:</strong></p>
+<ul>
+  <li>Login attempts (successful and failed)</li>
+  <li>Permission changes</li>
+  <li>Security policy modifications</li>
+  <li>Suspicious activities</li>
+</ul>
+
+<h2 id="method-1-using-sql-server-management-studio-ssms">Method 1: Using SQL Server Management Studio (SSMS)</h2>
+
+<h3 id="step-by-step-guide">Step-by-Step Guide</h3>
+
+<p><strong>Step 1: Navigate to SQL Server Logs</strong></p>
+<ol>
+  <li>Open <strong>SQL Server Management Studio</strong></li>
+  <li>Connect to your SQL Server instance</li>
+  <li>In <strong>Object Explorer</strong>, expand your server name</li>
+  <li>Expand the <strong>Management</strong> folder</li>
+  <li>Expand <strong>SQL Server Logs</strong></li>
+</ol>
+
+<p><img src="/assets/images/posts/2010/11.jpg" alt="SQL Server Logs Location" /></p>
+
+<p><strong>Step 2: Open a Specific Log File</strong></p>
+<ol>
+  <li>You’ll see multiple log files:
+    <ul>
+      <li><strong>Current</strong>: The active log file</li>
+      <li><strong>Archive #1, #2, etc.</strong>: Previous log files</li>
+    </ul>
+  </li>
+  <li>Right-click on the desired log file</li>
+  <li>Select <strong>View SQL Server Log</strong></li>
+</ol>
+
+<p><img src="/assets/images/posts/2010/12.jpg" alt="View SQL Server Log" /></p>
+
+<p><strong>Step 3: Navigate the Log Viewer</strong></p>
+
+<p>The <strong>Log File Viewer</strong> provides several useful features:</p>
+
+<ul>
+  <li><strong>Filter options</strong>: Filter by date, message type, or text</li>
+  <li><strong>Search functionality</strong>: Find specific errors or events</li>
+  <li><strong>Export capabilities</strong>: Save logs for analysis</li>
+  <li><strong>Multiple log types</strong>: View SQL Server, SQL Agent, and Windows logs</li>
+</ul>
+
+<h3 id="advanced-ssms-features">Advanced SSMS Features</h3>
+
+<p><strong>Filtering Logs:</strong></p>
+<ol>
+  <li>In the Log File Viewer, click <strong>Filter</strong></li>
+  <li>Set criteria such as:
+    <ul>
+      <li><strong>Date range</strong>: Specific time periods</li>
+      <li><strong>Message types</strong>: Errors, warnings, information</li>
+      <li><strong>Message text</strong>: Specific error messages or keywords</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Exporting Logs:</strong></p>
+<ol>
+  <li>Select the entries you want to export</li>
+  <li>Right-click and choose <strong>Export</strong></li>
+  <li>Save as CSV or text file for further analysis</li>
+</ol>
+
+<h2 id="method-2-using-t-sql-commands">Method 2: Using T-SQL Commands</h2>
+
+<h3 id="reading-current-error-log">Reading Current Error Log</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- View the current error log</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span><span class="p">;</span>
+
+<span class="c1">-- View specific log file (0=current, 1=archive#1, etc.)</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- Search for specific text in current log</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'error'</span><span class="p">;</span>
+
+<span class="c1">-- Search with date range</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'login'</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="s1">'2026-01-01'</span><span class="p">,</span> <span class="s1">'2026-01-12'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="advanced-t-sql-queries">Advanced T-SQL Queries</h3>
+
+<p><strong>Find Recent Errors:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'error'</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="n">DATEADD</span><span class="p">(</span><span class="k">day</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">()),</span> <span class="n">GETDATE</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><strong>Search for Failed Logins:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'Login failed'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Find Backup/Restore Operations:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'backup'</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="n">DATEADD</span><span class="p">(</span><span class="k">day</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">()),</span> <span class="n">GETDATE</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="log-file-enumeration">Log File Enumeration</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- List all available error log files</span>
+<span class="k">EXEC</span> <span class="n">xp_enumerrorlogs</span><span class="p">;</span>
+
+<span class="c1">-- Get log file information</span>
+<span class="k">EXEC</span> <span class="n">sp_readerrorlog</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="method-3-direct-file-access">Method 3: Direct File Access</h2>
+
+<h3 id="log-file-locations">Log File Locations</h3>
+
+<p><strong>Default Paths:</strong></p>
+<ul>
+  <li><strong>Error Log</strong>: <code class="language-plaintext highlighter-rouge">C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Log\ERRORLOG</code></li>
+  <li><strong>Archive Logs</strong>: Same directory with extensions <code class="language-plaintext highlighter-rouge">.1</code>, <code class="language-plaintext highlighter-rouge">.2</code>, <code class="language-plaintext highlighter-rouge">.3</code>, etc.</li>
+</ul>
+
+<p><strong>Finding Custom Paths:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Get current error log path</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'Logging SQL Server messages in file'</span><span class="p">;</span>
+
+<span class="c1">-- Alternative method</span>
+<span class="k">SELECT</span> <span class="n">SERVERPROPERTY</span><span class="p">(</span><span class="s1">'ErrorLogFileName'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ErrorLogPath</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="using-powershell">Using PowerShell</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Read error log with PowerShell</span><span class="w">
+</span><span class="n">Get-Content</span><span class="w"> </span><span class="s2">"C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Log\ERRORLOG"</span><span class="w"> </span><span class="o">|</span><span class="w"> 
+</span><span class="n">Select-String</span><span class="w"> </span><span class="s2">"error"</span><span class="w"> </span><span class="nt">-Context</span><span class="w"> </span><span class="nx">2</span><span class="w">
+
+</span><span class="c"># Monitor log in real-time</span><span class="w">
+</span><span class="n">Get-Content</span><span class="w"> </span><span class="s2">"path\to\ERRORLOG"</span><span class="w"> </span><span class="nt">-Wait</span><span class="w"> </span><span class="nt">-Tail</span><span class="w"> </span><span class="nx">10</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="analyzing-common-error-patterns">Analyzing Common Error Patterns</h2>
+
+<h3 id="critical-errors-to-monitor">Critical Errors to Monitor</h3>
+
+<p><strong>Database Corruption:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'corruption'</span><span class="p">;</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'CHECKDB'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Memory Issues:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'memory'</span><span class="p">;</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'out of memory'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Connection Problems:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">;</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'connection'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Security Events:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'login failed'</span><span class="p">;</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'access denied'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="understanding-error-severity-levels">Understanding Error Severity Levels</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Severity</th>
+      <th>Description</th>
+      <th>Action Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0-10</td>
+      <td>Informational messages</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>11-16</td>
+      <td>User errors</td>
+      <td>Check application logic</td>
+    </tr>
+    <tr>
+      <td>17-19</td>
+      <td>Software/hardware errors</td>
+      <td>Investigate system</td>
+    </tr>
+    <tr>
+      <td>20-25</td>
+      <td>System errors</td>
+      <td>Immediate attention</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="log-management-best-practices">Log Management Best Practices</h2>
+
+<h3 id="1-log-rotation-configuration">1. Log Rotation Configuration</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Configure number of error log files to retain</span>
+<span class="k">EXEC</span> <span class="n">xp_instance_regwrite</span> 
+    <span class="s1">'HKEY_LOCAL_MACHINE'</span><span class="p">,</span> 
+    <span class="s1">'Software</span><span class="se">\M</span><span class="s1">icrosoft</span><span class="se">\M</span><span class="s1">SSQLServer</span><span class="se">\M</span><span class="s1">SSQLServer'</span><span class="p">,</span> 
+    <span class="s1">'NumErrorLogs'</span><span class="p">,</span> 
+    <span class="s1">'REG_DWORD'</span><span class="p">,</span> 
+    <span class="mi">30</span><span class="p">;</span> <span class="c1">-- Keep 30 log files</span>
+</code></pre></div></div>
+
+<h3 id="2-automated-log-cycling">2. Automated Log Cycling</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Cycle error log (creates new current log)</span>
+<span class="k">EXEC</span> <span class="n">sp_cycle_errorlog</span><span class="p">;</span>
+
+<span class="c1">-- Schedule this in SQL Agent for regular cycling</span>
+</code></pre></div></div>
+
+<h3 id="3-monitoring-script">3. Monitoring Script</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create a monitoring script for critical errors</span>
+<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">sp_MonitorErrorLog</span>
+<span class="k">AS</span>
+<span class="k">BEGIN</span>
+    <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">ErrorLogTemp</span> <span class="p">(</span>
+        <span class="n">LogDate</span> <span class="nb">DATETIME</span><span class="p">,</span>
+        <span class="n">ProcessInfo</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+        <span class="p">[</span><span class="nb">Text</span><span class="p">]</span> <span class="n">NVARCHAR</span><span class="p">(</span><span class="mi">4000</span><span class="p">)</span>
+    <span class="p">);</span>
+    
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">#</span><span class="n">ErrorLogTemp</span>
+    <span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'error'</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> 
+        <span class="n">DATEADD</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">GETDATE</span><span class="p">()),</span> <span class="n">GETDATE</span><span class="p">();</span>
+    
+    <span class="n">IF</span> <span class="o">@@</span><span class="n">ROWCOUNT</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">BEGIN</span>
+        <span class="c1">-- Send alert or log to monitoring table</span>
+        <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">#</span><span class="n">ErrorLogTemp</span><span class="p">;</span>
+    <span class="k">END</span>
+    
+    <span class="k">DROP</span> <span class="k">TABLE</span> <span class="o">#</span><span class="n">ErrorLogTemp</span><span class="p">;</span>
+<span class="k">END</span>
+</code></pre></div></div>
+
+<h2 id="troubleshooting-common-scenarios">Troubleshooting Common Scenarios</h2>
+
+<h3 id="scenario-1-database-wont-start">Scenario 1: Database Won’t Start</h3>
+
+<p><strong>Steps to investigate:</strong></p>
+<ol>
+  <li>Check the most recent error log</li>
+  <li>Look for errors during startup sequence</li>
+  <li>Common issues: file path problems, permission issues, corruption</li>
+</ol>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Look for startup errors</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'startup'</span><span class="p">;</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'recovery'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="scenario-2-performance-issues">Scenario 2: Performance Issues</h3>
+
+<p><strong>Key indicators to search for:</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Memory pressure</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'memory'</span><span class="p">;</span>
+
+<span class="c1">-- I/O issues</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'I/O'</span><span class="p">;</span>
+
+<span class="c1">-- Lock timeouts</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="scenario-3-security-breach-investigation">Scenario 3: Security Breach Investigation</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Failed login attempts</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'Login failed'</span><span class="p">;</span>
+
+<span class="c1">-- Successful logins from specific IPs</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'Login succeeded'</span><span class="p">;</span>
+
+<span class="c1">-- Permission changes</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'permission'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="advanced-log-analysis-techniques">Advanced Log Analysis Techniques</h2>
+
+<h3 id="1-powerbi-integration">1. PowerBI Integration</h3>
+
+<p>Create PowerBI reports from log data:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Export log data for analysis</span>
+<span class="k">SELECT</span> 
+    <span class="n">LogDate</span><span class="p">,</span>
+    <span class="n">ProcessInfo</span><span class="p">,</span>
+    <span class="p">[</span><span class="nb">Text</span><span class="p">],</span>
+    <span class="k">CASE</span> 
+        <span class="k">WHEN</span> <span class="p">[</span><span class="nb">Text</span><span class="p">]</span> <span class="k">LIKE</span> <span class="s1">'%error%'</span> <span class="k">THEN</span> <span class="s1">'Error'</span>
+        <span class="k">WHEN</span> <span class="p">[</span><span class="nb">Text</span><span class="p">]</span> <span class="k">LIKE</span> <span class="s1">'%warning%'</span> <span class="k">THEN</span> <span class="s1">'Warning'</span>
+        <span class="k">ELSE</span> <span class="s1">'Information'</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">MessageType</span>
+<span class="k">FROM</span> <span class="p">(</span>
+    <span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span>
+<span class="p">)</span> <span class="k">AS</span> <span class="n">LogData</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="2-log-parsing-with-regular-expressions">2. Log Parsing with Regular Expressions</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Extract IP addresses from login failures</span>
+<span class="k">SELECT</span> 
+    <span class="n">LogDate</span><span class="p">,</span>
+    <span class="p">[</span><span class="nb">Text</span><span class="p">],</span>
+    <span class="k">SUBSTRING</span><span class="p">([</span><span class="nb">Text</span><span class="p">],</span> 
+        <span class="n">PATINDEX</span><span class="p">(</span><span class="s1">'%[0-9]%.[0-9]%.[0-9]%.[0-9]%'</span><span class="p">,</span> <span class="p">[</span><span class="nb">Text</span><span class="p">]),</span> 
+        <span class="mi">15</span><span class="p">)</span> <span class="k">AS</span> <span class="n">IPAddress</span>
+<span class="k">FROM</span> <span class="p">(</span>
+    <span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'Login failed'</span>
+<span class="p">)</span> <span class="k">AS</span> <span class="n">LoginFailures</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="3-automated-alerting">3. Automated Alerting</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Create alert for critical errors</span>
+<span class="k">EXEC</span> <span class="n">msdb</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_add_alert</span> 
+    <span class="o">@</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Critical Error Alert'</span><span class="p">,</span>
+    <span class="o">@</span><span class="n">message_id</span> <span class="o">=</span> <span class="mi">823</span><span class="p">,</span> <span class="c1">-- Disk I/O error</span>
+    <span class="o">@</span><span class="n">severity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="o">@</span><span class="n">notification_message</span> <span class="o">=</span> <span class="s1">'Critical database error detected'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="performance-considerations">Performance Considerations</h2>
+
+<h3 id="1-log-file-size-management">1. Log File Size Management</h3>
+
+<ul>
+  <li>Monitor log file growth</li>
+  <li>Implement regular cycling</li>
+  <li>Consider log file location (separate drive)</li>
+</ul>
+
+<h3 id="2-query-optimization">2. Query Optimization</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Use date ranges to limit results</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> 
+    <span class="s1">'2026-01-01 00:00:00'</span><span class="p">,</span> <span class="s1">'2026-01-01 23:59:59'</span><span class="p">;</span>
+
+<span class="c1">-- Be specific with search terms</span>
+<span class="k">EXEC</span> <span class="n">xp_readerrorlog</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'specific error message'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="security-and-compliance">Security and Compliance</h2>
+
+<h3 id="1-access-control">1. Access Control</h3>
+
+<ul>
+  <li>Limit access to error logs</li>
+  <li>Use appropriate SQL Server roles</li>
+  <li>Audit log access attempts</li>
+</ul>
+
+<h3 id="2-log-retention-policies">2. Log Retention Policies</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Set retention policy</span>
+<span class="k">EXEC</span> <span class="n">xp_instance_regwrite</span> 
+    <span class="s1">'HKEY_LOCAL_MACHINE'</span><span class="p">,</span>
+    <span class="s1">'Software</span><span class="se">\M</span><span class="s1">icrosoft</span><span class="se">\M</span><span class="s1">SSQLServer</span><span class="se">\M</span><span class="s1">SSQLServer'</span><span class="p">,</span>
+    <span class="s1">'NumErrorLogs'</span><span class="p">,</span>
+    <span class="s1">'REG_DWORD'</span><span class="p">,</span>
+    <span class="mi">90</span><span class="p">;</span> <span class="c1">-- 90 days retention</span>
+</code></pre></div></div>
+
+<h3 id="3-compliance-requirements">3. Compliance Requirements</h3>
+
+<ul>
+  <li>Ensure logs meet regulatory requirements</li>
+  <li>Implement secure log storage</li>
+  <li>Regular log backup procedures</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>SQL Server error logs are invaluable tools for database administration, troubleshooting, and monitoring. Effective log management includes:</p>
+
+<p><strong>Key Takeaways:</strong></p>
+<ol>
+  <li><strong>Multiple Access Methods</strong>: Use SSMS for interactive analysis, T-SQL for automation</li>
+  <li><strong>Proactive Monitoring</strong>: Regular log reviews prevent issues from escalating</li>
+  <li><strong>Proper Filtering</strong>: Use specific search criteria to find relevant information quickly</li>
+  <li><strong>Automated Analysis</strong>: Implement scripts and alerts for critical errors</li>
+  <li><strong>Security Awareness</strong>: Monitor for security events and failed logins</li>
+  <li><strong>Performance Impact</strong>: Balance log detail with system performance</li>
+</ol>
+
+<p><strong>Best Practices:</strong></p>
+<ul>
+  <li>Review logs regularly (daily for production systems)</li>
+  <li>Implement automated alerting for critical errors</li>
+  <li>Maintain proper log retention policies</li>
+  <li>Document common error patterns and solutions</li>
+  <li>Train team members on log analysis techniques</li>
+</ul>
+
+<p>By mastering SQL Server error log analysis, you’ll be better equipped to maintain healthy, secure, and high-performing database systems.</p>
 
         
         
@@ -386,11 +807,31 @@
     
       
       
-      <a href="/tags/#database" class="page__taxonomy-item" rel="tag">database</a><span class="sep">, </span>
+      <a href="/tags/#database-administration" class="page__taxonomy-item" rel="tag">database-administration</a><span class="sep">, </span>
     
       
       
-      <a href="/tags/#sql-server" class="page__taxonomy-item" rel="tag">sql server</a><span class="sep">, </span>
+      <a href="/tags/#error-logs" class="page__taxonomy-item" rel="tag">error-logs</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#monitoring" class="page__taxonomy-item" rel="tag">monitoring</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#sqlserver" class="page__taxonomy-item" rel="tag">sqlserver</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ssms" class="page__taxonomy-item" rel="tag">ssms</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#t-sql" class="page__taxonomy-item" rel="tag">t-sql</a><span class="sep">, </span>
     
       
       
@@ -415,7 +856,11 @@
     
       
       
-      <a href="/categories/#database" class="page__taxonomy-item" rel="tag">Database</a><span class="sep">, </span>
+      <a href="/categories/#database-administration" class="page__taxonomy-item" rel="tag">Database Administration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#monitoring" class="page__taxonomy-item" rel="tag">Monitoring</a><span class="sep">, </span>
     
       
       
@@ -430,14 +875,14 @@
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2010-12-01T00:00:00-05:00">December 01, 2010</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2011-12-01T00:00:00-05:00">December 01, 2011</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+view+SQL+Server+error+log%20https%3A%2F%2Fmahedee.net%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Complete+Guide+to+SQL+Server+Error+Logs%3A+Viewing%2C+Analyzing%2C+and+Managing+Database+Logs%20https%3A%2F%2Fmahedee.net%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fhow-to-view-sql-server-error-log%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -448,11 +893,11 @@
       
   <nav class="pagination">
     
-      <a href="/set-a-fixed-amount-of-memory-in-sql-server-using-sql-server-management-studio/" class="pagination--pager" title="Set a fixed amount of memory in SQL Server (Using SQL Server Management Studio)
+      <a href="/ringing-buzzer-with-c-embedded-system-beginning-2/" class="pagination--pager" title="Controlling Buzzers in Embedded Systems: PIC Microcontroller Programming with C
 ">Previous</a>
     
     
-      <a href="/folder-permission-from-windows-command-line/" class="pagination--pager" title="Folder permission from windows command line
+      <a href="/love-calculator-using-c.md/" class="pagination--pager" title="Love calculator using C#
 ">Next</a>
     
   </nav>
@@ -610,7 +1055,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+        <a href="/factory-design-pattern-using-csharp/" rel="permalink">Factory Design Pattern using C# with a real world banking example
 </a>
       
     </h2>
@@ -620,11 +1065,10 @@
 
 
 
-  6 minute read
+  7 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
-</p>
+    <p class="archive__item-excerpt" itemprop="description">Learn how to implement the Factory Design Pattern in C# through a practical banking application example. Understand object creation delegation, loose couplin...</p>
   </article>
 </div>
 

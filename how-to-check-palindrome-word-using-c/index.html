@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to check palindrome word using C# - Think Simple</title>
-<meta name="description" content="Think Simple">
+<!-- begin _includes/seo.html --><title>Checking Palindromes in C#: Multiple Approaches and Techniques - Think Simple</title>
+<meta name="description" content="Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,19 +19,21 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to check palindrome word using C#">
+<meta property="og:title" content="Checking Palindromes in C#: Multiple Approaches and Techniques">
 <meta property="og:url" content="https://mahedee.net/how-to-check-palindrome-word-using-c/">
 
 
-  <meta property="og:description" content="Think Simple">
+  <meta property="og:description" content="Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
 
 
 
 
 
-
-
-  <meta property="article:published_time" content="2011-03-01T00:00:00-05:00">
+  <meta property="article:published_time" content="2012-03-01T00:00:00-05:00">
 
 
 
@@ -97,24 +99,24 @@
 
 <!-- SEO tags -->
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to check palindrome word using C# | Think Simple</title>
+<title>Checking Palindromes in C#: Multiple Approaches and Techniques | Think Simple</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="How to check palindrome word using C#" />
+<meta property="og:title" content="Checking Palindromes in C#: Multiple Approaches and Techniques" />
 <meta name="author" content="Mahedee Hasan" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Think Simple" />
-<meta property="og:description" content="Think Simple" />
+<meta name="description" content="Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies." />
+<meta property="og:description" content="Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies." />
 <link rel="canonical" href="https://mahedee.net/how-to-check-palindrome-word-using-c/" />
 <meta property="og:url" content="https://mahedee.net/how-to-check-palindrome-word-using-c/" />
 <meta property="og:site_name" content="Think Simple" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2011-03-01T00:00:00-05:00" />
+<meta property="article:published_time" content="2012-03-01T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to check palindrome word using C#" />
+<meta property="twitter:title" content="Checking Palindromes in C#: Multiple Approaches and Techniques" />
 <meta name="twitter:site" content="@" />
 <meta name="twitter:creator" content="@Mahedee Hasan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-03-01T00:00:00-05:00","datePublished":"2011-03-01T00:00:00-05:00","description":"Think Simple","headline":"How to check palindrome word using C#","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-check-palindrome-word-using-c/"},"url":"https://mahedee.net/how-to-check-palindrome-word-using-c/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2012-03-01T00:00:00-05:00","datePublished":"2012-03-01T00:00:00-05:00","description":"Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies.","headline":"Checking Palindromes in C#: Multiple Approaches and Techniques","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-check-palindrome-word-using-c/"},"url":"https://mahedee.net/how-to-check-palindrome-word-using-c/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,15 +328,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to check palindrome word using C#">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="March 01, 2011">
+    <meta itemprop="headline" content="Checking Palindromes in C#: Multiple Approaches and Techniques">
+    <meta itemprop="description" content="Master palindrome detection in C# with multiple approaches including iterative, recursive, LINQ, and performance-optimized solutions. Learn to handle edge cases and compare different implementation strategies.">
+    <meta itemprop="datePublished" content="March 01, 2012">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to check palindrome word using C#
+          <h1 id="page-title" class="page__title" itemprop="headline">Checking Palindromes in C#: Multiple Approaches and Techniques
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -342,7 +344,7 @@
 
 
 
-  less than 1 minute read
+  6 minute read
 </p>
           
         </header>
@@ -350,52 +352,485 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Palindrome word can be read in both direction. Suppose “level” can be read in both direction, so it is palindrome word. To check palindrome word you can try like following code using C#.</p>
+        <p>A palindrome is a word, phrase, or sequence that reads the same backward as forward. Classic examples include “level,” “radar,” “civic,” and “madam.” In this comprehensive guide, we’ll explore various methods to detect palindromes in C# with different approaches and optimizations.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Program</span>
+<h2 id="what-makes-a-word-a-palindrome">What Makes a Word a Palindrome?</h2>
+
+<p>A palindrome has these characteristics:</p>
+<ul>
+  <li>Reads the same forwards and backwards</li>
+  <li>Case-insensitive comparison is typically used</li>
+  <li>Spaces and punctuation may be ignored depending on requirements</li>
+  <li>Examples: “level,” “A man a plan a canal Panama,” “Was it a car or a cat I saw?”</li>
+</ul>
+
+<h2 id="method-1-two-pointer-approach-iterative">Method 1: Two-Pointer Approach (Iterative)</h2>
+
+<p>This is the most common and efficient approach, using two pointers moving from opposite ends:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PalindromeChecker</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindrome</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">minLength</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
-        <span class="kt">int</span> <span class="n">maxLength</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
-        <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span> <span class="c1">// Empty string is considered a palindrome</span>
+
+        <span class="kt">int</span> <span class="n">left</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">minLength</span> <span class="p">&gt;</span> <span class="n">maxLength</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="kt">char</span> <span class="n">a</span> <span class="p">=</span> <span class="n">word</span><span class="p">[</span><span class="n">minLength</span><span class="p">];</span>
-            <span class="kt">char</span> <span class="n">b</span> <span class="p">=</span> <span class="n">word</span><span class="p">[</span><span class="n">maxLength</span><span class="p">];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">!=</span> <span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">left</span><span class="p">])</span> <span class="p">!=</span> <span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">right</span><span class="p">]))</span>
             <span class="p">{</span>
                 <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
             <span class="p">}</span>
-            <span class="n">minLength</span><span class="p">++;</span>
-            <span class="n">maxLength</span><span class="p">--;</span>
+            <span class="n">left</span><span class="p">++;</span>
+            <span class="n">right</span><span class="p">--;</span>
         <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
     <span class="p">}</span>
- 
+
     <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="kt">string</span><span class="p">[]</span> <span class="n">palindromeWord</span> <span class="p">=</span> <span class="p">{</span><span class="s">"aibohphobia"</span><span class="p">,</span><span class="s">"Dhaka"</span><span class="p">,</span><span class="s">"alula"</span><span class="p">,</span><span class="s">"cammac"</span><span class="p">,</span><span class="s">"Civic"</span><span class="p">,</span> <span class="s">"deified"</span><span class="p">,</span><span class="s">"deleveled"</span><span class="p">,</span>
-                             <span class="s">"detartrated"</span><span class="p">,</span><span class="s">"devoved"</span><span class="p">,</span><span class="s">"History"</span><span class="p">,</span><span class="s">"evitative"</span><span class="p">,</span><span class="s">"level"</span><span class="p">,</span><span class="s">""</span><span class="p">,</span><span class="s">"mahedee"</span><span class="p">};</span>
- 
-        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">palindromeWord</span><span class="p">)</span>
+        <span class="kt">string</span><span class="p">[]</span> <span class="n">testWords</span> <span class="p">=</span> <span class="p">{</span>
+            <span class="s">"level"</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">,</span> <span class="s">"radar"</span><span class="p">,</span> <span class="s">"civic"</span><span class="p">,</span> <span class="s">"deified"</span><span class="p">,</span> 
+            <span class="s">"rotator"</span><span class="p">,</span> <span class="s">"madam"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">,</span> <span class="s">"racecar"</span><span class="p">,</span> <span class="s">"noon"</span>
+        <span class="p">};</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Palindrome Checker Results ===\n"</span><span class="p">);</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">testWords</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nf">IsPalindrome</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
-            <span class="p">{</span>
-                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">word</span> <span class="p">+</span> <span class="s">" is a Palindrome"</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">else</span>
-            <span class="p">{</span>
-                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">word</span> <span class="p">+</span> <span class="s">" is not a Palindrome"</span><span class="p">);</span>
-            <span class="p">}</span>
+            <span class="kt">bool</span> <span class="n">isPalindrome</span> <span class="p">=</span> <span class="nf">IsPalindrome</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">isPalindrome</span> <span class="p">?</span> <span class="s">"✓ Palindrome"</span> <span class="p">:</span> <span class="s">"✗ Not a palindrome"</span><span class="p">;</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">word</span><span class="p">,-</span><span class="m">10</span><span class="p">}</span><span class="s"> → </span><span class="p">{</span><span class="n">result</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre></div></div>
+
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+
+<h2 id="method-2-recursive-approach">Method 2: Recursive Approach</h2>
+
+<p>A elegant recursive solution that demonstrates the mathematical nature of palindromes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RecursivePalindromeChecker</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindromeRecursive</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="nf">CheckPalindromeRecursive</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">word</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">CheckPalindromeRecursive</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Base case: single character or crossed pointers</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="p">&gt;=</span> <span class="n">right</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="c1">// Check current characters</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">left</span><span class="p">])</span> <span class="p">!=</span> <span class="kt">char</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">right</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+        <span class="c1">// Recursive call with inner characters</span>
+        <span class="k">return</span> <span class="nf">CheckPalindromeRecursive</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">left</span> <span class="p">+</span> <span class="m">1</span><span class="p">,</span> <span class="n">right</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestRecursiveMethod</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span><span class="p">[]</span> <span class="n">words</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"level"</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">,</span> <span class="s">"civic"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">,</span> <span class="s">"radar"</span> <span class="p">};</span>
+        
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Recursive Palindrome Check ===\n"</span><span class="p">);</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">words</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">result</span> <span class="p">=</span> <span class="nf">IsPalindromeRecursive</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">word</span><span class="p">}</span><span class="s"> → </span><span class="p">{(</span><span class="n">result</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="method-3-linq-based-approach">Method 3: LINQ-Based Approach</h2>
+
+<p>Using LINQ for a more functional programming style:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">LinqPalindromeChecker</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindromeLinq</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">normalized</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">normalized</span><span class="p">.</span><span class="nf">SequenceEqual</span><span class="p">(</span><span class="n">normalized</span><span class="p">.</span><span class="nf">Reverse</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Alternative LINQ approach using Zip</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindromeLinqZip</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">normalized</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">().</span><span class="nf">ToArray</span><span class="p">();</span>
+        <span class="kt">var</span> <span class="n">reversed</span> <span class="p">=</span> <span class="n">normalized</span><span class="p">.</span><span class="nf">Reverse</span><span class="p">().</span><span class="nf">ToArray</span><span class="p">();</span>
+        
+        <span class="k">return</span> <span class="n">normalized</span><span class="p">.</span><span class="nf">Zip</span><span class="p">(</span><span class="n">reversed</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">a</span> <span class="p">==</span> <span class="n">b</span><span class="p">).</span><span class="nf">All</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestLinqMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span><span class="p">[]</span> <span class="n">words</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"level"</span><span class="p">,</span> <span class="s">"programming"</span><span class="p">,</span> <span class="s">"civic"</span><span class="p">,</span> <span class="s">"algorithm"</span> <span class="p">};</span>
+        
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== LINQ Palindrome Check ===\n"</span><span class="p">);</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">words</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">result1</span> <span class="p">=</span> <span class="nf">IsPalindromeLinq</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="kt">bool</span> <span class="n">result2</span> <span class="p">=</span> <span class="nf">IsPalindromeLinqZip</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">word</span><span class="p">}</span><span class="s"> → SequenceEqual: </span><span class="p">{</span><span class="n">result1</span><span class="p">}</span><span class="s">, Zip: </span><span class="p">{</span><span class="n">result2</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="method-4-advanced-palindrome-checker">Method 4: Advanced Palindrome Checker</h2>
+
+<p>A more sophisticated version that handles phrases, ignores punctuation, and provides detailed analysis:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text.RegularExpressions</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AdvancedPalindromeChecker</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPhrasepalindrome</span><span class="p">(</span><span class="kt">string</span> <span class="n">phrase</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">phrase</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="c1">// Remove non-alphanumeric characters and convert to lowercase</span>
+        <span class="kt">string</span> <span class="n">cleaned</span> <span class="p">=</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="s">@"[^a-zA-Z0-9]"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="nf">ToLower</span><span class="p">();</span>
+        
+        <span class="k">return</span> <span class="nf">IsPalindrome</span><span class="p">(</span><span class="n">cleaned</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindrome</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="kt">int</span> <span class="n">left</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="p">&lt;</span> <span class="n">right</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="p">!=</span> <span class="n">word</span><span class="p">[</span><span class="n">right</span><span class="p">])</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            
+            <span class="n">left</span><span class="p">++;</span>
+            <span class="n">right</span><span class="p">--;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">PalindromeAnalysis</span> <span class="nf">AnalyzePalindrome</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">analysis</span> <span class="p">=</span> <span class="k">new</span> <span class="n">PalindromeAnalysis</span>
+        <span class="p">{</span>
+            <span class="n">OriginalInput</span> <span class="p">=</span> <span class="n">input</span><span class="p">,</span>
+            <span class="n">IsPalindrome</span> <span class="p">=</span> <span class="nf">IsPhrasepalindrome</span><span class="p">(</span><span class="n">input</span><span class="p">),</span>
+            <span class="n">CleanedInput</span> <span class="p">=</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">@"[^a-zA-Z0-9]"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="nf">ToLower</span><span class="p">(),</span>
+            <span class="n">Length</span> <span class="p">=</span> <span class="n">input</span><span class="p">?.</span><span class="n">Length</span> <span class="p">??</span> <span class="m">0</span>
+        <span class="p">};</span>
+
+        <span class="k">return</span> <span class="n">analysis</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestAdvancedMethod</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span><span class="p">[]</span> <span class="n">phrases</span> <span class="p">=</span> <span class="p">{</span>
+            <span class="s">"level"</span><span class="p">,</span>
+            <span class="s">"A man a plan a canal Panama"</span><span class="p">,</span>
+            <span class="s">"race a car"</span><span class="p">,</span>
+            <span class="s">"Was it a car or a cat I saw?"</span><span class="p">,</span>
+            <span class="s">"Madam, I'm Adam"</span><span class="p">,</span>
+            <span class="s">"Not a palindrome"</span><span class="p">,</span>
+            <span class="s">"No 'x' in Nixon"</span>
+        <span class="p">};</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Advanced Palindrome Analysis ===\n"</span><span class="p">);</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">phrase</span> <span class="k">in</span> <span class="n">phrases</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">analysis</span> <span class="p">=</span> <span class="nf">AnalyzePalindrome</span><span class="p">(</span><span class="n">phrase</span><span class="p">);</span>
+            
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Original: \"</span><span class="p">{</span><span class="n">analysis</span><span class="p">.</span><span class="n">OriginalInput</span><span class="p">}</span><span class="s">\""</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Cleaned:  \"</span><span class="p">{</span><span class="n">analysis</span><span class="p">.</span><span class="n">CleanedInput</span><span class="p">}</span><span class="s">\""</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Result:   </span><span class="p">{(</span><span class="n">analysis</span><span class="p">.</span><span class="n">IsPalindrome</span> <span class="p">?</span> <span class="s">"✓ Palindrome"</span> <span class="p">:</span> <span class="s">"✗ Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Length:   </span><span class="p">{</span><span class="n">analysis</span><span class="p">.</span><span class="n">Length</span><span class="p">}</span><span class="s"> characters\n"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">PalindromeAnalysis</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">OriginalInput</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">CleanedInput</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsPalindrome</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Length</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="method-5-performance-optimized-version">Method 5: Performance-Optimized Version</h2>
+
+<p>For high-performance scenarios where you need to check many palindromes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.CompilerServices</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PerformancePalindromeChecker</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">MethodImpl</span><span class="p">(</span><span class="n">MethodImplOptions</span><span class="p">.</span><span class="n">AggressiveInlining</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindromeOptimized</span><span class="p">(</span><span class="n">ReadOnlySpan</span><span class="p">&lt;</span><span class="kt">char</span><span class="p">&gt;</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">length</span> <span class="p">=</span> <span class="n">word</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">halfLength</span> <span class="p">=</span> <span class="n">length</span> <span class="p">/</span> <span class="m">2</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">halfLength</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">ToLowerInvariant</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">!=</span> <span class="kt">char</span><span class="p">.</span><span class="nf">ToLowerInvariant</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">length</span> <span class="p">-</span> <span class="m">1</span> <span class="p">-</span> <span class="n">i</span><span class="p">]))</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// For string input</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">IsPalindromeOptimized</span><span class="p">(</span><span class="kt">string</span> <span class="n">word</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="nf">IsPalindromeOptimized</span><span class="p">(</span><span class="n">word</span><span class="p">.</span><span class="nf">AsSpan</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestPerformanceMethod</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span><span class="p">[]</span> <span class="n">words</span> <span class="p">=</span> <span class="p">{</span> <span class="s">"level"</span><span class="p">,</span> <span class="s">"radar"</span><span class="p">,</span> <span class="s">"civic"</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">,</span> <span class="s">"racecar"</span> <span class="p">};</span>
+        
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Performance-Optimized Palindrome Check ===\n"</span><span class="p">);</span>
+
+        <span class="kt">var</span> <span class="n">startTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">iteration</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">iteration</span> <span class="p">&lt;</span> <span class="m">100000</span><span class="p">;</span> <span class="n">iteration</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">words</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="nf">IsPalindromeOptimized</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="kt">var</span> <span class="n">endTime</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">elapsed</span> <span class="p">=</span> <span class="n">endTime</span> <span class="p">-</span> <span class="n">startTime</span><span class="p">;</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Processed </span><span class="p">{</span><span class="n">words</span><span class="p">.</span><span class="n">Length</span> <span class="p">*</span> <span class="m">100000</span><span class="p">:</span><span class="n">N0</span><span class="p">}</span><span class="s"> palindrome checks"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Time elapsed: </span><span class="p">{</span><span class="n">elapsed</span><span class="p">.</span><span class="n">TotalMilliseconds</span><span class="p">:</span><span class="n">F2</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+        
+        <span class="c1">// Show results for verification</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">string</span> <span class="n">word</span> <span class="k">in</span> <span class="n">words</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">result</span> <span class="p">=</span> <span class="nf">IsPalindromeOptimized</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">word</span><span class="p">}</span><span class="s"> → </span><span class="p">{(</span><span class="n">result</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="complete-example-with-user-input">Complete Example with User Input</h2>
+
+<p>A comprehensive example that combines multiple approaches:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CompletePalindromeProgram</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Palindrome Checker Program ===\n"</span><span class="p">);</span>
+
+        <span class="c1">// Pre-defined test cases</span>
+        <span class="nf">RunTestCases</span><span class="p">();</span>
+
+        <span class="c1">// Interactive mode</span>
+        <span class="nf">RunInteractiveMode</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">RunTestCases</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">testCases</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;</span>
+        <span class="p">{</span>
+            <span class="p">{</span> <span class="s">"level"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"radar"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"civic"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"deified"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"rotator"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"madam"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"racecar"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"noon"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"hello"</span><span class="p">,</span> <span class="k">false</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"world"</span><span class="p">,</span> <span class="k">false</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"programming"</span><span class="p">,</span> <span class="k">false</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">"algorithm"</span><span class="p">,</span> <span class="k">false</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s">""</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span> <span class="c1">// Edge case: empty string</span>
+            <span class="p">{</span> <span class="s">"a"</span><span class="p">,</span> <span class="k">true</span> <span class="p">},</span> <span class="c1">// Edge case: single character</span>
+            <span class="p">{</span> <span class="s">"ab"</span><span class="p">,</span> <span class="k">false</span> <span class="p">}</span>
+        <span class="p">};</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Running test cases...\n"</span><span class="p">);</span>
+
+        <span class="kt">int</span> <span class="n">passed</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">total</span> <span class="p">=</span> <span class="n">testCases</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">testCase</span> <span class="k">in</span> <span class="n">testCases</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">result</span> <span class="p">=</span> <span class="n">PalindromeChecker</span><span class="p">.</span><span class="nf">IsPalindrome</span><span class="p">(</span><span class="n">testCase</span><span class="p">.</span><span class="n">Key</span><span class="p">);</span>
+            <span class="kt">bool</span> <span class="n">expected</span> <span class="p">=</span> <span class="n">testCase</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+            <span class="kt">string</span> <span class="n">status</span> <span class="p">=</span> <span class="n">result</span> <span class="p">==</span> <span class="n">expected</span> <span class="p">?</span> <span class="s">"✓ PASS"</span> <span class="p">:</span> <span class="s">"✗ FAIL"</span><span class="p">;</span>
+            
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">testCase</span><span class="p">.</span><span class="n">Key</span><span class="p">,-</span><span class="m">12</span><span class="p">}</span><span class="s"> → Expected: </span><span class="p">{</span><span class="n">expected</span><span class="p">,-</span><span class="m">5</span><span class="p">}</span><span class="s"> Got: </span><span class="p">{</span><span class="n">result</span><span class="p">,-</span><span class="m">5</span><span class="p">}</span><span class="s"> </span><span class="p">{</span><span class="n">status</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+            
+            <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="p">==</span> <span class="n">expected</span><span class="p">)</span> <span class="n">passed</span><span class="p">++;</span>
+        <span class="p">}</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"\nTest Results: </span><span class="p">{</span><span class="n">passed</span><span class="p">}</span><span class="s">/</span><span class="p">{</span><span class="n">total</span><span class="p">}</span><span class="s"> passed (</span><span class="p">{(</span><span class="kt">double</span><span class="p">)</span><span class="n">passed</span><span class="p">/</span><span class="n">total</span><span class="p">*</span><span class="m">100</span><span class="p">:</span><span class="n">F1</span><span class="p">}</span><span class="s">%)\n"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">RunInteractiveMode</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Interactive Mode ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Enter words to check (type 'exit' to quit):\n"</span><span class="p">);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="s">"Enter word: "</span><span class="p">);</span>
+            <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="p">||</span> <span class="n">input</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">()</span> <span class="p">==</span> <span class="s">"exit"</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="c1">// Check using different methods</span>
+            <span class="kt">bool</span> <span class="n">iterative</span> <span class="p">=</span> <span class="n">PalindromeChecker</span><span class="p">.</span><span class="nf">IsPalindrome</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+            <span class="kt">bool</span> <span class="n">recursive</span> <span class="p">=</span> <span class="n">RecursivePalindromeChecker</span><span class="p">.</span><span class="nf">IsPalindromeRecursive</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+            <span class="kt">bool</span> <span class="n">linq</span> <span class="p">=</span> <span class="n">LinqPalindromeChecker</span><span class="p">.</span><span class="nf">IsPalindromeLinq</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+            <span class="kt">bool</span> <span class="n">advanced</span> <span class="p">=</span> <span class="n">AdvancedPalindromeChecker</span><span class="p">.</span><span class="nf">IsPhrasepalindrome</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"\nResults for '</span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">':"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"  Iterative:  </span><span class="p">{(</span><span class="n">iterative</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"  Recursive:  </span><span class="p">{(</span><span class="n">recursive</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"  LINQ:       </span><span class="p">{(</span><span class="n">linq</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"  Advanced:   </span><span class="p">{(</span><span class="n">advanced</span> <span class="p">?</span> <span class="s">"Palindrome"</span> <span class="p">:</span> <span class="s">"Not palindrome"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Thanks for using the Palindrome Checker!"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="performance-comparison">Performance Comparison</h2>
+
+<p>Different methods have varying performance characteristics:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Time Complexity</th>
+      <th>Space Complexity</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Two-Pointer</td>
+      <td>O(n)</td>
+      <td>O(1)</td>
+      <td>General use, best performance</td>
+    </tr>
+    <tr>
+      <td>Recursive</td>
+      <td>O(n)</td>
+      <td>O(n)</td>
+      <td>Educational, functional style</td>
+    </tr>
+    <tr>
+      <td>LINQ</td>
+      <td>O(n)</td>
+      <td>O(n)</td>
+      <td>Readable code, quick prototyping</td>
+    </tr>
+    <tr>
+      <td>Advanced</td>
+      <td>O(n)</td>
+      <td>O(n)</td>
+      <td>Complex text processing</td>
+    </tr>
+    <tr>
+      <td>Optimized</td>
+      <td>O(n)</td>
+      <td>O(1)</td>
+      <td>High-performance scenarios</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Handle Edge Cases</strong>: Empty strings, null values, single characters</li>
+  <li><strong>Case Sensitivity</strong>: Always normalize case for word comparison</li>
+  <li><strong>Unicode Considerations</strong>: Use <code class="language-plaintext highlighter-rouge">ToLowerInvariant()</code> for culture-independent comparison</li>
+  <li><strong>Memory Efficiency</strong>: Use <code class="language-plaintext highlighter-rouge">ReadOnlySpan&lt;char&gt;</code> for performance-critical code</li>
+  <li><strong>Input Validation</strong>: Check for null or empty inputs</li>
+  <li><strong>Choose the Right Method</strong>: Consider your specific requirements (performance vs. readability)</li>
+</ol>
+
+<h2 id="real-world-applications">Real-World Applications</h2>
+
+<p>Palindrome detection is used in:</p>
+<ul>
+  <li><strong>Data Validation</strong>: Checking for symmetric patterns</li>
+  <li><strong>Bioinformatics</strong>: Finding palindromic DNA sequences</li>
+  <li><strong>Cryptography</strong>: Certain encryption algorithms</li>
+  <li><strong>Text Processing</strong>: Content analysis and pattern matching</li>
+  <li><strong>Game Development</strong>: Word games and puzzles</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Palindrome detection is a classic programming problem that demonstrates various algorithmic approaches. While the two-pointer iterative method offers the best balance of performance and readability, each approach has its merits depending on your specific requirements. Choose the method that best fits your needs in terms of performance, maintainability, and code style.</p>
 
         
         
@@ -417,7 +852,35 @@
     
       
       
-      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+      <a href="/tags/#algorithms" class="page__taxonomy-item" rel="tag">algorithms</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linq" class="page__taxonomy-item" rel="tag">linq</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#palindrome" class="page__taxonomy-item" rel="tag">palindrome</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#performance" class="page__taxonomy-item" rel="tag">performance</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#recursion" class="page__taxonomy-item" rel="tag">recursion</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#string-manipulation" class="page__taxonomy-item" rel="tag">string-manipulation</a>
     
     </span>
   </p>
@@ -438,21 +901,29 @@
     
       
       
-      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+      <a href="/categories/#algorithms" class="page__taxonomy-item" rel="tag">Algorithms</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#string-manipulation" class="page__taxonomy-item" rel="tag">String Manipulation</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2011-03-01T00:00:00-05:00">March 01, 2011</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2012-03-01T00:00:00-05:00">March 01, 2012</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+check+palindrome+word+using+C%23%20https%3A%2F%2Fmahedee.net%2Fhow-to-check-palindrome-word-using-c%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Checking+Palindromes+in+C%23%3A+Multiple+Approaches+and+Techniques%20https%3A%2F%2Fmahedee.net%2Fhow-to-check-palindrome-word-using-c%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fhow-to-check-palindrome-word-using-c%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -463,11 +934,11 @@
       
   <nav class="pagination">
     
-      <a href="/how-to-find-prime-number-between-1-to-n/" class="pagination--pager" title="How To Find Prime Number Between 1 To N
+      <a href="/properties-a-short-explanation-using-c/" class="pagination--pager" title="Properties a short explanation using C#
 ">Previous</a>
     
     
-      <a href="/master-sql-fundamentals-complete-guide/" class="pagination--pager" title="Master SQL Fundamentals: Complete Guide to CREATE, INSERT, SELECT, UPDATE, DELETE Operations
+      <a href="/how-to-remove-special-character-from-unicode-string/" class="pagination--pager" title="Removing Special Characters from Unicode Strings in C#: Complete Guide
 ">Next</a>
     
   </nav>
@@ -625,7 +1096,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+        <a href="/factory-design-pattern-using-csharp/" rel="permalink">Factory Design Pattern using C# with a real world banking example
 </a>
       
     </h2>
@@ -635,11 +1106,10 @@
 
 
 
-  6 minute read
+  7 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
-</p>
+    <p class="archive__item-excerpt" itemprop="description">Learn how to implement the Factory Design Pattern in C# through a practical banking application example. Understand object creation delegation, loose couplin...</p>
   </article>
 </div>
 

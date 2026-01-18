@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>How to remove special character from unicode string - Think Simple</title>
-<meta name="description" content="Think Simple">
+<!-- begin _includes/seo.html --><title>Removing Special Characters from Unicode Strings in C#: Complete Guide - Think Simple</title>
+<meta name="description" content="Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,19 +19,21 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="How to remove special character from unicode string">
+<meta property="og:title" content="Removing Special Characters from Unicode Strings in C#: Complete Guide">
 <meta property="og:url" content="https://mahedee.net/how-to-remove-special-character-from-unicode-string/">
 
 
-  <meta property="og:description" content="Think Simple">
+  <meta property="og:description" content="Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
 
 
 
 
 
-
-
-  <meta property="article:published_time" content="2011-05-05T00:00:00-04:00">
+  <meta property="article:published_time" content="2012-05-05T00:00:00-04:00">
 
 
 
@@ -97,24 +99,24 @@
 
 <!-- SEO tags -->
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to remove special character from unicode string | Think Simple</title>
+<title>Removing Special Characters from Unicode Strings in C#: Complete Guide | Think Simple</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="How to remove special character from unicode string" />
+<meta property="og:title" content="Removing Special Characters from Unicode Strings in C#: Complete Guide" />
 <meta name="author" content="Mahedee Hasan" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Think Simple" />
-<meta property="og:description" content="Think Simple" />
+<meta name="description" content="Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly." />
+<meta property="og:description" content="Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly." />
 <link rel="canonical" href="https://mahedee.net/how-to-remove-special-character-from-unicode-string/" />
 <meta property="og:url" content="https://mahedee.net/how-to-remove-special-character-from-unicode-string/" />
 <meta property="og:site_name" content="Think Simple" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2011-05-05T00:00:00-04:00" />
+<meta property="article:published_time" content="2012-05-05T00:00:00-04:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to remove special character from unicode string" />
+<meta property="twitter:title" content="Removing Special Characters from Unicode Strings in C#: Complete Guide" />
 <meta name="twitter:site" content="@" />
 <meta name="twitter:creator" content="@Mahedee Hasan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-05-05T00:00:00-04:00","datePublished":"2011-05-05T00:00:00-04:00","description":"Think Simple","headline":"How to remove special character from unicode string","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-remove-special-character-from-unicode-string/"},"url":"https://mahedee.net/how-to-remove-special-character-from-unicode-string/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2012-05-05T00:00:00-04:00","datePublished":"2012-05-05T00:00:00-04:00","description":"Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly.","headline":"Removing Special Characters from Unicode Strings in C#: Complete Guide","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/how-to-remove-special-character-from-unicode-string/"},"url":"https://mahedee.net/how-to-remove-special-character-from-unicode-string/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,15 +328,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="How to remove special character from unicode string">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="May 05, 2011">
+    <meta itemprop="headline" content="Removing Special Characters from Unicode Strings in C#: Complete Guide">
+    <meta itemprop="description" content="Learn multiple approaches to remove special characters from Unicode strings in C#. Covers regex patterns, custom filters, performance optimization, and handling international characters properly.">
+    <meta itemprop="datePublished" content="May 05, 2012">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">How to remove special character from unicode string
+          <h1 id="page-title" class="page__title" itemprop="headline">Removing Special Characters from Unicode Strings in C#: Complete Guide
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -342,7 +344,7 @@
 
 
 
-  less than 1 minute read
+  6 minute read
 </p>
           
         </header>
@@ -350,37 +352,536 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Here is the sample code to remove special character from Unicode string.</p>
+        <p>Working with Unicode strings and removing special characters is a common requirement in text processing applications. Whether you’re sanitizing user input, preparing data for databases, or cleaning text for analysis, understanding different approaches to handle special characters in Unicode strings is essential.</p>
+
+<h2 id="understanding-unicode-and-special-characters">Understanding Unicode and Special Characters</h2>
+
+<p>Unicode is a standard that provides a unique number for every character, regardless of platform, program, or language. When dealing with Unicode text, special characters can include:</p>
 
 <ul>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Sample Input: SG@%@sgs th? g#%@^@#$ chào^#^$#!abc35</td>
-          <td>_ sgs _35 hello world không gsg</td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
-  <li>Sample Output: SG%sgs th? g#%^#$ chào^#^$#!abc35 sgs 35 hello world không gsg</li>
+  <li>Punctuation marks: <code class="language-plaintext highlighter-rouge">!</code>, <code class="language-plaintext highlighter-rouge">@</code>, <code class="language-plaintext highlighter-rouge">#</code>, <code class="language-plaintext highlighter-rouge">$</code>, <code class="language-plaintext highlighter-rouge">%</code>, <code class="language-plaintext highlighter-rouge">^</code>, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">*</code></li>
+  <li>Mathematical symbols: <code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&gt;</code></li>
+  <li>Currency symbols: <code class="language-plaintext highlighter-rouge">$</code>, <code class="language-plaintext highlighter-rouge">€</code>, <code class="language-plaintext highlighter-rouge">¥</code>, <code class="language-plaintext highlighter-rouge">₹</code></li>
+  <li>Diacritical marks: <code class="language-plaintext highlighter-rouge">é</code>, <code class="language-plaintext highlighter-rouge">ñ</code>, <code class="language-plaintext highlighter-rouge">ü</code>, <code class="language-plaintext highlighter-rouge">ç</code></li>
+  <li>Whitespace characters: tabs, line breaks, non-breaking spaces</li>
+  <li>Control characters and formatting marks</li>
 </ul>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Program</span>
+<h2 id="method-1-simple-character-replacement">Method 1: Simple Character Replacement</h2>
+
+<p>The most basic approach removes specific known characters:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SimpleCharacterRemoval</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveSpecificCharacters</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"@"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"#"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"$"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"%"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"^"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"&amp;"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"*"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"|"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                   <span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"_"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestSimpleRemoval</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"SG@%@sgs th? g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="n">output</span> <span class="p">=</span> <span class="nf">RemoveSpecificCharacters</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Simple Character Replacement ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Input:  </span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Output: </span><span class="p">{</span><span class="n">output</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Pros:</strong> Simple and fast for known characters<br />
+<strong>Cons:</strong> Limited flexibility, requires modification for new characters</p>
+
+<h2 id="method-2-regular-expression-approach">Method 2: Regular Expression Approach</h2>
+
+<p>Regular expressions provide powerful pattern matching for character removal:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text.RegularExpressions</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RegexCharacterRemoval</span>
+<span class="p">{</span>
+    <span class="c1">// Remove all non-alphanumeric characters (keeping only letters and numbers)</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">KeepAlphanumericOnly</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">@"[^a-zA-Z0-9\s]"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Remove specific special characters using character class</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveSpecialCharacters</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">@"[@#$%^&amp;*|_]"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Keep only Unicode letters, numbers, and whitespace</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">KeepUnicodeLettersAndNumbers</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">@"[^\p{L}\p{N}\s]"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Remove punctuation but keep Unicode letters and numbers</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemovePunctuation</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">@"\p{P}"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Custom pattern: Remove everything except letters, numbers, spaces, and specific characters</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">CustomFilter</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">,</span> <span class="kt">string</span> <span class="n">allowedSpecialChars</span> <span class="p">=</span> <span class="s">""</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="kt">string</span> <span class="n">pattern</span> <span class="p">=</span> <span class="s">$@"[^\p\p\s</span><span class="p">{</span><span class="n">Regex</span><span class="p">.</span><span class="nf">Escape</span><span class="p">(</span><span class="n">allowedSpecialChars</span><span class="p">)}</span><span class="s">]"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestRegexMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"SG@%@sgs thể g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Regular Expression Methods ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Original: </span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Alphanumeric only: </span><span class="p">{</span><span class="nf">KeepAlphanumericOnly</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Remove [@#$%^&amp;*|_]: </span><span class="p">{</span><span class="nf">RemoveSpecialCharacters</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Unicode letters/numbers: </span><span class="p">{</span><span class="nf">KeepUnicodeLettersAndNumbers</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Remove punctuation: </span><span class="p">{</span><span class="nf">RemovePunctuation</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Custom (allow .-): </span><span class="p">{</span><span class="nf">CustomFilter</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">".-"</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="important-regex-patterns">Important Regex Patterns:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pattern</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[^a-zA-Z0-9\s]</code></td>
+      <td>Remove everything except ASCII letters, numbers, and spaces</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\p{P}</code></td>
+      <td>Matches any punctuation character</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\p{L}</code></td>
+      <td>Matches any Unicode letter</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\p{N}</code></td>
+      <td>Matches any Unicode number</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\p{S}</code></td>
+      <td>Matches any Unicode symbol</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[^\p{L}\p{N}\s]</code></td>
+      <td>Keep only Unicode letters, numbers, and whitespace</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="method-3-linq-based-approach">Method 3: LINQ-Based Approach</h2>
+
+<p>Using LINQ for functional-style character filtering:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">LinqCharacterRemoval</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveCharactersLinq</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">,</span> <span class="n">Func</span><span class="p">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;</span> <span class="n">predicate</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">predicate</span><span class="p">).</span><span class="nf">ToArray</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">KeepAlphanumericLinq</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">RemoveCharactersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">c</span> <span class="p">=&gt;</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsLetterOrDigit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">||</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsWhiteSpace</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveSpecialCharactersLinq</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">char</span><span class="p">[]</span> <span class="n">specialChars</span> <span class="p">=</span> <span class="p">{</span> <span class="sc">'@'</span><span class="p">,</span> <span class="sc">'#'</span><span class="p">,</span> <span class="sc">'$'</span><span class="p">,</span> <span class="sc">'%'</span><span class="p">,</span> <span class="sc">'^'</span><span class="p">,</span> <span class="sc">'&amp;'</span><span class="p">,</span> <span class="sc">'*'</span><span class="p">,</span> <span class="sc">'|'</span><span class="p">,</span> <span class="sc">'_'</span> <span class="p">};</span>
+        <span class="k">return</span> <span class="nf">RemoveCharactersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">c</span> <span class="p">=&gt;</span> <span class="p">!</span><span class="n">specialChars</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">KeepUnicodeLettersLinq</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">RemoveCharactersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">c</span> <span class="p">=&gt;</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsLetter</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">||</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsDigit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">||</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsWhiteSpace</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestLinqMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"SG@%@sgs thể g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== LINQ-Based Methods ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Original: </span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Alphanumeric (LINQ): </span><span class="p">{</span><span class="nf">KeepAlphanumericLinq</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Remove specials (LINQ): </span><span class="p">{</span><span class="nf">RemoveSpecialCharactersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Unicode letters (LINQ): </span><span class="p">{</span><span class="nf">KeepUnicodeLettersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="method-4-stringbuilder-for-performance">Method 4: StringBuilder for Performance</h2>
+
+<p>For large strings or frequent operations, StringBuilder provides better performance:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">StringBuilderCharacterRemoval</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveCharactersStringBuilder</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">,</span> <span class="kt">char</span><span class="p">[]</span> <span class="n">charsToRemove</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">input</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">Array</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">charsToRemove</span><span class="p">,</span> <span class="n">ch</span> <span class="p">=&gt;</span> <span class="n">ch</span> <span class="p">==</span> <span class="n">c</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">KeepOnlyLettersAndNumbers</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">input</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">IsLetterOrDigit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">||</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsWhiteSpace</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestStringBuilderMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"SG@%@sgs thể g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
+        <span class="kt">char</span><span class="p">[]</span> <span class="n">specialChars</span> <span class="p">=</span> <span class="p">{</span> <span class="sc">'@'</span><span class="p">,</span> <span class="sc">'#'</span><span class="p">,</span> <span class="sc">'$'</span><span class="p">,</span> <span class="sc">'%'</span><span class="p">,</span> <span class="sc">'^'</span><span class="p">,</span> <span class="sc">'&amp;'</span><span class="p">,</span> <span class="sc">'*'</span><span class="p">,</span> <span class="sc">'|'</span><span class="p">,</span> <span class="sc">'_'</span> <span class="p">};</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== StringBuilder Methods ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Original: </span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Remove array of chars: </span><span class="p">{</span><span class="nf">RemoveCharactersStringBuilder</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">specialChars</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Letters and numbers only: </span><span class="p">{</span><span class="nf">KeepOnlyLettersAndNumbers</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="method-5-advanced-unicode-handling">Method 5: Advanced Unicode Handling</h2>
+
+<p>Comprehensive Unicode character classification and handling:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Globalization</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text.RegularExpressions</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AdvancedUnicodeHandling</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">NormalizeAndClean</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="c1">// Normalize Unicode (decompose accented characters)</span>
+        <span class="kt">string</span> <span class="n">normalized</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="nf">Normalize</span><span class="p">(</span><span class="n">NormalizationForm</span><span class="p">.</span><span class="n">FormD</span><span class="p">);</span>
+        
+        <span class="kt">var</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">normalized</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">UnicodeCategory</span> <span class="n">category</span> <span class="p">=</span> <span class="n">CharUnicodeInfo</span><span class="p">.</span><span class="nf">GetUnicodeCategory</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            
+            <span class="c1">// Keep letters, digits, and spaces; skip combining diacritical marks</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">category</span> <span class="p">!=</span> <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">NonSpacingMark</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="kt">char</span><span class="p">.</span><span class="nf">IsLetterOrDigit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">||</span> <span class="kt">char</span><span class="p">.</span><span class="nf">IsWhiteSpace</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">().</span><span class="nf">Normalize</span><span class="p">(</span><span class="n">NormalizationForm</span><span class="p">.</span><span class="n">FormC</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">RemoveByUnicodeCategory</span><span class="p">(</span><span class="kt">string</span> <span class="n">input</span><span class="p">,</span> <span class="k">params</span> <span class="n">UnicodeCategory</span><span class="p">[]</span> <span class="n">categoriesToRemove</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">input</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+        
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">input</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">UnicodeCategory</span> <span class="n">category</span> <span class="p">=</span> <span class="n">CharUnicodeInfo</span><span class="p">.</span><span class="nf">GetUnicodeCategory</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            
+            <span class="k">if</span> <span class="p">(!</span><span class="n">Array</span><span class="p">.</span><span class="nf">Exists</span><span class="p">(</span><span class="n">categoriesToRemove</span><span class="p">,</span> <span class="n">cat</span> <span class="p">=&gt;</span> <span class="n">cat</span> <span class="p">==</span> <span class="n">category</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">TestAdvancedMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"Héllo Wörld! Café résumé naïve 测试 العربية русский"</span><span class="p">;</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Advanced Unicode Handling ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Original: </span><span class="p">{</span><span class="n">input</span><span class="p">}</span><span class="s">\n"</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Normalized and cleaned: </span><span class="p">{</span><span class="nf">NormalizeAndClean</span><span class="p">(</span><span class="n">input</span><span class="p">)}</span><span class="s">"</span><span class="p">);</span>
+        
+        <span class="c1">// Remove punctuation and symbols</span>
+        <span class="kt">string</span> <span class="n">withoutPunctuation</span> <span class="p">=</span> <span class="nf">RemoveByUnicodeCategory</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> 
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">OtherPunctuation</span><span class="p">,</span> 
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">OpenPunctuation</span><span class="p">,</span> 
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">ClosePunctuation</span><span class="p">,</span>
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">ConnectorPunctuation</span><span class="p">,</span>
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">DashPunctuation</span><span class="p">,</span>
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">FinalQuotePunctuation</span><span class="p">,</span>
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">InitialQuotePunctuation</span><span class="p">,</span>
+            <span class="n">UnicodeCategory</span><span class="p">.</span><span class="n">OtherPunctuation</span><span class="p">);</span>
+            
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Without punctuation: </span><span class="p">{</span><span class="n">withoutPunctuation</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="performance-comparison">Performance Comparison</h2>
+
+<p>Here’s a benchmark comparison of different methods:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PerformanceComparison</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">BenchmarkMethods</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="s">"SG@%@sgs thể g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">iterations</span> <span class="p">=</span> <span class="m">100000</span><span class="p">;</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Performance Comparison ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Testing with </span><span class="p">{</span><span class="n">iterations</span><span class="p">:</span><span class="n">N0</span><span class="p">}</span><span class="s"> iterations\n"</span><span class="p">);</span>
+
+        <span class="c1">// Test String.Replace method</span>
+        <span class="kt">var</span> <span class="n">sw</span> <span class="p">=</span> <span class="n">Stopwatch</span><span class="p">.</span><span class="nf">StartNew</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">iterations</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="n">SimpleCharacterRemoval</span><span class="p">.</span><span class="nf">RemoveSpecificCharacters</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"String.Replace: </span><span class="p">{</span><span class="n">sw</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+
+        <span class="c1">// Test Regex method</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">iterations</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">RemoveSpecialCharacters</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Regex: </span><span class="p">{</span><span class="n">sw</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+
+        <span class="c1">// Test LINQ method</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">iterations</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="n">LinqCharacterRemoval</span><span class="p">.</span><span class="nf">RemoveSpecialCharactersLinq</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"LINQ: </span><span class="p">{</span><span class="n">sw</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+
+        <span class="c1">// Test StringBuilder method</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Restart</span><span class="p">();</span>
+        <span class="kt">char</span><span class="p">[]</span> <span class="n">specialChars</span> <span class="p">=</span> <span class="p">{</span> <span class="sc">'@'</span><span class="p">,</span> <span class="sc">'#'</span><span class="p">,</span> <span class="sc">'$'</span><span class="p">,</span> <span class="sc">'%'</span><span class="p">,</span> <span class="sc">'^'</span><span class="p">,</span> <span class="sc">'&amp;'</span><span class="p">,</span> <span class="sc">'*'</span><span class="p">,</span> <span class="sc">'|'</span><span class="p">,</span> <span class="sc">'_'</span> <span class="p">};</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">iterations</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="n">StringBuilderCharacterRemoval</span><span class="p">.</span><span class="nf">RemoveCharactersStringBuilder</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">specialChars</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sw</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"StringBuilder: </span><span class="p">{</span><span class="n">sw</span><span class="p">.</span><span class="n">ElapsedMilliseconds</span><span class="p">}</span><span class="s"> ms"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="complete-example-program">Complete Example Program</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UnicodeStringCleaner</span>
 <span class="p">{</span>
     <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="kt">string</span> <span class="n">inputString</span> <span class="p">=</span> <span class="s">"SG@%@sgs thể g#%@^@#$ chào^#^$#!abc35| _ sgs _35 hello world không gsg"</span><span class="p">;</span>
- 
-        <span class="kt">string</span> <span class="n">outputString</span> <span class="p">=</span> <span class="n">inputString</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"@"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"|"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"_"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
- 
-        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">inputString</span><span class="p">);</span>
-        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">outputString</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"=== Unicode String Special Character Removal ===\n"</span><span class="p">);</span>
+
+        <span class="c1">// Test all methods</span>
+        <span class="n">SimpleCharacterRemoval</span><span class="p">.</span><span class="nf">TestSimpleRemoval</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+        
+        <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">TestRegexMethods</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+        
+        <span class="n">LinqCharacterRemoval</span><span class="p">.</span><span class="nf">TestLinqMethods</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+        
+        <span class="n">StringBuilderCharacterRemoval</span><span class="p">.</span><span class="nf">TestStringBuilderMethods</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+        
+        <span class="n">AdvancedUnicodeHandling</span><span class="p">.</span><span class="nf">TestAdvancedMethods</span><span class="p">();</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">();</span>
+
+        <span class="c1">// Performance comparison</span>
+        <span class="n">PerformanceComparison</span><span class="p">.</span><span class="nf">BenchmarkMethods</span><span class="p">();</span>
+
+        <span class="c1">// Interactive mode</span>
+        <span class="nf">InteractiveMode</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">InteractiveMode</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"\n=== Interactive Mode ==="</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Enter text to clean (or 'exit' to quit):"</span><span class="p">);</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="s">"\nInput: "</span><span class="p">);</span>
+            <span class="kt">string</span> <span class="n">input</span> <span class="p">=</span> <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="p">||</span> <span class="n">input</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">()</span> <span class="p">==</span> <span class="s">"exit"</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"\nChoose cleaning method:"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"1. Remove specific characters (@#$%^&amp;*|_)"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"2. Keep only alphanumeric"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"3. Keep Unicode letters and numbers"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"4. Remove punctuation"</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="s">"Choice (1-4): "</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="nf">TryParse</span><span class="p">(</span><span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">(),</span> <span class="k">out</span> <span class="kt">int</span> <span class="n">choice</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="kt">string</span> <span class="n">result</span> <span class="p">=</span> <span class="n">choice</span> <span class="k">switch</span>
+                <span class="p">{</span>
+                    <span class="m">1</span> <span class="p">=&gt;</span> <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">RemoveSpecialCharacters</span><span class="p">(</span><span class="n">input</span><span class="p">),</span>
+                    <span class="m">2</span> <span class="p">=&gt;</span> <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">KeepAlphanumericOnly</span><span class="p">(</span><span class="n">input</span><span class="p">),</span>
+                    <span class="m">3</span> <span class="p">=&gt;</span> <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">KeepUnicodeLettersAndNumbers</span><span class="p">(</span><span class="n">input</span><span class="p">),</span>
+                    <span class="m">4</span> <span class="p">=&gt;</span> <span class="n">RegexCharacterRemoval</span><span class="p">.</span><span class="nf">RemovePunctuation</span><span class="p">(</span><span class="n">input</span><span class="p">),</span>
+                    <span class="n">_</span> <span class="p">=&gt;</span> <span class="s">"Invalid choice"</span>
+                <span class="p">};</span>
+
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Result: </span><span class="p">{</span><span class="n">result</span><span class="p">}</span><span class="s">"</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Thanks for using the Unicode String Cleaner!"</span><span class="p">);</span>
         <span class="n">Console</span><span class="p">.</span><span class="nf">ReadKey</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
-
 </code></pre></div></div>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Choose the Right Method</strong>:
+    <ul>
+      <li><strong>String.Replace</strong>: For few specific known characters</li>
+      <li><strong>Regex</strong>: For pattern-based removal and Unicode support</li>
+      <li><strong>StringBuilder</strong>: For large strings or frequent operations</li>
+      <li><strong>LINQ</strong>: For functional-style programming and readability</li>
+    </ul>
+  </li>
+  <li><strong>Unicode Considerations</strong>:
+    <ul>
+      <li>Use <code class="language-plaintext highlighter-rouge">\p{L}</code> and <code class="language-plaintext highlighter-rouge">\p{N}</code> in regex for Unicode letter/number matching</li>
+      <li>Consider normalization for accented characters</li>
+      <li>Be aware of surrogate pairs for characters outside the Basic Multilingual Plane</li>
+    </ul>
+  </li>
+  <li><strong>Performance Tips</strong>:
+    <ul>
+      <li>Compile regex patterns for repeated use</li>
+      <li>Use StringBuilder for building large strings</li>
+      <li>Consider caching results for frequently processed strings</li>
+    </ul>
+  </li>
+  <li><strong>Security Considerations</strong>:
+    <ul>
+      <li>Always validate input length to prevent DoS attacks</li>
+      <li>Be explicit about what characters you allow vs. remove</li>
+      <li>Consider using allowlists instead of blocklists when possible</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="common-use-cases">Common Use Cases</h2>
+
+<ul>
+  <li><strong>Data Sanitization</strong>: Cleaning user input for database storage</li>
+  <li><strong>SEO-Friendly URLs</strong>: Removing special characters from page titles</li>
+  <li><strong>File Naming</strong>: Creating valid file names from user input</li>
+  <li><strong>Search Indexing</strong>: Normalizing text for search functionality</li>
+  <li><strong>Data Import/Export</strong>: Cleaning data between different systems</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Removing special characters from Unicode strings requires understanding your specific requirements and choosing the appropriate method. Whether you need simple character replacement or complex Unicode normalization, C# provides powerful tools to handle text processing efficiently. Consider performance requirements, internationalization needs, and maintainability when selecting your approach.</p>
 
         
         
@@ -402,7 +903,35 @@
     
       
       
-      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#internationalization" class="page__taxonomy-item" rel="tag">internationalization</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#performance" class="page__taxonomy-item" rel="tag">performance</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#regex" class="page__taxonomy-item" rel="tag">regex</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#string-manipulation" class="page__taxonomy-item" rel="tag">string-manipulation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#text-processing" class="page__taxonomy-item" rel="tag">text-processing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#unicode" class="page__taxonomy-item" rel="tag">unicode</a>
     
     </span>
   </p>
@@ -423,21 +952,29 @@
     
       
       
-      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#string-manipulation" class="page__taxonomy-item" rel="tag">String Manipulation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#unicode" class="page__taxonomy-item" rel="tag">Unicode</a>
     
     </span>
   </p>
 
 
         
-          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2011-05-05T00:00:00-04:00">May 05, 2011</time></p>
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2012-05-05T00:00:00-04:00">May 05, 2012</time></p>
         
       </footer>
 
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=How+to+remove+special+character+from+unicode+string%20https%3A%2F%2Fmahedee.net%2Fhow-to-remove-special-character-from-unicode-string%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Removing+Special+Characters+from+Unicode+Strings+in+C%23%3A+Complete+Guide%20https%3A%2F%2Fmahedee.net%2Fhow-to-remove-special-character-from-unicode-string%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fhow-to-remove-special-character-from-unicode-string%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -448,11 +985,11 @@
       
   <nav class="pagination">
     
-      <a href="/asp-net-common-interview-questions/" class="pagination--pager" title="100 ASP.NET Common Interview Questions
+      <a href="/how-to-check-palindrome-word-using-c/" class="pagination--pager" title="Checking Palindromes in C#: Multiple Approaches and Techniques
 ">Previous</a>
     
     
-      <a href="/common-powershell-commands/" class="pagination--pager" title="Common PowerShell commands for windows
+      <a href="/common-oop-interview-questions/" class="pagination--pager" title="Common OOP interview questions
 ">Next</a>
     
   </nav>
@@ -610,7 +1147,7 @@
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+        <a href="/factory-design-pattern-using-csharp/" rel="permalink">Factory Design Pattern using C# with a real world banking example
 </a>
       
     </h2>
@@ -620,11 +1157,10 @@
 
 
 
-  6 minute read
+  7 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
-</p>
+    <p class="archive__item-excerpt" itemprop="description">Learn how to implement the Factory Design Pattern in C# through a practical banking application example. Understand object creation delegation, loose couplin...</p>
   </article>
 </div>
 

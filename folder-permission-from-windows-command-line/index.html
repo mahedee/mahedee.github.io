@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Folder permission from windows command line - Think Simple</title>
-<meta name="description" content="Think Simple">
+<!-- begin _includes/seo.html --><title>Managing Windows Folder Permissions from Command Line - Think Simple</title>
+<meta name="description" content="Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security.">
 
 
   <meta name="author" content="Mahedee Hasan">
@@ -19,13 +19,15 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Think Simple">
-<meta property="og:title" content="Folder permission from windows command line">
+<meta property="og:title" content="Managing Windows Folder Permissions from Command Line">
 <meta property="og:url" content="https://mahedee.net/folder-permission-from-windows-command-line/">
 
 
-  <meta property="og:description" content="Think Simple">
+  <meta property="og:description" content="Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security.">
 
 
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
 
 
 
@@ -97,24 +99,24 @@
 
 <!-- SEO tags -->
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Folder permission from windows command line | Think Simple</title>
+<title>Managing Windows Folder Permissions from Command Line | Think Simple</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Folder permission from windows command line" />
+<meta property="og:title" content="Managing Windows Folder Permissions from Command Line" />
 <meta name="author" content="Mahedee Hasan" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Think Simple" />
-<meta property="og:description" content="Think Simple" />
+<meta name="description" content="Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security." />
+<meta property="og:description" content="Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security." />
 <link rel="canonical" href="https://mahedee.net/folder-permission-from-windows-command-line/" />
 <meta property="og:url" content="https://mahedee.net/folder-permission-from-windows-command-line/" />
 <meta property="og:site_name" content="Think Simple" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2011-01-01T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Folder permission from windows command line" />
+<meta property="twitter:title" content="Managing Windows Folder Permissions from Command Line" />
 <meta name="twitter:site" content="@" />
 <meta name="twitter:creator" content="@Mahedee Hasan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-01-01T00:00:00-05:00","datePublished":"2011-01-01T00:00:00-05:00","description":"Think Simple","headline":"Folder permission from windows command line","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/folder-permission-from-windows-command-line/"},"url":"https://mahedee.net/folder-permission-from-windows-command-line/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2011-01-01T00:00:00-05:00","datePublished":"2011-01-01T00:00:00-05:00","description":"Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security.","headline":"Managing Windows Folder Permissions from Command Line","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/folder-permission-from-windows-command-line/"},"url":"https://mahedee.net/folder-permission-from-windows-command-line/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -326,15 +328,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Folder permission from windows command line">
-    <meta itemprop="description" content="">
+    <meta itemprop="headline" content="Managing Windows Folder Permissions from Command Line">
+    <meta itemprop="description" content="Learn how to manage Windows folder permissions using command line tools like CACLS and ICACLS. Essential techniques for system administrators and developers working with file system security.">
     <meta itemprop="datePublished" content="January 01, 2011">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Folder permission from windows command line
+          <h1 id="page-title" class="page__title" itemprop="headline">Managing Windows Folder Permissions from Command Line
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -342,7 +344,7 @@
 
 
 
-  less than 1 minute read
+  2 minute read
 </p>
           
         </header>
@@ -350,41 +352,224 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>To give all permission in temp folder for every one, run command prompt with admin privilege and then run the following command.</p>
+        <p>Managing folder permissions in Windows doesn’t always require the graphical interface. Command line tools provide powerful and efficient ways to modify file and folder permissions, especially when working with scripts or managing multiple directories.</p>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">D:\Images</span><span class="p">&gt;</span> <span class="nf">cacls</span> <span class="nf">C:\Windows\Temp</span> <span class="nv">/t</span> <span class="nv">/e</span> <span class="nv">/g</span> <span class="nf">Everyone:f</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\C9B3A155-BAC8-4CC8-BB43-0E3BE182ABAB-Sigs</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\CAVS</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\comtypes_cache</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\Crashpad</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\CR_AD113.tmp</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\DiagOutputDir</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\Gethelp</span>
-<span class="nf">processed</span> <span class="nf">file:</span> <span class="nf">C:\Windows\Temp\GoogleDFSSetup_211015180131_8668.log</span>
-<span class="nf">processed</span> <span class="nf">dir:</span> <span class="nf">C:\Windows\Temp\logs</span>
-<span class="nf">processed</span> <span class="nf">file:</span> <span class="nf">C:\Windows\Temp\MpCmdRun.log</span>
-<span class="nf">processed</span> <span class="nf">file:</span> <span class="nf">C:\Windows\Temp\MpCopyAccelerator.log</span>
-<span class="nf">processed</span> <span class="nf">file:</span> <span class="nf">C:\Windows\Temp\MpSigStub.log</span>
-</code></pre></div></div>
+<h2 id="prerequisites">Prerequisites</h2>
 
-<p>Here,</p>
+<p>Before modifying folder permissions, ensure you:</p>
 <ul>
-  <li>/t means “apply change recursively”</li>
-  <li>/e means “edit existing DACL”.</li>
+  <li>Run Command Prompt as Administrator</li>
+  <li>Understand the security implications of permission changes</li>
+  <li>Have backup of important data</li>
 </ul>
 
-<p><strong>Alternative way</strong><br />
-You can try with the following command</p>
+<h2 id="using-cacls-legacy-method">Using CACLS (Legacy Method)</h2>
 
-<div class="language-ps highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">C:</span><span class="p">&gt;</span><span class="nf">icacls</span> <span class="nf">"C:\Windows\temp"</span> <span class="nv">/grant</span> <span class="nf">mahedee:</span><span class="s">(OI)(CI)</span><span class="nf">F</span>
+<p>The <code class="language-plaintext highlighter-rouge">CACLS</code> command is the traditional way to modify Access Control Lists (ACLs) in Windows. While still functional, it’s been superseded by <code class="language-plaintext highlighter-rouge">ICACLS</code>.</p>
+
+<h3 id="basic-cacls-syntax">Basic CACLS Syntax</h3>
+
+<p>To grant full permissions to Everyone on a folder and all its contents:</p>
+
+<pre><code class="language-cmd">cacls C:\Windows\Temp /t /e /g Everyone:f
+</code></pre>
+
+<p><strong>Sample Output:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>D:\Images&gt; cacls C:\Windows\Temp /t /e /g Everyone:f
+processed dir: C:\Windows\Temp
+processed dir: C:\Windows\Temp\C9B3A155-BAC8-4CC8-BB43-0E3BE182ABAB-Sigs
+processed dir: C:\Windows\Temp\CAVS
+processed dir: C:\Windows\Temp\comtypes_cache
+processed dir: C:\Windows\Temp\Crashpad
+processed file: C:\Windows\Temp\GoogleDFSSetup_211015180131_8668.log
+processed dir: C:\Windows\Temp\logs
+processed file: C:\Windows\Temp\MpCmdRun.log
 </code></pre></div></div>
-<p>Here,</p>
+
+<h3 id="cacls-parameters-explained">CACLS Parameters Explained</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/t</code></td>
+      <td>Apply changes recursively to all subdirectories and files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/e</code></td>
+      <td>Edit existing DACL (Discretionary Access Control List) instead of replacing it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/g</code></td>
+      <td>Grant specified user access rights</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Everyone:f</code></td>
+      <td>Grant full control to the Everyone group</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="common-cacls-permission-levels">Common CACLS Permission Levels</h3>
+
 <ul>
-  <li>F= Full Control</li>
-  <li>CI= Container Inherit</li>
-  <li>OI= Object Inherit</li>
+  <li><code class="language-plaintext highlighter-rouge">f</code> - Full Control</li>
+  <li><code class="language-plaintext highlighter-rouge">c</code> - Change (write)</li>
+  <li><code class="language-plaintext highlighter-rouge">r</code> - Read</li>
+  <li><code class="language-plaintext highlighter-rouge">w</code> - Write</li>
+  <li><code class="language-plaintext highlighter-rouge">n</code> - None</li>
 </ul>
+
+<h2 id="using-icacls-recommended-method">Using ICACLS (Recommended Method)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ICACLS</code> is the modern replacement for CACLS, offering more functionality and better Unicode support.</p>
+
+<h3 id="basic-icacls-syntax">Basic ICACLS Syntax</h3>
+
+<pre><code class="language-cmd">icacls "C:\Windows\temp" /grant username:(OI)(CI)F
+</code></pre>
+
+<h3 id="icacls-parameters-explained">ICACLS Parameters Explained</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">F</code></td>
+      <td>Full Control</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">M</code></td>
+      <td>Modify</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RX</code></td>
+      <td>Read and Execute</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R</code></td>
+      <td>Read</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">W</code></td>
+      <td>Write</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="inheritance-options">Inheritance Options</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">(OI)</code></td>
+      <td>Object Inherit - applies to files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">(CI)</code></td>
+      <td>Container Inherit - applies to folders</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">(IO)</code></td>
+      <td>Inherit Only</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">(NP)</code></td>
+      <td>Do not propagate inherit</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="practical-examples">Practical Examples</h2>
+
+<h3 id="1-grant-full-control-to-specific-user">1. Grant Full Control to Specific User</h3>
+
+<pre><code class="language-cmd">icacls "C:\MyFolder" /grant john:(OI)(CI)F
+</code></pre>
+
+<h3 id="2-remove-user-permissions">2. Remove User Permissions</h3>
+
+<pre><code class="language-cmd">icacls "C:\MyFolder" /remove john
+</code></pre>
+
+<h3 id="3-view-current-permissions">3. View Current Permissions</h3>
+
+<pre><code class="language-cmd">icacls "C:\MyFolder"
+</code></pre>
+
+<h3 id="4-reset-permissions-to-default">4. Reset Permissions to Default</h3>
+
+<pre><code class="language-cmd">icacls "C:\MyFolder" /reset /t
+</code></pre>
+
+<h3 id="5-grant-read-only-access">5. Grant Read-Only Access</h3>
+
+<pre><code class="language-cmd">icacls "C:\MyFolder" /grant users:(OI)(CI)R
+</code></pre>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Always backup permissions</strong> before making changes:
+    <pre><code class="language-cmd">icacls "C:\MyFolder" /save backup.txt /t
+</code></pre>
+  </li>
+  <li>
+    <p><strong>Test on non-critical folders</strong> first</p>
+  </li>
+  <li>
+    <p><strong>Use specific user accounts</strong> instead of Everyone when possible</p>
+  </li>
+  <li>
+    <p><strong>Apply principle of least privilege</strong> - grant only necessary permissions</p>
+  </li>
+  <li><strong>Document permission changes</strong> for future reference</li>
+</ol>
+
+<h2 id="security-considerations">Security Considerations</h2>
+
+<ul>
+  <li>Granting full control to Everyone can be a security risk</li>
+  <li>Always understand the implications before modifying system folders</li>
+  <li>Consider using Groups instead of individual users for easier management</li>
+  <li>Regular audit of folder permissions is recommended</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="access-denied-errors">Access Denied Errors</h3>
+<ul>
+  <li>Ensure Command Prompt is running as Administrator</li>
+  <li>Check if you have ownership of the folder</li>
+  <li>Verify the user/group exists</li>
+</ul>
+
+<h3 id="permission-not-applied">Permission Not Applied</h3>
+<ul>
+  <li>Check inheritance settings</li>
+  <li>Verify the correct syntax is used</li>
+  <li>Ensure the path is correct and accessible</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Command line permission management in Windows provides flexibility and automation capabilities that GUI tools cannot match. While CACLS remains functional, ICACLS offers better features and should be preferred for new implementations. Always exercise caution when modifying permissions, especially on system directories.</p>
 
         
         
@@ -406,7 +591,27 @@ You can try with the following command</p>
     
       
       
-      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a>
+      <a href="/tags/#cacls" class="page__taxonomy-item" rel="tag">cacls</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#command-line" class="page__taxonomy-item" rel="tag">command-line</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#icacls" class="page__taxonomy-item" rel="tag">icacls</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#permissions" class="page__taxonomy-item" rel="tag">permissions</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reviewed-v02" class="page__taxonomy-item" rel="tag">reviewed_v02</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">windows</a>
     
     </span>
   </p>
@@ -427,7 +632,11 @@ You can try with the following command</p>
     
       
       
-      <a href="/categories/#c" class="page__taxonomy-item" rel="tag">C#</a>
+      <a href="/categories/#system-administration" class="page__taxonomy-item" rel="tag">System Administration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
     
     </span>
   </p>
@@ -441,7 +650,7 @@ You can try with the following command</p>
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Folder+permission+from+windows+command+line%20https%3A%2F%2Fmahedee.net%2Ffolder-permission-from-windows-command-line%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Managing+Windows+Folder+Permissions+from+Command+Line%20https%3A%2F%2Fmahedee.net%2Ffolder-permission-from-windows-command-line%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Ffolder-permission-from-windows-command-line%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -452,11 +661,11 @@ You can try with the following command</p>
       
   <nav class="pagination">
     
-      <a href="/how-to-view-sql-server-error-log/" class="pagination--pager" title="How to view SQL Server error log
+      <a href="/solution-disappears-in-solution-explorer-visual-studio-2010/" class="pagination--pager" title="Fix: Solution Disappears in Visual Studio Solution Explorer
 ">Previous</a>
     
     
-      <a href="/how-to-find-prime-number-between-1-to-n/" class="pagination--pager" title="How To Find Prime Number Between 1 To N
+      <a href="/how-to-find-the-size-of-all-tables-in-sql-server-database/" class="pagination--pager" title="How to Find Table Sizes in SQL Server: Complete Guide with Multiple Methods
 ">Next</a>
     
   </nav>
@@ -614,7 +823,7 @@ You can try with the following command</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/procedural-vs-object-oriented-programming/" rel="permalink">Procedural vs Object-Oriented Programming: Key Differences Explained
+        <a href="/factory-design-pattern-using-csharp/" rel="permalink">Factory Design Pattern using C# with a real world banking example
 </a>
       
     </h2>
@@ -624,11 +833,10 @@ You can try with the following command</p>
 
 
 
-  6 minute read
+  7 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Discover the key differences between procedural and OOP paradigms. Compare data organization, reusability, and real-world applications in software development.
-</p>
+    <p class="archive__item-excerpt" itemprop="description">Learn how to implement the Factory Design Pattern in C# through a practical banking application example. Understand object creation delegation, loose couplin...</p>
   </article>
 </div>
 

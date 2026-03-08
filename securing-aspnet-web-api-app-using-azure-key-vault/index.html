@@ -1,0 +1,1988 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Securing an ASP.NET Core Web API by Integrating Azure Key Vault - Think Simple</title>
+<meta name="description" content="This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application.">
+
+
+  <meta name="author" content="Mahedee Hasan">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Think Simple">
+<meta property="og:title" content="Securing an ASP.NET Core Web API by Integrating Azure Key Vault">
+<meta property="og:url" content="https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/">
+
+
+  <meta property="og:description" content="This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application.">
+
+
+
+  <meta property="og:image" content="https://mahedee.net/assets/images/post_banner01.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-07T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mahedee Hasan",
+      "url": "https://mahedee.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Think Simple Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<!-- SEO tags -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Securing an ASP.NET Core Web API by Integrating Azure Key Vault | Think Simple</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Securing an ASP.NET Core Web API by Integrating Azure Key Vault" />
+<meta name="author" content="Mahedee Hasan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application." />
+<meta property="og:description" content="This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application." />
+<link rel="canonical" href="https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/" />
+<meta property="og:url" content="https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/" />
+<meta property="og:site_name" content="Think Simple" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-07T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Securing an ASP.NET Core Web API by Integrating Azure Key Vault" />
+<meta name="twitter:site" content="@" />
+<meta name="twitter:creator" content="@Mahedee Hasan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mahedee Hasan"},"dateModified":"2026-03-07T00:00:00-05:00","datePublished":"2026-03-07T00:00:00-05:00","description":"This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application.","headline":"Securing an ASP.NET Core Web API by Integrating Azure Key Vault","mainEntityOfPage":{"@type":"WebPage","@id":"https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/"},"url":"https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+
+
+     
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Think Simple
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/me.jpg" alt="Mahedee Hasan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Mahedee Hasan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am a Microsoft MVP (11th times), programmer, software developer, software architect, consultant, author, researcher, technical blogger, technical speaker, trainer and learner. I have more than 17 years experience in the field of software design and development.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Ontario, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:mahedee.hasan@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://mahedee.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+          
+        
+          
+            <li><a href="https://mvp.microsoft.com/en-us/PublicProfile/5001294" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-award" aria-hidden="true"></i> MVP</a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/mahedee/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/mahedeehasan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://facebook.com/mahedee19" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
+          
+        
+          
+            <li><a href="https://github.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="https://www.buymeacoffee.com/mahedee" rel="nofollow noopener noreferrer"><i class="fab fa fa-coffee" aria-hidden="true"></i> Buy me a Coffee</a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Securing an ASP.NET Core Web API by Integrating Azure Key Vault">
+    <meta itemprop="description" content="This step-by-step tutorial demonstrates how to integrate Azure Key Vault with an ASP.NET Core Web API application. You will learn how to create a Key Vault, store secrets, configure access, and use secrets in your application.">
+    <meta itemprop="datePublished" content="March 07, 2026">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Securing an ASP.NET Core Web API by Integrating Azure Key Vault
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Azure Key Vault is a Microsoft Azure service for securely storing and managing sensitive information — secrets (passwords, connection strings, API keys), cryptographic keys, and certificates. Instead of hardcoding secrets in config files or source code, your application fetches them from the vault at runtime. Access is controlled via Azure RBAC, every read is audit-logged, and services running in Azure can authenticate using Managed Identity — with zero credentials stored anywhere.</p>
+
+<h2 id="what-well-build">What We’ll Build</h2>
+
+<p>We’ll create a simple e-commerce ASP.NET Core Web API called ECommerceApi that uses Azure Key Vault to securely manage all sensitive configuration at runtime — no secrets stored in code or config files.</p>
+
+<p>The application includes:</p>
+
+<ul>
+  <li>Auth — user registration and login with JWT bearer tokens</li>
+  <li>Products — full CRUD for the product catalog</li>
+  <li>Orders — order placement with stock management and email confirmation</li>
+  <li>Config endpoint — development-only endpoint to verify all Key Vault secrets are loaded correctly</li>
+</ul>
+
+<p>All sensitive values — the SQL Server connection string, JWT signing secret, and SMTP credentials — are stored as secrets in Azure Key Vault and loaded automatically into IConfiguration at startup using DefaultAzureCredential.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before we start, make sure you have:</p>
+<ul>
+  <li>.NET 10 SDK</li>
+  <li>Azure CLI</li>
+  <li>SQL Server (local or Azure)</li>
+  <li>Azure subscription</li>
+  <li>Visual Studio 2026 or Visual Studio Code</li>
+</ul>
+
+<h2 id="step-1-create-a-resource-group">Step 1: Create a Resource Group</h2>
+
+<ol>
+  <li>Go to <a href="https://portal.azure.com">https://portal.azure.com</a> and sign in.</li>
+  <li>In the top search bar, type <strong>Resource groups</strong> and click it.</li>
+  <li>Click <strong>+ Create</strong>.</li>
+  <li>Fill in:
+    <ul>
+      <li><strong>Subscription</strong> → Select your subscription</li>
+      <li><strong>Resource group</strong> → <code class="language-plaintext highlighter-rouge">rg-ecommerce-dev</code></li>
+      <li><strong>Region</strong> → Choose the region closest to you (e.g., <code class="language-plaintext highlighter-rouge">West US</code>)</li>
+    </ul>
+  </li>
+  <li>Click <strong>Review + create</strong> → <strong>Create</strong>.</li>
+</ol>
+
+<h2 id="step-2-create-the-azure-key-vault">Step 2: Create the Azure Key Vault</h2>
+
+<ol>
+  <li>In the Azure Portal search bar, type <strong>Key vaults</strong> and click it.</li>
+  <li>Click <strong>+ Create</strong>.</li>
+  <li>
+    <p>Fill in the <strong>Basics</strong> tab:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Subscription</td>
+          <td>Your subscription</td>
+        </tr>
+        <tr>
+          <td>Resource group</td>
+          <td><code class="language-plaintext highlighter-rouge">rg-ecommerce-dev</code></td>
+        </tr>
+        <tr>
+          <td>Key vault name</td>
+          <td><code class="language-plaintext highlighter-rouge">kv-ecommerce-dev-mh</code> <em>(must be globally unique)</em></td>
+        </tr>
+        <tr>
+          <td>Region</td>
+          <td>Same as your resource group</td>
+        </tr>
+        <tr>
+          <td>Pricing tier</td>
+          <td><strong>Standard</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Click <strong>Next: Access configuration</strong>.</li>
+  <li>On the <strong>Access configuration</strong> tab:
+    <ul>
+      <li><strong>Permission model</strong> → Select <strong>Azure role-based access control (RBAC)</strong><br />
+<em>(RBAC is recommended over Vault Access Policies for better auditability)</em></li>
+    </ul>
+  </li>
+  <li>Leave all other settings as default.</li>
+  <li>Click <strong>Review + create</strong> → <strong>Create</strong>.</li>
+  <li>Once deployed, click <strong>Go to resource</strong>.</li>
+  <li><strong>Copy the Vault URI</strong> from the Overview page — it looks like:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  https://kv-ecommerce-dev-mh.vault.azure.net/
+</code></pre></div>    </div>
+    <p>You will paste this into <code class="language-plaintext highlighter-rouge">appsettings.json</code>.</p>
+
+    <p><img src="/assets/images/posts/2026/create-kv.png" alt="" />
+<strong>Fig : Creating the Azure Key Vault</strong>
+ 
+ 
+<img src="/assets/images/posts/2026/vault-URI.png" alt="" />
+ <strong>Fig : Copying the Vault URI</strong></p>
+  </li>
+</ol>
+
+<h2 id="step-3-grant-access--local-development">Step 3: Grant Access — Local Development</h2>
+
+<p>When running locally, <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code> uses your <code class="language-plaintext highlighter-rouge">az login</code> session.<br />
+You need to assign your own Azure AD account the <strong>Key Vault Secrets User</strong> role.</p>
+
+<p><strong>Log in to Azure CLI</strong></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">az</span><span class="w"> </span><span class="nx">login</span><span class="w">
+</span><span class="n">az</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="nx">show</span><span class="w">   </span><span class="c"># verify the correct subscription is active</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If you have multiple subscriptions:</p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">az</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nt">--subscription</span><span class="w"> </span><span class="s2">"&lt;your-subscription-id&gt;"</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Assign yourself the required roles</strong></p>
+
+<p>You need <strong>two roles</strong> assigned to your own Azure AD account:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Key Vault Secrets Officer</strong></td>
+      <td>Create, update, delete secrets via the Portal or CLI</td>
+    </tr>
+    <tr>
+      <td><strong>Key Vault Secrets User</strong></td>
+      <td>Read secrets at runtime (also used by the app’s Managed Identity)</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p><strong>Important:</strong> Without <strong>Key Vault Secrets Officer</strong>, you will get a <code class="language-plaintext highlighter-rouge">Forbidden / RBAC</code> error when trying to create secrets in the Portal. This is separate from the runtime read access the app needs.</p>
+</blockquote>
+
+<p><strong>Steps (repeat for each role):</strong></p>
+
+<ol>
+  <li>In the Azure Portal, navigate to your Key Vault (<code class="language-plaintext highlighter-rouge">kv-ecommerce-dev-mh</code>).</li>
+  <li>Click <strong>Access control (IAM)</strong> in the left menu.</li>
+  <li>Click <strong>+ Add → Add role assignment</strong>.</li>
+  <li>On the <strong>Role</strong> tab:
+    <ul>
+      <li>Search for and select the role (<strong>Key Vault Secrets Officer</strong> first, then repeat for <strong>Key Vault Secrets User</strong>)</li>
+      <li>Click <strong>Next</strong></li>
+    </ul>
+  </li>
+  <li>On the <strong>Members</strong> tab:
+    <ul>
+      <li><strong>Assign access to</strong> → <code class="language-plaintext highlighter-rouge">User, group, or service principal</code></li>
+      <li>Click <strong>+ Select members</strong></li>
+      <li>Search for your own Azure AD email/name → Select it</li>
+      <li>Click <strong>Select</strong> → <strong>Next</strong> → <strong>Review + assign</strong></li>
+    </ul>
+  </li>
+  <li><strong>Wait 2–5 minutes</strong> for the role to propagate before creating secrets.</li>
+</ol>
+
+<p><strong>Or assign both roles at once via CLI:</strong></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$myObjectId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">az</span><span class="w"> </span><span class="nx">ad</span><span class="w"> </span><span class="nx">signed-in-user</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nt">--query</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="nt">-o</span><span class="w"> </span><span class="nx">tsv</span><span class="w">
+</span><span class="nv">$scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/subscriptions/&lt;your-subscription-id&gt;/resourceGroups/rg-ecommerce-dev/providers/Microsoft.KeyVault/vaults/kv-ecommerce-dev-mh"</span><span class="w">
+
+</span><span class="n">az</span><span class="w"> </span><span class="nx">role</span><span class="w"> </span><span class="nx">assignment</span><span class="w"> </span><span class="nx">create</span><span class="w"> </span><span class="nt">--role</span><span class="w"> </span><span class="s2">"Key Vault Secrets Officer"</span><span class="w"> </span><span class="nt">--assignee</span><span class="w"> </span><span class="nv">$myObjectId</span><span class="w"> </span><span class="nt">--scope</span><span class="w"> </span><span class="nv">$scope</span><span class="w">
+</span><span class="n">az</span><span class="w"> </span><span class="nx">role</span><span class="w"> </span><span class="nx">assignment</span><span class="w"> </span><span class="nx">create</span><span class="w"> </span><span class="nt">--role</span><span class="w"> </span><span class="s2">"Key Vault Secrets User"</span><span class="w">   </span><span class="nt">--assignee</span><span class="w"> </span><span class="nv">$myObjectId</span><span class="w"> </span><span class="nt">--scope</span><span class="w"> </span><span class="nv">$scope</span><span class="w">
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>After this, <code class="language-plaintext highlighter-rouge">DefaultAzureCredential</code> on your local machine (authenticated via <code class="language-plaintext highlighter-rouge">az login</code>) will be able to read secrets, and you can manage secrets via the Portal.</p>
+</blockquote>
+
+<h2 id="step-4-add-secrets-to-key-vault">Step 4: Add Secrets to Key Vault</h2>
+
+<blockquote>
+  <p><strong>Naming convention:</strong> Azure Key Vault does not support <code class="language-plaintext highlighter-rouge">:</code> (colon) in secret names.<br />
+The <code class="language-plaintext highlighter-rouge">Azure.Extensions.AspNetCore.Configuration.Secrets</code> package translates <code class="language-plaintext highlighter-rouge">--</code> (double dash) to <code class="language-plaintext highlighter-rouge">:</code> in <code class="language-plaintext highlighter-rouge">IConfiguration</code>.<br />
+So <code class="language-plaintext highlighter-rouge">SqlServer--ConnectionString</code> in Key Vault becomes <code class="language-plaintext highlighter-rouge">SqlServer:ConnectionString</code> in your app.</p>
+</blockquote>
+
+<h3 id="step-by-step-for-each-secret">Step-by-step for each secret:</h3>
+
+<ol>
+  <li>In your Key Vault resource, click <strong>Objects → Secrets</strong> in the left menu.</li>
+  <li>Click <strong>+ Generate/Import</strong>.</li>
+  <li>Set:
+    <ul>
+      <li><strong>Upload options</strong> → <code class="language-plaintext highlighter-rouge">Manual</code></li>
+      <li><strong>Name</strong> → <em>(see table below)</em></li>
+      <li><strong>Secret value</strong> → <em>(see table below)</em></li>
+    </ul>
+  </li>
+  <li>Click <strong>Create</strong>.</li>
+</ol>
+
+<p>Repeat for all 8 secrets:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Secret Name (Key Vault)</th>
+      <th>Secret Value</th>
+      <th>Maps to (<code class="language-plaintext highlighter-rouge">IConfiguration</code> key)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SqlServer--ConnectionString</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Server=&lt;your-azure-sql-server&gt;.database.windows.net;Database=ECommerceDb;User Id=&lt;user&gt;;Password=&lt;pass&gt;;TrustServerCertificate=False;Encrypt=True;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SqlServer:ConnectionString</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Jwt--SigningSecret</code></td>
+      <td>A random string, <strong>minimum 32 characters</strong> (e.g., generate with <code class="language-plaintext highlighter-rouge">openssl rand -base64 32</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">Jwt:SigningSecret</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Jwt--Issuer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ECommerceApi</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Jwt:Issuer</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Jwt--Audience</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ECommerceApiUsers</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Jwt:Audience</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--Host</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smtp.sendgrid.net</code> <em>(or your SMTP provider)</em></td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:Host</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--Port</code></td>
+      <td><code class="language-plaintext highlighter-rouge">587</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:Port</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--Username</code></td>
+      <td><code class="language-plaintext highlighter-rouge">apikey</code> <em>(SendGrid) or your username or email address</em></td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:Username</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--Password</code></td>
+      <td>Your SMTP password / SendGrid API key</td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:Password</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--FromEmail</code></td>
+      <td><code class="language-plaintext highlighter-rouge">noreply@yourdomain.com</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:FromEmail</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Smtp--FromName</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ECommerce Store</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Smtp:FromName</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p><strong>Tip:</strong> For local development / testing SMTP, use <a href="https://mailtrap.io">Mailtrap</a> — free sandbox that catches all emails without sending them.</p>
+</blockquote>
+
+<p><img src="/assets/images/posts/2026/add-secret-key-akv.png" alt="" />
+<strong>Fig : Adding a secret to Azure Key Vault</strong></p>
+
+<h2 id="step-5-build-the-ecommerceapi-application-using-aspnet-core-web-api">Step 5: Build the ECommerceApi Application using asp.net core web api</h2>
+
+<p>This section walks through creating the complete <code class="language-plaintext highlighter-rouge">ECommerceApi</code> project from scratch. Follow each step in order to build the same application.</p>
+
+<h3 id="step-51--scaffold-the-project">Step 5.1 — Scaffold the Project</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mkdir</span><span class="w"> </span><span class="nx">src</span><span class="w">
+</span><span class="n">cd</span><span class="w"> </span><span class="nx">src</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">webapi</span><span class="w"> </span><span class="nt">-n</span><span class="w"> </span><span class="nx">ECommerceApi</span><span class="w">
+</span><span class="n">cd</span><span class="w"> </span><span class="nx">ECommerceApi</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Delete the generated <code class="language-plaintext highlighter-rouge">WeatherForecast.cs</code> and <code class="language-plaintext highlighter-rouge">Controllers/WeatherForecastController.cs</code> — they are not needed.</p>
+
+<h3 id="step-52--add-nuget-packages">Step 5.2 — Add NuGet Packages</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Azure.Identity</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Azure.Extensions.AspNetCore.Configuration.Secrets</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">BCrypt.Net-Next</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">MailKit</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Microsoft.AspNetCore.Authentication.JwtBearer</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Microsoft.EntityFrameworkCore.SqlServer</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Microsoft.EntityFrameworkCore.Tools</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Microsoft.OpenApi</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">package</span><span class="w"> </span><span class="nx">Swashbuckle.AspNetCore</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="step-53--create-the-models">Step 5.3 — Create the Models</h3>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">Models/</code> folder and add the following four files.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Models/User.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">PasswordHash</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Role</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="s">"Customer"</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedAt</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">ICollection</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;</span> <span class="n">Orders</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Models/Product.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Stock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedAt</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">ICollection</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;</span> <span class="n">OrderItems</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Models/Order.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Order</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">UserId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">User</span> <span class="n">User</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">null</span><span class="p">!;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Status</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="s">"Pending"</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">TotalAmount</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedAt</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="n">ICollection</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;</span> <span class="n">Items</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Models/OrderItem.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrderItem</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">OrderId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Order</span> <span class="n">Order</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">null</span><span class="p">!;</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ProductId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Product</span> <span class="n">Product</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">null</span><span class="p">!;</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Quantity</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">UnitPrice</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-54--create-the-database-context">Step 5.4 — Create the Database Context</h3>
+
+<p>Create <code class="language-plaintext highlighter-rouge">Data/AppDbContext.cs</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Data</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AppDbContext</span> <span class="p">:</span> <span class="n">DbContext</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">AppDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">AppDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span> <span class="n">Users</span> <span class="p">=&gt;</span> <span class="n">Set</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;();</span>
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;</span> <span class="n">Products</span> <span class="p">=&gt;</span> <span class="n">Set</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;();</span>
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;</span> <span class="n">Orders</span> <span class="p">=&gt;</span> <span class="n">Set</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;();</span>
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;</span> <span class="n">OrderItems</span> <span class="p">=&gt;</span> <span class="n">Set</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;();</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnModelCreating</span><span class="p">(</span><span class="n">ModelBuilder</span> <span class="n">modelBuilder</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="nf">HasIndex</span><span class="p">(</span><span class="n">u</span> <span class="p">=&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">Email</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">IsUnique</span><span class="p">();</span>
+
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Product</span><span class="p">&gt;().</span><span class="nf">Property</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">).</span><span class="nf">HasPrecision</span><span class="p">(</span><span class="m">18</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">Order</span><span class="p">&gt;().</span><span class="nf">Property</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">TotalAmount</span><span class="p">).</span><span class="nf">HasPrecision</span><span class="p">(</span><span class="m">18</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;().</span><span class="nf">Property</span><span class="p">(</span><span class="n">oi</span> <span class="p">=&gt;</span> <span class="n">oi</span><span class="p">.</span><span class="n">UnitPrice</span><span class="p">).</span><span class="nf">HasPrecision</span><span class="p">(</span><span class="m">18</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="nf">HasOne</span><span class="p">(</span><span class="n">oi</span> <span class="p">=&gt;</span> <span class="n">oi</span><span class="p">.</span><span class="n">Order</span><span class="p">).</span><span class="nf">WithMany</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Items</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">HasForeignKey</span><span class="p">(</span><span class="n">oi</span> <span class="p">=&gt;</span> <span class="n">oi</span><span class="p">.</span><span class="n">OrderId</span><span class="p">).</span><span class="nf">OnDelete</span><span class="p">(</span><span class="n">DeleteBehavior</span><span class="p">.</span><span class="n">Cascade</span><span class="p">);</span>
+
+        <span class="n">modelBuilder</span><span class="p">.</span><span class="n">Entity</span><span class="p">&lt;</span><span class="n">OrderItem</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="nf">HasOne</span><span class="p">(</span><span class="n">oi</span> <span class="p">=&gt;</span> <span class="n">oi</span><span class="p">.</span><span class="n">Product</span><span class="p">).</span><span class="nf">WithMany</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">OrderItems</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">HasForeignKey</span><span class="p">(</span><span class="n">oi</span> <span class="p">=&gt;</span> <span class="n">oi</span><span class="p">.</span><span class="n">ProductId</span><span class="p">).</span><span class="nf">OnDelete</span><span class="p">(</span><span class="n">DeleteBehavior</span><span class="p">.</span><span class="n">Restrict</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-55--create-the-dtos">Step 5.5 — Create the DTOs</h3>
+
+<p>Create three subfolders: <code class="language-plaintext highlighter-rouge">DTOs/Auth/</code>, <code class="language-plaintext highlighter-rouge">DTOs/Products/</code>, <code class="language-plaintext highlighter-rouge">DTOs/Orders/</code>.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Auth/RegisterDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Auth</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">RegisterDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="n">EmailAddress</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="nf">MinLength</span><span class="p">(</span><span class="m">6</span><span class="p">)]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Password</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Auth/LoginDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Auth</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">LoginDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="n">EmailAddress</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Password</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Auth/AuthResponseDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Auth</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AuthResponseDto</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Token</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Email</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Role</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Products/ProductDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Products</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ProductDto</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Stock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Products/CreateProductDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Products</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CreateProductDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Description</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="p">[</span><span class="nf">Range</span><span class="p">(</span><span class="m">0.01</span><span class="p">,</span> <span class="kt">double</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)]</span> <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Price</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="nf">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)]</span> <span class="k">public</span> <span class="kt">int</span> <span class="n">Stock</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Orders/CreateOrderDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Orders</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CreateOrderDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="nf">MinLength</span><span class="p">(</span><span class="m">1</span><span class="p">)]</span> <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">OrderItemRequestDto</span><span class="p">&gt;</span> <span class="n">Items</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrderItemRequestDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="k">public</span> <span class="kt">int</span> <span class="n">ProductId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="nf">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kt">int</span><span class="p">.</span><span class="n">MaxValue</span><span class="p">)]</span> <span class="k">public</span> <span class="kt">int</span> <span class="n">Quantity</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Orders/OrderResponseDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Orders</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrderResponseDto</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Status</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">TotalAmount</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DateTime</span> <span class="n">CreatedAt</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">OrderItemResponseDto</span><span class="p">&gt;</span> <span class="n">Items</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrderItemResponseDto</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ProductId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ProductName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Quantity</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">UnitPrice</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">decimal</span> <span class="n">Subtotal</span> <span class="p">=&gt;</span> <span class="n">Quantity</span> <span class="p">*</span> <span class="n">UnitPrice</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">DTOs/Orders/UpdateOrderStatusDto.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.DTOs.Orders</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">UpdateOrderStatusDto</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Status</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-56--create-the-services">Step 5.6 — Create the Services</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Services/ITokenService.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">interface</span> <span class="nc">ITokenService</span>
+<span class="p">{</span>
+    <span class="kt">string</span> <span class="nf">CreateToken</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Services/TokenService.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.IdentityModel.Tokens</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IdentityModel.Tokens.Jwt</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Security.Claims</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">TokenService</span> <span class="p">:</span> <span class="n">ITokenService</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_config</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nf">TokenService</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">config</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_config</span> <span class="p">=</span> <span class="n">config</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">CreateToken</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">secret</span> <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:SigningSecret"</span><span class="p">]</span>
+            <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"JWT signing secret not configured."</span><span class="p">);</span>
+
+        <span class="kt">var</span> <span class="n">key</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SymmetricSecurityKey</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">secret</span><span class="p">));</span>
+        <span class="kt">var</span> <span class="n">creds</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SigningCredentials</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">SecurityAlgorithms</span><span class="p">.</span><span class="n">HmacSha256</span><span class="p">);</span>
+
+        <span class="kt">var</span> <span class="n">claims</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span>
+        <span class="p">{</span>
+            <span class="k">new</span> <span class="nf">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()),</span>
+            <span class="k">new</span> <span class="nf">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">),</span>
+            <span class="k">new</span> <span class="nf">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">),</span>
+            <span class="k">new</span> <span class="nf">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">Role</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Role</span><span class="p">)</span>
+        <span class="p">};</span>
+
+        <span class="kt">var</span> <span class="n">token</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">JwtSecurityToken</span><span class="p">(</span>
+            <span class="n">issuer</span><span class="p">:</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:Issuer"</span><span class="p">],</span>
+            <span class="n">audience</span><span class="p">:</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Jwt:Audience"</span><span class="p">],</span>
+            <span class="n">claims</span><span class="p">:</span> <span class="n">claims</span><span class="p">,</span>
+            <span class="n">expires</span><span class="p">:</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">.</span><span class="nf">AddHours</span><span class="p">(</span><span class="m">24</span><span class="p">),</span>
+            <span class="n">signingCredentials</span><span class="p">:</span> <span class="n">creds</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">JwtSecurityTokenHandler</span><span class="p">().</span><span class="nf">WriteToken</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Services/IEmailService.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">interface</span> <span class="nc">IEmailService</span>
+<span class="p">{</span>
+    <span class="n">Task</span> <span class="nf">SendWelcomeEmailAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">toEmail</span><span class="p">,</span> <span class="kt">string</span> <span class="n">name</span><span class="p">);</span>
+    <span class="n">Task</span> <span class="nf">SendOrderConfirmationAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">toEmail</span><span class="p">,</span> <span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">orderId</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">total</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Services/EmailService.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">MailKit.Net.Smtp</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">MailKit.Security</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">MimeKit</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">EmailService</span> <span class="p">:</span> <span class="n">IEmailService</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_config</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">EmailService</span><span class="p">&gt;</span> <span class="n">_logger</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">EmailService</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">config</span><span class="p">,</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">EmailService</span><span class="p">&gt;</span> <span class="n">logger</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_config</span> <span class="p">=</span> <span class="n">config</span><span class="p">;</span>
+        <span class="n">_logger</span> <span class="p">=</span> <span class="n">logger</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SendWelcomeEmailAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">toEmail</span><span class="p">,</span> <span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="k">await</span> <span class="nf">SendEmailAsync</span><span class="p">(</span><span class="n">toEmail</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s">"Welcome to ECommerce Store!"</span><span class="p">,</span>
+            <span class="s">$"&lt;h2&gt;Welcome, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!&lt;/h2&gt;&lt;p&gt;Thank you for registering at our store.&lt;/p&gt;"</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SendOrderConfirmationAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">toEmail</span><span class="p">,</span> <span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">orderId</span><span class="p">,</span> <span class="kt">decimal</span> <span class="n">total</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="k">await</span> <span class="nf">SendEmailAsync</span><span class="p">(</span><span class="n">toEmail</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s">$"Order #</span><span class="p">{</span><span class="n">orderId</span><span class="p">}</span><span class="s"> Confirmed"</span><span class="p">,</span>
+            <span class="s">$"&lt;h2&gt;Order Confirmed, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!&lt;/h2&gt;&lt;p&gt;Order &lt;strong&gt;#</span><span class="p">{</span><span class="n">orderId</span><span class="p">}</span><span class="s">&lt;/strong&gt; — Total: &lt;strong&gt;$</span><span class="p">{</span><span class="n">total</span><span class="p">:</span><span class="n">F2</span><span class="p">}</span><span class="s">&lt;/strong&gt;&lt;/p&gt;"</span><span class="p">);</span>
+
+    <span class="k">private</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">SendEmailAsync</span><span class="p">(</span><span class="kt">string</span> <span class="n">toEmail</span><span class="p">,</span> <span class="kt">string</span> <span class="n">toName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">subject</span><span class="p">,</span> <span class="kt">string</span> <span class="n">htmlBody</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">host</span>     <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:Host"</span><span class="p">]</span>     <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"SMTP host not configured."</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">port</span>     <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:Port"</span><span class="p">]</span> <span class="p">??</span> <span class="s">"587"</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">username</span> <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:Username"</span><span class="p">]</span> <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"SMTP username not configured."</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">password</span> <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:Password"</span><span class="p">]</span> <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"SMTP password not configured."</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">fromEmail</span> <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:FromEmail"</span><span class="p">]</span> <span class="p">??</span> <span class="n">username</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">fromName</span>  <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="s">"Smtp:FromName"</span><span class="p">]</span>  <span class="p">??</span> <span class="s">"ECommerce Store"</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MimeMessage</span><span class="p">();</span>
+        <span class="n">message</span><span class="p">.</span><span class="n">From</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">MailboxAddress</span><span class="p">(</span><span class="n">fromName</span><span class="p">,</span> <span class="n">fromEmail</span><span class="p">));</span>
+        <span class="n">message</span><span class="p">.</span><span class="n">To</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="nf">MailboxAddress</span><span class="p">(</span><span class="n">toName</span><span class="p">,</span> <span class="n">toEmail</span><span class="p">));</span>
+        <span class="n">message</span><span class="p">.</span><span class="n">Subject</span> <span class="p">=</span> <span class="n">subject</span><span class="p">;</span>
+        <span class="n">message</span><span class="p">.</span><span class="n">Body</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">TextPart</span><span class="p">(</span><span class="s">"html"</span><span class="p">)</span> <span class="p">{</span> <span class="n">Text</span> <span class="p">=</span> <span class="n">htmlBody</span> <span class="p">};</span>
+
+        <span class="k">using</span> <span class="nn">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SmtpClient</span><span class="p">();</span>
+        <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">ConnectAsync</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">SecureSocketOptions</span><span class="p">.</span><span class="n">StartTls</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">AuthenticateAsync</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">SendAsync</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="nf">DisconnectAsync</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+        <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="s">"Email sent to {Email} — Subject: {Subject}"</span><span class="p">,</span> <span class="n">toEmail</span><span class="p">,</span> <span class="n">subject</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-57--create-the-controllers">Step 5.7 — Create the Controllers</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Controllers/AuthController.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.DTOs.Auth</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Controllers</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+<span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AuthController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">AppDbContext</span> <span class="n">_db</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ITokenService</span> <span class="n">_tokenService</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IEmailService</span> <span class="n">_emailService</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">AuthController</span><span class="p">&gt;</span> <span class="n">_logger</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">AuthController</span><span class="p">(</span><span class="n">AppDbContext</span> <span class="n">db</span><span class="p">,</span> <span class="n">ITokenService</span> <span class="n">tokenService</span><span class="p">,</span>
+        <span class="n">IEmailService</span> <span class="n">emailService</span><span class="p">,</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">AuthController</span><span class="p">&gt;</span> <span class="n">logger</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_db</span> <span class="p">=</span> <span class="n">db</span><span class="p">;</span> <span class="n">_tokenService</span> <span class="p">=</span> <span class="n">tokenService</span><span class="p">;</span>
+        <span class="n">_emailService</span> <span class="p">=</span> <span class="n">emailService</span><span class="p">;</span> <span class="n">_logger</span> <span class="p">=</span> <span class="n">logger</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"register"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">AuthResponseDto</span><span class="p">&gt;&gt;</span> <span class="nf">Register</span><span class="p">(</span><span class="n">RegisterDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">AnyAsync</span><span class="p">(</span><span class="n">u</span> <span class="p">=&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">Email</span> <span class="p">==</span> <span class="n">dto</span><span class="p">.</span><span class="n">Email</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nf">Conflict</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">message</span> <span class="p">=</span> <span class="s">"Email is already registered."</span> <span class="p">});</span>
+
+        <span class="kt">var</span> <span class="n">user</span> <span class="p">=</span> <span class="k">new</span> <span class="n">User</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+            <span class="n">Email</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span>
+            <span class="n">PasswordHash</span> <span class="p">=</span> <span class="n">BCrypt</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">BCrypt</span><span class="p">.</span><span class="nf">HashPassword</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="n">Password</span><span class="p">)</span>
+        <span class="p">};</span>
+        <span class="n">_db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+        <span class="n">_</span> <span class="p">=</span> <span class="n">_emailService</span><span class="p">.</span><span class="nf">SendWelcomeEmailAsync</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">ContinueWith</span><span class="p">(</span><span class="n">t</span> <span class="p">=&gt;</span> <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Exception</span><span class="p">,</span>
+                <span class="s">"Welcome email failed for {Email}"</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">),</span>
+                <span class="n">TaskContinuationOptions</span><span class="p">.</span><span class="n">OnlyOnFaulted</span><span class="p">);</span>
+
+        <span class="kt">var</span> <span class="n">token</span> <span class="p">=</span> <span class="n">_tokenService</span><span class="p">.</span><span class="nf">CreateToken</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthResponseDto</span> <span class="p">{</span> <span class="n">Token</span> <span class="p">=</span> <span class="n">token</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Role</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Role</span> <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPost</span><span class="p">(</span><span class="s">"login"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">AuthResponseDto</span><span class="p">&gt;&gt;</span> <span class="nf">Login</span><span class="p">(</span><span class="n">LoginDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">user</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">SingleOrDefaultAsync</span><span class="p">(</span><span class="n">u</span> <span class="p">=&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">Email</span> <span class="p">==</span> <span class="n">dto</span><span class="p">.</span><span class="n">Email</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="k">is</span> <span class="k">null</span> <span class="p">||</span> <span class="p">!</span><span class="n">BCrypt</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">BCrypt</span><span class="p">.</span><span class="nf">Verify</span><span class="p">(</span><span class="n">dto</span><span class="p">.</span><span class="n">Password</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">PasswordHash</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nf">Unauthorized</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">message</span> <span class="p">=</span> <span class="s">"Invalid email or password."</span> <span class="p">});</span>
+
+        <span class="kt">var</span> <span class="n">token</span> <span class="p">=</span> <span class="n">_tokenService</span><span class="p">.</span><span class="nf">CreateToken</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">new</span> <span class="n">AuthResponseDto</span> <span class="p">{</span> <span class="n">Token</span> <span class="p">=</span> <span class="n">token</span><span class="p">,</span> <span class="n">Email</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Role</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Role</span> <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Controllers/ProductsController.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.DTOs.Products</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Controllers</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+<span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ProductsController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">AppDbContext</span> <span class="n">_db</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nf">ProductsController</span><span class="p">(</span><span class="n">AppDbContext</span> <span class="n">db</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_db</span> <span class="p">=</span> <span class="n">db</span><span class="p">;</span>
+
+    <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">ProductDto</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetAll</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">ProductDto</span>
+        <span class="p">{</span>
+            <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Description</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Description</span><span class="p">,</span>
+            <span class="n">Price</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">,</span> <span class="n">Stock</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Stock</span>
+        <span class="p">}).</span><span class="nf">ToListAsync</span><span class="p">());</span>
+
+    <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">ProductDto</span><span class="p">&gt;&gt;</span> <span class="nf">GetById</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">p</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="k">new</span> <span class="n">ProductDto</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Description</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Description</span><span class="p">,</span> <span class="n">Price</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Price</span><span class="p">,</span> <span class="n">Stock</span> <span class="p">=</span> <span class="n">p</span><span class="p">.</span><span class="n">Stock</span> <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">ProductDto</span><span class="p">&gt;&gt;</span> <span class="nf">Create</span><span class="p">(</span><span class="n">CreateProductDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Product</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Description</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Description</span><span class="p">,</span> <span class="n">Price</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Price</span><span class="p">,</span> <span class="n">Stock</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Stock</span> <span class="p">};</span>
+        <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ProductDto</span> <span class="p">{</span> <span class="n">Id</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Name</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">Description</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Description</span><span class="p">,</span> <span class="n">Price</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Price</span><span class="p">,</span> <span class="n">Stock</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Stock</span> <span class="p">};</span>
+        <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">GetById</span><span class="p">),</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPut</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Update</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">CreateProductDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+        <span class="n">product</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Name</span><span class="p">;</span> <span class="n">product</span><span class="p">.</span><span class="n">Description</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Description</span><span class="p">;</span>
+        <span class="n">product</span><span class="p">.</span><span class="n">Price</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Price</span><span class="p">;</span> <span class="n">product</span><span class="p">.</span><span class="n">Stock</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Stock</span><span class="p">;</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpDelete</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">Delete</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">product</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+        <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">product</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Controllers/OrdersController.cs</code></strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">ECommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.DTOs.Orders</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Models</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Security.Claims</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Controllers</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+<span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrdersController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">AppDbContext</span> <span class="n">_db</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IEmailService</span> <span class="n">_emailService</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">OrdersController</span><span class="p">&gt;</span> <span class="n">_logger</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">OrdersController</span><span class="p">(</span><span class="n">AppDbContext</span> <span class="n">db</span><span class="p">,</span> <span class="n">IEmailService</span> <span class="n">emailService</span><span class="p">,</span> <span class="n">ILogger</span><span class="p">&lt;</span><span class="n">OrdersController</span><span class="p">&gt;</span> <span class="n">logger</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_db</span> <span class="p">=</span> <span class="n">db</span><span class="p">;</span> <span class="n">_emailService</span> <span class="p">=</span> <span class="n">emailService</span><span class="p">;</span> <span class="n">_logger</span> <span class="p">=</span> <span class="n">logger</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">HttpPost</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">OrderResponseDto</span><span class="p">&gt;&gt;</span> <span class="nf">CreateOrder</span><span class="p">(</span><span class="n">CreateOrderDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="nf">FindFirstValue</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">)!);</span>
+        <span class="kt">var</span> <span class="n">user</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">Unauthorized</span><span class="p">();</span>
+
+        <span class="kt">var</span> <span class="n">productIds</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Items</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">ProductId</span><span class="p">).</span><span class="nf">Distinct</span><span class="p">().</span><span class="nf">ToList</span><span class="p">();</span>
+        <span class="kt">var</span> <span class="n">products</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Products</span><span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">productIds</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">)).</span><span class="nf">ToDictionaryAsync</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+
+        <span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Order</span> <span class="p">{</span> <span class="n">UserId</span> <span class="p">=</span> <span class="n">userId</span> <span class="p">};</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">item</span> <span class="k">in</span> <span class="n">dto</span><span class="p">.</span><span class="n">Items</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(!</span><span class="n">products</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">ProductId</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">product</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">message</span> <span class="p">=</span> <span class="s">$"Product ID </span><span class="p">{</span><span class="n">item</span><span class="p">.</span><span class="n">ProductId</span><span class="p">}</span><span class="s"> not found."</span> <span class="p">});</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">product</span><span class="p">.</span><span class="n">Stock</span> <span class="p">&lt;</span> <span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nf">BadRequest</span><span class="p">(</span><span class="k">new</span> <span class="p">{</span> <span class="n">message</span> <span class="p">=</span> <span class="s">$"Insufficient stock for '</span><span class="p">{</span><span class="n">product</span><span class="p">.</span><span class="n">Name</span><span class="p">}</span><span class="s">'."</span> <span class="p">});</span>
+
+            <span class="n">product</span><span class="p">.</span><span class="n">Stock</span> <span class="p">-=</span> <span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">;</span>
+            <span class="n">order</span><span class="p">.</span><span class="n">Items</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">OrderItem</span> <span class="p">{</span> <span class="n">ProductId</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Quantity</span> <span class="p">=</span> <span class="n">item</span><span class="p">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">UnitPrice</span> <span class="p">=</span> <span class="n">product</span><span class="p">.</span><span class="n">Price</span> <span class="p">});</span>
+            <span class="n">order</span><span class="p">.</span><span class="n">TotalAmount</span> <span class="p">+=</span> <span class="n">item</span><span class="p">.</span><span class="n">Quantity</span> <span class="p">*</span> <span class="n">product</span><span class="p">.</span><span class="n">Price</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">_db</span><span class="p">.</span><span class="n">Orders</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+
+        <span class="n">_</span> <span class="p">=</span> <span class="n">_emailService</span><span class="p">.</span><span class="nf">SendOrderConfirmationAsync</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">order</span><span class="p">.</span><span class="n">TotalAmount</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">ContinueWith</span><span class="p">(</span><span class="n">t</span> <span class="p">=&gt;</span> <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Exception</span><span class="p">,</span>
+                <span class="s">"Order confirmation email failed for order #{OrderId}"</span><span class="p">,</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span><span class="p">),</span>
+                <span class="n">TaskContinuationOptions</span><span class="p">.</span><span class="n">OnlyOnFaulted</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nf">CreatedAtAction</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">GetById</span><span class="p">),</span> <span class="k">new</span> <span class="p">{</span> <span class="n">id</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span> <span class="p">},</span> <span class="nf">MapToDto</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">products</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">OrderResponseDto</span><span class="p">&gt;&gt;&gt;</span> <span class="nf">GetMyOrders</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="nf">FindFirstValue</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">)!);</span>
+        <span class="kt">var</span> <span class="n">orders</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Orders</span>
+            <span class="p">.</span><span class="nf">Include</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Items</span><span class="p">).</span><span class="nf">ThenInclude</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">Product</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">UserId</span> <span class="p">==</span> <span class="n">userId</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">OrderByDescending</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">CreatedAt</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">orders</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="nf">MapToDto</span><span class="p">(</span><span class="n">o</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"{id}"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&lt;</span><span class="n">OrderResponseDto</span><span class="p">&gt;&gt;</span> <span class="nf">GetById</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="nf">FindFirstValue</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">)!);</span>
+        <span class="kt">var</span> <span class="n">isAdmin</span> <span class="p">=</span> <span class="n">User</span><span class="p">.</span><span class="nf">IsInRole</span><span class="p">(</span><span class="s">"Admin"</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Orders</span><span class="p">.</span><span class="nf">Include</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Items</span><span class="p">).</span><span class="nf">ThenInclude</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">Product</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">FirstOrDefaultAsync</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="n">id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">isAdmin</span> <span class="p">&amp;&amp;</span> <span class="n">order</span><span class="p">.</span><span class="n">UserId</span> <span class="p">!=</span> <span class="n">userId</span><span class="p">)</span> <span class="k">return</span> <span class="nf">Forbid</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="nf">MapToDto</span><span class="p">(</span><span class="n">order</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="nf">HttpPatch</span><span class="p">(</span><span class="s">"{id}/status"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="nf">UpdateStatus</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">UpdateOrderStatusDto</span> <span class="n">dto</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="n">Orders</span><span class="p">.</span><span class="nf">FindAsync</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span> <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+        <span class="n">order</span><span class="p">.</span><span class="n">Status</span> <span class="p">=</span> <span class="n">dto</span><span class="p">.</span><span class="n">Status</span><span class="p">;</span>
+        <span class="k">await</span> <span class="n">_db</span><span class="p">.</span><span class="nf">SaveChangesAsync</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nf">NoContent</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">static</span> <span class="n">OrderResponseDto</span> <span class="nf">MapToDto</span><span class="p">(</span><span class="n">Order</span> <span class="n">order</span><span class="p">,</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">Product</span><span class="p">&gt;?</span> <span class="n">productMap</span> <span class="p">=</span> <span class="k">null</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="k">new</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Id</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">Status</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">Status</span><span class="p">,</span>
+            <span class="n">TotalAmount</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">TotalAmount</span><span class="p">,</span> <span class="n">CreatedAt</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">CreatedAt</span><span class="p">,</span>
+            <span class="n">Items</span> <span class="p">=</span> <span class="n">order</span><span class="p">.</span><span class="n">Items</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">i</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">OrderItemResponseDto</span>
+            <span class="p">{</span>
+                <span class="n">ProductId</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">ProductId</span><span class="p">,</span>
+                <span class="n">ProductName</span> <span class="p">=</span> <span class="n">productMap</span> <span class="p">!=</span> <span class="k">null</span>
+                    <span class="p">?</span> <span class="p">(</span><span class="n">productMap</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">ProductId</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">p</span><span class="p">)</span> <span class="p">?</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span> <span class="p">:</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">)</span>
+                    <span class="p">:</span> <span class="n">i</span><span class="p">.</span><span class="n">Product</span><span class="p">?.</span><span class="n">Name</span> <span class="p">??</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">,</span>
+                <span class="n">Quantity</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">Quantity</span><span class="p">,</span> <span class="n">UnitPrice</span> <span class="p">=</span> <span class="n">i</span><span class="p">.</span><span class="n">UnitPrice</span>
+            <span class="p">}).</span><span class="nf">ToList</span><span class="p">()</span>
+        <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="step-58---create-the-configcontroller-to-verify-that-secrets-are-loaded-correctly-from-azure-key-vault">Step 5.8 - Create the ConfigController to verify that secrets are loaded correctly from Azure Key Vault.</h3>
+<blockquote>
+  <p>This controller is for development/testing purposes only and should not be included in production.</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Controllers/ConfigController.cs</code></strong></p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ECommerceApi.Controllers</span><span class="p">;</span>
+
+<span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// Development-only endpoint to verify Azure Key Vault secrets are loaded correctly.</span>
+<span class="c1">/// Remove or restrict this controller before deploying to production.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="p">[</span><span class="n">ApiController</span><span class="p">]</span>
+<span class="p">[</span><span class="nf">Route</span><span class="p">(</span><span class="s">"api/[controller]"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ConfigController</span> <span class="p">:</span> <span class="n">ControllerBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IConfiguration</span> <span class="n">_config</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IWebHostEnvironment</span> <span class="n">_env</span><span class="p">;</span>
+
+    <span class="c1">// Keys expected to be loaded from Azure Key Vault</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">SecretKeys</span> <span class="p">=</span>
+    <span class="p">[</span>
+        <span class="s">"SqlServer:ConnectionString"</span><span class="p">,</span>
+        <span class="s">"Jwt:SigningSecret"</span><span class="p">,</span>
+        <span class="s">"Jwt:Issuer"</span><span class="p">,</span>
+        <span class="s">"Jwt:Audience"</span><span class="p">,</span>
+        <span class="s">"Smtp:Host"</span><span class="p">,</span>
+        <span class="s">"Smtp:Port"</span><span class="p">,</span>
+        <span class="s">"Smtp:Username"</span><span class="p">,</span>
+        <span class="s">"Smtp:Password"</span><span class="p">,</span>
+        <span class="s">"Smtp:FromEmail"</span><span class="p">,</span>
+        <span class="s">"Smtp:FromName"</span>
+    <span class="p">];</span>
+
+    <span class="c1">// Keys whose values should be masked for safety</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">readonly</span> <span class="kt">string</span><span class="p">[]</span> <span class="n">SensitiveKeys</span> <span class="p">=</span>
+    <span class="p">[</span>
+        <span class="s">"SqlServer:ConnectionString"</span><span class="p">,</span>
+        <span class="s">"Jwt:SigningSecret"</span><span class="p">,</span>
+        <span class="s">"Smtp:Password"</span>
+    <span class="p">];</span>
+
+    <span class="k">public</span> <span class="nf">ConfigController</span><span class="p">(</span><span class="n">IConfiguration</span> <span class="n">config</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_config</span> <span class="p">=</span> <span class="n">config</span><span class="p">;</span>
+        <span class="n">_env</span> <span class="p">=</span> <span class="n">env</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Returns all Azure Key Vault secret keys and their values.</span>
+    <span class="c1">/// Sensitive values (passwords, secrets) are partially masked.</span>
+    <span class="c1">/// Only available in Development environment.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="p">[</span><span class="nf">HttpGet</span><span class="p">(</span><span class="s">"keyvault-secrets"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="n">IActionResult</span> <span class="nf">GetKeyVaultSecrets</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="n">_env</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+            <span class="k">return</span> <span class="nf">NotFound</span><span class="p">();</span>
+
+        <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">SecretKeys</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">key</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="k">value</span> <span class="p">=</span> <span class="n">_config</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+            <span class="kt">var</span> <span class="n">isSensitive</span> <span class="p">=</span> <span class="n">SensitiveKeys</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="k">new</span>
+            <span class="p">{</span>
+                <span class="n">Key</span> <span class="p">=</span> <span class="n">key</span><span class="p">,</span>
+                <span class="n">Value</span> <span class="p">=</span> <span class="k">value</span> <span class="k">is</span> <span class="k">null</span>
+                    <span class="p">?</span> <span class="s">"(not set)"</span>
+                    <span class="p">:</span> <span class="n">isSensitive</span>
+                        <span class="p">?</span> <span class="nf">MaskValue</span><span class="p">(</span><span class="k">value</span><span class="p">)</span>
+                        <span class="p">:</span> <span class="k">value</span><span class="p">,</span>
+                <span class="n">IsSet</span> <span class="p">=</span> <span class="k">value</span> <span class="k">is</span> <span class="k">not</span> <span class="k">null</span>
+            <span class="p">};</span>
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">MaskValue</span><span class="p">(</span><span class="kt">string</span> <span class="k">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">value</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;=</span> <span class="m">6</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="kt">string</span><span class="p">(</span><span class="sc">'*'</span><span class="p">,</span> <span class="k">value</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="k">value</span><span class="p">[..</span><span class="m">3</span><span class="p">]</span> <span class="p">+</span> <span class="k">new</span> <span class="kt">string</span><span class="p">(</span><span class="sc">'*'</span><span class="p">,</span> <span class="k">value</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">6</span><span class="p">)</span> <span class="p">+</span> <span class="k">value</span><span class="p">[^</span><span class="m">3</span><span class="p">..];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="step-59--configure-appsettingsjson-to-include-the-key-vault-uri-and-load-secrets-at-runtime">Step 5.9 — Configure appsettings.json to include the Key Vault URI and load secrets at runtime.</h3>
+
+<p>Open <code class="language-plaintext highlighter-rouge">appsettings.json</code> and replace its contents with:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"KeyVaultUri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://kv-ecommerce-dev-mh.vault.azure.net/"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="step-510--configure-programcs">Step 5.10 — Configure Program.cs</h3>
+
+<p>Replace the generated <code class="language-plaintext highlighter-rouge">Program.cs</code> with the following code. Here keyVaultUri is read from <code class="language-plaintext highlighter-rouge">appsettings.json</code> and the <code class="language-plaintext highlighter-rouge">Azure.Extensions.AspNetCore.Configuration.Secrets</code> package is used to load all secrets from Key Vault into <code class="language-plaintext highlighter-rouge">IConfiguration</code> at startup.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Azure.Identity</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Data</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">ECommerceApi.Services</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Authentication.JwtBearer</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.IdentityModel.Tokens</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.OpenApi</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">WebApplication</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+<span class="c1">// Azure Key Vault — loads all secrets into IConfiguration at startup</span>
+<span class="kt">var</span> <span class="n">keyVaultUri</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"KeyVaultUri"</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">keyVaultUri</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">.</span><span class="nf">AddAzureKeyVault</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="n">keyVaultUri</span><span class="p">),</span>
+        <span class="k">new</span> <span class="nf">DefaultAzureCredential</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Database (connection string comes from Key Vault secret: SqlServer--ConnectionString)</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">AppDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span>
+        <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"SqlServer:ConnectionString"</span><span class="p">]</span>
+            <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"SqlServer:ConnectionString is not configured."</span><span class="p">)));</span>
+
+<span class="c1">// JWT Authentication (signing secret comes from Key Vault secret: Jwt--SigningSecret)</span>
+<span class="kt">var</span> <span class="n">jwtSecret</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:SigningSecret"</span><span class="p">]</span>
+    <span class="p">??</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">"Jwt:SigningSecret is not configured."</span><span class="p">);</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddAuthentication</span><span class="p">(</span><span class="n">JwtBearerDefaults</span><span class="p">.</span><span class="n">AuthenticationScheme</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">AddJwtBearer</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">options</span><span class="p">.</span><span class="n">TokenValidationParameters</span> <span class="p">=</span> <span class="k">new</span> <span class="n">TokenValidationParameters</span>
+        <span class="p">{</span>
+            <span class="n">ValidateIssuer</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+            <span class="n">ValidateAudience</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+            <span class="n">ValidateLifetime</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+            <span class="n">ValidateIssuerSigningKey</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+            <span class="n">ValidIssuer</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:Issuer"</span><span class="p">],</span>
+            <span class="n">ValidAudience</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">[</span><span class="s">"Jwt:Audience"</span><span class="p">],</span>
+            <span class="n">IssuerSigningKey</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SymmetricSecurityKey</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">jwtSecret</span><span class="p">))</span>
+        <span class="p">};</span>
+    <span class="p">});</span>
+
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddAuthorization</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">ITokenService</span><span class="p">,</span> <span class="n">TokenService</span><span class="p">&gt;();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">IEmailService</span><span class="p">,</span> <span class="n">EmailService</span><span class="p">&gt;();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddControllers</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddEndpointsApiExplorer</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">AddSwaggerGen</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerDoc</span><span class="p">(</span><span class="s">"v1"</span><span class="p">,</span> <span class="k">new</span> <span class="n">OpenApiInfo</span> <span class="p">{</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">"ECommerce API"</span><span class="p">,</span> <span class="n">Version</span> <span class="p">=</span> <span class="s">"v1"</span> <span class="p">});</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">AddSecurityDefinition</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">,</span> <span class="k">new</span> <span class="n">OpenApiSecurityScheme</span>
+    <span class="p">{</span>
+        <span class="n">Name</span> <span class="p">=</span> <span class="s">"Authorization"</span><span class="p">,</span>
+        <span class="n">Type</span> <span class="p">=</span> <span class="n">SecuritySchemeType</span><span class="p">.</span><span class="n">ApiKey</span><span class="p">,</span>
+        <span class="n">In</span> <span class="p">=</span> <span class="n">ParameterLocation</span><span class="p">.</span><span class="n">Header</span><span class="p">,</span>
+        <span class="n">Description</span> <span class="p">=</span> <span class="s">"Enter: Bearer {your token}"</span>
+    <span class="p">});</span>
+    <span class="n">c</span><span class="p">.</span><span class="nf">AddSecurityRequirement</span><span class="p">(</span><span class="n">_</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">OpenApiSecurityRequirement</span>
+    <span class="p">{</span>
+        <span class="p">{</span> <span class="k">new</span> <span class="nf">OpenApiSecuritySchemeReference</span><span class="p">(</span><span class="s">"Bearer"</span><span class="p">),</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwagger</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="nf">UseSwaggerUI</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">SwaggerEndpoint</span><span class="p">(</span><span class="s">"/swagger/v1/swagger.json"</span><span class="p">,</span> <span class="s">"ECommerce API v1"</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">UseHttpsRedirection</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">UseAuthorization</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">MapControllers</span><span class="p">();</span>
+
+<span class="c1">// Seed a default admin user on first run</span>
+<span class="c1">// Credentials: admin@ecommerce.com / Admin1234!</span>
+<span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">scope</span> <span class="p">=</span> <span class="n">app</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">CreateScope</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">scope</span><span class="p">.</span><span class="n">ServiceProvider</span><span class="p">.</span><span class="n">GetRequiredService</span><span class="p">&lt;</span><span class="n">AppDbContext</span><span class="p">&gt;();</span>
+    <span class="n">db</span><span class="p">.</span><span class="n">Database</span><span class="p">.</span><span class="nf">EnsureCreated</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(!</span><span class="n">db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">Any</span><span class="p">(</span><span class="n">u</span> <span class="p">=&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">Email</span> <span class="p">==</span> <span class="s">"admin@ecommerce.com"</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">db</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">ECommerceApi</span><span class="p">.</span><span class="n">Models</span><span class="p">.</span><span class="n">User</span>
+        <span class="p">{</span>
+            <span class="n">Name</span> <span class="p">=</span> <span class="s">"Admin"</span><span class="p">,</span>
+            <span class="n">Email</span> <span class="p">=</span> <span class="s">"admin@ecommerce.com"</span><span class="p">,</span>
+            <span class="n">PasswordHash</span> <span class="p">=</span> <span class="n">BCrypt</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">BCrypt</span><span class="p">.</span><span class="nf">HashPassword</span><span class="p">(</span><span class="s">"Admin1234!"</span><span class="p">),</span>
+            <span class="n">Role</span> <span class="p">=</span> <span class="s">"Admin"</span><span class="p">,</span>
+            <span class="n">CreatedAt</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span>
+        <span class="p">});</span>
+        <span class="n">db</span><span class="p">.</span><span class="nf">SaveChanges</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">app</span><span class="p">.</span><span class="nf">Run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="step-511--verify-the-build">Step 5.11 — Verify the Build</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dotnet</span><span class="w"> </span><span class="nx">build</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Expected output: <code class="language-plaintext highlighter-rouge">Build succeeded</code> with 0 errors.</p>
+
+<hr />
+<h2 id="step-6--create--apply-entity-framework-migrations">Step 6 — Create &amp; Apply Entity Framework Migrations</h2>
+
+<p>Ensure EF Core CLI tools are installed:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dotnet</span><span class="w"> </span><span class="nx">tool</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--global</span><span class="w"> </span><span class="nx">dotnet-ef</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Navigate to the project directory:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">src/ECommerceApi</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Create the initial migration:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dotnet</span><span class="w"> </span><span class="nx">ef</span><span class="w"> </span><span class="nx">migrations</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">InitialCreate</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Apply the migration to your database:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dotnet</span><span class="w"> </span><span class="nx">ef</span><span class="w"> </span><span class="nx">database</span><span class="w"> </span><span class="nx">update</span><span class="w">
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>For production, run <code class="language-plaintext highlighter-rouge">dotnet ef database update</code> during your CI/CD pipeline or apply the SQL script generated by <code class="language-plaintext highlighter-rouge">dotnet ef migrations script</code>.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="step-7--run-the-application-locally">Step 7 — Run the Application Locally</h2>
+
+<h3 id="step-71--authenticate-azure-cli-if-using-key-vault-locally">Step 7.1 — Authenticate Azure CLI (if using Key Vault locally)</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">az</span><span class="w"> </span><span class="nx">login</span><span class="w">
+</span><span class="n">az</span><span class="w"> </span><span class="nx">account</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nt">--subscription</span><span class="w"> </span><span class="s2">"&lt;your-subscription-id&gt;"</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="step-72--run-the-application">Step 7.2 — Run the application</h3>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cd</span><span class="w"> </span><span class="nx">src/ECommerceApi</span><span class="w">
+</span><span class="n">dotnet</span><span class="w"> </span><span class="nx">run</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="step-73--open-swagger-ui">Step 7.3 — Open Swagger UI</h3>
+
+<p>Navigate to the URL shown in the terminal (typically):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://localhost:5001/swagger
+</code></pre></div></div>
+<blockquote>
+  <p>Port may vary based on your launch settings. Look for the HTTPS URL in the terminal output.</p>
+</blockquote>
+
+<p>Now you can test all API endpoints via Swagger UI. The <code class="language-plaintext highlighter-rouge">ConfigController</code> endpoint (<code class="language-plaintext highlighter-rouge">GET /api/config/keyvault-secrets</code>) will show you which secrets are loaded from Azure Key Vault and their masked values. You can also test user registration, login, product management, and order creation to verify that everything is working end-to-end with secrets securely loaded from Key Vault.</p>
+
+<h2 id="notes">Notes</h2>
+<h3 id="deploy-application-to-azure-app-service">Deploy Application to Azure App Service</h3>
+<p>When deploying to Azure App Service, ensure that the App Service’s managed identity has <code class="language-plaintext highlighter-rouge">Secret Reader</code> access to the Azure Key Vault. The application will automatically load secrets from Key Vault at startup using the same code, so no changes are needed in your application configuration for production deployment. Just make sure to set the <code class="language-plaintext highlighter-rouge">KeyVaultUri</code> in <code class="language-plaintext highlighter-rouge">appsettings.json</code> to point to your production Key Vault.</p>
+
+<h3 id="how-to-connect-to-azure-key-vault-in-different-environments-quick-reference">How to connect to Azure Key Vault in different Environments (Quick Reference)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Environment</th>
+      <th>Auth Method</th>
+      <th>What to set up</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Local (your machine)</strong></td>
+      <td>Azure CLI session</td>
+      <td><code class="language-plaintext highlighter-rouge">az login</code> + assign <strong>Key Vault Secrets User</strong> role to your Azure AD account</td>
+    </tr>
+    <tr>
+      <td><strong>Another developer’s machine</strong></td>
+      <td>Azure CLI session</td>
+      <td>They run <code class="language-plaintext highlighter-rouge">az login</code> + a team admin assigns the same role to their account</td>
+    </tr>
+    <tr>
+      <td><strong>Azure App Service</strong></td>
+      <td>Managed Identity</td>
+      <td>Enable System-assigned MI on the App Service + assign <strong>Key Vault Secrets User</strong> role to it</td>
+    </tr>
+    <tr>
+      <td><strong>IIS / on-premises server</strong></td>
+      <td>Service Principal (env vars)</td>
+      <td>Create a Service Principal, set 3 env vars on the server, assign role to the SP</td>
+    </tr>
+    <tr>
+      <td><strong>CI/CD pipeline</strong></td>
+      <td>Service Principal (env vars)</td>
+      <td>Same SP, set vars as pipeline secrets</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this tutorial, you built a complete ASP.NET Core Web API application with secure integration to Azure Key Vault for managing sensitive configuration like database connection strings, JWT secrets, and SMTP credentials. You created a simple e-commerce API with user authentication, product management, and order processing features. The application securely loads all secrets from Azure Key Vault at runtime, ensuring that sensitive information is never hardcoded or stored in source control.</p>
+
+<p>If you have any questions or need further assistance, feel free to comment in the comments section below. If you found this tutorial helpful, please share in facebook, linkedin, twitter or any other social media platform.
+Happy coding!</p>
+
+<p><strong><a href="https://github.com/mahedee/code-sample02/tree/main/asp-azure-key-vault">Complete Source Code on GitHub</a></strong></p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#aspnetcore" class="page__taxonomy-item" rel="tag">aspnetcore</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#auth" class="page__taxonomy-item" rel="tag">auth</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#azure" class="page__taxonomy-item" rel="tag">azure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#configuration" class="page__taxonomy-item" rel="tag">configuration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#csharp" class="page__taxonomy-item" rel="tag">csharp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#devops" class="page__taxonomy-item" rel="tag">devops</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#dotnet" class="page__taxonomy-item" rel="tag">dotnet</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#keyvault" class="page__taxonomy-item" rel="tag">keyvault</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#security" class="page__taxonomy-item" rel="tag">security</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#webapi" class="page__taxonomy-item" rel="tag">webapi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#net" class="page__taxonomy-item" rel="tag">.NET</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#asp-net-core" class="page__taxonomy-item" rel="tag">ASP.NET Core</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#azure" class="page__taxonomy-item" rel="tag">Azure</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#configuration" class="page__taxonomy-item" rel="tag">Configuration</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#security" class="page__taxonomy-item" rel="tag">Security</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-api" class="page__taxonomy-item" rel="tag">Web API</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2026-03-07T00:00:00-05:00">March 07, 2026</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Securing+an+ASP.NET+Core+Web+API+by+Integrating+Azure+Key+Vault%20https%3A%2F%2Fmahedee.net%2Fsecuring-aspnet-web-api-app-using-azure-key-vault%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmahedee.net%2Fsecuring-aspnet-web-api-app-using-azure-key-vault%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fmahedee.net%2Fsecuring-aspnet-web-api-app-using-azure-key-vault%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/how-to-build-microservices-aspnet-core-apache-kafka-docker/" class="pagination--pager" title="How to Build a Sample Microservices Application Using ASP.NET Core, Apache Kafka, and Docker
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1641495303280571"></script>
+
+<div class="fb-comments" 
+     data-href="https://mahedee.net/securing-aspnet-web-api-app-using-azure-key-vault/" 
+     data-width="100%" 
+     data-numposts="10"
+     data-colorscheme="light"
+     data-order-by="social"
+     data-mobile="true">
+</div>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/how-to-build-microservices-aspnet-core-apache-kafka-docker/" rel="permalink">How to Build a Sample Microservices Application Using ASP.NET Core, Apache Kafka, and Docker
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  24 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">This step-by-step tutorial demonstrates how to build a sample microservices application using ASP.NET Core, Apache Kafka, and Docker. You will learn how to d...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/implementing-distributed-transactions-saga-pattern-rabbitmq-aspnetcore.md/" rel="permalink">Implementing Distributed Transactions in Microservices: SAGA Pattern with RabbitMQ and ASP.NET Core
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  25 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn how to implement distributed transactions in microservices using the SAGA choreography pattern with RabbitMQ and ASP.NET Core. This comprehensive guide...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/middleware-in-aspnet-core-why-it-matters-and-how-to-build-custom-middleware/" rel="permalink">Middleware in ASP.NET Core: Why It Matters and How to Build Custom Middleware with a Real-World Examples
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Learn why middleware matters in ASP.NET Core and how to build custom middleware with practical, real-world examples used in modern applications.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/post_banner01.jpeg"
+          
+          alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/factory-design-pattern-explained-with-10-real-world-use-cases/" rel="permalink">Factory Design Pattern Explained with 10 Real-World Use Cases
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Explore 10 practical real-world applications of the Factory Design Pattern, from payment gateways and notification systems to cloud services and game develop...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+      <!-- AdSense disabled:
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3654930341568980"
+     data-ad-slot="2244980843"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+     -->
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    <li><i class="fas fa-fw fa-award" aria-hidden="true"></i> <a href = "https://mvp.microsoft.com/en-us/PublicProfile/5001294">MVP Profile</a></li> 
+    ||<li><i class="fas fa-fw fa-list-alt" aria-hidden="true"></i> <a href = "/categories/">Categories</a></li>
+    ||<li><i class="fas fa-fw fa-code" aria-hidden="true"></i> <a href = "#">Programming</a></li>  
+    ||<li><i class="fas fa-fw fa-globe" aria-hidden="true"></i> <a href = "/categories/#asp-net">ASP.NET</a></li> 
+    ||<li><a href = "#">AI & ML</a></li>
+    ||<li><a href = "#">Javascript</a></li>
+    ||<li><a href = "#">Software Architecture</a></li>
+    ||<li><a href = "#">Database</a></li>
+    ||<li><a href = "#">OOP</a></li>
+    ||<li><a href = "#">Design Pattern</a></li>  
+    ||<li><a href = "#">Algorithm</a></li>
+    ||<li><a href = "#">Interview Tips</a></li>
+    ||<li><a href = "#">Opinions</a></li>
+    ||<li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 Mahedee Hasan. 
+  <!-- Powered by  -->
+  <!-- <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>. -->
+</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '', { 'anonymize_ip': false});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+        <!-- AdSense disabled: Add sense code for all page : added globaly
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3654930341568980"
+        crossorigin="anonymous"></script>
+        -->
+
+  </body>
+</html>
